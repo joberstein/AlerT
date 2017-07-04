@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">AlerT</string>
+    <string name="routes_page">My Routes</string>
+
+    <string-array name="route_list">
+        <item>Blue Line</item>
+        <item>Green Line</item>
+        <item>Orange Line</item>
+        <item>Red Line</item>
+        <item>Silver Line</item>
+    </string-array>
+
+    <string name="blue_line">Blue Line</string>
+    <string name="green_line">Green Line</string>
+    <string name="red_line">Red Line</string>
+    <string name="orange_line">Orange Line</string>
+    <string name="silver_line">Silver Line</string>
+</resources>

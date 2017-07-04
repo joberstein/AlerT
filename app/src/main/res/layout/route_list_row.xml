@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="72dp">
+
+    <ImageView
+            android:id="@+id/custom_item_icon"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="20dp"
+            android:gravity="center_vertical"
+            android:src="@drawable/circle_green"
+            android:visibility="invisible"/>
+
+    <TextView
+            android:id="@+id/custom_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/custom_item_icon"
+            android:gravity="center_vertical"
+            android:textSize="22sp"
+            android:fontFamily="Roboto"
+            android:text="@string/green_line"
+            android:visibility="invisible"/>
+
+    <include layout="@layout/route_alert"
+             android:id="@+id/custom_item_info"
+             android:layout_width="46dp"
+             android:layout_height="46dp"
+             android:layout_centerVertical="true"
+             android:layout_alignEnd="@id/custom_item_title"
+             android:layout_marginEnd="50dp"
+             android:gravity="center_vertical"
+             android:visibility="invisible"/>
+
+    <ImageView
+            android:id="@+id/custom_item_chevron"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_chevron_right"
+            android:visibility="invisible"/>
+
+</RelativeLayout>

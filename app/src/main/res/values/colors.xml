@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#f64b4b</color>
+
+    <color name="blue_line">#2a4b9a</color>
+    <color name="green_line">#389000</color>
+    <color name="red_line">#d61010</color>
+    <color name="orange_line">#ec9a42</color>
+    <color name="silver_line">#c2c2c2</color>
+
+    <color name="alert_red">#ff0000</color>
+</resources>
