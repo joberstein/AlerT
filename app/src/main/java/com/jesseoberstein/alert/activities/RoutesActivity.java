@@ -1,13 +1,19 @@
 package com.jesseoberstein.alert.activities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
+
+import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.StartActivityOnClick;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
 import com.jesseoberstein.alert.models.CustomListItem;
-import com.jesseoberstein.alert.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,13 +21,13 @@ import java.util.Optional;
 
 import static com.jesseoberstein.alert.models.CustomListItem.buildRoutesListItem;
 
-public class MainActivity extends AppCompatActivity {
+public class RoutesActivity extends AppCompatActivity {
     private CustomListAdapter myRoutesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_routes);
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
             bar.setTitle(R.string.routes_page);
@@ -32,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
         myRoutesAdapter = new CustomListAdapter(this, generateMyRoutes());
         ListView listView = (ListView) findViewById(R.id.route_list);
         listView.setAdapter(myRoutesAdapter);
+
+        Bundle bundle = new Bundle();
+        // Pass in routes to filter (user already has them in their routes list)
+        bundle.putString("query", "Green Line");
+        FloatingActionButton addRouteView = (FloatingActionButton) findViewById(R.id.add_route);
+        addRouteView.setOnClickListener(
+                new StartActivityOnClick(this, RoutesSearchActivity.class)
+                        .withAction(Intent.ACTION_SEARCH)
+                        .withBundle(bundle));
     }
 
     private ArrayList<CustomListItem> generateMyRoutes(){
@@ -39,11 +54,12 @@ public class MainActivity extends AppCompatActivity {
             buildRoutesListItem(R.drawable.circle_blue, getString(R.string.blue_line), "1"),
             buildRoutesListItem(R.drawable.circle_green, getString(R.string.green_line), ""),
             buildRoutesListItem(R.drawable.circle_orange, getString(R.string.orange_line), ""),
-            buildRoutesListItem(R.drawable.circle_red, getString(R.string.red_line), "2"),
+            buildRoutesListItem(R.drawable.circle_red, getString(R.string.red_line), "5"),
             buildRoutesListItem(R.drawable.circle_silver, getString(R.string.silver_line), "")
         ));
     }
 
+    // Just for testing.
     public void increaseAlert(View view) {
         CustomListItem item0 = myRoutesAdapter.getItem(0);
         String item0info = Optional.ofNullable(item0.getInfo()).orElse("0");

@@ -11,22 +11,35 @@ public class CustomListItem {
     /************************
      * Builders
      ************************/
-    public CustomListItem withIcon(int icon) {
+    public static CustomListItem buildRoutesListItem(int icon, String name, String alerts) {
+        return buildRoutesListItem(new CustomListItem(), icon, name, alerts);
+    }
+
+    public static CustomListItem buildRoutesListItem(CustomListItem item, int icon, String name, String alerts) {
+        item.withIcon(icon)
+                .withName(name)
+                .withChevron(R.drawable.ic_chevron_right);
+
+        alerts = (!alerts.isEmpty() && Integer.parseInt(alerts) > 0) ? alerts : null;
+        return item.withInfo(alerts);
+    }
+
+    private CustomListItem withIcon(int icon) {
         this.icon = icon;
         return this;
     }
 
-    public CustomListItem withName(String name) {
+    private CustomListItem withName(String name) {
         this.name = name;
         return this;
     }
 
-    public CustomListItem withInfo(String info) {
+    private CustomListItem withInfo(String info) {
         this.info = info;
         return this;
     }
 
-    public CustomListItem withChevron(int chevron) {
+    private CustomListItem withChevron(int chevron) {
         this.chevron = chevron;
         return this;
     }
@@ -38,18 +51,4 @@ public class CustomListItem {
     public String getName() { return this.name; }
     public String getInfo() { return this.info; }
     public int getChevron() { return this.chevron; }
-
-
-    public static CustomListItem buildRoutesListItem(CustomListItem item, int icon, String name, String alerts) {
-        item.withIcon(icon)
-            .withName(name)
-            .withChevron(R.drawable.ic_chevron_right);
-
-        alerts = (!alerts.isEmpty() && Integer.parseInt(alerts) > 0) ? alerts : null;
-        return item.withInfo(alerts);
-    }
-
-    public static CustomListItem buildRoutesListItem(int icon, String name, String alerts) {
-        return buildRoutesListItem(new CustomListItem(), icon, name, alerts);
-    }
 }

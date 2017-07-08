@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AlerT</string>
     <string name="routes_page">My Routes</string>
+    <string name="routes_search_page">Search Routes</string>
 
     <string-array name="route_list">
         <item>Blue Line</item>
