@@ -1,16 +1,16 @@
-package com.jesseoberstein.alert.activities;
+package com.jesseoberstein.alert.activities.search;
 
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
 
 import com.jesseoberstein.alert.QueryTextListener;
 import com.jesseoberstein.alert.R;
@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class RoutesSearchActivity extends AppCompatActivity {
+public class Routes extends AppCompatActivity {
     private List<String> getRoutes() {
         return Arrays.asList(
                 getString(R.string.blue_line),
@@ -36,7 +36,7 @@ public class RoutesSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_routes_search);
+        setContentView(R.layout.activites_search_routes);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.routes_search_bar);
         setSupportActionBar(toolbar);
@@ -63,10 +63,10 @@ public class RoutesSearchActivity extends AppCompatActivity {
     }
 
     private void setSearchViewSuggestionSettings(SearchView searchView) {
-        SimpleCursorAdapter adapter = AlertUtils.newSimpleCursorAdapter(this,
-                R.layout.search_list_row,
-                new String[]{"route"},
-                new int[]{R.id.search_row_text});
+        SimpleCursorAdapter adapter =
+                new SimpleCursorAdapter(this, R.layout.list_search, null,
+                        new String[]{"route"}, new int[]{R.id.search_row_text},
+                        CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
         QueryTextListener queryTextListener = new QueryTextListener(
                 new String[]{BaseColumns._ID, "route"},

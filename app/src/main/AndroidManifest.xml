@@ -9,7 +9,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.RoutesActivity">
+        <activity android:name=".activities.view.Routes">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -20,10 +20,10 @@
         </activity>
 
         <activity
-            android:name=".activities.RoutesSearchActivity"
+            android:name=".activities.search.Routes"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateVisible"
-            android:parentActivityName="com.jesseoberstein.alert.activities.RoutesActivity">
+            android:parentActivityName="com.jesseoberstein.alert.activities.view.Routes">
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -33,7 +33,19 @@
                 android:resource="@xml/searchable"/>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jesseoberstein.alert.activities.RoutesActivity"/>
+                android:value="com.jesseoberstein.alert.activities.view.Routes"/>
+        </activity>
+
+        <activity
+            android:name=".activities.view.Alarms"
+            android:parentActivityName="com.jesseoberstein.alert.activities.view.Routes">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jesseoberstein.alert.activities.view.Routes"/>
         </activity>
     </application>
 

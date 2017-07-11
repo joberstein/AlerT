@@ -1,73 +1,106 @@
 package com.jesseoberstein.alert.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.jesseoberstein.alert.models.CustomListItem;
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.utils.AlertUtils;
-import java.util.*;
+import com.jesseoberstein.alert.models.CustomListItem;
+import com.jesseoberstein.alert.utils.ListProp;
+import java.util.ArrayList;
+import java.util.Optional;
+import static com.jesseoberstein.alert.utils.AlertUtils.CUSTOM_LIST_IDS;
+import static com.jesseoberstein.alert.utils.AlertUtils.CUSTOM_LIST_PROPS;
+import static com.jesseoberstein.alert.utils.AlertUtils.listsToMap;
 
 public class CustomListAdapter extends ArrayAdapter<CustomListItem> {
-
-    private static final String ICON = "icon";
-    private static final String NAME = "name";
-    private static final String INFO = "info";
-    private static final String CHEVRON = "chevron";
-
-    private final Context context;
+    private final LayoutInflater inflater;
+    private final int view;
     private final ArrayList<CustomListItem> modelsArrayList;
 
-    public CustomListAdapter(Context context, ArrayList<CustomListItem> itemList) {
-        super(context, R.layout.route_list_row, itemList);
-        this.context = context;
+    private final int LIST_DIVIDER = 0;
+    private final int CUSTOM_LIST_ITEM = 1;
+    private final int NUM_VIEWTYPES = 2;
+
+    public CustomListAdapter(Context context, int view, ArrayList<CustomListItem> itemList) {
+        super(context, view, itemList);
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.view = view;
         this.modelsArrayList = itemList;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View rowView = inflater.inflate(R.layout.route_list_row, parent, false);
-        ImageView iconView = (ImageView) rowView.findViewById(R.id.custom_item_icon);
-        TextView nameView = (TextView) rowView.findViewById(R.id.custom_item_title);
-        View infoView = rowView.findViewById(R.id.custom_item_info);
-        TextView infoTextView = (TextView) rowView.findViewById(R.id.custom_item_info_text);
-        ImageView chevronView = (ImageView) rowView.findViewById(R.id.custom_item_chevron);
-
-        CustomListItem item = modelsArrayList.get(position);
-
-        iconView.setImageResource(item.getIcon());
-        nameView.setText(item.getName());
-        infoTextView.setText(item.getInfo());
-        chevronView.setImageResource(item.getChevron());
-
-        List<String> props = Arrays.asList(ICON, NAME, INFO, CHEVRON);
-        List<View> views = Arrays.asList(iconView, nameView, infoView, chevronView);
-        Map<String, View> viewsMap = AlertUtils.listsToMap(props, views);
-        showViewsIfPropertiesExist(item, viewsMap);
-
-        return rowView;
+    public int getViewTypeCount() {
+        return NUM_VIEWTYPES;
     }
 
-    private <T> void showViewsIfPropertiesExist(CustomListItem item, Map<String, View> viewsMap) {
-        viewsMap.forEach((propKey, view) -> {
-            Optional<T> property = Optional.ofNullable(getCustomListItemProp(item, propKey));
-            property.ifPresent(prop -> view.setVisibility(View.VISIBLE));
-        });
+    @Override
+    public int getItemViewType(int position) {
+        Optional<CustomListItem> optItem = Optional.ofNullable(getItem(position));
+        return optItem.map(CustomListItem::isDivider).orElse(true) ? LIST_DIVIDER : CUSTOM_LIST_ITEM;
     }
 
-    private <T> T getCustomListItemProp(CustomListItem item, String propKey) {
+    @NonNull
+    @Override
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        int viewToInflate = (getItemViewType(position) == LIST_DIVIDER) ? R.layout.list_divider : this.view;
+        final View rowToDisplay = this.inflater.inflate(viewToInflate, parent, false);
+
+        switch (getItemViewType(position)) {
+            case CUSTOM_LIST_ITEM:
+                CustomListItem item = modelsArrayList.get(position);
+                listsToMap(CUSTOM_LIST_IDS, CUSTOM_LIST_PROPS).forEach((key, value) ->
+                        setItemViewValue(item, value, rowToDisplay.findViewById(key)));
+            default:
+                return rowToDisplay;
+        }
+    }
+
+    /**
+     * Set the item view for the given property.
+     * @param item The item to get the property from.
+     * @param propKey The property to set the view for.
+     * @param v The view to set the property on.
+     * @param <T> A string (text view value) or int (image view resource id).
+     */
+    private <T> void setItemViewValue(CustomListItem item, ListProp propKey, View v) {
+        Optional<View> optView = Optional.ofNullable(v);
+        T propValue = getItemPropertyValue(item, propKey);
         switch (propKey) {
-            case ICON:    return (T) Integer.valueOf(item.getIcon());
-            case NAME:    return (T) item.getName();
-            case INFO:    return (T) item.getInfo();
-            case CHEVRON: return (T) Integer.valueOf(item.getChevron());
-            default:      return (T) "";
+            case INFO:
+                optView.ifPresent(view -> Optional.ofNullable(propValue).ifPresent(val -> view.setVisibility(View.VISIBLE)));
+                optView = optView.map(view -> view.findViewById(R.id.custom_item_info_text));
+            case PRIMARY_TEXT:
+            case SECONDARY_TEXT:
+            case TERTIARY_TEXT:
+                optView.ifPresent(view -> ((TextView) view).setText((String) propValue));
+                break;
+            case ICON:
+            case CHEVRON:
+                optView.ifPresent(view -> ((ImageView) view).setImageResource((Integer) propValue));
+        }
+    }
+
+    /**
+     * Get an item property based on the given key.
+     * @param item The item to get properties from.
+     * @param propKey One of ListProp, a key representing an item's property.
+     * @param <T> The item property, a String or int (id).
+     * @return An item property.
+     */
+    private <T> T getItemPropertyValue(CustomListItem item, ListProp propKey) {
+        switch (propKey) {
+            case ICON:              return (T) Integer.valueOf(item.getIcon());
+            case PRIMARY_TEXT:      return (T) item.getPrimaryText();
+            case SECONDARY_TEXT:    return (T) item.getSecondaryText();
+            case TERTIARY_TEXT:     return (T) item.getTertiaryText();
+            case INFO:              return (T) item.getInfo();
+            case CHEVRON:           return (T) Integer.valueOf(item.getChevron());
+            default:                return (T) "";
         }
     }
 }
