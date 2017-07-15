@@ -22,4 +22,12 @@
     <string name="station">Station</string>
     <string name="direction">Direction</string>
     <string name="create">Create</string>
+
+    <string name="step_1">1) Choose Start Time</string>
+    <string name="step_2">2) Select Days</string>
+    <string name="step_3">3) Modify Settings</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="done">Done</string>
+
 </resources>

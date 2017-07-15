@@ -1,4 +1,4 @@
-package com.jesseoberstein.alert.activities.view;
+package com.jesseoberstein.alert.activities.alarms;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,9 @@ import android.widget.ListView;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.StartActivityOnClick;
-import com.jesseoberstein.alert.activities.insert.Alarm;
+import com.jesseoberstein.alert.StartActivityOnItemClick;
+import com.jesseoberstein.alert.activities.alarm.CreateAlarm;
+import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
 import com.jesseoberstein.alert.models.CustomListItem;
 
@@ -22,7 +24,7 @@ import java.util.Optional;
 import static com.jesseoberstein.alert.models.CustomListItem.buildAlarmListItem;
 import static com.jesseoberstein.alert.models.CustomListItem.makeDivider;
 
-public class Alarms extends AppCompatActivity {
+public class ViewAlarms extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class Alarms extends AppCompatActivity {
 
         CustomListAdapter myAlarmsAdapter = new CustomListAdapter(this, R.layout.list_alarms, generateAlarms());
         ListView listView = (ListView) findViewById(R.id.alarm_list);
+        listView.setOnItemClickListener(new StartActivityOnItemClick(this, EditAlarm.class));
         listView.setAdapter(myAlarmsAdapter);
 
         Bundle bundle = new Bundle();
@@ -45,7 +48,7 @@ public class Alarms extends AppCompatActivity {
 
         FloatingActionButton addAlarmView = (FloatingActionButton) findViewById(R.id.add_alarm);
         addAlarmView.setOnClickListener(
-                new StartActivityOnClick(this, Alarm.class)
+                new StartActivityOnClick(this, CreateAlarm.class)
                         .withAction(Intent.ACTION_INSERT)
                         .withBundle(bundle));
     }

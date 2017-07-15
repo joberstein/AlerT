@@ -1,4 +1,4 @@
-package com.jesseoberstein.alert.activities.insert;
+package com.jesseoberstein.alert.activities.alarm;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -32,7 +32,7 @@ import static com.jesseoberstein.alert.utils.AlertUtils.isEven;
 import static com.jesseoberstein.alert.validation.CreateAlarmPredicates.isValidNickname;
 import static com.jesseoberstein.alert.validation.CreateAlarmPredicates.isValidStation;
 
-public class Alarm extends AppCompatActivity {
+public class CreateAlarm extends AppCompatActivity {
     private static final int THEME_COLOR = R.color.orange_line;
     private static final int NICKNAME_KEY = 0;
     private static final int STATION_KEY = 1;
@@ -48,7 +48,7 @@ public class Alarm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activities_insert_alarm);
+        setContentView(R.layout.activities_create_alarm);
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
             bar.setTitle(R.string.create_alarm_page);

@@ -1,4 +1,4 @@
-package com.jesseoberstein.alert.activities.search;
+package com.jesseoberstein.alert.activities.routes;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -14,13 +14,12 @@ import android.widget.CursorAdapter;
 
 import com.jesseoberstein.alert.QueryTextListener;
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class Routes extends AppCompatActivity {
+public class SearchRoutes extends AppCompatActivity {
     private List<String> getRoutes() {
         return Arrays.asList(
                 getString(R.string.blue_line),

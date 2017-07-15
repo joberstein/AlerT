@@ -1,17 +1,17 @@
-package com.jesseoberstein.alert.activities.view;
+package com.jesseoberstein.alert.activities.routes;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.StartActivityOnClick;
 import com.jesseoberstein.alert.StartActivityOnItemClick;
+import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
 import com.jesseoberstein.alert.models.CustomListItem;
 
@@ -21,7 +21,7 @@ import java.util.Optional;
 
 import static com.jesseoberstein.alert.models.CustomListItem.buildRoutesListItem;
 
-public class Routes extends AppCompatActivity {
+public class ViewRoutes extends AppCompatActivity {
     private CustomListAdapter myRoutesAdapter;
 
     @Override
@@ -34,7 +34,7 @@ public class Routes extends AppCompatActivity {
         });
 
         myRoutesAdapter = new CustomListAdapter(this, R.layout.list_routes, generateMyRoutes());
-        AdapterView.OnItemClickListener goToAlarms = new StartActivityOnItemClick(this, Alarms.class);
+        AdapterView.OnItemClickListener goToAlarms = new StartActivityOnItemClick(this, ViewAlarms.class);
 
         ListView listView = (ListView) findViewById(R.id.route_list);
         listView.setAdapter(myRoutesAdapter);
@@ -46,7 +46,7 @@ public class Routes extends AppCompatActivity {
 
         FloatingActionButton addRouteView = (FloatingActionButton) findViewById(R.id.add_route);
         addRouteView.setOnClickListener(
-                new StartActivityOnClick(this, com.jesseoberstein.alert.activities.search.Routes.class)
+                new StartActivityOnClick(this, SearchRoutes.class)
                         .withAction(Intent.ACTION_SEARCH)
                         .withBundle(bundle));
     }

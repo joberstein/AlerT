@@ -9,7 +9,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.view.Routes">
+        <activity android:name=".activities.routes.ViewRoutes">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -20,10 +20,10 @@
         </activity>
 
         <activity
-            android:name=".activities.search.Routes"
+            android:name=".activities.routes.SearchRoutes"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateVisible"
-            android:parentActivityName="com.jesseoberstein.alert.activities.view.Routes">
+            android:parentActivityName="com.jesseoberstein.alert.activities.routes.ViewRoutes">
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -33,31 +33,43 @@
                 android:resource="@xml/searchable"/>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jesseoberstein.alert.activities.view.Routes"/>
+                android:value="com.jesseoberstein.alert.activities.routes.ViewRoutes"/>
         </activity>
 
         <activity
-            android:name=".activities.view.Alarms"
-            android:parentActivityName="com.jesseoberstein.alert.activities.view.Routes">
+            android:name=".activities.alarms.ViewAlarms"
+            android:parentActivityName="com.jesseoberstein.alert.activities.routes.ViewRoutes">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jesseoberstein.alert.activities.view.Routes"/>
+                android:value="com.jesseoberstein.alert.activities.routes.ViewRoutes"/>
         </activity>
 
         <activity
-            android:name=".activities.insert.Alarm"
-            android:parentActivityName="com.jesseoberstein.alert.activities.view.Alarms">
+            android:name=".activities.alarm.CreateAlarm"
+            android:parentActivityName="com.jesseoberstein.alert.activities.alarms.ViewAlarms">
 
             <intent-filter>
                 <action android:name="android.intent.action.INSERT"/>
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jesseoberstein.alert.activities.view.Alarms"/>
+                android:value="com.jesseoberstein.alert.activities.alarms.ViewAlarms"/>
+        </activity>
+
+        <activity
+            android:name=".activities.alarm.EditAlarm"
+            android:parentActivityName="com.jesseoberstein.alert.activities.alarms.ViewAlarms">
+
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jesseoberstein.alert.activities.alarms.ViewAlarms"/>
         </activity>
 
     </application>
