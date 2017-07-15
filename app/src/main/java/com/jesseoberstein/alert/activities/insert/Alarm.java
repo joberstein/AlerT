@@ -18,6 +18,9 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.ToggleButtonColorOnClick;
 import com.jesseoberstein.alert.utils.AlertUtils;
 import com.jesseoberstein.alert.utils.Tints;
+import com.jesseoberstein.alert.validation.AbstractValidator;
+import com.jesseoberstein.alert.validation.AutoCompleteValidator;
+import com.jesseoberstein.alert.validation.TextValidator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,9 +29,13 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static com.jesseoberstein.alert.utils.AlertUtils.isEven;
+import static com.jesseoberstein.alert.validation.CreateAlarmPredicates.isValidNickname;
+import static com.jesseoberstein.alert.validation.CreateAlarmPredicates.isValidStation;
 
 public class Alarm extends AppCompatActivity {
     private static final int THEME_COLOR = R.color.orange_line;
+    private static final int NICKNAME_KEY = 0;
+    private static final int STATION_KEY = 1;
     private static final String[] STATIONS = new String[] {
             "Malden Center", "Wellington", "Assembly", "Sullivan Square",
             "North Station", "Haymarket", "State", "Downtown Crossing", "Chinatown",
@@ -57,20 +64,38 @@ public class Alarm extends AppCompatActivity {
 
         // Set up the page elements.
         AlertUtils.showKeyboard(this);
-        setUpAutoComplete(stationAutoComplete);
+        setUpNickname(nicknameText, createAlarmButton);
+        setUpAutoComplete(stationAutoComplete, createAlarmButton);
         setUpDirectionButtons(directionsView, THEME_COLOR, R.color.white);
         setUpCreateAlarmButton(createAlarmButton, THEME_COLOR, R.color.white);
     }
 
     /**
+     * Set up validation for the nickname input field.
+     * @param nicknameText The view to use for the nickname EditText.
+     * @param submit The button to update validation status with.
+     */
+    private void setUpNickname(EditText nicknameText, Button submit) {
+        String error = "Must be 1 - 12 characters.";
+        TextValidator validator = new TextValidator(nicknameText, isValidNickname(), error, submit, NICKNAME_KEY);
+        nicknameText.addTextChangedListener(validator);
+    }
+
+    /**
      * Set up autocomplete for the station input field.
      * @param autoComplete The view to use for the station autocomplete.
+     * @param submit The button to update validation status with.
      */
-    private void setUpAutoComplete(AutoCompleteTextView autoComplete) {
+    private void setUpAutoComplete(AutoCompleteTextView autoComplete, Button submit) {
+        String error = "Not a valid station.";
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, STATIONS);
+        TextValidator textValidator = new TextValidator(autoComplete, isValidStation(STATIONS), error, submit, STATION_KEY);
+        AutoCompleteValidator validator = new AutoCompleteValidator(autoComplete, isValidStation(STATIONS), error, submit, STATION_KEY);
         View focusHolder = findViewById(R.id.hiddenFocus);
 
         autoComplete.setAdapter(adapter);
+        autoComplete.setValidator(validator);
+        autoComplete.addTextChangedListener(textValidator);
         autoComplete.setOnEditorActionListener(new HideKeyboardOnNextAction(focusHolder));
         autoComplete.setOnItemClickListener(new HideKeyboardOnItemClick(autoComplete, focusHolder));
     }
@@ -138,7 +163,9 @@ public class Alarm extends AppCompatActivity {
      * @param buttonTextColor The color to set the text of the create alarm button.
      */
     private void setUpCreateAlarmButton(Button btn, int buttonColor, int buttonTextColor) {
+        AbstractValidator.initializeValidationAwareView(btn, 2);
         btn.setBackgroundTintList(Tints.forColoredButton(this, getColor(buttonColor)));
         btn.setTextColor(Tints.forColoredButtonText(this, getColor(buttonTextColor)));
+        btn.setEnabled(false);
     }
 }
