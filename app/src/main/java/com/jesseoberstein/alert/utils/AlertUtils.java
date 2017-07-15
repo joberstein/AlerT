@@ -1,15 +1,16 @@
 package com.jesseoberstein.alert.utils;
 
 import android.app.Activity;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.widget.CursorAdapter;
+import android.content.Context;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.jesseoberstein.alert.R;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -40,5 +41,45 @@ public class AlertUtils {
     public static <K, V> Map<K, V> listsToMap(List<K> keys, List<V> values) {
         return IntStream.range(0, keys.size()).boxed()
                 .collect(Collectors.toMap(keys::get, values::get));
+    }
+
+    /**
+     * Is the given number even?
+     * @param i The number to check.
+     * @return True if even, false otherwise.
+     */
+    public static boolean isEven(int i) {
+        return i % 2 == 0;
+    }
+
+    /**
+     * Show the keyboard for the given view.
+     * @param activity The activity to show the keyboard for.
+     */
+    public static void showKeyboard(Activity activity) {
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    }
+
+    /**
+     * Hide the keyboard if the given next focus is a dummy focus holder (0 width).
+     * @param input The potential last input.
+     * @param nextFocus The next view to focus on.
+     */
+    public static void hideKeyboardForLastInput(View input, View nextFocus) {
+        input.clearFocus();
+        if (nextFocus.getWidth() == 0) {
+            AlertUtils.hideKeyboard(nextFocus);
+        }
+    }
+
+    /**
+     * Hide the keyboard for the given view.
+     * @param view The view to hide the keyboard for.
+     */
+    private static void hideKeyboard(View view) {
+        view.requestFocus();
+        InputMethodManager imm = (InputMethodManager) view.getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

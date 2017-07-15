@@ -1,6 +1,8 @@
 package com.jesseoberstein.alert.activities.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -8,6 +10,8 @@ import android.view.MenuInflater;
 import android.widget.ListView;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.StartActivityOnClick;
+import com.jesseoberstein.alert.activities.insert.Alarm;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
 import com.jesseoberstein.alert.models.CustomListItem;
 
@@ -19,7 +23,6 @@ import static com.jesseoberstein.alert.models.CustomListItem.buildAlarmListItem;
 import static com.jesseoberstein.alert.models.CustomListItem.makeDivider;
 
 public class Alarms extends AppCompatActivity {
-    private CustomListAdapter myAlarmsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +35,19 @@ public class Alarms extends AppCompatActivity {
             bar.setDisplayHomeAsUpEnabled(true);
         });
 
-        myAlarmsAdapter = new CustomListAdapter(this, R.layout.list_alarms, generateAlarms());
+        CustomListAdapter myAlarmsAdapter = new CustomListAdapter(this, R.layout.list_alarms, generateAlarms());
         ListView listView = (ListView) findViewById(R.id.alarm_list);
         listView.setAdapter(myAlarmsAdapter);
+
+        Bundle bundle = new Bundle();
+        // Pass in routes to filter (user already has them in their routes list)
+        bundle.putString("route", "Orange Line");
+
+        FloatingActionButton addAlarmView = (FloatingActionButton) findViewById(R.id.add_alarm);
+        addAlarmView.setOnClickListener(
+                new StartActivityOnClick(this, Alarm.class)
+                        .withAction(Intent.ACTION_INSERT)
+                        .withBundle(bundle));
     }
 
     @Override

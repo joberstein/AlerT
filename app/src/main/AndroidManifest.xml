@@ -47,6 +47,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jesseoberstein.alert.activities.view.Routes"/>
         </activity>
+
+        <activity
+            android:name=".activities.insert.Alarm"
+            android:parentActivityName="com.jesseoberstein.alert.activities.view.Alarms">
+
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jesseoberstein.alert.activities.view.Alarms"/>
+        </activity>
+
     </application>
 
 </manifest>

@@ -8,4 +8,32 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.BlueLine" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorButtonNormal">@color/blue_line</item>
+    </style>
+
+    <style name="AppTheme.GreenLine" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorButtonNormal">@color/green_line</item>
+    </style>
+
+    <style name="AppTheme.OrangeLine" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorButtonNormal">@color/white</item>
+        <item name="android:strokeColor">@color/orange_line</item>
+    </style>
+
+    <style name="AppTheme.RedLine" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorButtonNormal">@color/red_line</item>
+    </style>
+
+    <style name="AppTheme.SilverLine" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorButtonNormal">@color/silver_line</item>
+    </style>
+
+    <style name="AppTheme.White" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorButtonNormal">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:strokeColor">@color/black</item>
+        <item name="android:strokeWidth">2</item>
+    </style>
+
 </resources>

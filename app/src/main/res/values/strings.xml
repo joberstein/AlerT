@@ -2,6 +2,7 @@
     <string name="app_name">AlerT</string>
     <string name="routes_page">My Routes</string>
     <string name="routes_search_page">Search Routes</string>
+    <string name="create_alarm_page">New Alarm</string>
 
     <string-array name="route_list">
         <item>Blue Line</item>
@@ -16,4 +17,9 @@
     <string name="red_line">Red Line</string>
     <string name="orange_line">Orange Line</string>
     <string name="silver_line">Silver Line</string>
+
+    <string name="nickname">Nickname</string>
+    <string name="station">Station</string>
+    <string name="direction">Direction</string>
+    <string name="create">Create</string>
 </resources>
