@@ -1,25 +1,25 @@
 package com.jesseoberstein.alert.activities.alarm;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.TransitionManager;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jesseoberstein.alert.ChangeNavOnPageSelected;
+import com.jesseoberstein.alert.DecrementViewOnClick;
+import com.jesseoberstein.alert.IncrementViewOnClick;
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.StepBackOnClick;
-import com.jesseoberstein.alert.StepNextOnClick;
+import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 public class EditAlarm extends AppCompatActivity {
     private static final int THEME_COLOR = R.color.orange_line;
+    private FragmentPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +33,20 @@ public class EditAlarm extends AppCompatActivity {
             bar.setDisplayHomeAsUpEnabled(true);
         });
 
-        View page = findViewById(R.id.page);
-        View stepper = findViewById(R.id.stepper);
-        TextView stepText = (TextView) findViewById(R.id.stepText);
-        ImageView time = (ImageView) findViewById(R.id.time);
-        ImageView day = (ImageView) findViewById(R.id.day);
-        ImageView settings = (ImageView) findViewById(R.id.settings);
-        List<ImageView> steps = new ArrayList<>(Arrays.asList(time, day, settings));
         View previous = findViewById(R.id.previous_step);
         View next = findViewById(R.id.next_step);
+        View submit = findViewById(R.id.submit_alarm);
+        adapter = new AlarmPagerAdapter(getSupportFragmentManager());
 
-        stepper.setBackgroundColor(getColor(THEME_COLOR));
-        previous.setOnClickListener(new StepBackOnClick(page, stepText, previous, next, steps));
-        next.setOnClickListener(new StepNextOnClick(page, stepText, previous, next, steps));
+        ViewPager pager = (ViewPager) findViewById(R.id.alarm_pager);
+        pager.setAdapter(adapter);
+        pager.addOnPageChangeListener(new ChangeNavOnPageSelected(previous, next, submit));
+        pager.setCurrentItem(0);
+
+        next.setOnClickListener(new IncrementViewOnClick(pager));
+        previous.setOnClickListener(new DecrementViewOnClick(pager));
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.stepper_dots);
+        tabLayout.setupWithViewPager(pager, true);
     }
 }

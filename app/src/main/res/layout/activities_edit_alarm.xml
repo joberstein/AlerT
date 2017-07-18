@@ -1,77 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:tag="0"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.jesseoberstein.alert.activities.alarm.EditAlarm">
 
-    <TextView
-        android:id="@+id/stepText"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/alarm_pager"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/white"
-        android:elevation="3dp"
-        android:layout_alignParentTop="true"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:gravity="center_vertical"
-        android:text="@string/step_1"
-        android:textSize="16sp"/>
+        android:layout_height="wrap_content">
+    </android.support.v4.view.ViewPager>
 
-    <RelativeLayout
-        android:id="@+id/stepper"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/stepper_dots"
         android:layout_alignParentBottom="true"
-        android:padding="6dp"
-        android:background="@color/orange_line">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_nav_height"
+        android:background="@color/orange_line"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabPaddingStart="@dimen/bottom_nav_margin_between"
+        app:tabPaddingEnd="@dimen/bottom_nav_margin_between">
+    </android.support.design.widget.TabLayout>
 
-        <TextView
-            android:id="@+id/previous_step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:text="@string/back"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:drawableStart="@drawable/ic_chevron_left_white"
-            android:visibility="invisible"/>
+    <TextView
+        android:id="@+id/previous_step"
+        android:text="@string/back"
+        android:layout_alignParentStart="true"
+        android:drawableStart="@drawable/ic_chevron_left_white"
+        android:visibility="invisible"
+        style="@style/AlarmPagerBottomNavigation"/>
 
-        <include layout="@layout/edit_alarm_steps"/>
+    <TextView
+        android:id="@+id/next_step"
+        android:text="@string/next"
+        android:layout_alignParentEnd="true"
+        android:drawableEnd="@drawable/ic_chevron_right_white"
+        style="@style/AlarmPagerBottomNavigation"/>
 
-        <TextView
-            android:id="@+id/next_step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:text="@string/next"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:drawableEnd="@drawable/ic_chevron_right_white"/>
+    <TextView
+        android:id="@+id/submit_alarm"
+        android:text="@string/done"
+        android:layout_alignParentEnd="true"
+        android:paddingStart="@dimen/default_icon_size"
+        android:paddingEnd="@dimen/default_icon_size"
+        android:visibility="invisible"
+        style="@style/AlarmPagerBottomNavigation"/>
 
-        <TextView
-            android:id="@+id/final_step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
-            android:text="@string/done"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:visibility="invisible"/>
-
-    </RelativeLayout>
 </RelativeLayout>
