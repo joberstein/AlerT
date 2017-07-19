@@ -58,6 +58,13 @@ public class CustomListItem {
                 .withChevron(R.drawable.ic_chevron_right);
     }
 
+    /**
+     * Build a simple list item with only primary text.
+     */
+    public static CustomListItem buildSimpleTextItem(String primaryText) {
+        return new CustomListItem().withPrimaryText(primaryText);
+    }
+
     public static CustomListItem makeDivider() {
         return new CustomListItem().asDivider();
     }

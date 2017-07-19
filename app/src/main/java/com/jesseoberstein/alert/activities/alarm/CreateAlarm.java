@@ -11,11 +11,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ToggleButton;
 
 import com.jesseoberstein.alert.HideKeyboardOnItemClick;
 import com.jesseoberstein.alert.HideKeyboardOnNextAction;
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.ToggleButtonColorOnClick;
+import com.jesseoberstein.alert.ToggleOnClick;
 import com.jesseoberstein.alert.utils.AlertUtils;
 import com.jesseoberstein.alert.utils.Tints;
 import com.jesseoberstein.alert.validation.AbstractValidator;
@@ -139,14 +140,16 @@ public class CreateAlarm extends AppCompatActivity {
      * @param buttonTextColor The color to set the text of each direction button when active.
      */
     private void addDirectionButton(ViewGroup parent, String direction, int buttonColor, int buttonTextColor) {
-        ToggleButtonColorOnClick toggleBtnColor = new ToggleButtonColorOnClick(buttonColor, buttonTextColor, this);
-        Button btn = (Button) LayoutInflater.from(this).inflate(R.layout.button_direction, parent, false);
+        ToggleOnClick toggleBtnColor = new ToggleOnClick(buttonColor, buttonTextColor, this);
+        ToggleButton btn = (ToggleButton) LayoutInflater.from(this).inflate(R.layout.button_direction, parent, false);
         parent.addView(btn);
 
         Optional.ofNullable(direction)
                 .map(validDirection -> {
-                    btn.setOnClickListener(toggleBtnColor);
+                    btn.setOnCheckedChangeListener(toggleBtnColor);
                     btn.setText(validDirection);
+                    btn.setTextOn(validDirection);
+                    btn.setTextOff(validDirection);
                     btn.setBackgroundTintList(Tints.forColoredButton(this, getColor(R.color.white)));
                     return btn;
                 })
