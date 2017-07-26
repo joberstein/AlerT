@@ -48,4 +48,14 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="SingleChoiceDropdown">
+        <item name="android:dropDownItemStyle">@android:layout/simple_list_item_single_choice</item>
+        <item name="android:spinnerItemStyle">@android:layout/simple_list_item_single_choice</item>
+        <item name="android:spinnerDropDownItemStyle">@android:layout/simple_list_item_single_choice</item>
+    </style>
+
+    <style name="SingleChoiceDropdown.Offset" parent="SingleChoiceDropdown">
+        <item name="android:dropDownVerticalOffset">20dp</item>
+    </style>
+
 </resources>

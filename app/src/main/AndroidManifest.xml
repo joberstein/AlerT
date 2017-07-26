@@ -62,7 +62,8 @@
 
         <activity
             android:name=".activities.alarm.EditAlarm"
-            android:parentActivityName="com.jesseoberstein.alert.activities.alarms.ViewAlarms">
+            android:parentActivityName="com.jesseoberstein.alert.activities.alarms.ViewAlarms"
+            android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
                 <action android:name="android.intent.action.EDIT"/>

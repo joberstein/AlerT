@@ -6,7 +6,6 @@
     android:layout_alignParentTop="true"
     android:layout_height="45dp"
     android:background="@color/white"
-    android:elevation="3dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:gravity="center_vertical"

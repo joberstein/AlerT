@@ -40,4 +40,19 @@
     <string name="next">Next</string>
     <string name="done">Done</string>
 
+    <string name="duration">Duration</string>
+    <string-array name="duration_list">
+        <item>HOURS</item>
+        <item>MINUTES</item>
+    </string-array>
+
+    <string name="repeat">Repeat</string>
+    <string-array name="repeat_list">
+        <item>NEVER</item>
+        <item>WEEKLY</item>
+        <item>MONTHLY</item>
+    </string-array>
+
+    <string name="status">Status</string>
+
 </resources>

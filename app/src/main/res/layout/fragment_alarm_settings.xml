@@ -1,9 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <include layout="@layout/step_text"/>
 
-</RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/list_padding_above"
+        android:paddingStart="@dimen/list_text_padding_start"
+        android:paddingEnd="@dimen/list_text_padding_end">
+
+        <include layout="@layout/input_nickname"/>
+
+        <!--Duration-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingEnd="36dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/duration_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:textAlignment="textEnd"
+                    android:inputType="number"
+                    android:imeOptions="actionNext"
+                    android:hint="@string/duration"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/duration_dropdown"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:entries="@array/duration_list"
+                style="@style/SingleChoiceDropdown.Offset"/>
+        </LinearLayout>
+
+        <include layout="@layout/input_focus_holder"/>
+
+        <!--Repeat-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/repeat_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingStart="30dp"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:text="@string/repeat"/>
+
+            <Spinner
+                android:id="@+id/repeat_dropdown"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:entries="@array/repeat_list"
+                style="@style/SingleChoiceDropdown"/>
+        </LinearLayout>
+
+        <!--Status-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/status_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingStart="30dp"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:text="@string/status"/>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <Switch
+                    android:id="@+id/status_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -11,19 +11,7 @@
     tools:context="com.jesseoberstein.alert.activities.alarm.CreateAlarm">
 
     <!-- Nickname -->
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/nickname"
-            android:inputType="text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/nickname"
-            android:layout_marginBottom="10dp"/>
-
-    </android.support.design.widget.TextInputLayout>
+    <include layout="@layout/input_nickname"/>
 
     <!-- Station -->
     <android.support.design.widget.TextInputLayout
@@ -42,12 +30,7 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/hiddenFocus"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"/>
+    <include layout="input_focus_holder"/>
 
     <!-- Direction -->
     <LinearLayout

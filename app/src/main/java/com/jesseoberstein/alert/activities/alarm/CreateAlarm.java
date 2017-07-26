@@ -44,7 +44,7 @@ public class CreateAlarm extends AppCompatActivity {
             "Roxbury Crossing", "Jackson Square", "Stonybrook", "Green Street"
     };
 
-    private static List<String> directions = new ArrayList<>(Arrays.asList("Oak Grove", "Forest Hills"));
+    private List<String> directions = new ArrayList<>(Arrays.asList("Oak Grove", "Forest Hills"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
