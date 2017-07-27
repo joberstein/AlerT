@@ -20,7 +20,7 @@ import static com.jesseoberstein.alert.utils.AlertUtils.listsToMap;
 public class CustomListAdapter extends ArrayAdapter<CustomListItem> {
     private final LayoutInflater inflater;
     private final int view;
-    private final ArrayList<CustomListItem> modelsArrayList;
+    private ArrayList<CustomListItem> items = new ArrayList<>();
 
     private final int LIST_DIVIDER = 0;
     private final int CUSTOM_LIST_ITEM = 1;
@@ -30,7 +30,11 @@ public class CustomListAdapter extends ArrayAdapter<CustomListItem> {
         super(context, view, itemList);
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.view = view;
-        this.modelsArrayList = itemList;
+        this.items = itemList;
+    }
+
+    public ArrayList<CustomListItem> getItems() {
+        return new ArrayList<>(this.items);
     }
 
     @Override
@@ -52,7 +56,7 @@ public class CustomListAdapter extends ArrayAdapter<CustomListItem> {
 
         switch (getItemViewType(position)) {
             case CUSTOM_LIST_ITEM:
-                CustomListItem item = modelsArrayList.get(position);
+                CustomListItem item = this.items.get(position);
                 listsToMap(CUSTOM_LIST_IDS, CUSTOM_LIST_PROPS).forEach((key, value) ->
                         setItemViewValue(item, value, rowToDisplay.findViewById(key)));
             default:

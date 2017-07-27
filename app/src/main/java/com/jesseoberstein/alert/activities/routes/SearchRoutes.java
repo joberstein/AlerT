@@ -16,6 +16,7 @@ import com.jesseoberstein.alert.QueryTextListener;
 import com.jesseoberstein.alert.R;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,9 +29,7 @@ public class SearchRoutes extends AppCompatActivity {
                 getString(R.string.red_line),
                 getString(R.string.silver_line)
         );
-    }
-
-    ;
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +44,13 @@ public class SearchRoutes extends AppCompatActivity {
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
         boolean isSearchIntent = Intent.ACTION_SEARCH.equals(intent.getAction());
-        String query = isSearchIntent ? intent.getStringExtra(SearchManager.QUERY) : "";
+        List<String> query = isSearchIntent ?
+                intent.getStringArrayListExtra(SearchManager.QUERY) :
+                Collections.emptyList();
         setupSearchView(toolbar, query);
     }
 
-    private void setupSearchView(Toolbar toolbar, String query) {
+    private void setupSearchView(Toolbar toolbar, List<String> query) {
         SearchView searchView = (SearchView) toolbar.findViewById(R.id.routes_search);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
@@ -58,10 +59,10 @@ public class SearchRoutes extends AppCompatActivity {
         searchView.setIconified(false);
         searchView.setFocusable(true);
         searchView.requestFocus();
-        setSearchViewSuggestionSettings(searchView);
+        setSearchViewSuggestionSettings(searchView, query);
     }
 
-    private void setSearchViewSuggestionSettings(SearchView searchView) {
+    private void setSearchViewSuggestionSettings(SearchView searchView, List<String> query) {
         SimpleCursorAdapter adapter =
                 new SimpleCursorAdapter(this, R.layout.list_search, null,
                         new String[]{"route"}, new int[]{R.id.search_row_text},
@@ -69,7 +70,7 @@ public class SearchRoutes extends AppCompatActivity {
 
         QueryTextListener queryTextListener = new QueryTextListener(
                 new String[]{BaseColumns._ID, "route"},
-                this.getRoutes().toArray(new String[]{}),
+                this.getRoutes().stream().filter(route -> !query.contains(route)).toArray(String[]::new),
                 adapter);
 
         searchView.setSuggestionsAdapter(adapter);

@@ -18,6 +18,7 @@ import com.jesseoberstein.alert.models.CustomListItem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.jesseoberstein.alert.models.CustomListItem.buildRoutesListItem;
 
@@ -42,7 +43,9 @@ public class ViewRoutes extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         // Pass in routes to filter (user already has them in their routes list)
-        bundle.putString("query", "Green Line");
+        bundle.putStringArrayList("query", myRoutesAdapter.getItems().stream()
+                .map(CustomListItem::getPrimaryText)
+                .collect(Collectors.toCollection(ArrayList::new)));
 
         FloatingActionButton addRouteView = (FloatingActionButton) findViewById(R.id.add_route);
         addRouteView.setOnClickListener(
@@ -57,8 +60,7 @@ public class ViewRoutes extends AppCompatActivity {
             buildRoutesListItem(R.drawable.circle_blue, getString(R.string.blue_line), "1"),
             buildRoutesListItem(R.drawable.circle_green, getString(R.string.green_line), ""),
             buildRoutesListItem(R.drawable.circle_orange, getString(R.string.orange_line), ""),
-            buildRoutesListItem(R.drawable.circle_red, getString(R.string.red_line), "5"),
-            buildRoutesListItem(R.drawable.circle_silver, getString(R.string.silver_line), "")
+            buildRoutesListItem(R.drawable.circle_red, getString(R.string.red_line), "5")
         ));
     }
 }
