@@ -1,13 +1,12 @@
-package com.jesseoberstein.alert;
+package com.jesseoberstein.alert.listeners.inputs;
 
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.jesseoberstein.alert.utils.AlertUtils;
 
-import static android.view.inputmethod.EditorInfo.*;
+import static android.view.inputmethod.EditorInfo.IME_ACTION_NEXT;
 
 /**
  * A listener that will hide the keyboard on a "next" click if this is the last input.

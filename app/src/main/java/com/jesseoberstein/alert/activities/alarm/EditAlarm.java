@@ -7,11 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.TextView;
 
-import com.jesseoberstein.alert.ChangeNavOnPageSelected;
-import com.jesseoberstein.alert.DecrementViewOnClick;
-import com.jesseoberstein.alert.IncrementViewOnClick;
+import com.jesseoberstein.alert.listeners.alarm.ChangeNavOnPageSelected;
+import com.jesseoberstein.alert.listeners.alarm.DecrementViewOnClick;
+import com.jesseoberstein.alert.listeners.alarm.IncrementViewOnClick;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
 

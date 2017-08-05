@@ -1,26 +1,21 @@
-package com.jesseoberstein.alert;
+package com.jesseoberstein.alert.listeners;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.Checkable;
-import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
-import org.w3c.dom.Text;
+import com.jesseoberstein.alert.R;
 
 /**
  * A listener that will toggle a Checkable's color and text color on click.
  */
-public class ToggleOnClick implements OnCheckedChangeListener, OnItemClickListener {
+public class ToggleColorOnClick implements OnCheckedChangeListener, OnItemClickListener {
 
     private int activeColor;
     private int activeTextColor;
@@ -28,9 +23,9 @@ public class ToggleOnClick implements OnCheckedChangeListener, OnItemClickListen
     private int inactiveTextColor;
     private Context context;
 
-    public ToggleOnClick() { }
+    public ToggleColorOnClick() { }
 
-    public ToggleOnClick(int activeColor, int activeTextColor, Context context) {
+    public ToggleColorOnClick(int activeColor, int activeTextColor, Context context) {
         this.activeColor = activeColor;
         this.activeTextColor = activeTextColor;
         this.context = context;

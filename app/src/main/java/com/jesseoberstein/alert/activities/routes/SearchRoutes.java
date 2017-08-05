@@ -1,5 +1,6 @@
 package com.jesseoberstein.alert.activities.routes;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -12,15 +13,23 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.widget.CursorAdapter;
 
-import com.jesseoberstein.alert.QueryTextListener;
+import com.jesseoberstein.alert.interfaces.OnAddRouteDialogClick;
+import com.jesseoberstein.alert.listeners.routes.QueryRoutesListener;
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class SearchRoutes extends AppCompatActivity {
+import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
+
+public class SearchRoutes extends AppCompatActivity implements OnAddRouteDialogClick {
+    public static final int REQUEST_CODE = 1;
+    public static final String COLUMN_ROUTE = "route";
+    public static final String[] COLUMN_NAMES = new String[]{BaseColumns._ID, COLUMN_ROUTE};
+
     private List<String> getRoutes() {
         return Arrays.asList(
                 getString(R.string.blue_line),
@@ -43,10 +52,7 @@ public class SearchRoutes extends AppCompatActivity {
 
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
-        boolean isSearchIntent = Intent.ACTION_SEARCH.equals(intent.getAction());
-        List<String> query = isSearchIntent ?
-                intent.getStringArrayListExtra(SearchManager.QUERY) :
-                Collections.emptyList();
+        List<String> query = intent.getStringArrayListExtra(SearchManager.QUERY);
         setupSearchView(toolbar, query);
     }
 
@@ -68,12 +74,26 @@ public class SearchRoutes extends AppCompatActivity {
                         new String[]{"route"}, new int[]{R.id.search_row_text},
                         CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
-        QueryTextListener queryTextListener = new QueryTextListener(
-                new String[]{BaseColumns._ID, "route"},
-                this.getRoutes().stream().filter(route -> !query.contains(route)).toArray(String[]::new),
+        List<String> queryVal = Optional.ofNullable(query).orElse(Collections.emptyList());
+        QueryRoutesListener queryTextListener = new QueryRoutesListener(
+                this,
+                COLUMN_NAMES,
+                this.getRoutes().stream().filter(route -> !queryVal.contains(route)).toArray(String[]::new),
                 adapter);
 
         searchView.setSuggestionsAdapter(adapter);
         searchView.setOnQueryTextListener(queryTextListener);
+        searchView.setOnSuggestionListener(new SelectRouteOnClick(this, adapter, COLUMN_NAMES));
     }
+
+    @Override
+    public void onAddSelectedRoute(Bundle selectedRoute) {
+        Intent intent = new Intent();
+        intent.putExtra(SELECTED_ROUTE, selectedRoute);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    public void onCancelSelectedRoute(Bundle selectedRoute) {}
 }

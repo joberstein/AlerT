@@ -13,10 +13,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
-import com.jesseoberstein.alert.HideKeyboardOnItemClick;
-import com.jesseoberstein.alert.HideKeyboardOnNextAction;
+import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnItemClick;
+import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnNextAction;
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.ToggleOnClick;
+import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
 import com.jesseoberstein.alert.utils.AlertUtils;
 import com.jesseoberstein.alert.utils.Tints;
 import com.jesseoberstein.alert.validation.AbstractValidator;
@@ -140,7 +140,7 @@ public class CreateAlarm extends AppCompatActivity {
      * @param buttonTextColor The color to set the text of each direction button when active.
      */
     private void addDirectionButton(ViewGroup parent, String direction, int buttonColor, int buttonTextColor) {
-        ToggleOnClick toggleBtnColor = new ToggleOnClick(buttonColor, buttonTextColor, this);
+        ToggleColorOnClick toggleBtnColor = new ToggleColorOnClick(buttonColor, buttonTextColor, this);
         ToggleButton btn = (ToggleButton) LayoutInflater.from(this).inflate(R.layout.button_direction, parent, false);
         parent.addView(btn);
 

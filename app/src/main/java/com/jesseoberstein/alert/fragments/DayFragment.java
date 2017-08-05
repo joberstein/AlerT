@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.ToggleOnClick;
+import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
 import com.jesseoberstein.alert.models.CustomListItem;
 
@@ -32,7 +32,7 @@ public class DayFragment extends AlarmBaseFragment {
         CustomListAdapter weekdaysAdapter = new CustomListAdapter(view.getContext(), R.layout.list_weekdays, generateWeekdays(view));
         ListView listView = (ListView) view.findViewById(R.id.weekdays_list);
         listView.setAdapter(weekdaysAdapter);
-        listView.setOnItemClickListener(new ToggleOnClick());
+        listView.setOnItemClickListener(new ToggleColorOnClick());
 
         return view;
     }

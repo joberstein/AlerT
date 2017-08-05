@@ -10,8 +10,7 @@ import android.view.MenuInflater;
 import android.widget.ListView;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.StartActivityOnClick;
-import com.jesseoberstein.alert.StartActivityOnItemClick;
+import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.activities.alarm.CreateAlarm;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
@@ -39,7 +38,7 @@ public class ViewAlarms extends AppCompatActivity {
 
         CustomListAdapter myAlarmsAdapter = new CustomListAdapter(this, R.layout.list_alarms, generateAlarms());
         ListView listView = (ListView) findViewById(R.id.alarm_list);
-        listView.setOnItemClickListener(new StartActivityOnItemClick(this, EditAlarm.class));
+        listView.setOnItemClickListener(new StartActivityOnClick(this, EditAlarm.class));
         listView.setAdapter(myAlarmsAdapter);
 
         Bundle bundle = new Bundle();

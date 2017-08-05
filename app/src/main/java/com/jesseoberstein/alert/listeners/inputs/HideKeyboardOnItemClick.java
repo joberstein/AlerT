@@ -1,4 +1,4 @@
-package com.jesseoberstein.alert;
+package com.jesseoberstein.alert.listeners.inputs;
 
 import android.view.View;
 import android.widget.AdapterView;

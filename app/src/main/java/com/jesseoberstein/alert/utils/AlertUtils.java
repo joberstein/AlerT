@@ -2,6 +2,8 @@ package com.jesseoberstein.alert.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
+import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -81,5 +83,50 @@ public class AlertUtils {
         InputMethodManager imm = (InputMethodManager) view.getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    /**
+     * Add an extra to an existing bundle, agnostic of a given cursor item's type.
+     * @param bundle An existing bundle
+     * @param columnIndex The index of the column to get the name and type of.
+     * @param cursor The cursor, should be positioned at an element.
+     */
+    public static void putExtraByField(Bundle bundle, Cursor cursor, int columnIndex) {
+        String columnName = cursor.getColumnName(columnIndex);
+        switch (cursor.getType(columnIndex)) {
+            case 1:
+                bundle.putInt(columnName, cursor.getInt(columnIndex));
+                break;
+            case 2:
+                bundle.putFloat(columnName, cursor.getFloat(columnIndex));
+                break;
+            case 3:
+                bundle.putString(columnName, cursor.getString(columnIndex));
+                break;
+            case 4:
+                bundle.putByteArray(columnName, cursor.getBlob(columnIndex));
+                break;
+        }
+    }
+
+    /**
+     * Get the icon for the corresponding route; if a route cannot be found, default to a black circle.
+     * @param routeName The name of the route to get the icon for.
+     * @return A drawable representing a route icon.
+     */
+    public static int getRouteIcon(String routeName) {
+        int defaultIcon = R.drawable.circle_black;
+        try {
+            switch (RouteName.getEnum(routeName)) {
+                case BLUE:      return R.drawable.circle_blue;
+                case GREEN:     return R.drawable.circle_green;
+                case ORANGE:    return R.drawable.circle_orange;
+                case RED:       return R.drawable.circle_red;
+                case SILVER:    return R.drawable.circle_silver;
+                default:        return defaultIcon;
+            }
+        } catch (Throwable e) {
+            return defaultIcon;
+        }
     }
 }

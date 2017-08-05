@@ -37,6 +37,11 @@ public class CustomListAdapter extends ArrayAdapter<CustomListItem> {
         return new ArrayList<>(this.items);
     }
 
+    public void addItem(CustomListItem item) {
+        this.items.add(item);
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public int getViewTypeCount() {
         return NUM_VIEWTYPES;

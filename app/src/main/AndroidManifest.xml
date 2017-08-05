@@ -9,7 +9,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.routes.ViewRoutes">
+        <activity
+            android:name=".activities.routes.ViewRoutes"
+            android:launchMode="singleTop">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -38,6 +41,7 @@
 
         <activity
             android:name=".activities.alarms.ViewAlarms"
+            android:launchMode="singleTop"
             android:parentActivityName="com.jesseoberstein.alert.activities.routes.ViewRoutes">
 
             <intent-filter>

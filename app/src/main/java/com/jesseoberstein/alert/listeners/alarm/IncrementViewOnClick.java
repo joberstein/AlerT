@@ -1,4 +1,4 @@
-package com.jesseoberstein.alert;
+package com.jesseoberstein.alert.listeners.alarm;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;
