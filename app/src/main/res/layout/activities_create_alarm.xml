@@ -30,7 +30,7 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <include layout="input_focus_holder"/>
+    <include layout="@layout/input_focus_holder"/>
 
     <!-- Direction -->
     <LinearLayout
