@@ -4,6 +4,7 @@
     <string name="routes_search_page">Search Routes</string>
     <string name="create_alarm_page">New Alarm</string>
 
+    <string name="route_list_empty">No routes to display yet</string>
     <string-array name="route_list">
         <item>Blue Line</item>
         <item>Green Line</item>

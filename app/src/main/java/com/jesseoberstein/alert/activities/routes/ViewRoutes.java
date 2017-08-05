@@ -36,14 +36,13 @@ public class ViewRoutes extends AppCompatActivity {
             bar.setTitle(R.string.routes_page);
         });
 
-        if (myRoutesAdapter == null) {
-            myRoutesAdapter = new CustomListAdapter(this, R.layout.list_routes, new ArrayList<>());
-        }
-        AdapterView.OnItemClickListener goToAlarms = new StartActivityOnClick(this, ViewAlarms.class);
+        myRoutesAdapter = new CustomListAdapter(this, R.layout.list_routes, new ArrayList<>());
 
         ListView listView = (ListView) findViewById(R.id.route_list);
         listView.setAdapter(myRoutesAdapter);
-        listView.setOnItemClickListener(goToAlarms);
+        listView.setOnItemClickListener(new StartActivityOnClick(this, ViewAlarms.class));
+        listView.setEmptyView(findViewById(R.id.route_list_empty));
+
         updateAddRouteListener();
     }
 
