@@ -13,9 +13,9 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.widget.CursorAdapter;
 
-import com.jesseoberstein.alert.interfaces.OnAddRouteDialogClick;
-import com.jesseoberstein.alert.listeners.routes.QueryRoutesListener;
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.interfaces.OnRouteDialogClick;
+import com.jesseoberstein.alert.listeners.routes.QueryRoutesListener;
 import com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick;
 
 import java.util.Arrays;
@@ -25,7 +25,7 @@ import java.util.Optional;
 
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
 
-public class SearchRoutes extends AppCompatActivity implements OnAddRouteDialogClick {
+public class SearchRoutes extends AppCompatActivity implements OnRouteDialogClick {
     public static final int REQUEST_CODE = 1;
     public static final String COLUMN_ROUTE = "route";
     public static final String[] COLUMN_NAMES = new String[]{BaseColumns._ID, COLUMN_ROUTE};
@@ -93,6 +93,9 @@ public class SearchRoutes extends AppCompatActivity implements OnAddRouteDialogC
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
+
+    @Override
+    public void onRemoveSelectedRoute(Bundle selectedRoute) {}
 
     @Override
     public void onCancelSelectedRoute(Bundle selectedRoute) {}

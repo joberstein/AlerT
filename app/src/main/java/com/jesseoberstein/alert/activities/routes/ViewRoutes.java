@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
+import com.jesseoberstein.alert.interfaces.OnRouteDialogClick;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
+import com.jesseoberstein.alert.listeners.routes.RemoveRouteOnLongClick;
 import com.jesseoberstein.alert.models.CustomListItem;
 import com.jesseoberstein.alert.utils.AlertUtils;
 
@@ -24,7 +25,7 @@ import static com.jesseoberstein.alert.activities.routes.SearchRoutes.COLUMN_ROU
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
 import static com.jesseoberstein.alert.models.CustomListItem.buildRoutesListItem;
 
-public class ViewRoutes extends AppCompatActivity {
+public class ViewRoutes extends AppCompatActivity implements OnRouteDialogClick {
     private CustomListAdapter myRoutesAdapter;
 
     @Override
@@ -40,8 +41,9 @@ public class ViewRoutes extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.route_list);
         listView.setAdapter(myRoutesAdapter);
-        listView.setOnItemClickListener(new StartActivityOnClick(this, ViewAlarms.class));
         listView.setEmptyView(findViewById(R.id.route_list_empty));
+        listView.setOnItemClickListener(new StartActivityOnClick(this, ViewAlarms.class));
+        listView.setOnItemLongClickListener(new RemoveRouteOnLongClick(this));
 
         updateAddRouteListener();
     }
@@ -93,4 +95,17 @@ public class ViewRoutes extends AppCompatActivity {
                 .collect(Collectors.toCollection(ArrayList::new)));
         return bundle;
     }
+
+    @Override
+    public void onRemoveSelectedRoute(Bundle selectedRoute) {
+        String routeName = selectedRoute.getString(COLUMN_ROUTE);
+        myRoutesAdapter.removeItemByPrimaryText(routeName);
+        updateAddRouteListener();
+    }
+
+    @Override
+    public void onAddSelectedRoute(Bundle selectedRoute) {}
+
+    @Override
+    public void onCancelSelectedRoute(Bundle selectedRoute) {}
 }

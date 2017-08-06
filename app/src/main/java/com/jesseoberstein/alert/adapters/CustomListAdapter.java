@@ -42,6 +42,15 @@ public class CustomListAdapter extends ArrayAdapter<CustomListItem> {
         this.notifyDataSetChanged();
     }
 
+    public void removeItemByPrimaryText(String primaryText) {
+        ArrayList<CustomListItem> listItems = new ArrayList<>(this.items);
+        listItems.stream()
+                .filter(item -> item.getPrimaryText().equals(primaryText))
+                .findAny()
+                .ifPresent(itemToRemove -> this.items.remove(itemToRemove));
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public int getViewTypeCount() {
         return NUM_VIEWTYPES;

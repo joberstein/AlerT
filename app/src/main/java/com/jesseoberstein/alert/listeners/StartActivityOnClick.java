@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.jesseoberstein.alert.models.CustomListItem;
-
 import java.util.Optional;
 
 import static android.view.View.OnClickListener;
@@ -42,6 +40,7 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
         return this;
     }
 
+    @Override
     public void onClick(View view) {
         this.startActivity();
     }

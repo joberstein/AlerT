@@ -114,4 +114,35 @@ public class CustomListItem {
     public String getInfo() { return this.info; }
     public int getChevron() { return this.chevron; }
     public boolean isDivider() { return this.isDivider; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CustomListItem that = (CustomListItem) o;
+
+        if (icon != that.icon) return false;
+        if (chevron != that.chevron) return false;
+        if (isDivider != that.isDivider) return false;
+        if (primaryText != null ? !primaryText.equals(that.primaryText) : that.primaryText != null)
+            return false;
+        if (secondaryText != null ? !secondaryText.equals(that.secondaryText) : that.secondaryText != null)
+            return false;
+        if (tertiaryText != null ? !tertiaryText.equals(that.tertiaryText) : that.tertiaryText != null)
+            return false;
+        return info != null ? info.equals(that.info) : that.info == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = icon;
+        result = 31 * result + (primaryText != null ? primaryText.hashCode() : 0);
+        result = 31 * result + (secondaryText != null ? secondaryText.hashCode() : 0);
+        result = 31 * result + (tertiaryText != null ? tertiaryText.hashCode() : 0);
+        result = 31 * result + (info != null ? info.hashCode() : 0);
+        result = 31 * result + chevron;
+        result = 31 * result + (isDivider ? 1 : 0);
+        return result;
+    }
 }
