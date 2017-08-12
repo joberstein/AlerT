@@ -11,6 +11,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.CursorAdapter;
 
 import com.jesseoberstein.alert.R;
@@ -23,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static android.support.v7.appcompat.R.id;
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
 
 public class SearchRoutes extends AppCompatActivity implements OnRouteDialogClick {
@@ -84,6 +88,15 @@ public class SearchRoutes extends AppCompatActivity implements OnRouteDialogClic
         searchView.setSuggestionsAdapter(adapter);
         searchView.setOnQueryTextListener(queryTextListener);
         searchView.setOnSuggestionListener(new SelectRouteOnClick(this, adapter, COLUMN_NAMES));
+
+        AutoCompleteTextView suggestions = (AutoCompleteTextView) searchView.findViewById(id.search_src_text);
+        suggestions.setDropDownBackgroundResource(android.R.color.transparent);
+
+        View anchor = searchView.findViewById(suggestions.getDropDownAnchor());
+        Optional.ofNullable(anchor).ifPresent(dropdown -> {
+            dropdown.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) ->
+                suggestions.setDropDownWidth(ViewGroup.LayoutParams.MATCH_PARENT));
+        });
     }
 
     @Override

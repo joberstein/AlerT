@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:layout_alignParentStart="true"
-    android:layout_gravity="start"
-    android:gravity="start">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/list_text_padding_start">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_train"
+        android:paddingEnd="@dimen/list_text_padding_start"/>
 
     <TextView
         android:id="@+id/search_row_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="4sp"
-        android:textSize="20sp"
-        android:textColor="#000"
-        android:text="@string/green_line"/>
+        android:textSize="@dimen/single_line_list_font_size_primary"
+        android:textColor="@color/black"/>
 
-</RelativeLayout>
+</LinearLayout>
