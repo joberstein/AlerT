@@ -1,4 +1,4 @@
-package com.jesseoberstein.alert.utils;
+package com.jesseoberstein.mbta.utils;
 
 import java.util.Arrays;
 
