@@ -17,13 +17,12 @@ import com.jesseoberstein.alert.models.CustomListItem;
 import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.jesseoberstein.alert.activities.routes.SearchRoutes.COLUMN_ROUTE;
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
-import static com.jesseoberstein.alert.models.CustomListItem.buildRoutesListItem;
+import static com.jesseoberstein.alert.models.RouteListItem.buildRoutesListItem;
 
 public class ViewRoutes extends AppCompatActivity implements OnRouteDialogClick {
     private CustomListAdapter myRoutesAdapter;
@@ -59,16 +58,6 @@ public class ViewRoutes extends AppCompatActivity implements OnRouteDialogClick 
                 updateAddRouteListener();
             }
         }
-    }
-
-    // Static test route data.
-    private ArrayList<CustomListItem> generateMyRoutes(){
-        return new ArrayList<>(Arrays.asList(
-            buildRoutesListItem(R.drawable.circle_blue, getString(R.string.blue_line), "1"),
-            buildRoutesListItem(R.drawable.circle_green, getString(R.string.green_line), ""),
-            buildRoutesListItem(R.drawable.circle_orange, getString(R.string.orange_line), ""),
-            buildRoutesListItem(R.drawable.circle_red, getString(R.string.red_line), "5")
-        ));
     }
 
     /**

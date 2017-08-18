@@ -20,8 +20,8 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.interfaces.OnRouteDialogClick;
 import com.jesseoberstein.alert.listeners.routes.QueryRoutesListener;
 import com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick;
+import com.jesseoberstein.alert.providers.RoutesProvider;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -33,16 +33,7 @@ public class SearchRoutes extends AppCompatActivity implements OnRouteDialogClic
     public static final int REQUEST_CODE = 1;
     public static final String COLUMN_ROUTE = "route";
     public static final String[] COLUMN_NAMES = new String[]{BaseColumns._ID, COLUMN_ROUTE};
-
-    private List<String> getRoutes() {
-        return Arrays.asList(
-                getString(R.string.blue_line),
-                getString(R.string.green_line),
-                getString(R.string.orange_line),
-                getString(R.string.red_line),
-                getString(R.string.silver_line)
-        );
-    };
+    private RoutesProvider routesProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +44,8 @@ public class SearchRoutes extends AppCompatActivity implements OnRouteDialogClic
         setSupportActionBar(toolbar);
         Optional<ActionBar> supportActionBar = Optional.ofNullable(getSupportActionBar());
         supportActionBar.ifPresent(bar -> bar.setDisplayHomeAsUpEnabled(true));
+
+        routesProvider = RoutesProvider.init(getAssets());
 
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
@@ -82,7 +75,9 @@ public class SearchRoutes extends AppCompatActivity implements OnRouteDialogClic
         QueryRoutesListener queryTextListener = new QueryRoutesListener(
                 this,
                 COLUMN_NAMES,
-                this.getRoutes().stream().filter(route -> !queryVal.contains(route)).toArray(String[]::new),
+                routesProvider.getRouteNames().stream()
+                        .filter(route -> !queryVal.contains(route))
+                        .toArray(String[]::new),
                 adapter);
 
         searchView.setSuggestionsAdapter(adapter);

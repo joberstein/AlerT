@@ -11,32 +11,13 @@ public class CustomListItem {
     private int chevron;           // R.drawable
     private boolean isDivider;
 
-    private CustomListItem() {
+    CustomListItem() {
         this.isDivider = false;
     }
 
     /************************
      * Builders
      ************************/
-
-    /**
-     * Build a new route list item.
-     */
-    public static CustomListItem buildRoutesListItem(int icon, String name, String alerts) {
-        return buildRoutesListItem(new CustomListItem(), icon, name, alerts);
-    }
-
-    /**
-     * Build a route list item with the given list item.
-     */
-    public static CustomListItem buildRoutesListItem(CustomListItem item, int icon, String name, String alerts) {
-        String info = (!alerts.isEmpty() && Integer.parseInt(alerts) > 0) ? alerts : null;
-        return item
-                .withIcon(icon)
-                .withPrimaryText(name)
-                .withInfo(info)
-                .withChevron(R.drawable.ic_chevron_right);
-    }
 
     /**
      * Build a new alarm list item.
@@ -69,37 +50,37 @@ public class CustomListItem {
         return new CustomListItem().asDivider();
     }
 
-    private CustomListItem withIcon(int icon) {
+    CustomListItem withIcon(int icon) {
         this.icon = icon;
         return this;
     }
 
-    private CustomListItem withPrimaryText(String primaryText) {
+    CustomListItem withPrimaryText(String primaryText) {
         this.primaryText = primaryText;
         return this;
     }
 
-    private CustomListItem withSecondaryText(String secondaryText) {
+    CustomListItem withSecondaryText(String secondaryText) {
         this.secondaryText = secondaryText;
         return this;
     }
 
-    private CustomListItem withTertiaryText(String tertiaryText) {
+    CustomListItem withTertiaryText(String tertiaryText) {
         this.tertiaryText = tertiaryText;
         return this;
     }
 
-    private CustomListItem withInfo(String info) {
+    CustomListItem withInfo(String info) {
         this.info = info;
         return this;
     }
 
-    private CustomListItem withChevron(int chevron) {
+    CustomListItem withChevron(int chevron) {
         this.chevron = chevron;
         return this;
     }
 
-    private CustomListItem asDivider() {
+    CustomListItem asDivider() {
         this.isDivider = true;
         return this;
     }
