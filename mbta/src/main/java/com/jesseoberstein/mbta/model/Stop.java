@@ -24,18 +24,20 @@ public class Stop {
     @JsonProperty("stop_lon")
     private double stopLongitude;
 
-    @JsonProperty("is_endpoint")
-    private boolean isEndpoint;
-
     @JsonProperty("real_stop_name")
     private String realStopName;
 
-    public Stop() {
-        this.isEndpoint = false;
-    }
+    @JsonProperty("stop_sequence")
+    private int stopSequence;
 
-    public String getRealStopName() {
-        return this.parentStationName.isEmpty() ? this.stopName : this.parentStationName;
+    @JsonProperty("sch_arr_dt")
+    private long scheduledArrivalTime;
+
+    @JsonProperty("sch_dep_dt")
+    private long scheduledDepartureTime;
+
+    public Stop() {
+        this.parentStationName = "";
     }
 
     public int getStopOrder() {
@@ -60,9 +62,7 @@ public class Stop {
 
     public void setStopName(String stopName) {
         this.stopName = stopName;
-        if (this.parentStationName != null) {
-            this.realStopName = getRealStopName();
-        }
+        this.realStopName = stopName;
     }
 
     public String getParentStation() {
@@ -79,8 +79,8 @@ public class Stop {
 
     public void setParentStationName(String parentStationName) {
         this.parentStationName = parentStationName;
-        if (this.stopName != null) {
-            this.realStopName = getRealStopName();
+        if (!parentStationName.isEmpty()) {
+            this.realStopName = parentStationName;
         }
     }
 
@@ -100,25 +100,52 @@ public class Stop {
         this.stopLongitude = stopLongitude;
     }
 
-    public boolean isEndpoint() {
-        return this.isEndpoint;
+    public String getRealStopName() {
+        return this.realStopName;
     }
 
-    public void setIsEndpoint(boolean isEndpoint) {
-        this.isEndpoint = isEndpoint;
+    public void setRealStopName(String realStopName) {
+        this.realStopName = realStopName;
+    }
+
+    public int getStopSequence() {
+        return stopSequence;
+    }
+
+    public void setStopSequence(int stopSequence) {
+        this.stopSequence = stopSequence;
+    }
+
+    public long getScheduledArrivalTime() {
+        return scheduledArrivalTime;
+    }
+
+    public void setScheduledArrivalTime(long scheduledArrivalTime) {
+        this.scheduledArrivalTime = scheduledArrivalTime;
+    }
+
+    public long getScheduledDepartureTime() {
+        return scheduledDepartureTime;
+    }
+
+    public void setScheduledDepartureTime(long scheduledDepartureTime) {
+        this.scheduledDepartureTime = scheduledDepartureTime;
     }
 
     @Override
     public String toString() {
         return "Stop{" + "\n" +
                 "stopOrder=" + stopOrder + "\n" +
-                "stopId='" + stopId + "\n" +
-                "stopName='" + stopName + "\n" +
+                "stopId=" + stopId + "\n" +
+                "stopName=" + stopName + "\n" +
                 "parentStation='" + parentStation + "\n" +
-                "parentStationName='" + parentStationName + "\n" +
+                "parentStationName=" + parentStationName + "\n" +
+                "realStopName=" + realStopName + "\n" +
                 "stopLatitude=" + stopLatitude + "\n" +
                 "stopLongitude=" + stopLongitude + "\n" +
-                "isEndpoint=" + isEndpoint + "\n" +
+                "stop_sequence=" + stopSequence + "\n" +
+                "scheduledArrivalTime=" + scheduledArrivalTime + "\n" +
+                "scheduledDepartureTime=" + scheduledDepartureTime + "\n" +
                 "}\n";
     }
 }

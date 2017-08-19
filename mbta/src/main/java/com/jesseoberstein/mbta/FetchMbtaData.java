@@ -3,45 +3,48 @@ package com.jesseoberstein.mbta;
 import com.jesseoberstein.mbta.model.Directions;
 import com.jesseoberstein.mbta.model.Route;
 import com.jesseoberstein.mbta.model.Routes;
-import com.jesseoberstein.mbta.model.Stop;
 import com.jesseoberstein.mbta.utils.ResponseParser;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.jesseoberstein.mbta.api.Endpoints.fetchRoutes;
+import static com.jesseoberstein.mbta.api.Endpoints.fetchSchedulesByRoutes;
 import static com.jesseoberstein.mbta.api.Endpoints.fetchStopsByRoute;
 
 public class FetchMbtaData {
 
     public static void main(String[] args) {
-        List<Optional<Directions>> optDirections = getAllRouteDirections();
-        optDirections.forEach(
-                optDirection -> optDirection.ifPresent(
-                        directions -> directions.getDirections().forEach(
-                                direction -> setEndpointsForRoute(direction.getStops()))));
+        List<Route> routes = getRoutes();
+        List<Optional<Directions>> optDirections = getAllRouteDirections(routes);
+        List<Optional<Routes>> optSchedules = getAllRouteSchedules(routes);
 
-        List<Directions> directions = optDirections.stream()
-                .map(opt -> opt.orElse(null))
-                .collect(Collectors.toList());
-
+        List<Directions> directions = getElementsFromOptionals(optDirections);
         ResponseParser.write(directions, "stopsByRoute");
+
+        List<Routes> schedules = getElementsFromOptionals(optSchedules);
+        ResponseParser.write(schedules, "scheduleByRoutes");
     }
 
-    private static void setEndpointsForRoute(List<Stop> routeStops) {
-        if (!routeStops.isEmpty()) {
-            routeStops.get(0).setIsEndpoint(true);
-        }
-        if (routeStops.size() > 1) {
-            routeStops.get(routeStops.size() - 1).setIsEndpoint(true);
-        }
+    private static <T> List<T> getElementsFromOptionals(List<Optional<T>> list) {
+        return list.stream()
+                .map(opt -> opt.orElse(null))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
-    private static List<Optional<Directions>> getAllRouteDirections() {
-        return getRoutes().stream()
+    private static List<Optional<Directions>> getAllRouteDirections(List<Route> routes) {
+        return routes.stream()
                 .map(FetchMbtaData::getRouteDirections)
+                .collect(Collectors.toList());
+    }
+
+    private static List<Optional<Routes>> getAllRouteSchedules(List<Route> routes) {
+        return routes.stream()
+                .map(FetchMbtaData::getRouteEndpoints)
                 .collect(Collectors.toList());
     }
 
@@ -59,5 +62,10 @@ public class FetchMbtaData {
         Optional<Directions> optDirections = fetchStopsByRoute(route.getRouteId());
         optDirections.ifPresent(directions -> directions.setRoute(route));
         return optDirections;
+    }
+
+    private static Optional<Routes> getRouteEndpoints(Route route) {
+        List<String> routes = Collections.singletonList(route.getRouteId());
+        return fetchSchedulesByRoutes(routes);
     }
 }

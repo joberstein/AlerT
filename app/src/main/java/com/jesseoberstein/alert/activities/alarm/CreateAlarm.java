@@ -17,6 +17,7 @@ import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnItemClick;
 import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnNextAction;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
+import com.jesseoberstein.alert.providers.EndpointsProvider;
 import com.jesseoberstein.alert.providers.StationsProvider;
 import com.jesseoberstein.alert.utils.AlertUtils;
 import com.jesseoberstein.alert.utils.Tints;
@@ -24,8 +25,6 @@ import com.jesseoberstein.alert.validation.AbstractValidator;
 import com.jesseoberstein.alert.validation.AutoCompleteValidator;
 import com.jesseoberstein.alert.validation.TextValidator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -40,6 +39,7 @@ public class CreateAlarm extends AppCompatActivity {
     private static final int NICKNAME_KEY = 0;
     private static final int STATION_KEY = 1;
     private StationsProvider stationsProvider;
+    private EndpointsProvider endpointsProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class CreateAlarm extends AppCompatActivity {
         });
 
         stationsProvider = StationsProvider.init(getAssets());
+        endpointsProvider = EndpointsProvider.init(getAssets());
 
         // Get the activity views.
         EditText nicknameText = (EditText) findViewById(R.id.nickname);
@@ -86,7 +87,7 @@ public class CreateAlarm extends AppCompatActivity {
      */
     private void setUpAutoComplete(AutoCompleteTextView autoComplete, Button submit) {
         String error = "Not a valid station.";
-        String[] stations = stationsProvider.getStopsForRoute("Red Line").toArray(new String[0]);
+        String[] stations = stationsProvider.getStopNamesForRoute("Green Line").toArray(new String[0]);
         Predicate<String> isValidStation = isValidStation(stations);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, stations);
         TextValidator textValidator = new TextValidator(autoComplete, isValidStation, error, submit, STATION_KEY);
@@ -108,7 +109,7 @@ public class CreateAlarm extends AppCompatActivity {
      * @param buttonTextColor The text color of an active direction button.
      */
     private void setUpDirectionButtons(LinearLayout directionsView, int buttonColor, int buttonTextColor) {
-        List<String> directions = stationsProvider.getEndpointsForRoute("Orange Line");
+        List<String> directions = endpointsProvider.getEndpointsForRoute("Orange Line");
         directions.add(null);
         int size = directions.size();
         int evenSize = isEven(size) ? size : size - 1;

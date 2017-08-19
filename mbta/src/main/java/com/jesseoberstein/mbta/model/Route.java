@@ -3,6 +3,8 @@ package com.jesseoberstein.mbta.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jesseoberstein.mbta.utils.RouteName;
 
+import java.util.List;
+
 public class Route {
     @JsonProperty("route_id")
     private String routeId;
@@ -15,6 +17,9 @@ public class Route {
 
     @JsonProperty("parent_route")
     private String parentRoute;
+
+    @JsonProperty("direction")
+    private List<Direction> directions;
 
     public Route() {}
 
@@ -35,7 +40,7 @@ public class Route {
         setParentRoute();
     }
 
-    public boolean getRouteHide() {
+    public boolean isRouteHide() {
         return routeHide;
     }
 
@@ -60,6 +65,18 @@ public class Route {
         return this.parentRoute;
     }
 
+    public void setParentRoute(String parentRoute) {
+        this.parentRoute = parentRoute;
+    }
+
+    public List<Direction> getDirections() {
+        return directions;
+    }
+
+    public void setDirections(List<Direction> directions) {
+        this.directions = directions;
+    }
+
     @Override
     public String toString() {
         return "\n\t\t\t\t" +
@@ -67,6 +84,7 @@ public class Route {
                 "routeId: " + routeId + "\n\t\t\t\t\t" +
                 "routeName: " + routeName + "\n\t\t\t\t\t" +
                 "routeHide: " + routeHide + "\n\t\t\t\t" +
+                "directions: " + directions + "\n\t\t\t\t" +
                 "}";
     }
 }

@@ -2,6 +2,7 @@ package com.jesseoberstein.mbta.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Direction {
@@ -14,7 +15,13 @@ public class Direction {
     @JsonProperty("stop")
     private List<Stop> stops;
 
-    public Direction() {}
+    @JsonProperty("trip")
+    private List<Trip> trips;
+
+    public Direction() {
+        this.stops = Collections.emptyList();
+        this.trips = Collections.emptyList();
+    }
 
     public int getDirectionId() {
         return directionId;
@@ -40,12 +47,21 @@ public class Direction {
         this.stops = stops;
     }
 
+    public List<Trip> getTrips() {
+        return trips;
+    }
+
+    public void setTrips(List<Trip> trips) {
+        this.trips = trips;
+    }
+
     @Override
     public String toString() {
-        return "Direction{" + "\n" +
-                "directionId=" + directionId + "\n" +
-                "directionName='" + directionName + "\n" +
-                "stops=" + stops + "\n" +
+        return "{" + "\n\t" +
+                "directionId=" + directionId + "\n\t" +
+                "directionName='" + directionName + "\n\t" +
+                "stops=" + stops + "\n\t" +
+                "trips=" + trips + "\n" +
                 "}\n";
     }
 }

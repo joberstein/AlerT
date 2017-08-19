@@ -26,9 +26,9 @@ public class StationsProvider {
     }
 
     /**
-     * Initialize the RoutesProvider if it doesn't already exist.
+     * Initialize the StationsProvider if it doesn't already exist.
      * @param assetManager The android's context asset manager.
-     * @return RoutesProvider
+     * @return StationsProvider
      */
     public static StationsProvider init(AssetManager assetManager) {
         if (null == instance) {
@@ -39,16 +39,41 @@ public class StationsProvider {
 
 
     /**
-     * Get all of the stops for a given route.
+     * Get all of the stop names for a given route.
      * @param parentRoute The parent route to get the stops for.
      * @return A list of stop names in the given route.
      */
-    public List<String> getStopsForRoute(String parentRoute) {
+    public List<String> getStopNamesForRoute(String parentRoute) {
+        return getStopsForRoute(parentRoute).stream()
+                .map(Stop::getRealStopName)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Get all of the stops for a given route.
+     * @param parentRoute The parent route to get the stops for.
+     * @return A list of stop in the given route (contains inbound and outbound stops).
+     */
+    public List<Stop> getStopsForRoute(String parentRoute) {
         return this.directions.stream()
                 .filter(dirs -> dirs.getRoute().getParentRoute().equals(parentRoute))
                 .flatMap(dirs -> dirs.getDirections().stream())
                 .flatMap(direction -> direction.getStops().stream())
-                .map(Stop::getRealStopName)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Get the stop ids for the given stop given a parent route.  This is useful because for some
+     * reason, the same stop has a different inbound and outbound stop id.
+     * @param stopName The name of the stop to get the ids for.
+     * @param parentRoute The name of the parent route.
+     * @return A list of stop ids.
+     */
+    public List<String> getStopIdsForStop(String stopName, String parentRoute) {
+        return getStopsForRoute(parentRoute).stream()
+                .filter(stop -> stop.getRealStopName().equals(stopName))
+                .map(Stop::getStopId)
                 .distinct()
                 .collect(Collectors.toList());
     }
@@ -70,50 +95,6 @@ public class StationsProvider {
                                 .collect(Collectors.toList())
                                 .isEmpty())
                 .map(directions -> directions.getRoute().getRouteName())
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Get the endpoints relative to a given stop, given the parent route.
-     * May be deprecated in favor of having a DirectionsProvider.
-     */
-    public List<String> getEndpointsForStop(String stopName, String parentRoute) {
-        return getEndpointsForSpecificRoutes(getRouteNamesForStop(stopName, parentRoute));
-    }
-
-    /**
-     * Get all of the endpoints for a given parent route.
-     * May be deprecated in favor of having a DirectionsProvider.
-     */
-    public List<String> getEndpointsForRoute(String parentRoute) {
-        List<Directions> filteredDirections = this.directions.stream()
-                .filter(dirs -> dirs.getRoute().getParentRoute().equals(parentRoute))
-                .collect(Collectors.toList());
-        return getEndpoints(filteredDirections);
-    }
-
-    /**
-     * Get the endpoints for the given specific (MBTA API) route.
-     * May be deprecated in favor of having a DirectionsProvider.
-     */
-    private List<String> getEndpointsForSpecificRoutes(List<String> routeNames) {
-        List<Directions> filteredDirections = this.directions.stream()
-                .filter(dirs -> routeNames.contains(dirs.getRoute().getRouteName()))
-                .collect(Collectors.toList());
-        return getEndpoints(filteredDirections);
-    }
-
-    /**
-     * Get all of the endpoints for a given a list of route directions.
-     * May be deprecated in favor of having a DirectionsProvider.
-     */
-    private List<String> getEndpoints(List<Directions> directions) {
-        return directions.stream()
-                .flatMap(dirs -> dirs.getDirections().stream())
-                .flatMap(direction -> direction.getStops().stream())
-                .filter(Stop::getIsEndpoint)
-                .map(Stop::getRealStopName)
-                .distinct()
                 .collect(Collectors.toList());
     }
 
