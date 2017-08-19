@@ -20,6 +20,14 @@ allprojects {
     }
 }
 
+task updateMBTAJar(type: Copy) {
+    destinationDir = file("app")
+
+    into("libs") {
+        from("mbta/build/libs/mbta.jar")
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

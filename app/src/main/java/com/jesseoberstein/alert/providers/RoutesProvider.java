@@ -49,7 +49,7 @@ public class RoutesProvider {
      */
     public static RoutesProvider init(AssetManager assetManager) {
         if (null == instance) {
-            return new RoutesProvider(assetManager);
+            instance = new RoutesProvider(assetManager);
         }
         return instance;
     }

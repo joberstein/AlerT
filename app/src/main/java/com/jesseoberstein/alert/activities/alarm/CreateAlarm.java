@@ -17,6 +17,7 @@ import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnItemClick;
 import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnNextAction;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
+import com.jesseoberstein.alert.providers.StationsProvider;
 import com.jesseoberstein.alert.utils.AlertUtils;
 import com.jesseoberstein.alert.utils.Tints;
 import com.jesseoberstein.alert.validation.AbstractValidator;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import static com.jesseoberstein.alert.utils.AlertUtils.isEven;
@@ -37,14 +39,7 @@ public class CreateAlarm extends AppCompatActivity {
     private static final int THEME_COLOR = R.color.orange_line;
     private static final int NICKNAME_KEY = 0;
     private static final int STATION_KEY = 1;
-    private static final String[] STATIONS = new String[] {
-            "Malden Center", "Wellington", "Assembly", "Sullivan Square",
-            "North Station", "Haymarket", "State", "Downtown Crossing", "Chinatown",
-            "Tufts Medical Center", "Back Bay", "Massachusetts Avenue", "Ruggles",
-            "Roxbury Crossing", "Jackson Square", "Stonybrook", "Green Street"
-    };
-
-    private List<String> directions = new ArrayList<>(Arrays.asList("Oak Grove", "Forest Hills"));
+    private StationsProvider stationsProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +51,8 @@ public class CreateAlarm extends AppCompatActivity {
             bar.setBackgroundDrawable(getDrawable(THEME_COLOR));
             bar.setDisplayHomeAsUpEnabled(true);
         });
+
+        stationsProvider = StationsProvider.init(getAssets());
 
         // Get the activity views.
         EditText nicknameText = (EditText) findViewById(R.id.nickname);
@@ -89,9 +86,11 @@ public class CreateAlarm extends AppCompatActivity {
      */
     private void setUpAutoComplete(AutoCompleteTextView autoComplete, Button submit) {
         String error = "Not a valid station.";
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, STATIONS);
-        TextValidator textValidator = new TextValidator(autoComplete, isValidStation(STATIONS), error, submit, STATION_KEY);
-        AutoCompleteValidator validator = new AutoCompleteValidator(autoComplete, isValidStation(STATIONS), error, submit, STATION_KEY);
+        String[] stations = stationsProvider.getStopsForRoute("Red Line").toArray(new String[0]);
+        Predicate<String> isValidStation = isValidStation(stations);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, stations);
+        TextValidator textValidator = new TextValidator(autoComplete, isValidStation, error, submit, STATION_KEY);
+        AutoCompleteValidator validator = new AutoCompleteValidator(autoComplete, isValidStation, error, submit, STATION_KEY);
         View focusHolder = findViewById(R.id.hiddenFocus);
 
         autoComplete.setAdapter(adapter);
@@ -109,6 +108,7 @@ public class CreateAlarm extends AppCompatActivity {
      * @param buttonTextColor The text color of an active direction button.
      */
     private void setUpDirectionButtons(LinearLayout directionsView, int buttonColor, int buttonTextColor) {
+        List<String> directions = stationsProvider.getEndpointsForRoute("Orange Line");
         directions.add(null);
         int size = directions.size();
         int evenSize = isEven(size) ? size : size - 1;

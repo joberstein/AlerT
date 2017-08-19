@@ -13,6 +13,7 @@ public class Route {
     @JsonProperty("route_hide")
     private boolean routeHide;
 
+    @JsonProperty("parent_route")
     private String parentRoute;
 
     public Route() {}

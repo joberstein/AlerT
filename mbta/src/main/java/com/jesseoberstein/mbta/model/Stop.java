@@ -24,14 +24,18 @@ public class Stop {
     @JsonProperty("stop_lon")
     private double stopLongitude;
 
+    @JsonProperty("is_endpoint")
     private boolean isEndpoint;
+
+    @JsonProperty("real_stop_name")
+    private String realStopName;
 
     public Stop() {
         this.isEndpoint = false;
     }
 
     public String getRealStopName() {
-        return (this.getParentStationName().isEmpty()) ? this.getStopName() : this.getParentStationName();
+        return this.parentStationName.isEmpty() ? this.stopName : this.parentStationName;
     }
 
     public int getStopOrder() {
@@ -56,6 +60,9 @@ public class Stop {
 
     public void setStopName(String stopName) {
         this.stopName = stopName;
+        if (this.parentStationName != null) {
+            this.realStopName = getRealStopName();
+        }
     }
 
     public String getParentStation() {
@@ -72,6 +79,9 @@ public class Stop {
 
     public void setParentStationName(String parentStationName) {
         this.parentStationName = parentStationName;
+        if (this.stopName != null) {
+            this.realStopName = getRealStopName();
+        }
     }
 
     public double getStopLatitude() {
