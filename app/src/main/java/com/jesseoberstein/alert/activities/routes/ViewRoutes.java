@@ -7,13 +7,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
+import com.jesseoberstein.alert.data.UserRouteDao;
 import com.jesseoberstein.alert.interfaces.OnRouteDialogClick;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.listeners.routes.RemoveRouteOnLongClick;
 import com.jesseoberstein.alert.models.CustomListItem;
+import com.jesseoberstein.alert.models.RouteListItem;
+import com.jesseoberstein.alert.models.UserRoute;
 import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.ArrayList;
@@ -26,17 +30,21 @@ import static com.jesseoberstein.alert.models.RouteListItem.buildRoutesListItem;
 
 public class ViewRoutes extends AppCompatActivity implements OnRouteDialogClick {
     private CustomListAdapter myRoutesAdapter;
+    RuntimeExceptionDao<UserRoute, String> userRouteDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activities_view_routes);
-        Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
-        supportActionBarOptional.ifPresent(bar -> {
-            bar.setTitle(R.string.routes_page);
-        });
+        UserRouteDao userRouteDao = new UserRouteDao(getApplicationContext());
+        this.userRouteDao = userRouteDao.getDao();
+        ArrayList<CustomListItem> userRoutes = this.userRouteDao.queryForAll().stream()
+                .map(RouteListItem::buildRoutesListItem)
+                .collect(Collectors.toCollection(ArrayList::new));
 
-        myRoutesAdapter = new CustomListAdapter(this, R.layout.list_routes, new ArrayList<>());
+        setContentView(R.layout.activities_view_routes);
+        Optional<ActionBar> actionBarOptional = Optional.ofNullable(getSupportActionBar());
+        actionBarOptional.ifPresent(bar -> bar.setTitle(R.string.routes_page));
+        myRoutesAdapter = new CustomListAdapter(this, R.layout.list_routes, userRoutes);
 
         ListView listView = (ListView) findViewById(R.id.route_list);
         listView.setAdapter(myRoutesAdapter);
@@ -54,7 +62,9 @@ public class ViewRoutes extends AppCompatActivity implements OnRouteDialogClick 
                 Bundle selected = data.getBundleExtra(SELECTED_ROUTE);
                 String routeName = selected.getString(COLUMN_ROUTE);
                 int icon = AlertUtils.getRouteIcon(routeName);
-                myRoutesAdapter.addItem(buildRoutesListItem(icon, routeName, ""));
+                UserRoute userRoute = new UserRoute(routeName, icon);
+                userRouteDao.create(userRoute);
+                myRoutesAdapter.addItem(buildRoutesListItem(userRoute));
                 updateAddRouteListener();
             }
         }
@@ -88,6 +98,7 @@ public class ViewRoutes extends AppCompatActivity implements OnRouteDialogClick 
     @Override
     public void onRemoveSelectedRoute(Bundle selectedRoute) {
         String routeName = selectedRoute.getString(COLUMN_ROUTE);
+        userRouteDao.deleteById(routeName);
         myRoutesAdapter.removeItemByPrimaryText(routeName);
         updateAddRouteListener();
     }

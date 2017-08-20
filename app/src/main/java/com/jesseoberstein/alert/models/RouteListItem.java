@@ -8,13 +8,15 @@ import com.jesseoberstein.alert.R;
 public class RouteListItem extends CustomListItem {
 
     /**
-     * Build a route list item with the given list item.
+     * Build a route list item with the given user route.
      */
-    public static CustomListItem buildRoutesListItem(int icon, String name, String alerts) {
+    public static CustomListItem buildRoutesListItem(UserRoute userRoute) {
+        String alerts = userRoute.getAlerts();
         String info = (!alerts.isEmpty() && Integer.parseInt(alerts) > 0) ? alerts : null;
+
         return new CustomListItem()
-                .withPrimaryText(name)
-                .withIcon(icon)
+                .withPrimaryText(userRoute.getRouteName())
+                .withIcon(userRoute.getIcon())
                 .withInfo(info)
                 .withChevron(R.drawable.ic_chevron_right);
     }
