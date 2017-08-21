@@ -8,30 +8,18 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.jesseoberstein.alert.R;
-import com.jesseoberstein.mbta.utils.RouteName;
+import com.jesseoberstein.alert.models.UserRoute;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.jesseoberstein.alert.utils.ListProp.CHEVRON;
-import static com.jesseoberstein.alert.utils.ListProp.ICON;
-import static com.jesseoberstein.alert.utils.ListProp.INFO;
-import static com.jesseoberstein.alert.utils.ListProp.PRIMARY_TEXT;
-import static com.jesseoberstein.alert.utils.ListProp.SECONDARY_TEXT;
-import static com.jesseoberstein.alert.utils.ListProp.TERTIARY_TEXT;
+import static com.jesseoberstein.alert.utils.Constants.*;
+import static com.jesseoberstein.alert.utils.Constants.DEFAULT_ROUTE;
+import static com.jesseoberstein.alert.utils.Constants.USER_ROUTES;
 
 public class AlertUtils {
-
-    public static List<ListProp> CUSTOM_LIST_PROPS = Arrays.asList(
-            ICON, PRIMARY_TEXT, SECONDARY_TEXT, TERTIARY_TEXT, INFO, CHEVRON);
-
-    public static List<Integer> CUSTOM_LIST_IDS = Arrays.asList(
-            R.id.custom_item_icon, R.id.custom_item_primary_text, R.id.custom_item_secondary_text,
-            R.id.custom_item_tertiary_text, R.id.custom_item_info, R.id.custom_item_chevron);
 
     /**
      * Create a map with two given lists.  The two lists should be equal in size.
@@ -115,19 +103,16 @@ public class AlertUtils {
      * @param routeName The name of the route to get the icon for.
      * @return A drawable representing a route icon.
      */
-    public static int getRouteIcon(String routeName) {
-        int defaultIcon = R.drawable.circle_black;
-        try {
-            switch (RouteName.getEnum(routeName)) {
-                case BLUE:      return R.drawable.circle_blue;
-                case GREEN:     return R.drawable.circle_green;
-                case ORANGE:    return R.drawable.circle_orange;
-                case RED:       return R.drawable.circle_red;
-                case SILVER:    return R.drawable.circle_silver;
-                default:        return defaultIcon;
-            }
-        } catch (Throwable e) {
-            return defaultIcon;
+    public static int getRouteResource(String routeName, String resourceType) {
+        UserRoute userRoute = USER_ROUTES.stream()
+                .filter(route -> route.getRouteName().equals(routeName))
+                .findFirst().orElseGet(() -> DEFAULT_ROUTE);
+
+        switch (resourceType) {
+            case ICON:    return userRoute.getIcon();
+            case COLOR:   return userRoute.getColor();
+            case THEME:   return userRoute.getTheme();
+            default:        return -1;
         }
     }
 }

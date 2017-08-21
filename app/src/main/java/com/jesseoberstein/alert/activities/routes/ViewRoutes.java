@@ -18,7 +18,6 @@ import com.jesseoberstein.alert.listeners.routes.RemoveRouteOnLongClick;
 import com.jesseoberstein.alert.models.CustomListItem;
 import com.jesseoberstein.alert.models.RouteListItem;
 import com.jesseoberstein.alert.models.UserRoute;
-import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -61,8 +60,7 @@ public class ViewRoutes extends AppCompatActivity implements OnRouteDialogClick 
             if (RESULT_OK == resultCode) {
                 Bundle selected = data.getBundleExtra(SELECTED_ROUTE);
                 String routeName = selected.getString(COLUMN_ROUTE);
-                int icon = AlertUtils.getRouteIcon(routeName);
-                UserRoute userRoute = new UserRoute(routeName, icon);
+                UserRoute userRoute = new UserRoute(routeName);
                 userRouteDao.create(userRoute);
                 myRoutesAdapter.addItem(buildRoutesListItem(userRoute));
                 updateAddRouteListener();

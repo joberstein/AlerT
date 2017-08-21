@@ -8,27 +8,34 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
 import com.jesseoberstein.alert.listeners.alarm.ChangeNavOnPageSelected;
 import com.jesseoberstein.alert.listeners.alarm.DecrementViewOnClick;
 import com.jesseoberstein.alert.listeners.alarm.IncrementViewOnClick;
-import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
 
 import java.util.Optional;
 
+import static com.jesseoberstein.alert.utils.Constants.COLOR;
+import static com.jesseoberstein.alert.utils.Constants.THEME;
+
 public class EditAlarm extends AppCompatActivity {
-    private static final int THEME_COLOR = R.color.orange_line;
+    private static int themeColor;
     private FragmentPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle selectedBundle = getIntent().getExtras();
+        themeColor = selectedBundle.getInt(COLOR);
+        setTheme(selectedBundle.getInt(THEME));
+
         setContentView(R.layout.activities_edit_alarm);
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
             bar.setTitle("North Station");
             bar.setSubtitle("Forest Hills");
-            bar.setBackgroundDrawable(getDrawable(THEME_COLOR));
+            bar.setBackgroundDrawable(getDrawable(themeColor));
             bar.setDisplayHomeAsUpEnabled(true);
         });
 
@@ -46,6 +53,7 @@ public class EditAlarm extends AppCompatActivity {
         previous.setOnClickListener(new DecrementViewOnClick(pager));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.stepper_dots);
+        tabLayout.setBackgroundColor(getColor(themeColor));
         tabLayout.setupWithViewPager(pager, true);
     }
 }

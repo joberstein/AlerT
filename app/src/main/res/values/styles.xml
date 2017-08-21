@@ -8,31 +8,40 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.BlueLine" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorButtonNormal">@color/blue_line</item>
+    <style name="BlueLine" parent="AppTheme">
+        <item name="colorPrimary">@color/blue_line</item>
+        <item name="colorAccent">@color/blue_line</item>
     </style>
 
-    <style name="AppTheme.GreenLine" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorButtonNormal">@color/green_line</item>
+    <style name="GreenLine" parent="AppTheme">
+        <item name="colorPrimary">@color/green_line</item>
+        <item name="colorAccent">@color/green_line</item>
     </style>
 
-    <style name="AppTheme.OrangeLine" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="OrangeLine" parent="AppTheme">
+        <item name="colorPrimary">@color/orange_line</item>
+        <item name="colorAccent">@color/orange_line</item>
+    </style>
+
+    <style name="RedLine" parent="AppTheme">
+        <item name="colorPrimary">@color/red_line</item>
+        <item name="colorAccent">@color/red_line</item>
+    </style>
+
+    <style name="SilverLine" parent="AppTheme">
+        <item name="colorPrimary">@color/silver_line</item>
+        <item name="colorAccent">@color/silver_line</item>
+    </style>
+
+    <style name="DefaultRoute" parent="AppTheme">
+        <item name="colorPrimary">@color/default_route</item>
+        <item name="colorAccent">@color/default_route</item>
+    </style>
+
+    <style name="White" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorButtonNormal">@color/white</item>
-        <item name="android:strokeColor">@color/orange_line</item>
-    </style>
-
-    <style name="AppTheme.RedLine" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorButtonNormal">@color/red_line</item>
-    </style>
-
-    <style name="AppTheme.SilverLine" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorButtonNormal">@color/silver_line</item>
-    </style>
-
-    <style name="AppTheme.White" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorButtonNormal">@color/white</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:strokeColor">@color/black</item>
+        <item name="android:textColor">@color/default_route</item>
+        <item name="android:strokeColor">@color/default_route</item>
         <item name="android:strokeWidth">2</item>
     </style>
 

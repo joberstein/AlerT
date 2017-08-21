@@ -9,13 +9,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
+import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
 import com.jesseoberstein.alert.models.CustomListItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
+import static com.jesseoberstein.alert.utils.Constants.COLOR;
 
 public class DayFragment extends AlarmBaseFragment {
 
@@ -32,7 +34,9 @@ public class DayFragment extends AlarmBaseFragment {
         CustomListAdapter weekdaysAdapter = new CustomListAdapter(view.getContext(), R.layout.list_weekdays, generateWeekdays(view));
         ListView listView = (ListView) view.findViewById(R.id.weekdays_list);
         listView.setAdapter(weekdaysAdapter);
-        listView.setOnItemClickListener(new ToggleColorOnClick());
+
+        int themeColor = getActivity().getIntent().getExtras().getInt(COLOR);
+        listView.setOnItemClickListener(new ToggleColorOnClick(themeColor, R.color.white, getContext()));
 
         return view;
     }

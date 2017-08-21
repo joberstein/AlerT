@@ -7,7 +7,8 @@ public enum RouteName {
     GREEN("Green Line"),
     ORANGE("Orange Line"),
     RED("Red Line"),
-    SILVER("Silver Line");
+    SILVER("Silver Line"),
+    MATTAPAN("Mattapan Trolley");
 
     private final String fullName;
 

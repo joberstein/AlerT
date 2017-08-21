@@ -8,9 +8,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.jesseoberstein.alert.models.CustomListItem;
+import com.jesseoberstein.alert.models.UserRoute;
+
 import java.util.Optional;
 
 import static android.view.View.OnClickListener;
+import static com.jesseoberstein.alert.utils.Constants.COLOR;
+import static com.jesseoberstein.alert.utils.Constants.ROUTE;
+import static com.jesseoberstein.alert.utils.Constants.THEME;
 
 public class StartActivityOnClick implements OnClickListener, OnItemClickListener {
     private Activity origin;
@@ -47,6 +53,20 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (this.extras == null) {
+            this.extras = new Bundle();
+        }
+
+        switch (this.origin.getClass().getSimpleName()) {
+            case "ViewRoutes":
+                CustomListItem selected = (CustomListItem) parent.getItemAtPosition(position);
+                UserRoute userRoute = new UserRoute(selected.getPrimaryText());
+                this.extras.putString(ROUTE, userRoute.getRouteName());
+                this.extras.putInt(COLOR, userRoute.getColor());
+                this.extras.putInt(THEME, userRoute.getTheme());
+                break;
+        }
+
         this.startActivity();
     }
 

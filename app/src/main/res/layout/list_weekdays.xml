@@ -6,5 +6,4 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/list_text_padding_start"
     android:layout_marginStart="@dimen/list_text_padding_start"
-    android:gravity="center_vertical"
-    android:background="@drawable/list_item_color_state"/>
+    android:gravity="center_vertical"/>

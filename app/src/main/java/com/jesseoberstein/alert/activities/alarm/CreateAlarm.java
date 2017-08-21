@@ -31,13 +31,17 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import static com.jesseoberstein.alert.utils.AlertUtils.isEven;
+import static com.jesseoberstein.alert.utils.Constants.COLOR;
+import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 import static com.jesseoberstein.alert.validation.CreateAlarmPredicates.isValidNickname;
 import static com.jesseoberstein.alert.validation.CreateAlarmPredicates.isValidStation;
 
 public class CreateAlarm extends AppCompatActivity {
-    private static final int THEME_COLOR = R.color.orange_line;
     private static final int NICKNAME_KEY = 0;
     private static final int STATION_KEY = 1;
+    private static String selectedRoute;
+    private static int themeColor;
+
     private StationsProvider stationsProvider;
     private EndpointsProvider endpointsProvider;
 
@@ -45,10 +49,14 @@ public class CreateAlarm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activities_create_alarm);
+        Bundle routeBundle = getIntent().getExtras();
+        selectedRoute = routeBundle.getString(ROUTE);
+        themeColor = routeBundle.getInt(COLOR);
+
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
             bar.setTitle(R.string.create_alarm_page);
-            bar.setBackgroundDrawable(getDrawable(THEME_COLOR));
+            bar.setBackgroundDrawable(getDrawable(themeColor));
             bar.setDisplayHomeAsUpEnabled(true);
         });
 
@@ -65,8 +73,8 @@ public class CreateAlarm extends AppCompatActivity {
         AlertUtils.showKeyboard(this);
         setUpNickname(nicknameText, createAlarmButton);
         setUpAutoComplete(stationAutoComplete, createAlarmButton);
-        setUpDirectionButtons(directionsView, THEME_COLOR, R.color.white);
-        setUpCreateAlarmButton(createAlarmButton, THEME_COLOR, R.color.white);
+        setUpDirectionButtons(directionsView, themeColor, R.color.white);
+        setUpCreateAlarmButton(createAlarmButton, themeColor, R.color.white);
     }
 
     /**
@@ -87,7 +95,7 @@ public class CreateAlarm extends AppCompatActivity {
      */
     private void setUpAutoComplete(AutoCompleteTextView autoComplete, Button submit) {
         String error = "Not a valid station.";
-        String[] stations = stationsProvider.getStopNamesForRoute("Green Line").toArray(new String[0]);
+        String[] stations = stationsProvider.getStopNamesForRoute(selectedRoute).toArray(new String[0]);
         Predicate<String> isValidStation = isValidStation(stations);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, stations);
         TextValidator textValidator = new TextValidator(autoComplete, isValidStation, error, submit, STATION_KEY);
@@ -109,7 +117,7 @@ public class CreateAlarm extends AppCompatActivity {
      * @param buttonTextColor The text color of an active direction button.
      */
     private void setUpDirectionButtons(LinearLayout directionsView, int buttonColor, int buttonTextColor) {
-        List<String> directions = endpointsProvider.getEndpointsForRoute("Orange Line");
+        List<String> directions = endpointsProvider.getEndpointsForRoute(selectedRoute);
         directions.add(null);
         int size = directions.size();
         int evenSize = isEven(size) ? size : size - 1;

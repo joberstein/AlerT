@@ -13,8 +13,8 @@ import com.jesseoberstein.alert.models.CustomListItem;
 import com.jesseoberstein.alert.utils.ListProp;
 import java.util.ArrayList;
 import java.util.Optional;
-import static com.jesseoberstein.alert.utils.AlertUtils.CUSTOM_LIST_IDS;
-import static com.jesseoberstein.alert.utils.AlertUtils.CUSTOM_LIST_PROPS;
+import static com.jesseoberstein.alert.utils.Constants.CUSTOM_LIST_IDS;
+import static com.jesseoberstein.alert.utils.Constants.CUSTOM_LIST_PROPS;
 import static com.jesseoberstein.alert.utils.AlertUtils.listsToMap;
 
 public class CustomListAdapter extends ArrayAdapter<CustomListItem> {
