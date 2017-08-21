@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
+import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnItemClick;
 import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnNextAction;
 import com.jesseoberstein.alert.R;
@@ -42,6 +43,7 @@ public class CreateAlarm extends AppCompatActivity {
     private static String selectedRoute;
     private static int themeColor;
 
+    private Bundle receivedBundle;
     private StationsProvider stationsProvider;
     private EndpointsProvider endpointsProvider;
 
@@ -49,9 +51,9 @@ public class CreateAlarm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activities_create_alarm);
-        Bundle routeBundle = getIntent().getExtras();
-        selectedRoute = routeBundle.getString(ROUTE);
-        themeColor = routeBundle.getInt(COLOR);
+        receivedBundle = getIntent().getExtras();
+        selectedRoute = receivedBundle.getString(ROUTE);
+        themeColor = receivedBundle.getInt(COLOR);
 
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
@@ -179,5 +181,6 @@ public class CreateAlarm extends AppCompatActivity {
         btn.setBackgroundTintList(Tints.forColoredButton(this, getColor(buttonColor)));
         btn.setTextColor(Tints.forColoredButtonText(this, getColor(buttonTextColor)));
         btn.setEnabled(false);
+        btn.setOnClickListener(new StartActivityOnClick(this, EditAlarm.class).withBundle(receivedBundle));
     }
 }

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.jesseoberstein.alert.R;
@@ -14,14 +15,19 @@ import com.jesseoberstein.alert.listeners.alarm.ChangeNavOnPageSelected;
 import com.jesseoberstein.alert.listeners.alarm.DecrementViewOnClick;
 import com.jesseoberstein.alert.listeners.alarm.IncrementViewOnClick;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
+import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
+import static com.jesseoberstein.alert.utils.Constants.STATION;
 import static com.jesseoberstein.alert.utils.Constants.THEME;
 
 public class EditAlarm extends AppCompatActivity {
     private static int themeColor;
     private FragmentPagerAdapter adapter;
+    private String station;
+    private ArrayList<String> endpoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +35,14 @@ public class EditAlarm extends AppCompatActivity {
         Bundle selectedBundle = getIntent().getExtras();
         themeColor = selectedBundle.getInt(COLOR);
         setTheme(selectedBundle.getInt(THEME));
+        station = selectedBundle.getString(STATION);
+        endpoints = selectedBundle.getStringArrayList(ENDPOINTS);
 
         setContentView(R.layout.activities_edit_alarm);
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
-            bar.setTitle("North Station");
-            bar.setSubtitle("Forest Hills");
+            bar.setTitle(station);
+            bar.setSubtitle(TextUtils.join(", ", endpoints));
             bar.setBackgroundDrawable(getDrawable(themeColor));
             bar.setDisplayHomeAsUpEnabled(true);
         });
