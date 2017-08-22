@@ -15,6 +15,16 @@
         android:layout_marginTop="@dimen/list_padding_above"
         style="@style/Widget.AppCompat.ListView"/>
 
+    <TextView
+        android:id="@+id/alarm_list_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:text="@string/alarm_list_empty"
+        android:textAlignment="center"
+        android:textSize="@dimen/list_empty_text_size"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_alarm"
         android:layout_width="wrap_content"
