@@ -12,7 +12,7 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
 import com.jesseoberstein.alert.data.UserRouteDao;
-import com.jesseoberstein.alert.interfaces.OnRouteDialogClick;
+import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.listeners.routes.RemoveRouteOnLongClick;
 import com.jesseoberstein.alert.models.CustomListItem;
@@ -27,7 +27,7 @@ import static com.jesseoberstein.alert.activities.routes.SearchRoutes.COLUMN_ROU
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
 import static com.jesseoberstein.alert.models.RouteListItem.buildRoutesListItem;
 
-public class ViewRoutes extends AppCompatActivity implements OnRouteDialogClick {
+public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
     private CustomListAdapter myRoutesAdapter;
     RuntimeExceptionDao<UserRoute, String> userRouteDao;
 
@@ -69,8 +69,8 @@ public class ViewRoutes extends AppCompatActivity implements OnRouteDialogClick 
     }
 
     /**
-     * Set a new listener on the add route button.  Called in 'onCreate' and every time a new route
-     * is added.
+     * Set a new listener on the add route button so that SearchRoutes filters out an up-to-date
+     * list of routes.  Called in 'onCreate' and every time a new route is added.
      */
     private void updateAddRouteListener() {
         FloatingActionButton addRouteView = (FloatingActionButton) findViewById(R.id.add_route);
@@ -94,16 +94,16 @@ public class ViewRoutes extends AppCompatActivity implements OnRouteDialogClick 
     }
 
     @Override
-    public void onRemoveSelectedRoute(Bundle selectedRoute) {
-        String routeName = selectedRoute.getString(COLUMN_ROUTE);
+    public void onRemoveSelected(Bundle selected) {
+        String routeName = selected.getString(COLUMN_ROUTE);
         userRouteDao.deleteById(routeName);
         myRoutesAdapter.removeItemByPrimaryText(routeName);
         updateAddRouteListener();
     }
 
     @Override
-    public void onAddSelectedRoute(Bundle selectedRoute) {}
+    public void onAddSelected(Bundle selected) {}
 
     @Override
-    public void onCancelSelectedRoute(Bundle selectedRoute) {}
+    public void onCancelSelected(Bundle selected) {}
 }

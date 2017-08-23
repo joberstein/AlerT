@@ -36,8 +36,20 @@ public class Constants {
     public static final String COLOR = "color";
     public static final String ICON = "icon";
     public static final String ROUTE = "route";
-    public static final String NICKNAME = "nickname";
     public static final String STATION = "station";
     public static final String ENDPOINTS = "endpoints";
+    public static final String IS_UPDATE = "isUpdate";
+
+    public static final String ALARM_TIME = "alarmTime";
+    public static final String HOUR = "hour";
+    public static final String MINUTES = "minutes";
+
+    public static final String ALARM_DAYS = "alarmDays";
+    public static final String DAYS = "days";
+
+    public static final String ALARM_SETTINGS = "alarmSettings";
+    public static final String NICKNAME = "nickname";
+    public static final String DURATION = "duration";
+    public static final String REPEAT = "repeat";
     public static final String STATUS = "status";
 }

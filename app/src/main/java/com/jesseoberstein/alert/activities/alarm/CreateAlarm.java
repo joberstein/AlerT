@@ -1,5 +1,7 @@
 package com.jesseoberstein.alert.activities.alarm;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +15,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
+import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
+import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
 import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnItemClick;
 import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnNextAction;
-import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
 import com.jesseoberstein.alert.providers.EndpointsProvider;
 import com.jesseoberstein.alert.providers.StationsProvider;
 import com.jesseoberstein.alert.utils.AlertUtils;
@@ -38,6 +40,7 @@ import static com.jesseoberstein.alert.validation.CreateAlarmPredicates.isValidN
 import static com.jesseoberstein.alert.validation.CreateAlarmPredicates.isValidStation;
 
 public class CreateAlarm extends AppCompatActivity {
+    public static final int REQUEST_CODE = 2;
     private static final int NICKNAME_KEY = 0;
     private static final int STATION_KEY = 1;
     private static String selectedRoute;
@@ -77,6 +80,16 @@ public class CreateAlarm extends AppCompatActivity {
         setUpAutoComplete(stationAutoComplete, createAlarmButton);
         setUpDirectionButtons(directionsView, themeColor, R.color.white);
         setUpCreateAlarmButton(createAlarmButton, themeColor, R.color.white);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (EditAlarm.REQUEST_CODE == requestCode)  {
+            if (RESULT_OK == resultCode) {
+                setResult(Activity.RESULT_OK, data);
+                finish();
+            }
+        }
     }
 
     /**
@@ -181,6 +194,7 @@ public class CreateAlarm extends AppCompatActivity {
         btn.setBackgroundTintList(Tints.forColoredButton(this, getColor(buttonColor)));
         btn.setTextColor(Tints.forColoredButtonText(this, getColor(buttonTextColor)));
         btn.setEnabled(false);
-        btn.setOnClickListener(new StartActivityOnClick(this, EditAlarm.class).withBundle(receivedBundle));
+        StartActivityOnClick editAlarm = new StartActivityOnClick(this, EditAlarm.class);
+        btn.setOnClickListener(editAlarm.withBundle(receivedBundle).withRequestCode(EditAlarm.REQUEST_CODE));
     }
 }

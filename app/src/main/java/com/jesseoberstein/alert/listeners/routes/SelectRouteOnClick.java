@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.widget.Adapter;
 
-import com.jesseoberstein.alert.fragments.AddRouteDialog;
+import com.jesseoberstein.alert.fragments.dialog.route.AddRouteDialog;
 import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.stream.IntStream;

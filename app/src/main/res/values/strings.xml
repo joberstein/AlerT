@@ -47,7 +47,12 @@
     <string name="add_route_dialog">Add the "%1$s" to your routes?</string>
     <string name="remove_route_dialog">Remove the "%1$s" from your routes?</string>
 
+    <string name="add_alarm_dialog">Add "%1$s" to your alarms?</string>
+    <string name="update_alarm_dialog">Update this alarm?</string>
+    <string name="remove_alarm_dialog">Remove "%1$s" from your alarms?</string>
+
     <string name="add">Add</string>
+    <string name="update">Update</string>
     <string name="remove">Remove</string>
     <string name="cancel">Cancel</string>
 

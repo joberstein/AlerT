@@ -26,6 +26,7 @@ import java.util.stream.IntStream;
 import static android.view.View.OnClickListener;
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
+import static com.jesseoberstein.alert.utils.Constants.IS_UPDATE;
 import static com.jesseoberstein.alert.utils.Constants.NICKNAME;
 import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 import static com.jesseoberstein.alert.utils.Constants.STATION;
@@ -131,6 +132,7 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
     }
 
     private void forwardToSelectedAlarm(CustomListItem item) {
+        this.extras.putBoolean(IS_UPDATE, true);
         this.extras.putString(NICKNAME, item.getPrimaryText());
         this.extras.putString(STATION, item.getSecondaryText());
         this.extras.putBoolean(STATUS, item.getIcon() == R.drawable.circle_light_green);

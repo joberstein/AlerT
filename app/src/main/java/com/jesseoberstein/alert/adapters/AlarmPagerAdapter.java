@@ -3,13 +3,17 @@ package com.jesseoberstein.alert.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import com.jesseoberstein.alert.fragments.DayFragment;
 import com.jesseoberstein.alert.fragments.SettingsFragment;
 import com.jesseoberstein.alert.fragments.TimeFragment;
 
 public class AlarmPagerAdapter extends FragmentPagerAdapter {
-    private static int NUM_PAGES = 3;
+    public static int NUM_PAGES = 3;
+    private TimeFragment timeFragment;
+    private DayFragment dayFragment;
+    private SettingsFragment settingsFragment;
 
     public AlarmPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
@@ -41,5 +45,34 @@ public class AlarmPagerAdapter extends FragmentPagerAdapter {
             default:
                 return null;
         }
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+        switch (position) {
+            case 0:
+                timeFragment = (TimeFragment) createdFragment;
+                break;
+            case 1:
+                dayFragment = (DayFragment) createdFragment;
+                break;
+            case 2:
+                settingsFragment = (SettingsFragment) createdFragment;
+        }
+
+        return createdFragment;
+    }
+
+    public TimeFragment getTimeFragment() {
+        return timeFragment;
+    }
+
+    public DayFragment getDayFragment() {
+        return dayFragment;
+    }
+
+    public SettingsFragment getSettingsFragment() {
+        return settingsFragment;
     }
 }

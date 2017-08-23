@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.jesseoberstein.alert.fragments.RemoveRouteDialog;
+import com.jesseoberstein.alert.fragments.dialog.route.RemoveRouteDialog;
 import com.jesseoberstein.alert.models.CustomListItem;
 
 import static android.widget.AdapterView.OnItemLongClickListener;

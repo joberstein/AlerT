@@ -17,7 +17,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CursorAdapter;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.interfaces.OnRouteDialogClick;
+import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.listeners.routes.QueryRoutesListener;
 import com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick;
 import com.jesseoberstein.alert.providers.RoutesProvider;
@@ -29,7 +29,7 @@ import java.util.Optional;
 import static android.support.v7.appcompat.R.id;
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
 
-public class SearchRoutes extends AppCompatActivity implements OnRouteDialogClick {
+public class SearchRoutes extends AppCompatActivity implements OnDialogClick {
     public static final int REQUEST_CODE = 1;
     public static final String COLUMN_ROUTE = "route";
     public static final String[] COLUMN_NAMES = new String[]{BaseColumns._ID, COLUMN_ROUTE};
@@ -95,16 +95,16 @@ public class SearchRoutes extends AppCompatActivity implements OnRouteDialogClic
     }
 
     @Override
-    public void onAddSelectedRoute(Bundle selectedRoute) {
+    public void onAddSelected(Bundle selected) {
         Intent intent = new Intent();
-        intent.putExtra(SELECTED_ROUTE, selectedRoute);
+        intent.putExtra(SELECTED_ROUTE, selected);
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
     @Override
-    public void onRemoveSelectedRoute(Bundle selectedRoute) {}
+    public void onRemoveSelected(Bundle selected) {}
 
     @Override
-    public void onCancelSelectedRoute(Bundle selectedRoute) {}
+    public void onCancelSelected(Bundle selected) {}
 }
