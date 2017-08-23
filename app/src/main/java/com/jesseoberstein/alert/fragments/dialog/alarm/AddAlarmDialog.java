@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.fragments.dialog.AbstractDialog;
-import com.jesseoberstein.alert.utils.Constants;
 
 import static com.jesseoberstein.alert.utils.Constants.*;
 
@@ -18,7 +17,7 @@ public class AddAlarmDialog extends AbstractDialog {
         int positiveText = isUpdate ? R.string.update : R.string.add;
 
         return this.createRouteDialogBuilder(savedInstanceState)
-                .setMessage(getResources().getString(message, getAlarmName()))
+                .setMessage(getResources().getString(message, getNewAlarmName()))
                 .setPositiveButton(positiveText, (dialog, id) -> getClickListener().onAddSelected(getArguments()))
                 .create();
     }

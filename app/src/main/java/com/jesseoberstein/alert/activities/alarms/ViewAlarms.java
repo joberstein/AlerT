@@ -14,13 +14,16 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.CreateAlarm;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
+import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
+import com.jesseoberstein.alert.listeners.alarm.RemoveAlarmOnLongClick;
 import com.jesseoberstein.alert.models.CustomListItem;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
 import static com.jesseoberstein.alert.listeners.alarm.UpdateAlarmOnClick.NEW_ALARM;
+import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_SETTINGS;
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
@@ -29,10 +32,11 @@ import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 import static com.jesseoberstein.alert.utils.Constants.STATION;
 import static com.jesseoberstein.alert.utils.Constants.STATUS;
 
-public class ViewAlarms extends AppCompatActivity {
+public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
     private static String selectedRoute;
     private static int themeColor;
     private CustomListAdapter myAlarmsAdapter;
+    private static int idGenerator = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,7 @@ public class ViewAlarms extends AppCompatActivity {
         listView.setOnItemClickListener(new StartActivityOnClick(this, EditAlarm.class)
                 .withBundle(selectedBundle)
                 .withRequestCode(EditAlarm.REQUEST_CODE));
+        listView.setOnItemLongClickListener(new RemoveAlarmOnLongClick(this));
 
         FloatingActionButton addAlarmView = (FloatingActionButton) findViewById(R.id.add_alarm);
         addAlarmView.setBackgroundTintList(getColorStateList(themeColor));
@@ -82,8 +87,20 @@ public class ViewAlarms extends AppCompatActivity {
                 String station = newAlarm.getString(STATION);
                 String endpoints = TextUtils.join(", ", newAlarm.getStringArrayList(ENDPOINTS));
                 boolean status = newAlarm.getBundle(ALARM_SETTINGS).getBoolean(STATUS);
-                myAlarmsAdapter.addItem(CustomListItem.buildAlarmListItem(nickname, station, endpoints, status));
+                myAlarmsAdapter.addItem(CustomListItem.buildAlarmListItem(idGenerator++, nickname, station, endpoints, status));
             }
         }
     }
+
+    @Override
+    public void onRemoveSelected(Bundle selected) {
+        int alarmId = selected.getInt(ALARM_ID);
+        myAlarmsAdapter.removeItemById(alarmId);
+    }
+
+    @Override
+    public void onAddSelected(Bundle selected) { }
+
+    @Override
+    public void onCancelSelected(Bundle selected) { }
 }

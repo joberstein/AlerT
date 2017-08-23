@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.jesseoberstein.alert.activities.routes.SearchRoutes.COLUMN_ROUTE;
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
 import static com.jesseoberstein.alert.models.RouteListItem.buildRoutesListItem;
+import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 
 public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
     private CustomListAdapter myRoutesAdapter;
@@ -59,7 +59,7 @@ public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
         if (SearchRoutes.REQUEST_CODE == requestCode)  {
             if (RESULT_OK == resultCode) {
                 Bundle selected = data.getBundleExtra(SELECTED_ROUTE);
-                String routeName = selected.getString(COLUMN_ROUTE);
+                String routeName = selected.getString(ROUTE);
                 UserRoute userRoute = new UserRoute(routeName);
                 userRouteDao.create(userRoute);
                 myRoutesAdapter.addItem(buildRoutesListItem(userRoute));
@@ -95,7 +95,7 @@ public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
 
     @Override
     public void onRemoveSelected(Bundle selected) {
-        String routeName = selected.getString(COLUMN_ROUTE);
+        String routeName = selected.getString(ROUTE);
         userRouteDao.deleteById(routeName);
         myRoutesAdapter.removeItemByPrimaryText(routeName);
         updateAddRouteListener();

@@ -10,7 +10,7 @@ import android.widget.Toast;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.jesseoberstein.alert.activities.routes.SearchRoutes.COLUMN_ROUTE;
+import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 
 public class QueryRoutesListener implements SearchView.OnQueryTextListener {
     private Activity activity;
@@ -75,7 +75,7 @@ public class QueryRoutesListener implements SearchView.OnQueryTextListener {
         return IntStream.range(0, cursor.getCount())
                 .mapToObj(i -> {
                     MatrixCursor row = (MatrixCursor) this.adapter.getItem(i);
-                    String suggestion = row.getString(cursor.getColumnIndex(COLUMN_ROUTE)).toLowerCase();
+                    String suggestion = row.getString(cursor.getColumnIndex(ROUTE)).toLowerCase();
                     cursor.moveToNext();
                     return suggestion.toLowerCase();
                 })

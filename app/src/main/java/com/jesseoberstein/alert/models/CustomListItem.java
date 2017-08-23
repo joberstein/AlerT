@@ -3,6 +3,7 @@ package com.jesseoberstein.alert.models;
 import com.jesseoberstein.alert.R;
 
 public class CustomListItem {
+    private int id;
     private int icon;               // R.drawable
     private String primaryText;
     private String secondaryText;
@@ -22,16 +23,17 @@ public class CustomListItem {
     /**
      * Build a new alarm list item.
      */
-    public static CustomListItem buildAlarmListItem(String nickname, String station, String direction, boolean isActive) {
-        return buildAlarmListItem(new CustomListItem(), nickname, station, direction, isActive);
+    public static CustomListItem buildAlarmListItem(int id, String nickname, String station, String direction, boolean isActive) {
+        return buildAlarmListItem(new CustomListItem(), id, nickname, station, direction, isActive);
     }
 
     /**
      * Build an alarm list item with the given list item.
      */
-    public static CustomListItem buildAlarmListItem(CustomListItem item, String nickname, String station, String direction, boolean isActive) {
+    public static CustomListItem buildAlarmListItem(CustomListItem item, int id, String nickname, String station, String direction, boolean isActive) {
         int icon = isActive ? R.drawable.circle_light_green : R.drawable.circle_light_gray;
         return item
+                .withId(id)
                 .withIcon(icon)
                 .withPrimaryText(nickname)
                 .withSecondaryText(station)
@@ -48,6 +50,11 @@ public class CustomListItem {
 
     public static CustomListItem makeDivider() {
         return new CustomListItem().asDivider();
+    }
+
+    CustomListItem withId(int id) {
+        this.id = id;
+        return this;
     }
 
     CustomListItem withIcon(int icon) {
@@ -88,6 +95,7 @@ public class CustomListItem {
     /************************
      * Getters
      ************************/
+    public int getId() { return this.id; }
     public int getIcon() { return this.icon; }
     public String getPrimaryText() { return this.primaryText; }
     public String getSecondaryText() { return this.secondaryText; }
@@ -103,6 +111,7 @@ public class CustomListItem {
 
         CustomListItem that = (CustomListItem) o;
 
+        if (id != that.id) return false;
         if (icon != that.icon) return false;
         if (chevron != that.chevron) return false;
         if (isDivider != that.isDivider) return false;
@@ -117,7 +126,8 @@ public class CustomListItem {
 
     @Override
     public int hashCode() {
-        int result = icon;
+        int result = id;
+        result = 31 * result + icon;
         result = 31 * result + (primaryText != null ? primaryText.hashCode() : 0);
         result = 31 * result + (secondaryText != null ? secondaryText.hashCode() : 0);
         result = 31 * result + (tertiaryText != null ? tertiaryText.hashCode() : 0);

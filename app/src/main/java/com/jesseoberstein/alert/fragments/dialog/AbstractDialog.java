@@ -36,8 +36,12 @@ public abstract class AbstractDialog extends DialogFragment {
         return getArguments().getString(ROUTE);
     }
 
-    protected String getAlarmName() {
+    protected String getNewAlarmName() {
         return getArguments().getBundle(NEW_ALARM).getBundle(ALARM_SETTINGS).getString(NICKNAME);
+    }
+
+    protected String getExistingAlarmName() {
+        return getArguments().getString(NICKNAME);
     }
 
     protected OnDialogClick getClickListener() {

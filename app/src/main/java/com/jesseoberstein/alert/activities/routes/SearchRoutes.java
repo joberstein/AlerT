@@ -28,11 +28,11 @@ import java.util.Optional;
 
 import static android.support.v7.appcompat.R.id;
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
+import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 
 public class SearchRoutes extends AppCompatActivity implements OnDialogClick {
     public static final int REQUEST_CODE = 1;
-    public static final String COLUMN_ROUTE = "route";
-    public static final String[] COLUMN_NAMES = new String[]{BaseColumns._ID, COLUMN_ROUTE};
+    public static final String[] COLUMN_NAMES = new String[]{BaseColumns._ID, ROUTE};
     private RoutesProvider routesProvider;
 
     @Override

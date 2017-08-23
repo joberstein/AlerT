@@ -36,6 +36,8 @@ public class Constants {
     public static final String COLOR = "color";
     public static final String ICON = "icon";
     public static final String ROUTE = "route";
+
+    public static final String ALARM_ID = "alarmId";
     public static final String STATION = "station";
     public static final String ENDPOINTS = "endpoints";
     public static final String IS_UPDATE = "isUpdate";
