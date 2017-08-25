@@ -3,21 +3,21 @@ package com.jesseoberstein.alert.data;
 import android.content.Context;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
-import com.jesseoberstein.alert.models.UserRoute;
+import com.jesseoberstein.alert.models.UserEndpoint;
 
-public class UserRouteDao extends DatabaseHelper {
-    private RuntimeExceptionDao<UserRoute, String> dao = null;
+public class UserEndpointDao extends DatabaseHelper {
+    private RuntimeExceptionDao<UserEndpoint, Integer> dao = null;
 
-    public UserRouteDao(Context context) {
+    public UserEndpointDao(Context context) {
         super(context);
     }
 
     /**
-     * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our UserRoute class.
+     * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our UserEndpoint class.
      * It will create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
      */
-    public RuntimeExceptionDao<UserRoute, String> getDao() {
-        dao = getInstance(dao, getRuntimeExceptionDao(UserRoute.class));
+    public RuntimeExceptionDao<UserEndpoint, Integer> getDao() {
+        dao = getInstance(dao, getRuntimeExceptionDao(UserEndpoint.class));
         return dao;
     }
 

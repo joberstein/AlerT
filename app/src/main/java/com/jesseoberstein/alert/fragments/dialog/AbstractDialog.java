@@ -6,10 +6,12 @@ import android.os.Bundle;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
+import com.jesseoberstein.alert.models.UserAlarm;
+
+import java.util.Optional;
 
 import static android.app.AlertDialog.Builder;
-import static com.jesseoberstein.alert.listeners.alarm.UpdateAlarmOnClick.NEW_ALARM;
-import static com.jesseoberstein.alert.utils.Constants.ALARM_SETTINGS;
+import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.NICKNAME;
 import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 
@@ -37,7 +39,8 @@ public abstract class AbstractDialog extends DialogFragment {
     }
 
     protected String getNewAlarmName() {
-        return getArguments().getBundle(NEW_ALARM).getBundle(ALARM_SETTINGS).getString(NICKNAME);
+        UserAlarm userAlarm = getArguments().getParcelable(ALARM);
+        return Optional.ofNullable(userAlarm).map(UserAlarm::getNickname).orElse("");
     }
 
     protected String getExistingAlarmName() {

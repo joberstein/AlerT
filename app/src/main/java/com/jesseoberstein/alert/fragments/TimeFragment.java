@@ -8,15 +8,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.interfaces.OnAlarmSubmit;
+import com.jesseoberstein.alert.models.UserAlarm;
 
 import java.util.Calendar;
 
-import static com.jesseoberstein.alert.utils.Constants.HOUR;
-import static com.jesseoberstein.alert.utils.Constants.MINUTES;
-
 public class TimeFragment extends AlarmBaseFragment implements OnAlarmSubmit {
     private TimePicker timePicker;
+    private UserAlarm alarm;
 
     public static TimeFragment newInstance(int page) {
         return (TimeFragment) AlarmBaseFragment.newInstance(page, new TimeFragment());
@@ -25,6 +25,8 @@ public class TimeFragment extends AlarmBaseFragment implements OnAlarmSubmit {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_alarm_time, container, false);
+        alarm = ((EditAlarm) getActivity()).getAlarm();
+
         TextView stepText = (TextView) view.findViewById(R.id.stepText);
         stepText.setText(R.string.step_1);
 
@@ -40,10 +42,8 @@ public class TimeFragment extends AlarmBaseFragment implements OnAlarmSubmit {
      * Send a bundle with the hour (0-23) and minutes (0-59) the time picker is set to.
      */
     @Override
-    public Bundle onAlarmSubmit() {
-        Bundle bundle = new Bundle();
-        bundle.putInt(HOUR, timePicker.getHour());
-        bundle.putInt(MINUTES, timePicker.getMinute());
-        return bundle;
+    public void onAlarmSubmit() {
+        alarm.setHour(timePicker.getHour());
+        alarm.setMinutes(timePicker.getMinute());
     }
 }

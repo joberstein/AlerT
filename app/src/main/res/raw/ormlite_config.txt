@@ -1,16 +1,95 @@
 #
-# generated on 2017/08/20 12:17:19
+# generated on 2017/08/25 12:12:36
 #
+# --table-start--
+dataClass=com.jesseoberstein.alert.models.UserAlarm
+tableName=user_alarms
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=route
+foreign=true
+# --field-end--
+# --field-start--
+fieldName=nickname
+# --field-end--
+# --field-start--
+fieldName=station
+# --field-end--
+# --field-start--
+fieldName=hour
+# --field-end--
+# --field-start--
+fieldName=minutes
+# --field-end--
+# --field-start--
+fieldName=monday
+# --field-end--
+# --field-start--
+fieldName=tuesday
+# --field-end--
+# --field-start--
+fieldName=wednesday
+# --field-end--
+# --field-start--
+fieldName=thursday
+# --field-end--
+# --field-start--
+fieldName=friday
+# --field-end--
+# --field-start--
+fieldName=saturday
+# --field-end--
+# --field-start--
+fieldName=sunday
+# --field-end--
+# --field-start--
+fieldName=duration
+# --field-end--
+# --field-start--
+fieldName=durationType
+columnName=duration_type
+# --field-end--
+# --field-start--
+fieldName=repeat
+# --field-end--
+# --field-start--
+fieldName=active
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.jesseoberstein.alert.models.UserEndpoint
+tableName=user_endpoints
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=alarm
+foreign=true
+columnDefinition=INTEGER REFERENCES user_alarms(id) ON DELETE CASCADE
+# --field-end--
+# --field-start--
+fieldName=endpointName
+columnName=endpoint_name
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
 # --table-start--
 dataClass=com.jesseoberstein.alert.models.UserRoute
 tableName=user_routes
 # --table-fields-start--
 # --field-start--
 fieldName=routeName
+columnName=route_name
 id=true
-# --field-end--
-# --field-start--
-fieldName=icon
 # --field-end--
 # --field-start--
 fieldName=alerts

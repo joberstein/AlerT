@@ -10,10 +10,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.adapters.CustomListAdapter;
 import com.jesseoberstein.alert.interfaces.OnAlarmSubmit;
 import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
 import com.jesseoberstein.alert.models.CustomListItem;
+import com.jesseoberstein.alert.models.UserAlarm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +23,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
-import static com.jesseoberstein.alert.utils.Constants.DAYS;
 
 public class DayFragment extends AlarmBaseFragment implements OnAlarmSubmit {
+    UserAlarm alarm;
     private ListView daysListView;
 
     public static DayFragment newInstance(int page) {
@@ -33,6 +35,8 @@ public class DayFragment extends AlarmBaseFragment implements OnAlarmSubmit {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_alarm_day, container, false);
+        alarm = ((EditAlarm) getActivity()).getAlarm();
+
         TextView stepText = (TextView) view.findViewById(R.id.stepText);
         stepText.setText(R.string.step_2);
 
@@ -53,14 +57,13 @@ public class DayFragment extends AlarmBaseFragment implements OnAlarmSubmit {
     }
 
     @Override
-    public Bundle onAlarmSubmit() {
-        Bundle bundle = new Bundle();
+    public void onAlarmSubmit() {
         ArrayList<String> selectedDays = IntStream.range(0, daysListView.getChildCount())
                 .mapToObj(i -> (CheckedTextView) daysListView.getChildAt(i))
                 .filter(CheckedTextView::isChecked)
                 .map(dayView -> dayView.getText().toString())
                 .collect(Collectors.toCollection(ArrayList::new));
-        bundle.putStringArrayList(DAYS, selectedDays);
-        return bundle;
+
+        alarm.setWeekdays(selectedDays);
     }
 }

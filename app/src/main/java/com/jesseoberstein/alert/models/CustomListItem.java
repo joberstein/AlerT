@@ -16,31 +16,6 @@ public class CustomListItem {
         this.isDivider = false;
     }
 
-    /************************
-     * Builders
-     ************************/
-
-    /**
-     * Build a new alarm list item.
-     */
-    public static CustomListItem buildAlarmListItem(int id, String nickname, String station, String direction, boolean isActive) {
-        return buildAlarmListItem(new CustomListItem(), id, nickname, station, direction, isActive);
-    }
-
-    /**
-     * Build an alarm list item with the given list item.
-     */
-    public static CustomListItem buildAlarmListItem(CustomListItem item, int id, String nickname, String station, String direction, boolean isActive) {
-        int icon = isActive ? R.drawable.circle_light_green : R.drawable.circle_light_gray;
-        return item
-                .withId(id)
-                .withIcon(icon)
-                .withPrimaryText(nickname)
-                .withSecondaryText(station)
-                .withTertiaryText(direction)
-                .withChevron(R.drawable.ic_chevron_right);
-    }
-
     /**
      * Build a simple list item with only primary text.
      */

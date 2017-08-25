@@ -3,6 +3,8 @@ package com.jesseoberstein.alert.models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Optional;
+
 import static com.jesseoberstein.alert.utils.AlertUtils.getRouteResource;
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.ICON;
@@ -11,7 +13,7 @@ import static com.jesseoberstein.alert.utils.Constants.THEME;
 @DatabaseTable(tableName = "user_routes")
 public class UserRoute {
 
-    @DatabaseField(id = true)
+    @DatabaseField(id = true, columnName = "route_name")
     private String routeName;
 
     @DatabaseField
@@ -26,11 +28,13 @@ public class UserRoute {
     public UserRoute(String routeName) {
         this.routeName = routeName;
         this.alerts = "";
-        this.color = getRouteResource(routeName, COLOR);
-        this.icon = getRouteResource(routeName, ICON);
-        this.theme = getRouteResource(routeName, THEME);
+        setRouteResources();
     }
 
+    /**
+     * Used to populate resources for the above constructor; using setResources here would like to
+     * null being used for the resources.
+     */
     public UserRoute(String routeName, int color, int icon, int theme) {
         this.routeName = routeName;
         this.color = color;
@@ -44,6 +48,14 @@ public class UserRoute {
 
     public void setRouteName(String routeName) {
         this.routeName = routeName;
+    }
+
+    public void setRouteResources() {
+        Optional.ofNullable(this.routeName).ifPresent(route -> {
+            this.color = getRouteResource(routeName, COLOR);
+            this.icon = getRouteResource(routeName, ICON);
+            this.theme = getRouteResource(routeName, THEME);
+        });
     }
 
     public String getAlerts() {

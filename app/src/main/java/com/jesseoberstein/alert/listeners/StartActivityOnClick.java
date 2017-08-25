@@ -14,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.models.CustomListItem;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserRoute;
 
 import java.util.ArrayList;
@@ -24,13 +26,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static android.view.View.OnClickListener;
+import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
 import static com.jesseoberstein.alert.utils.Constants.IS_UPDATE;
-import static com.jesseoberstein.alert.utils.Constants.NICKNAME;
 import static com.jesseoberstein.alert.utils.Constants.ROUTE;
-import static com.jesseoberstein.alert.utils.Constants.STATION;
-import static com.jesseoberstein.alert.utils.Constants.STATUS;
 import static com.jesseoberstein.alert.utils.Constants.THEME;
 
 public class StartActivityOnClick implements OnClickListener, OnItemClickListener {
@@ -101,11 +101,17 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
     }
 
     private void editCreatedAlarm() {
+        UserAlarm newAlarm = new UserAlarm();
+
         EditText nickname = (EditText) this.origin.findViewById(R.id.nickname);
-        this.extras.putString(NICKNAME, nickname.getText().toString());
+        newAlarm.setNickname(nickname.getText().toString());
 
         AutoCompleteTextView station = (AutoCompleteTextView) this.origin.findViewById(R.id.station);
-        this.extras.putString(STATION, station.getText().toString());
+        newAlarm.setStation(station.getText().toString());
+
+        // Defaults
+        newAlarm.setActive(true);
+        newAlarm.setDuration(1);
 
         // Search through this mess of a layout to get all of the toggled enpoints.
         // Structure: LinearLayout (root) -> LinearLayout (Button row) -> ToggleButton
@@ -118,24 +124,24 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
                 .filter(CompoundButton::isChecked)
                 .map(btn -> btn.getText().toString())
                 .collect(Collectors.toCollection(ArrayList::new));
-        this.extras.putStringArrayList(ENDPOINTS, selectedEndpoints);
 
-        // A new alarm is always set to on by default.
-        this.extras.putBoolean(STATUS, true);
+        this.extras.putStringArrayList(ENDPOINTS, selectedEndpoints);
+        this.extras.putBoolean(IS_UPDATE, false);
+        this.extras.putParcelable(ALARM, newAlarm);
     }
 
     private void forwardToSelectedRoute(CustomListItem item) {
         UserRoute userRoute = new UserRoute(item.getPrimaryText());
+        userRoute.setRouteResources();
         this.extras.putString(ROUTE, userRoute.getRouteName());
         this.extras.putInt(COLOR, userRoute.getColor());
         this.extras.putInt(THEME, userRoute.getTheme());
     }
 
     private void forwardToSelectedAlarm(CustomListItem item) {
+        UserAlarm userAlarm = ((ViewAlarms) this.origin).getUserAlarmDao().queryForId(item.getId());
+        this.extras.putParcelable(ALARM, userAlarm);
         this.extras.putBoolean(IS_UPDATE, true);
-        this.extras.putString(NICKNAME, item.getPrimaryText());
-        this.extras.putString(STATION, item.getSecondaryText());
-        this.extras.putBoolean(STATUS, item.getIcon() == R.drawable.circle_light_green);
         this.extras.putStringArrayList(ENDPOINTS,
                 Arrays.stream(item.getTertiaryText().split(","))
                         .collect(Collectors.toCollection(ArrayList::new)));

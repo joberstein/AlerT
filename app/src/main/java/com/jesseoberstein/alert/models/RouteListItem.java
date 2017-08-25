@@ -11,6 +11,7 @@ public class RouteListItem extends CustomListItem {
      * Build a route list item with the given user route.
      */
     public static CustomListItem buildRoutesListItem(UserRoute userRoute) {
+        userRoute.setRouteResources();
         String alerts = userRoute.getAlerts();
         String info = (!alerts.isEmpty() && Integer.parseInt(alerts) > 0) ? alerts : null;
 

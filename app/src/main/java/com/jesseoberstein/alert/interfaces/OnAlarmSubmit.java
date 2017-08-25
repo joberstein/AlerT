@@ -1,10 +1,8 @@
 package com.jesseoberstein.alert.interfaces;
 
-import android.os.Bundle;
-
 /**
- * Fragments of EditAlarm should implement this method and return a bundle with user-entered info.
+ * Fragments of EditAlarm should implement this method and set user-entered info on the passed alarm.
  */
 public interface OnAlarmSubmit {
-    public Bundle onAlarmSubmit();
+    public void onAlarmSubmit();
 }

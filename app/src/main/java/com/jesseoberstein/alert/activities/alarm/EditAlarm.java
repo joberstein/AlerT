@@ -17,23 +17,24 @@ import com.jesseoberstein.alert.listeners.alarm.ChangeNavOnPageSelected;
 import com.jesseoberstein.alert.listeners.alarm.DecrementViewOnClick;
 import com.jesseoberstein.alert.listeners.alarm.IncrementViewOnClick;
 import com.jesseoberstein.alert.listeners.alarm.UpdateAlarmOnClick;
+import com.jesseoberstein.alert.models.UserAlarm;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
 import static com.jesseoberstein.alert.utils.Constants.IS_UPDATE;
-import static com.jesseoberstein.alert.utils.Constants.STATION;
 import static com.jesseoberstein.alert.utils.Constants.THEME;
 
 public class EditAlarm extends AppCompatActivity implements OnDialogClick {
     public static final int REQUEST_CODE = 3;
     private static int themeColor;
     private AlarmPagerAdapter alarmPagerAdapter;
-    private String station;
     private ArrayList<String> endpoints;
     private boolean isUpdate;
+    private UserAlarm alarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +42,14 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick {
         Bundle selectedBundle = getIntent().getExtras();
         themeColor = selectedBundle.getInt(COLOR);
         setTheme(selectedBundle.getInt(THEME));
-        station = selectedBundle.getString(STATION);
         endpoints = selectedBundle.getStringArrayList(ENDPOINTS);
         isUpdate = selectedBundle.getBoolean(IS_UPDATE, false);
+        alarm = selectedBundle.getParcelable(ALARM);
 
         setContentView(R.layout.activities_edit_alarm);
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
-            bar.setTitle(station);
+            bar.setTitle(alarm.getStation());
             bar.setSubtitle(TextUtils.join(", ", endpoints));
             bar.setBackgroundDrawable(getDrawable(themeColor));
             bar.setDisplayHomeAsUpEnabled(true);
@@ -81,12 +82,12 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick {
         return alarmPagerAdapter;
     }
 
-    public String getStation() {
-        return station;
-    }
-
     public ArrayList<String> getEndpoints() {
         return endpoints;
+    }
+
+    public UserAlarm getAlarm() {
+        return alarm;
     }
 
     @Override
