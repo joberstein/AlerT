@@ -14,6 +14,10 @@ import com.jesseoberstein.alert.models.UserAlarm;
 
 import java.util.Calendar;
 
+import static java.util.Calendar.HOUR;
+import static java.util.Calendar.MINUTE;
+import static java.util.Calendar.getInstance;
+
 public class TimeFragment extends AlarmBaseFragment implements OnAlarmSubmit {
     private TimePicker timePicker;
     private UserAlarm alarm;
@@ -30,10 +34,12 @@ public class TimeFragment extends AlarmBaseFragment implements OnAlarmSubmit {
         TextView stepText = (TextView) view.findViewById(R.id.stepText);
         stepText.setText(R.string.step_1);
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = getInstance();
+        boolean isUpdate = alarm.getId() > 0;
+
         timePicker = (TimePicker) view.findViewById(R.id.alarm_time_picker);
-        timePicker.setHour(calendar.get(Calendar.HOUR));
-        timePicker.setMinute(calendar.get(Calendar.MINUTE));
+        timePicker.setHour(isUpdate ? alarm.getHour() : calendar.get(HOUR));
+        timePicker.setMinute(isUpdate ? alarm.getMinutes() : calendar.get(MINUTE));
 
         return view;
     }

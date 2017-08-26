@@ -38,9 +38,8 @@ public abstract class AbstractDialog extends DialogFragment {
         return getArguments().getString(ROUTE);
     }
 
-    protected String getNewAlarmName() {
-        UserAlarm userAlarm = getArguments().getParcelable(ALARM);
-        return Optional.ofNullable(userAlarm).map(UserAlarm::getNickname).orElse("");
+    protected UserAlarm getAlarm() {
+        return (UserAlarm) getArguments().getSerializable(ALARM);
     }
 
     protected String getExistingAlarmName() {

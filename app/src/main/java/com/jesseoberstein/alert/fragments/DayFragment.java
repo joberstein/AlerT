@@ -27,9 +27,38 @@ import static com.jesseoberstein.alert.utils.Constants.COLOR;
 public class DayFragment extends AlarmBaseFragment implements OnAlarmSubmit {
     UserAlarm alarm;
     private ListView daysListView;
+    private boolean initialView = true;
 
     public static DayFragment newInstance(int page) {
         return (DayFragment) AlarmBaseFragment.newInstance(page, new DayFragment());
+    }
+
+    /**
+     * Called when the UI is visible to the user. I'm taking advantage of this method's callback
+     * to populate the initial persisted selection of days for an alarm, since the 'daysListView'
+     * doesn't have any children in onCreate (off-screen).
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (initialView && daysListView != null && daysListView.getChildCount() > 0) {
+            int[] selectedDays = alarm.getWeekdays();
+            IntStream.range(0, daysListView.getChildCount())
+                    .filter(i -> {
+                        boolean isChecked = ((CheckedTextView) daysListView.getChildAt(i)).isChecked();
+                        return (selectedDays[i + 1] == 1) != isChecked;
+                    })
+                    .forEach(i -> {
+                        int weekdayOffset = i + 1;
+                        selectedDays[weekdayOffset] = (selectedDays[weekdayOffset] == 1) ? 1 : 0;
+                        long itemId = daysListView.getAdapter().getItemId(i);
+                        daysListView.performItemClick(daysListView.getChildAt(i), i, itemId);
+                    });
+
+            alarm.setWeekdays(selectedDays);
+            initialView = false;
+        }
     }
 
     @Override
@@ -40,9 +69,9 @@ public class DayFragment extends AlarmBaseFragment implements OnAlarmSubmit {
         TextView stepText = (TextView) view.findViewById(R.id.stepText);
         stepText.setText(R.string.step_2);
 
-        CustomListAdapter weekdaysAdapter = new CustomListAdapter(view.getContext(), R.layout.list_weekdays, generateWeekdays(view));
+        CustomListAdapter adapter = new CustomListAdapter(view.getContext(), R.layout.list_weekdays, generateWeekdays(view));
         daysListView = (ListView) view.findViewById(R.id.weekdays_list);
-        daysListView.setAdapter(weekdaysAdapter);
+        daysListView.setAdapter(adapter);
 
         int themeColor = getActivity().getIntent().getExtras().getInt(COLOR);
         daysListView.setOnItemClickListener(new ToggleColorOnClick(themeColor, R.color.white, getContext()));
@@ -58,11 +87,13 @@ public class DayFragment extends AlarmBaseFragment implements OnAlarmSubmit {
 
     @Override
     public void onAlarmSubmit() {
-        ArrayList<String> selectedDays = IntStream.range(0, daysListView.getChildCount())
-                .mapToObj(i -> (CheckedTextView) daysListView.getChildAt(i))
-                .filter(CheckedTextView::isChecked)
-                .map(dayView -> dayView.getText().toString())
-                .collect(Collectors.toCollection(ArrayList::new));
+        int[] selectedDays = alarm.getWeekdays();
+        IntStream.range(0, daysListView.getChildCount())
+                .forEach(i -> {
+                    boolean isChecked = ((CheckedTextView) daysListView.getChildAt(i)).isChecked();
+                    int weekdayOffset = i + 1;
+                    selectedDays[weekdayOffset] = isChecked ? 1 : 0;
+                });
 
         alarm.setWeekdays(selectedDays);
     }

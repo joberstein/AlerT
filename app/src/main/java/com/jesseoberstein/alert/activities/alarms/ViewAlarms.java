@@ -102,29 +102,20 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (CreateAlarm.REQUEST_CODE == requestCode)  {
-            if (RESULT_OK == resultCode) {
-                UserAlarm newAlarm = data.getExtras().getParcelable(ALARM);
-                newAlarm.setRoute(new UserRoute(selectedRoute));
-                userAlarmDao.create(newAlarm);
+        if (RESULT_OK == resultCode) {
+            UserAlarm alarm = (UserAlarm) data.getExtras().getSerializable(ALARM);
+            alarm.setRoute(new UserRoute(selectedRoute));
 
-                List<String> endpoints = data.getExtras().getStringArrayList(ENDPOINTS);
-                Optional.ofNullable(endpoints)
-                        .orElse(Collections.emptyList())
-                        .forEach(endpointName -> {
-                            UserEndpoint userEndpoint = new UserEndpoint();
-                            userEndpoint.setEndpointName(endpointName);
-                            userEndpoint.setAlarm(newAlarm);
-                            userEndpointDao.create(userEndpoint);
-                        });
+            switch (requestCode) {
+                case CreateAlarm.REQUEST_CODE:
+                    List<String> endpoints = data.getExtras().getStringArrayList(ENDPOINTS);
+                    createAlarm(alarm, endpoints);
+                    break;
 
-                myAlarmsAdapter.addItem(buildAlarmListItem(newAlarm, TextUtils.join(", ", endpoints)));
+                case EditAlarm.REQUEST_CODE:
+                    updateAlarm(alarm);
             }
         }
-    }
-
-    public RuntimeExceptionDao<UserAlarm, Integer> getUserAlarmDao() {
-        return userAlarmDao;
     }
 
     @Override
@@ -147,4 +138,39 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
 
     @Override
     public void onCancelSelected(Bundle selected) { }
+
+    public RuntimeExceptionDao<UserAlarm, Integer> getUserAlarmDao() {
+        return userAlarmDao;
+    }
+
+    /**
+     * Persist a new alarm and add a new alarm to the alarms list with the given endpoints.
+     * @param alarm The given new alarm.
+     * @param endpoints A list of the alarm's endpoints.
+     */
+    private void createAlarm(UserAlarm alarm, List<String> endpoints) {
+        userAlarmDao.create(alarm);
+        Optional.ofNullable(endpoints).orElse(Collections.emptyList())
+                .forEach(endpointName -> {
+                    UserEndpoint userEndpoint = new UserEndpoint();
+                    userEndpoint.setEndpointName(endpointName);
+                    userEndpoint.setAlarm(alarm);
+                    userEndpointDao.create(userEndpoint);
+                });
+
+        myAlarmsAdapter.addItem(buildAlarmListItem(alarm, TextUtils.join(", ", endpoints)));
+    }
+
+    /**
+     * Update the given alarm in the database and in the alarms list.
+     * @param alarm The given alarm.
+     */
+    private void updateAlarm(UserAlarm alarm) {
+        userAlarmDao.update(alarm);
+        List<String> endpoints = userEndpointDao.queryForEq("alarm_id", alarm.getId()).stream()
+                .map(UserEndpoint::getEndpointName)
+                .collect(Collectors.toList());
+
+        myAlarmsAdapter.updateItem(buildAlarmListItem(alarm, TextUtils.join(", ", endpoints)));
+    }
 }

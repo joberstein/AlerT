@@ -1,26 +1,24 @@
 package com.jesseoberstein.alert.models;
 
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
+//import android.os.Parcel;
+//import android.os.Parcelable;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.stream.IntStream;
 
-import static com.jesseoberstein.alert.utils.Constants.DAYS;
-import static com.jesseoberstein.alert.utils.Constants.DURATION;
-import static com.jesseoberstein.alert.utils.Constants.DURATION_TYPE;
-import static com.jesseoberstein.alert.utils.Constants.HOUR;
-import static com.jesseoberstein.alert.utils.Constants.IS_ACTIVE;
-import static com.jesseoberstein.alert.utils.Constants.MINUTES;
-import static com.jesseoberstein.alert.utils.Constants.NICKNAME;
-import static com.jesseoberstein.alert.utils.Constants.REPEAT;
+import static android.icu.util.Calendar.FRIDAY;
+import static android.icu.util.Calendar.MONDAY;
+import static android.icu.util.Calendar.SATURDAY;
+import static android.icu.util.Calendar.SUNDAY;
+import static android.icu.util.Calendar.THURSDAY;
+import static android.icu.util.Calendar.TUESDAY;
+import static android.icu.util.Calendar.WEDNESDAY;
 
 @DatabaseTable(tableName = "user_alarms")
-public class UserAlarm implements Parcelable {
+public class UserAlarm implements Serializable { //Parcelable {
 
     @DatabaseField(generatedId = true)
     private int id;
@@ -41,25 +39,25 @@ public class UserAlarm implements Parcelable {
     private int minutes;
 
     @DatabaseField
-    private boolean monday;
+    private int monday;
 
     @DatabaseField
-    private boolean tuesday;
+    private int tuesday;
 
     @DatabaseField
-    private boolean wednesday;
+    private int wednesday;
 
     @DatabaseField
-    private boolean thursday;
+    private int thursday;
 
     @DatabaseField
-    private boolean friday;
+    private int friday;
 
     @DatabaseField
-    private boolean saturday;
+    private int saturday;
 
     @DatabaseField
-    private boolean sunday;
+    private int sunday;
 
     @DatabaseField
     private int duration;
@@ -75,18 +73,47 @@ public class UserAlarm implements Parcelable {
 
     public UserAlarm() {}
 
-    private UserAlarm(Parcel in) {
-        id = in.readInt();
-        nickname = in.readString();
-        station = in.readString();
-        hour = in.readInt();
-        minutes = in.readInt();
-        duration = in.readInt();
-        durationType = in.readString();
-        repeat = in.readString();
-        active = in.readInt() == 1;
-        setWeekdays(in.createStringArrayList());
-    }
+//    private UserAlarm(Parcel in) {
+//        id = in.readInt();
+//        nickname = in.readString();
+//        station = in.readString();
+//        hour = in.readInt();
+//        minutes = in.readInt();
+//        duration = in.readInt();
+//        durationType = in.readString();
+//        repeat = in.readString();
+//        active = in.readInt() == 1;
+//        setWeekdays(in.createIntArray());
+//    }
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel out, int flags) {
+//        out.writeInt(id);
+//        out.writeString(nickname);
+//        out.writeString(station);
+//        out.writeInt(hour);
+//        out.writeInt(minutes);
+//        out.writeInt(duration);
+//        out.writeString(durationType);
+//        out.writeString(repeat);
+//        out.writeInt((active ? 1 : 0));
+//        out.writeIntArray(getWeekdays());
+//    }
+//
+//    public static final Parcelable.Creator<UserAlarm> CREATOR = new Parcelable.Creator<UserAlarm>() {
+//        public UserAlarm createFromParcel(Parcel in) {
+//            return new UserAlarm(in);
+//        }
+//
+//        public UserAlarm[] newArray(int size) {
+//            return new UserAlarm[size];
+//        }
+//    };
 
     public int getId() {
         return id;
@@ -136,59 +163,59 @@ public class UserAlarm implements Parcelable {
         this.minutes = minutes;
     }
 
-    public boolean isMonday() {
+    public int getMonday() {
         return monday;
     }
 
-    public void setMonday(boolean monday) {
+    public void setMonday(int monday) {
         this.monday = monday;
     }
 
-    public boolean isTuesday() {
+    public int getTuesday() {
         return tuesday;
     }
 
-    public void setTuesday(boolean tuesday) {
+    public void setTuesday(int tuesday) {
         this.tuesday = tuesday;
     }
 
-    public boolean isWednesday() {
+    public int getWednesday() {
         return wednesday;
     }
 
-    public void setWednesday(boolean wednesday) {
+    public void setWednesday(int wednesday) {
         this.wednesday = wednesday;
     }
 
-    public boolean isThursday() {
+    public int getThursday() {
         return thursday;
     }
 
-    public void setThursday(boolean thursday) {
+    public void setThursday(int thursday) {
         this.thursday = thursday;
     }
 
-    public boolean isFriday() {
+    public int getFriday() {
         return friday;
     }
 
-    public void setFriday(boolean friday) {
+    public void setFriday(int friday) {
         this.friday = friday;
     }
 
-    public boolean isSaturday() {
+    public int getSaturday() {
         return saturday;
     }
 
-    public void setSaturday(boolean saturday) {
+    public void setSaturday(int saturday) {
         this.saturday = saturday;
     }
 
-    public boolean isSunday() {
+    public int getSunday() {
         return sunday;
     }
 
-    public void setSunday(boolean sunday) {
+    public void setSunday(int sunday) {
         this.sunday = sunday;
     }
 
@@ -224,74 +251,63 @@ public class UserAlarm implements Parcelable {
         this.active = active;
     }
 
-    public void setTime(Bundle bundle) {
-        setHour(bundle.getInt(HOUR));
-        setMinutes(bundle.getInt(MINUTES));
-    }
+    public void setWeekdays(int[] weekdays) {
+        IntStream.range(SUNDAY, SATURDAY + 1).forEach(i -> {
+            int isSelected = weekdays[i];
 
-    public void setDays(Bundle bundle) {
-        setWeekdays(bundle.getStringArrayList(DAYS));
-    }
-
-    public void setSettings(Bundle bundle) {
-        setNickname(bundle.getString(NICKNAME));
-        setDuration(bundle.getInt(DURATION));
-        setDurationType(bundle.getString(DURATION_TYPE));
-        setRepeat(bundle.getString(REPEAT));
-        setActive(bundle.getBoolean(IS_ACTIVE));
-    }
-
-    public void setWeekdays(List<String> weekdays) {
-        weekdays.forEach(weekday -> {
-            switch (weekday) {
-                case "Monday":
-                    setMonday(true);
+            switch (i) {
+                case SUNDAY:
+                    setSunday(isSelected);
                     break;
-                case "Tuesday":
-                    setTuesday(true);
+                case MONDAY:
+                    setMonday(isSelected);
                     break;
-                case "Wednesday":
-                    setWednesday(true);
+                case TUESDAY:
+                    setTuesday(isSelected);
                     break;
-                case "Thursday":
-                    setTuesday(true);
+                case WEDNESDAY:
+                    setWednesday(isSelected);
                     break;
-                case "Friday":
-                    setFriday(true);
+                case THURSDAY:
+                    setThursday(isSelected);
                     break;
-                case "Saturday":
-                    setSaturday(true);
+                case FRIDAY:
+                    setFriday(isSelected);
                     break;
-                case "Sunday":
-                    setSunday(true);
+                case SATURDAY:
+                    setSaturday(isSelected);
             }
         });
     }
 
-    public ArrayList<String> getWeekdays() {
-        ArrayList<String> weekdays = new ArrayList<>();
+    public int[] getWeekdays() {
+        int[] weekdays = new int[SATURDAY + 1];
+        weekdays[0] = -1; // should not be used; Calendar days are indices 1 - 7.
 
-        if (isMonday()) {
-            weekdays.add("Monday");
-        }
-        if (isTuesday()) {
-            weekdays.add("Tuesday");
-        }
-        if (isWednesday()) {
-            weekdays.add("Wednesday");
-        }
-        if (isThursday()) {
-            weekdays.add("Thursday");
-        }
-        if (isFriday()) {
-            weekdays.add("Friday");
-        }
-        if (isSaturday()) {
-            weekdays.add("Saturday");
-        }
-        if (isSunday()) {
-            weekdays.add("Sunday");
-        }
+        IntStream.range(SUNDAY, SATURDAY + 1).forEach(i -> {
+            switch (i) {
+                case SUNDAY:
+                    weekdays[SUNDAY] = getSunday();
+                    break;
+                case MONDAY:
+                    weekdays[MONDAY] = getMonday();
+                    break;
+                case TUESDAY:
+                    weekdays[TUESDAY] = getTuesday();
+                    break;
+                case WEDNESDAY:
+                    weekdays[WEDNESDAY] = getWednesday();
+                    break;
+                case THURSDAY:
+                    weekdays[THURSDAY] = getThursday();
+                    break;
+                case FRIDAY:
+                    weekdays[FRIDAY] = getFriday();
+                    break;
+                case SATURDAY:
+                    weekdays[SATURDAY] = getSaturday();
+            }
+        });
 
         return weekdays;
     }
@@ -320,31 +336,53 @@ public class UserAlarm implements Parcelable {
     }
 
     @Override
-    public int describeContents() {
-        return 0;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserAlarm userAlarm = (UserAlarm) o;
+
+        if (id != userAlarm.id) return false;
+        if (hour != userAlarm.hour) return false;
+        if (minutes != userAlarm.minutes) return false;
+        if (monday != userAlarm.monday) return false;
+        if (tuesday != userAlarm.tuesday) return false;
+        if (wednesday != userAlarm.wednesday) return false;
+        if (thursday != userAlarm.thursday) return false;
+        if (friday != userAlarm.friday) return false;
+        if (saturday != userAlarm.saturday) return false;
+        if (sunday != userAlarm.sunday) return false;
+        if (duration != userAlarm.duration) return false;
+        if (active != userAlarm.active) return false;
+        if (route != null ? !route.equals(userAlarm.route) : userAlarm.route != null) return false;
+        if (nickname != null ? !nickname.equals(userAlarm.nickname) : userAlarm.nickname != null)
+            return false;
+        if (station != null ? !station.equals(userAlarm.station) : userAlarm.station != null)
+            return false;
+        if (durationType != null ? !durationType.equals(userAlarm.durationType) : userAlarm.durationType != null)
+            return false;
+        return repeat != null ? repeat.equals(userAlarm.repeat) : userAlarm.repeat == null;
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeInt(id);
-        out.writeString(nickname);
-        out.writeString(station);
-        out.writeInt(hour);
-        out.writeInt(minutes);
-        out.writeInt(duration);
-        out.writeString(durationType);
-        out.writeString(repeat);
-        out.writeInt((active ? 1 : 0));
-        out.writeStringList(getWeekdays());
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (route != null ? route.hashCode() : 0);
+        result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
+        result = 31 * result + (station != null ? station.hashCode() : 0);
+        result = 31 * result + hour;
+        result = 31 * result + minutes;
+        result = 31 * result + monday;
+        result = 31 * result + tuesday;
+        result = 31 * result + wednesday;
+        result = 31 * result + thursday;
+        result = 31 * result + friday;
+        result = 31 * result + saturday;
+        result = 31 * result + sunday;
+        result = 31 * result + duration;
+        result = 31 * result + (durationType != null ? durationType.hashCode() : 0);
+        result = 31 * result + (repeat != null ? repeat.hashCode() : 0);
+        result = 31 * result + (active ? 1 : 0);
+        return result;
     }
-
-    public static final Parcelable.Creator<UserAlarm> CREATOR = new Parcelable.Creator<UserAlarm>() {
-        public UserAlarm createFromParcel(Parcel in) {
-            return new UserAlarm(in);
-        }
-
-        public UserAlarm[] newArray(int size) {
-            return new UserAlarm[size];
-        }
-    };
 }

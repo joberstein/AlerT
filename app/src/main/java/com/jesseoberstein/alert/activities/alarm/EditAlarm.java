@@ -25,7 +25,6 @@ import java.util.Optional;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
-import static com.jesseoberstein.alert.utils.Constants.IS_UPDATE;
 import static com.jesseoberstein.alert.utils.Constants.THEME;
 
 public class EditAlarm extends AppCompatActivity implements OnDialogClick {
@@ -33,7 +32,6 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick {
     private static int themeColor;
     private AlarmPagerAdapter alarmPagerAdapter;
     private ArrayList<String> endpoints;
-    private boolean isUpdate;
     private UserAlarm alarm;
 
     @Override
@@ -43,8 +41,7 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick {
         themeColor = selectedBundle.getInt(COLOR);
         setTheme(selectedBundle.getInt(THEME));
         endpoints = selectedBundle.getStringArrayList(ENDPOINTS);
-        isUpdate = selectedBundle.getBoolean(IS_UPDATE, false);
-        alarm = selectedBundle.getParcelable(ALARM);
+        alarm = (UserAlarm) selectedBundle.getSerializable(ALARM);
 
         setContentView(R.layout.activities_edit_alarm);
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
@@ -72,10 +69,6 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.stepper_dots);
         tabLayout.setBackgroundColor(getColor(themeColor));
         tabLayout.setupWithViewPager(pager, true);
-    }
-
-    public boolean isUpdate() {
-        return isUpdate;
     }
 
     public AlarmPagerAdapter getAlarmPagerAdapter() {

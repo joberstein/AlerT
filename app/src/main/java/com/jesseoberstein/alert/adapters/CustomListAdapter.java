@@ -47,8 +47,10 @@ public class CustomListAdapter extends ArrayAdapter<CustomListItem> {
         listItems.stream()
                 .filter(item -> item.getPrimaryText().equals(primaryText))
                 .findAny()
-                .ifPresent(itemToRemove -> this.items.remove(itemToRemove));
-        this.notifyDataSetChanged();
+                .ifPresent(itemToRemove -> {
+                    this.items.remove(itemToRemove);
+                    this.notifyDataSetChanged();
+                });
     }
 
     public void removeItemById(int id) {
@@ -56,8 +58,24 @@ public class CustomListAdapter extends ArrayAdapter<CustomListItem> {
         listItems.stream()
                 .filter(item -> item.getId() == id)
                 .findAny()
-                .ifPresent(itemToRemove -> this.items.remove(itemToRemove));
-        this.notifyDataSetChanged();
+                .ifPresent(itemToRemove -> {
+                    this.items.remove(itemToRemove);
+                    this.notifyDataSetChanged();
+                });
+    }
+
+    public void updateItem(CustomListItem itemToUpdate) {
+        ArrayList<CustomListItem> listItems = new ArrayList<>(this.items);
+        listItems.stream()
+                .filter(item -> item.getId() == itemToUpdate.getId())
+                .findAny()
+                .ifPresent(item -> {
+                    System.out.println(item);
+                    System.out.println(itemToUpdate);
+                    int itemPosition = this.items.indexOf(item);
+                    this.items.set(itemPosition, itemToUpdate);
+                    this.notifyDataSetChanged();
+                });
     }
 
     @Override

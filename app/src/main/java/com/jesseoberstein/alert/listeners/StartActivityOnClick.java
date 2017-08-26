@@ -126,8 +126,7 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
                 .collect(Collectors.toCollection(ArrayList::new));
 
         this.extras.putStringArrayList(ENDPOINTS, selectedEndpoints);
-        this.extras.putBoolean(IS_UPDATE, false);
-        this.extras.putParcelable(ALARM, newAlarm);
+        this.extras.putSerializable(ALARM, newAlarm);
     }
 
     private void forwardToSelectedRoute(CustomListItem item) {
@@ -140,8 +139,7 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
 
     private void forwardToSelectedAlarm(CustomListItem item) {
         UserAlarm userAlarm = ((ViewAlarms) this.origin).getUserAlarmDao().queryForId(item.getId());
-        this.extras.putParcelable(ALARM, userAlarm);
-        this.extras.putBoolean(IS_UPDATE, true);
+        this.extras.putSerializable(ALARM, userAlarm);
         this.extras.putStringArrayList(ENDPOINTS,
                 Arrays.stream(item.getTertiaryText().split(","))
                         .collect(Collectors.toCollection(ArrayList::new)));

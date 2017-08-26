@@ -8,13 +8,13 @@
     <string name="alarm_list_empty">No alarms saved yet</string>
 
     <string-array name="weekdays">
+        <item>Sunday</item>
         <item>Monday</item>
         <item>Tuesday</item>
         <item>Wednesday</item>
         <item>Thursday</item>
         <item>Friday</item>
         <item>Saturday</item>
-        <item>Sunday</item>
     </string-array>
 
     <string name="nickname">Nickname</string>

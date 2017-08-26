@@ -17,6 +17,7 @@ import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnNextAction;
 import com.jesseoberstein.alert.models.UserAlarm;
 
 import java.util.Locale;
+import java.util.stream.IntStream;
 
 public class SettingsFragment extends AlarmBaseFragment implements OnAlarmSubmit {
     private UserAlarm alarm;
@@ -38,18 +39,19 @@ public class SettingsFragment extends AlarmBaseFragment implements OnAlarmSubmit
         TextView stepText = (TextView) view.findViewById(R.id.stepText);
         stepText.setText(R.string.step_3);
 
-        System.out.println(alarm);
-
         nicknameView = ((EditText) view.findViewById(R.id.nickname));
         nicknameView.setText(alarm.getNickname());
 
         View focusHolder = view.findViewById(R.id.hiddenFocus);
         durationView = ((EditText) view.findViewById(R.id.duration_text));
-        durationView.setText(String.format(Locale.US, "%d", alarm.getDuration()));
         durationView.setOnEditorActionListener(new HideKeyboardOnNextAction(focusHolder));
+        durationView.setText(String.format(Locale.US, "%d", alarm.getDuration()));
 
         durationDropdown = ((Spinner) view.findViewById(R.id.duration_dropdown));
+        setSpinnerSelection(durationDropdown, alarm.getDurationType());
+
         repeatDropdown = ((Spinner) view.findViewById(R.id.repeat_dropdown));
+        setSpinnerSelection(repeatDropdown, alarm.getRepeat());
 
         statusView = ((Switch) view.findViewById(R.id.status_toggle));
         statusView.setChecked(alarm.isActive());
@@ -64,5 +66,16 @@ public class SettingsFragment extends AlarmBaseFragment implements OnAlarmSubmit
         alarm.setDurationType(durationDropdown.getSelectedItem().toString());
         alarm.setRepeat(repeatDropdown.getSelectedItem().toString());
         alarm.setActive(statusView.isChecked());
+    }
+
+    private void setSpinnerSelection(Spinner spinner, String item) {
+        int newPosition = IntStream.range(0, spinner.getCount())
+                .filter(i -> spinner.getItemAtPosition(i).toString().equals(item))
+                .findFirst()
+                .orElse(-1);
+
+        if (newPosition > -1) {
+            spinner.setSelection(newPosition);
+        }
     }
 }

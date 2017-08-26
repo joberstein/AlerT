@@ -3,6 +3,7 @@ package com.jesseoberstein.alert.models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 import static com.jesseoberstein.alert.utils.AlertUtils.getRouteResource;
@@ -11,7 +12,7 @@ import static com.jesseoberstein.alert.utils.Constants.ICON;
 import static com.jesseoberstein.alert.utils.Constants.THEME;
 
 @DatabaseTable(tableName = "user_routes")
-public class UserRoute {
+public class UserRoute implements Serializable {
 
     @DatabaseField(id = true, columnName = "route_name")
     private String routeName;
@@ -88,5 +89,30 @@ public class UserRoute {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserRoute userRoute = (UserRoute) o;
+
+        if (icon != userRoute.icon) return false;
+        if (theme != userRoute.theme) return false;
+        if (color != userRoute.color) return false;
+        if (routeName != null ? !routeName.equals(userRoute.routeName) : userRoute.routeName != null)
+            return false;
+        return alerts != null ? alerts.equals(userRoute.alerts) : userRoute.alerts == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = routeName != null ? routeName.hashCode() : 0;
+        result = 31 * result + (alerts != null ? alerts.hashCode() : 0);
+        result = 31 * result + icon;
+        result = 31 * result + theme;
+        result = 31 * result + color;
+        return result;
     }
 }

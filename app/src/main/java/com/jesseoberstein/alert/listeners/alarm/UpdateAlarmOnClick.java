@@ -7,12 +7,10 @@ import android.view.View;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
 import com.jesseoberstein.alert.fragments.dialog.alarm.AddAlarmDialog;
-import com.jesseoberstein.alert.models.UserAlarm;
 
 import static android.view.View.OnClickListener;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
-import static com.jesseoberstein.alert.utils.Constants.IS_UPDATE;
 
 public class UpdateAlarmOnClick implements OnClickListener {
     private EditAlarm activity;
@@ -28,13 +26,12 @@ public class UpdateAlarmOnClick implements OnClickListener {
         adapter.getDayFragment().onAlarmSubmit();
         adapter.getSettingsFragment().onAlarmSubmit();
 
-        Bundle newAlarmBundle = new Bundle();
-        newAlarmBundle.putParcelable(ALARM, this.activity.getAlarm());
-        newAlarmBundle.putStringArrayList(ENDPOINTS, this.activity.getEndpoints());
-        newAlarmBundle.putBoolean(IS_UPDATE, this.activity.isUpdate());
+        Bundle alarmBundle = new Bundle();
+        alarmBundle.putSerializable(ALARM, this.activity.getAlarm());
+        alarmBundle.putStringArrayList(ENDPOINTS, this.activity.getEndpoints());
 
         DialogFragment dialog = new AddAlarmDialog();
-        dialog.setArguments(newAlarmBundle);
+        dialog.setArguments(alarmBundle);
         dialog.show(this.activity.getFragmentManager(), "AddAlarmDialog");
     }
 }
