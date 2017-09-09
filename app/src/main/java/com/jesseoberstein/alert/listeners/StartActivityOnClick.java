@@ -10,6 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
@@ -29,7 +30,6 @@ import static android.view.View.OnClickListener;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
-import static com.jesseoberstein.alert.utils.Constants.IS_UPDATE;
 import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 import static com.jesseoberstein.alert.utils.Constants.THEME;
 
@@ -113,14 +113,9 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
         newAlarm.setActive(true);
         newAlarm.setDuration(1);
 
-        // Search through this mess of a layout to get all of the toggled enpoints.
-        // Structure: LinearLayout (root) -> LinearLayout (Button row) -> ToggleButton
-        LinearLayout endpoints = (LinearLayout) this.origin.findViewById(R.id.directions);
+        GridView endpoints = (GridView) this.origin.findViewById(R.id.direction_buttons);
         ArrayList<String> selectedEndpoints = IntStream.range(0, endpoints.getChildCount())
-                .mapToObj(rowIdx -> ((LinearLayout) endpoints.getChildAt(rowIdx)))
-                .flatMap(row -> IntStream.range(0, row.getChildCount())
-                        .mapToObj(btnIdx -> ((ToggleButton) row.getChildAt(btnIdx)))
-                        .collect(Collectors.toList()).stream())
+                .mapToObj(i -> (ToggleButton) endpoints.getChildAt(i))
                 .filter(CompoundButton::isChecked)
                 .map(btn -> btn.getText().toString())
                 .collect(Collectors.toCollection(ArrayList::new));

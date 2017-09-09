@@ -1,25 +1,29 @@
 package com.jesseoberstein.alert.listeners.inputs;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
-import com.jesseoberstein.alert.utils.AlertUtils;
+import com.jesseoberstein.alert.activities.alarm.CreateAlarm;
+
+import static com.jesseoberstein.alert.utils.AlertUtils.hideKeyboardForLastInput;
 
 /**
  * A listener that will hide the keyboard when an autocomplete item is selected.
  */
 public class HideKeyboardOnItemClick implements AdapterView.OnItemClickListener {
-    private AutoCompleteTextView autoCompleteView;
-    private View nextFocus;
+    private Activity activity;
 
-    public HideKeyboardOnItemClick(AutoCompleteTextView autoCompleteTextView, View nextFocus) {
-        this.autoCompleteView = autoCompleteTextView;
-        this.nextFocus = nextFocus;
+    public HideKeyboardOnItemClick(Activity activity) {
+        this.activity = activity;
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        AlertUtils.hideKeyboardForLastInput(this.autoCompleteView, this.nextFocus);
+        CreateAlarm createAlarm = (CreateAlarm) activity;
+        hideKeyboardForLastInput(createAlarm.getStationAutoComplete(), createAlarm.getFocusHolder());
+        createAlarm.getDirectionsView().setVisibility(View.VISIBLE);
+        createAlarm.setUpDirectionButtons(((TextView) view).getText().toString());
     }
 }

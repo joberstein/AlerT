@@ -70,8 +70,6 @@ public class CustomListAdapter extends ArrayAdapter<CustomListItem> {
                 .filter(item -> item.getId() == itemToUpdate.getId())
                 .findAny()
                 .ifPresent(item -> {
-                    System.out.println(item);
-                    System.out.println(itemToUpdate);
                     int itemPosition = this.items.indexOf(item);
                     this.items.set(itemPosition, itemToUpdate);
                     this.notifyDataSetChanged();

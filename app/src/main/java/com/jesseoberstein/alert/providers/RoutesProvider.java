@@ -12,6 +12,7 @@ import com.jesseoberstein.mbta.utils.ModePredicate;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
  * Provides access to MBTA route data in many different forms.
  */
 public class RoutesProvider {
+    public static final List<Route> RED_LINE_ROUTES = Arrays.asList(new Route("Ashmont"), new Route("Braintree"));
     private static RoutesProvider instance = null;
     private static final ObjectMapper mapper = new ObjectMapper();
     private final AssetManager assetManager;
@@ -63,6 +65,7 @@ public class RoutesProvider {
         return this.routeModes.stream()
                 .filter(ModePredicate.isModeUsed())
                 .flatMap(mode -> mode.getRoutes().stream())
+                .filter(route -> !route.isRouteHide())
                 .collect(Collectors.toList());
     }
 
@@ -75,6 +78,18 @@ public class RoutesProvider {
     public List<String> getRouteNames() {
         return this.routes.stream()
                 .map(Route::getParentRoute)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Get the list of specific route names for the provider's routes (some modes may be
+     * filtered out).
+     * @return A list of specific route names (the route name given by the MBTA).
+     */
+    public List<String> getSpecificRouteNames() {
+        return this.routes.stream()
+                .map(Route::getRouteName)
                 .distinct()
                 .collect(Collectors.toList());
     }

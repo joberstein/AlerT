@@ -19,6 +19,7 @@
 
     <string name="nickname">Nickname</string>
     <string name="station">Station</string>
+    <string name="lines">Lines</string>
     <string name="direction">Direction</string>
     <string name="create">Create</string>
 

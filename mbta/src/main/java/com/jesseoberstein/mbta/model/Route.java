@@ -3,6 +3,7 @@ package com.jesseoberstein.mbta.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jesseoberstein.mbta.utils.RouteName;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Route {
@@ -22,6 +23,13 @@ public class Route {
     private List<Direction> directions;
 
     public Route() {}
+
+    public Route(String routeName) {
+        setRouteName(routeName);
+        this.routeId = routeName;
+        this.routeHide = false;
+        this.directions = Collections.emptyList();
+    }
 
     public String getRouteId() {
         return routeId;

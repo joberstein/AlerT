@@ -23,13 +23,20 @@ public abstract class AbstractValidator {
     private Button submit;
     private int inputKey;
 
-    AbstractValidator(TextView input, Predicate<String> predicate,
-                      String errorMsg, Button submit, int inputKey) {
-        this.input = input;
+    AbstractValidator(Predicate<String> predicate, String errorMsg, Button submit, int inputKey) {
         this.predicate = predicate;
         this.errorMsg = errorMsg;
         this.submit = submit;
         this.inputKey = inputKey;
+    }
+
+    AbstractValidator(TextView input, Predicate<String> predicate, String errorMsg, Button submit, int inputKey) {
+        this(predicate, errorMsg, submit, inputKey);
+        this.input = input;
+    }
+
+    public void setInputTextView(TextView view) {
+        this.input = view;
     }
 
     /**

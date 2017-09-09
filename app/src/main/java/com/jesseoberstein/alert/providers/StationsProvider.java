@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jesseoberstein.mbta.model.Directions;
 import com.jesseoberstein.mbta.model.Stop;
+import com.jesseoberstein.mbta.utils.RouteName;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,26 +76,6 @@ public class StationsProvider {
                 .filter(stop -> stop.getRealStopName().equals(stopName))
                 .map(Stop::getStopId)
                 .distinct()
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Get a list of specific route names for a given stop, relative to the given parent route.
-     * @param stopName The stop name to get the route names for.
-     * @param parentRoute The route to check within.
-     * @return A list of specific (can pass to the MBTA API) route names.
-     */
-    private List<String> getRouteNamesForStop(String stopName, String parentRoute) {
-        return this.directions.stream()
-                .filter(dirs -> dirs.getRoute().getParentRoute().equals(parentRoute) &&
-                        !dirs.getDirections().stream()
-                                .filter(direction -> !direction.getStops().stream()
-                                        .filter(stop -> stop.getRealStopName().equals(stopName))
-                                        .collect(Collectors.toList())
-                                        .isEmpty())
-                                .collect(Collectors.toList())
-                                .isEmpty())
-                .map(directions -> directions.getRoute().getRouteName())
                 .collect(Collectors.toList());
     }
 
