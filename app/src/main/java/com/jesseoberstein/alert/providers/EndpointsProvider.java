@@ -114,9 +114,9 @@ public class EndpointsProvider {
 
     /**
      * Return the actual Red Line endpoints (Ashmont or Braintree + Alewife).
-     * @param line
-     * @param endpoints
-     * @return
+     * @param line Ashmont (A) or Braintree (B) line.
+     * @param endpoints A list of the red line endpoints.
+     * @return The list of Red line for the given line.
      */
     public List<String> getRedLineEndpoints(RouteLine line, List<String> endpoints) {
         switch (line) {
@@ -129,6 +129,12 @@ public class EndpointsProvider {
         }
     }
 
+    /**
+     * Get the endpoints for a stop given the following routes.
+     * @param routes The routes to check for endpoints.
+     * @param stopIds The stop ids to check as endpoints.
+     * @return A list of endpoint names.
+     */
     private List<String> getEndpointsForStopFromRoutes(List<Route> routes, List<String> stopIds) {
         return routes.stream()
                 .flatMap(route -> route.getDirections().stream())

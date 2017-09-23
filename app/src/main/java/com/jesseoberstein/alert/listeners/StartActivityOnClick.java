@@ -4,17 +4,15 @@ package com.jesseoberstein.alert.listeners;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
-import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.activities.alarm.CreateAlarm;
 import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.models.CustomListItem;
 import com.jesseoberstein.alert.models.UserAlarm;
@@ -101,19 +99,22 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
     }
 
     private void editCreatedAlarm() {
+        CreateAlarm createAlarm = (CreateAlarm) this.origin;
+
         UserAlarm newAlarm = new UserAlarm();
+        newAlarm.setNickname(createAlarm.getNicknameText().getText().toString());
+        newAlarm.setStation(createAlarm.getStationAutoComplete().getText().toString());
 
-        EditText nickname = (EditText) this.origin.findViewById(R.id.nickname);
-        newAlarm.setNickname(nickname.getText().toString());
-
-        AutoCompleteTextView station = (AutoCompleteTextView) this.origin.findViewById(R.id.station);
-        newAlarm.setStation(station.getText().toString());
+        TabLayout tabs = createAlarm.getDirectionTabs();
+        newAlarm.setDirection(tabs.getTabAt(tabs.getSelectedTabPosition()).getText().toString());
 
         // Defaults
         newAlarm.setActive(true);
         newAlarm.setDuration(1);
 
-        GridView endpoints = (GridView) this.origin.findViewById(R.id.direction_buttons);
+        this.extras.putSerializable(ALARM, newAlarm);
+
+        GridView endpoints = createAlarm.getEndpointButtons();
         ArrayList<String> selectedEndpoints = IntStream.range(0, endpoints.getChildCount())
                 .mapToObj(i -> (ToggleButton) endpoints.getChildAt(i))
                 .filter(CompoundButton::isChecked)
@@ -121,7 +122,6 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
                 .collect(Collectors.toCollection(ArrayList::new));
 
         this.extras.putStringArrayList(ENDPOINTS, selectedEndpoints);
-        this.extras.putSerializable(ALARM, newAlarm);
     }
 
     private void forwardToSelectedRoute(CustomListItem item) {

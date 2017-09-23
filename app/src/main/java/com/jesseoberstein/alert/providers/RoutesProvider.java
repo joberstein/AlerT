@@ -85,10 +85,12 @@ public class RoutesProvider {
     /**
      * Get the list of specific route names for the provider's routes (some modes may be
      * filtered out).
+     * @param parentRoute The name of the parent route to filter by.
      * @return A list of specific route names (the route name given by the MBTA).
      */
-    public List<String> getSpecificRouteNames() {
+    public List<String> getSpecificRouteNames(String parentRoute) {
         return this.routes.stream()
+                .filter(route -> route.getParentRoute().equals(parentRoute))
                 .map(Route::getRouteName)
                 .distinct()
                 .collect(Collectors.toList());

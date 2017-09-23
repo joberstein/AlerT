@@ -44,6 +44,7 @@ public class CreateAlarmTextValidator extends AbstractValidator implements TextW
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         if (this.inputKey == STATION_KEY) {
             activity.getDirectionsView().setVisibility(View.GONE);
+            activity.getEndpointsView().setVisibility(View.GONE);
             activity.getLinesView().setVisibility(View.GONE);
         }
     }

@@ -19,8 +19,9 @@
 
     <string name="nickname">Nickname</string>
     <string name="station">Station</string>
+    <string name="directions">Directions</string>
     <string name="lines">Lines</string>
-    <string name="direction">Direction</string>
+    <string name="endpoints">Endpoints</string>
     <string name="create">Create</string>
 
     <string name="step_1">1) Choose Start Time</string>

@@ -1,8 +1,5 @@
 package com.jesseoberstein.alert.models;
 
-//import android.os.Parcel;
-//import android.os.Parcelable;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -18,7 +15,7 @@ import static android.icu.util.Calendar.TUESDAY;
 import static android.icu.util.Calendar.WEDNESDAY;
 
 @DatabaseTable(tableName = "user_alarms")
-public class UserAlarm implements Serializable { //Parcelable {
+public class UserAlarm implements Serializable {
 
     @DatabaseField(generatedId = true)
     private int id;
@@ -28,6 +25,9 @@ public class UserAlarm implements Serializable { //Parcelable {
 
     @DatabaseField
     private String nickname;
+
+    @DatabaseField
+    private String direction;
 
     @DatabaseField
     private String station;
@@ -73,48 +73,6 @@ public class UserAlarm implements Serializable { //Parcelable {
 
     public UserAlarm() {}
 
-//    private UserAlarm(Parcel in) {
-//        id = in.readInt();
-//        nickname = in.readString();
-//        station = in.readString();
-//        hour = in.readInt();
-//        minutes = in.readInt();
-//        duration = in.readInt();
-//        durationType = in.readString();
-//        repeat = in.readString();
-//        active = in.readInt() == 1;
-//        setWeekdays(in.createIntArray());
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel out, int flags) {
-//        out.writeInt(id);
-//        out.writeString(nickname);
-//        out.writeString(station);
-//        out.writeInt(hour);
-//        out.writeInt(minutes);
-//        out.writeInt(duration);
-//        out.writeString(durationType);
-//        out.writeString(repeat);
-//        out.writeInt((active ? 1 : 0));
-//        out.writeIntArray(getWeekdays());
-//    }
-//
-//    public static final Parcelable.Creator<UserAlarm> CREATOR = new Parcelable.Creator<UserAlarm>() {
-//        public UserAlarm createFromParcel(Parcel in) {
-//            return new UserAlarm(in);
-//        }
-//
-//        public UserAlarm[] newArray(int size) {
-//            return new UserAlarm[size];
-//        }
-//    };
-
     public int getId() {
         return id;
     }
@@ -139,6 +97,14 @@ public class UserAlarm implements Serializable { //Parcelable {
         this.nickname = nickname;
     }
 
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
     public String getStation() {
         return station;
     }
@@ -161,62 +127,6 @@ public class UserAlarm implements Serializable { //Parcelable {
 
     public void setMinutes(int minutes) {
         this.minutes = minutes;
-    }
-
-    public int getMonday() {
-        return monday;
-    }
-
-    public void setMonday(int monday) {
-        this.monday = monday;
-    }
-
-    public int getTuesday() {
-        return tuesday;
-    }
-
-    public void setTuesday(int tuesday) {
-        this.tuesday = tuesday;
-    }
-
-    public int getWednesday() {
-        return wednesday;
-    }
-
-    public void setWednesday(int wednesday) {
-        this.wednesday = wednesday;
-    }
-
-    public int getThursday() {
-        return thursday;
-    }
-
-    public void setThursday(int thursday) {
-        this.thursday = thursday;
-    }
-
-    public int getFriday() {
-        return friday;
-    }
-
-    public void setFriday(int friday) {
-        this.friday = friday;
-    }
-
-    public int getSaturday() {
-        return saturday;
-    }
-
-    public void setSaturday(int saturday) {
-        this.saturday = saturday;
-    }
-
-    public int getSunday() {
-        return sunday;
-    }
-
-    public void setSunday(int sunday) {
-        this.sunday = sunday;
     }
 
     public int getDuration() {
@@ -312,6 +222,62 @@ public class UserAlarm implements Serializable { //Parcelable {
         return weekdays;
     }
 
+    private int getMonday() {
+        return monday;
+    }
+
+    private void setMonday(int monday) {
+        this.monday = monday;
+    }
+
+    private int getTuesday() {
+        return tuesday;
+    }
+
+    private void setTuesday(int tuesday) {
+        this.tuesday = tuesday;
+    }
+
+    private int getWednesday() {
+        return wednesday;
+    }
+
+    private void setWednesday(int wednesday) {
+        this.wednesday = wednesday;
+    }
+
+    private int getThursday() {
+        return thursday;
+    }
+
+    private void setThursday(int thursday) {
+        this.thursday = thursday;
+    }
+
+    private int getFriday() {
+        return friday;
+    }
+
+    private void setFriday(int friday) {
+        this.friday = friday;
+    }
+
+    private int getSaturday() {
+        return saturday;
+    }
+
+    private void setSaturday(int saturday) {
+        this.saturday = saturday;
+    }
+
+    private int getSunday() {
+        return sunday;
+    }
+
+    private void setSunday(int sunday) {
+        this.sunday = sunday;
+    }
+
     @Override
     public String toString() {
         return "UserAlarm{" +
@@ -357,6 +323,8 @@ public class UserAlarm implements Serializable { //Parcelable {
         if (route != null ? !route.equals(userAlarm.route) : userAlarm.route != null) return false;
         if (nickname != null ? !nickname.equals(userAlarm.nickname) : userAlarm.nickname != null)
             return false;
+        if (direction != null ? !direction.equals(userAlarm.direction) : userAlarm.direction != null)
+            return false;
         if (station != null ? !station.equals(userAlarm.station) : userAlarm.station != null)
             return false;
         if (durationType != null ? !durationType.equals(userAlarm.durationType) : userAlarm.durationType != null)
@@ -369,6 +337,7 @@ public class UserAlarm implements Serializable { //Parcelable {
         int result = id;
         result = 31 * result + (route != null ? route.hashCode() : 0);
         result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
+        result = 31 * result + (direction != null ? direction.hashCode() : 0);
         result = 31 * result + (station != null ? station.hashCode() : 0);
         result = 31 * result + hour;
         result = 31 * result + minutes;

@@ -18,7 +18,7 @@ import java.util.List;
 
 abstract class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "alert";
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 13;
     private static List<Class<?>> DAO_CLASSES = Arrays.asList(
             UserRoute.class, UserAlarm.class, UserEndpoint.class
     );

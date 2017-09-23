@@ -1,8 +1,11 @@
 package com.jesseoberstein.alert.listeners.endpoints;
 
+import android.content.Context;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 
+import com.jesseoberstein.alert.activities.alarm.CreateAlarm;
 import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
 
 import java.util.HashMap;
@@ -18,15 +21,17 @@ public class ToggleEndpointsOnClick implements OnCheckedChangeListener {
     private List<String> routeEndpoints;
     private ArrayAdapter<String> endpointsAdapter;
     private HashMap<String, Integer> activeEndpoints;
+    private Context context;
 
     public ToggleEndpointsOnClick(ToggleColorOnClick toggleColorOnClick,
                                   List<String> routeEndpoints,
                                   ArrayAdapter<String> endpointsAdapter,
-                                  HashMap<String, Integer> activeEndpoints) {
+                                  HashMap<String, Integer> activeEndpoints, Context context) {
         this.toggleColorOnClick = toggleColorOnClick;
         this.routeEndpoints = routeEndpoints;
         this.endpointsAdapter = endpointsAdapter;
         this.activeEndpoints = activeEndpoints;
+        this.context = context;
     }
 
     @Override
@@ -47,5 +52,9 @@ public class ToggleEndpointsOnClick implements OnCheckedChangeListener {
         });
 
         this.endpointsAdapter.notifyDataSetChanged();
+
+        CreateAlarm createAlarm = (CreateAlarm) context;
+        int newVisibility = this.endpointsAdapter.isEmpty() ? View.GONE : View.VISIBLE;
+        createAlarm.getEndpointsView().setVisibility(newVisibility);
     }
 }

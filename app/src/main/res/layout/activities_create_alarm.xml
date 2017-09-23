@@ -31,7 +31,29 @@
 
     <include layout="@layout/input_focus_holder"/>
 
-    <!--Lines-->
+    <!-- Directions -->
+    <LinearLayout
+        android:id="@+id/directions_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/directions"
+            android:paddingStart="6dp"
+            android:layout_marginBottom="5dp"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/direction_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Lines -->
     <LinearLayout
         android:id="@+id/lines_view"
         android:layout_width="match_parent"
@@ -56,9 +78,9 @@
 
     </LinearLayout>
 
-    <!-- Direction -->
+    <!-- Endpoints -->
     <LinearLayout
-        android:id="@+id/directions_section"
+        android:id="@+id/endpoints_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -68,11 +90,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="6dp"
-            android:text="@string/direction"
+            android:text="@string/endpoints"
             android:layout_marginBottom="5dp"/>
 
         <GridView
-            android:id="@+id/direction_buttons"
+            android:id="@+id/endpoint_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:numColumns="2"

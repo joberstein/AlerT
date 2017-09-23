@@ -3,6 +3,7 @@ package com.jesseoberstein.alert.activities.alarm;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.adapters.ButtonListAdapter;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
+import com.jesseoberstein.alert.listeners.endpoints.SelectDirectionOnClick;
 import com.jesseoberstein.alert.listeners.endpoints.ToggleEndpointsOnClick;
 import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnItemClick;
 import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnNextAction;
@@ -30,6 +32,7 @@ import com.jesseoberstein.alert.utils.Tints;
 import com.jesseoberstein.alert.validation.AbstractValidator;
 import com.jesseoberstein.alert.validation.AutoCompleteValidator;
 import com.jesseoberstein.alert.validation.CreateAlarmTextValidator;
+import com.jesseoberstein.mbta.model.Direction;
 import com.jesseoberstein.mbta.model.Route;
 import com.jesseoberstein.mbta.utils.RouteLine;
 
@@ -50,8 +53,9 @@ public class CreateAlarm extends AppCompatActivity {
     public static final int NICKNAME_KEY = 0;
     public static final int STATION_KEY = 1;
 
-    private static String selectedRoute;
-    private static int themeColor;
+    private String selectedRoute;
+    private String selectedStop;
+    private int themeColor;
     private HashMap<String, Integer> activeEndpoints = new HashMap<>();
 
     private Bundle receivedBundle;
@@ -61,10 +65,12 @@ public class CreateAlarm extends AppCompatActivity {
 
     private EditText nicknameText;
     private AutoCompleteTextView stationAutoComplete;
+    private LinearLayout directionsView;
+    private TabLayout directionTabs;
     private LinearLayout linesView;
     private LinearLayout lineButtons;
-    private LinearLayout directionsView;
-    private GridView directionButtons;
+    private LinearLayout endpointsView;
+    private GridView endpointButtons;
     private View focusHolder;
 
     @Override
@@ -89,10 +95,12 @@ public class CreateAlarm extends AppCompatActivity {
         // Get the activity views.
         nicknameText = (EditText) findViewById(R.id.nickname);
         stationAutoComplete = (AutoCompleteTextView) findViewById(R.id.station);
+        directionsView = (LinearLayout) findViewById(R.id.directions_view);
+        directionTabs = (TabLayout) findViewById(R.id.direction_tabs);
         linesView = (LinearLayout) findViewById(R.id.lines_view);
         lineButtons = (LinearLayout) linesView.findViewById(R.id.line_buttons);
-        directionsView = (LinearLayout) findViewById(R.id.directions_section);
-        directionButtons = (GridView) findViewById(R.id.direction_buttons);
+        endpointsView = (LinearLayout) findViewById(R.id.endpoints_section);
+        endpointButtons = (GridView) findViewById(R.id.endpoint_buttons);
         focusHolder = findViewById(R.id.hiddenFocus);
         Button createAlarmButton = (Button) findViewById(R.id.create_alarm);
 
@@ -151,39 +159,67 @@ public class CreateAlarm extends AppCompatActivity {
         return stationAutoComplete;
     }
 
-    public LinearLayout getLinesView() {
-        return linesView;
-    }
-
     public LinearLayout getDirectionsView() {
         return directionsView;
     }
 
-    public GridView getDirectionButtons() {
-        return directionButtons;
+    public TabLayout getDirectionTabs() {
+        return directionTabs;
+    }
+
+    public LinearLayout getLinesView() {
+        return linesView;
+    }
+
+    public LinearLayout getEndpointsView() {
+        return endpointsView;
+    }
+
+    public GridView getEndpointButtons() {
+        return endpointButtons;
     }
 
     public View getFocusHolder() {
         return focusHolder;
     }
 
+    public void setUpDirectionTabs(String stopName) {
+        selectedStop = stopName;
+
+        directionsView.setVisibility(View.VISIBLE);
+        directionTabs.removeAllTabs();
+        directionTabs.setSelectedTabIndicatorColor(getColor(themeColor));
+        directionTabs.addOnTabSelectedListener(new SelectDirectionOnClick(this));
+
+        // Add a tab for each stop direction.
+        stationsProvider.getDirectionsForStop(selectedStop, selectedRoute).stream()
+                .map(Direction::getDirectionName)
+                .distinct()
+                .forEach(dirName -> directionTabs.addTab(directionTabs.newTab().setText(dirName)));
+
+        int selectedTabIdx = directionTabs.getSelectedTabPosition();
+        String defaultDirectionName = Optional.ofNullable(directionTabs.getTabAt(selectedTabIdx))
+                .flatMap(tab -> Optional.ofNullable(tab.getText()))
+                .map(CharSequence::toString).orElse("");
+        setUpLineAndEndpointButtons(defaultDirectionName);
+    }
+
     /**
-     * Create the direction buttons and add them to the view. Force the list of directions to be
-     * an even number.
+     * Create the endpoint and line buttons for the given stop, and add them to the view.
      */
-    public void setUpDirectionButtons(String stop) {
-        List<String> selectedStopIds = stationsProvider.getStopIdsForStop(stop, selectedRoute);
+    public void setUpLineAndEndpointButtons(String directionName) {
+        List<String> selectedStopIds = stationsProvider.getStopIdForStopAndDirection(selectedStop, directionName, selectedRoute);
         ButtonListAdapter endpointsAdapter = new ButtonListAdapter(this, R.layout.button_direction, themeColor, new ArrayList<>());
-        directionButtons.setAdapter(endpointsAdapter);
+        endpointButtons.setAdapter(endpointsAdapter);
 
         List<String> endpoints = endpointsProvider.getEndpointsForStop(selectedStopIds, selectedRoute);
-        if (endpoints.size() > 2) {
-            // show lines section. don't add buttons below
+        List<Route> routes = endpointsProvider.getRoutesForStop(selectedStopIds, routesProvider.getSpecificRouteNames(selectedRoute));
+        boolean isRedLine = selectedRoute.equals(RED.toString());
+        routes = isRedLine ? RoutesProvider.RED_LINE_ROUTES : routes;
+
+        if (routes.size() > 1 && endpoints.size() > 1) {
             linesView.setVisibility(View.VISIBLE);
             lineButtons.removeAllViews();
-            List<Route> routes = endpointsProvider.getRoutesForStop(selectedStopIds, routesProvider.getSpecificRouteNames());
-            boolean isRedLine = selectedRoute.equals(RED.toString());
-            routes = isRedLine ? RoutesProvider.RED_LINE_ROUTES : routes;
             routes.forEach(route -> {
                 RouteLine line = RouteLine.getLineFromRoute(route.getRouteId());
                 String lineName = line.equals(RouteLine.OTHER) ? route.getRouteName() : line.name();
@@ -195,6 +231,7 @@ public class CreateAlarm extends AppCompatActivity {
             });
         }
         else {
+            endpointsView.setVisibility(View.VISIBLE);
             endpointsAdapter.addAll(endpoints);
         }
     }
@@ -216,7 +253,8 @@ public class CreateAlarm extends AppCompatActivity {
         btn.setTextOn(line);
         btn.setTextOff(line);
         btn.setBackgroundColor(getColor(android.R.color.transparent));
-        btn.setOnCheckedChangeListener(new ToggleEndpointsOnClick(toggleBtnColor, routeEndpoints, endpointsAdapter, activeEndpoints));
+        btn.setOnCheckedChangeListener(new ToggleEndpointsOnClick(
+                toggleBtnColor, routeEndpoints, endpointsAdapter, activeEndpoints, this));
 
         lineButtons.addView(btn);
     }

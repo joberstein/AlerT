@@ -4,9 +4,9 @@ import android.content.res.AssetManager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jesseoberstein.mbta.model.Direction;
 import com.jesseoberstein.mbta.model.Directions;
 import com.jesseoberstein.mbta.model.Stop;
-import com.jesseoberstein.mbta.utils.RouteName;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,6 +76,44 @@ public class StationsProvider {
                 .filter(stop -> stop.getRealStopName().equals(stopName))
                 .map(Stop::getStopId)
                 .distinct()
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Get a stop id given a stop name and direction.
+     * @param stopName The real name of the stop.
+     * @param directionName The direction name.
+     * @param parentRoute The route the stop is on.
+     * @return A stop id.
+     */
+    public List<String> getStopIdForStopAndDirection(String stopName, String directionName, String parentRoute) {
+        return getDirectionsForStop(stopName, parentRoute).stream()
+                .filter(direction -> direction.getDirectionName().equals(directionName))
+                .flatMap(direction -> direction.getStops().stream())
+                .filter(stop -> stop.getRealStopName().equals(stopName))
+                .map(Stop::getStopId)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Get a list of directions that a stop has on a given route.
+     * @param stopName The stop to get the directions for.
+     * @param parentRoute The parent route to get directions from.
+     * @return A list of directions.
+     */
+    public List<Direction> getDirectionsForStop(String stopName, String parentRoute) {
+        return this.directions.stream()
+                .filter(directions ->
+                        directions.getRoute().getParentRoute().equals(parentRoute) &&
+                        !directions.getDirections().stream()
+                                .filter(direction -> !direction.getStops().stream()
+                                        .filter(stop -> !stop.getRealStopName().equals(stopName))
+                                        .collect(Collectors.toList())
+                                        .isEmpty())
+                                .collect(Collectors.toList())
+                                .isEmpty())
+                .flatMap(directions -> directions.getDirections().stream())
                 .collect(Collectors.toList());
     }
 

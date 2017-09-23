@@ -38,16 +38,6 @@ public class Constants {
 
     public static final String ALARM = "alarm";
     public static final String ALARM_ID = "alarmId";
-    public static final String STATION = "station";
-    public static final String IS_UPDATE = "isUpdate";
-    public static final String HOUR = "hour";
-    public static final String MINUTES = "minutes";
-    public static final String DAYS = "days";
     public static final String NICKNAME = "nickname";
-    public static final String DURATION = "duration";
-    public static final String DURATION_TYPE = "durationType";
-    public static final String REPEAT = "repeat";
-    public static final String IS_ACTIVE = "status";
-
     public static final String ENDPOINTS = "endpoints";
 }
