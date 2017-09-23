@@ -1,5 +1,7 @@
 package com.jesseoberstein.alert.activities.alarms;
 
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +28,7 @@ import com.jesseoberstein.alert.models.CustomListItem;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserEndpoint;
 import com.jesseoberstein.alert.models.UserRoute;
+import com.jesseoberstein.alert.utils.AlarmUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,6 +50,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
     private CustomListAdapter myAlarmsAdapter;
     private RuntimeExceptionDao<UserAlarm, Integer> userAlarmDao;
     private RuntimeExceptionDao<UserEndpoint, Integer> userEndpointDao;
+    private AlarmManager alarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +95,8 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
                 .withAction(Intent.ACTION_INSERT)
                 .withBundle(selectedBundle)
                 .withRequestCode(CreateAlarm.REQUEST_CODE));
+
+        alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
     }
 
     @Override
@@ -150,6 +156,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
      */
     private void createAlarm(UserAlarm alarm, List<String> endpoints) {
         userAlarmDao.create(alarm);
+        AlarmUtils.scheduleOrCancelAlarm(alarm, alarmManager, this);
         Optional.ofNullable(endpoints).orElse(Collections.emptyList())
                 .forEach(endpointName -> {
                     UserEndpoint userEndpoint = new UserEndpoint();
@@ -167,6 +174,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
      */
     private void updateAlarm(UserAlarm alarm) {
         userAlarmDao.update(alarm);
+        AlarmUtils.scheduleOrCancelAlarm(alarm, alarmManager, this);
         List<String> endpoints = userEndpointDao.queryForEq("alarm_id", alarm.getId()).stream()
                 .map(UserEndpoint::getEndpointName)
                 .collect(Collectors.toList());
