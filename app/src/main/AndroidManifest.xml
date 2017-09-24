@@ -77,6 +77,18 @@
                 android:value="com.jesseoberstein.alert.activities.alarms.ViewAlarms"/>
         </activity>
 
+        <receiver android:name=".receivers.OnAlarmStart"  android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receivers.OnAlarmStop"  android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.DELETE"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

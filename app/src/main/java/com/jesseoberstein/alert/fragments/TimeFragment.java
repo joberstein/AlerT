@@ -35,10 +35,11 @@ public class TimeFragment extends AlarmBaseFragment implements OnAlarmSubmit {
         stepText.setText(R.string.step_1);
 
         Calendar calendar = getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
         boolean isUpdate = alarm.getId() > 0;
 
         timePicker = (TimePicker) view.findViewById(R.id.alarm_time_picker);
-        timePicker.setHour(isUpdate ? alarm.getHour() : calendar.get(HOUR));
+        timePicker.setHour(isUpdate ? alarm.getHour() : calendar.get(Calendar.HOUR_OF_DAY));
         timePicker.setMinute(isUpdate ? alarm.getMinutes() : calendar.get(MINUTE));
 
         return view;

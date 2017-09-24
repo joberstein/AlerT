@@ -7,56 +7,68 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.receivers.OnAlarmStart;
+import com.jesseoberstein.alert.receivers.OnAlarmStop;
 
 import java.util.Calendar;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import static android.app.AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+import static android.app.AlarmManager.INTERVAL_DAY;
 import static android.app.AlarmManager.RTC;
 import static android.app.AlarmManager.RTC_WAKEUP;
+import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
+import static android.app.PendingIntent.getBroadcast;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_START_REQUEST_CODE;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_STOP_REQUEST_CODE;
 
 public class AlarmUtils {
     private static Calendar calendar = Calendar.getInstance();
 
-    public static void scheduleOrCancelAlarm(UserAlarm alarm, AlarmManager alarmManager, Context context) {
+    public static boolean shouldAlarmFireToday(int[] selectedDays) {
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        return selectedDays[calendar.get(Calendar.DAY_OF_WEEK)] == 1;
+    }
+
+    public static void scheduleOrCancelAlarm(UserAlarm alarm, AlarmManager alarmManager, Context context, String[] stopIds) {
         if (alarm.isActive()) {
-            scheduleAlarm(alarm, alarmManager, context);
+            scheduleAlarm(alarm, alarmManager, context, stopIds);
         } else {
             cancelAlarm(alarm, alarmManager, context);
         }
     }
 
-    private static void scheduleAlarm(UserAlarm alarm, AlarmManager alarmManager, Context context) {
+    private static void scheduleAlarm(UserAlarm alarm, AlarmManager alarmManager, Context context, String[] stopIds) {
         setAlarmStartTime(alarm);
-        alarmManager.setRepeating(RTC_WAKEUP, calendar.getTimeInMillis(),INTERVAL_FIFTEEN_MINUTES / 15, getAlarmStartIntent(alarm, context));
+        alarmManager.setRepeating(RTC_WAKEUP, calendar.getTimeInMillis(), INTERVAL_DAY, getAlarmStartIntent(alarm, context, stopIds));
 
         setAlarmEndTime(alarm, context);
-        alarmManager.set(RTC, calendar.getTimeInMillis(), getAlarmStopIntent(alarm, context));
+        alarmManager.setInexactRepeating(RTC, calendar.getTimeInMillis(), INTERVAL_DAY, getAlarmStopIntent(alarm, context));
     }
 
     private static void cancelAlarm(UserAlarm alarm, AlarmManager alarmManager, Context context) {
-        alarmManager.cancel(getAlarmStartIntent(alarm, context));
+        // Use an empty array for stop ids because extras don't apply in the intent filter.
+        alarmManager.cancel(getAlarmStartIntent(alarm, context, new String[]{}));
         alarmManager.cancel(getAlarmStopIntent(alarm, context));
     }
 
-    private static PendingIntent getAlarmStartIntent(UserAlarm alarm, Context context) {
-        Intent intent = new Intent(Intent.ACTION_INSERT, buildAlarmUri(alarm), context, ViewAlarms.class); // TODO receiver class goes here.
-        return PendingIntent.getBroadcast(context, ALARM_START_REQUEST_CODE, intent, 0);
+    private static PendingIntent getAlarmStartIntent(UserAlarm alarm, Context context, String[] stopIds) {
+        Intent intent = new Intent(Intent.ACTION_INSERT, buildAlarmUri(alarm.getId()), context, OnAlarmStart.class);
+        intent.putExtra(Constants.DAYS, alarm.getWeekdays());
+        intent.putExtra(Constants.STOP_IDS, stopIds);
+        return getBroadcast(context, ALARM_START_REQUEST_CODE, intent, FLAG_UPDATE_CURRENT);
     }
 
     private static PendingIntent getAlarmStopIntent(UserAlarm alarm, Context context) {
-        Intent intent = new Intent(Intent.ACTION_DELETE, buildAlarmUri(alarm), context, ViewAlarms.class); // TODO receiver class goes here.
-        return PendingIntent.getBroadcast(context, ALARM_STOP_REQUEST_CODE, intent, 0);
+        Intent intent = new Intent(Intent.ACTION_DELETE, buildAlarmUri(alarm.getId()), context, OnAlarmStop.class);
+        return getBroadcast(context, ALARM_STOP_REQUEST_CODE, intent, FLAG_UPDATE_CURRENT);
     }
 
     private static void setAlarmStartTime(UserAlarm alarm) {
-        calendar.set(Calendar.HOUR, alarm.getHour());
+        calendar.set(Calendar.HOUR_OF_DAY, alarm.getHour());
         calendar.set(Calendar.MINUTE, alarm.getMinutes());
+        calendar.set(Calendar.SECOND, 0);
     }
 
     private static void setAlarmEndTime(UserAlarm alarm, Context context) {
@@ -70,10 +82,10 @@ public class AlarmUtils {
         calendar.add(durationType, alarm.getDuration());
     }
 
-    private static Uri buildAlarmUri(UserAlarm alarm) {
+    private static Uri buildAlarmUri(int alarmId) {
         return new Uri.Builder()
                 .scheme("content")
-                .path("alarms/" + alarm.getId())
+                .path("alarms/" + alarmId)
                 .build();
     }
 }

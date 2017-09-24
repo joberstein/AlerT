@@ -40,7 +40,9 @@ public class Constants {
     public static final String ALARM_ID = "alarmId";
     public static final String NICKNAME = "nickname";
     public static final String ENDPOINTS = "endpoints";
+    public static final String DAYS = "days";
+    public static final String STOP_IDS = "stopId";
 
-    static final int ALARM_START_REQUEST_CODE = 4;
-    static final int ALARM_STOP_REQUEST_CODE = 5;
+    public static final int ALARM_START_REQUEST_CODE = 4;
+    public static final int ALARM_STOP_REQUEST_CODE = 5;
 }

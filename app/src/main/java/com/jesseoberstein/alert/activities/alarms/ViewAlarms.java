@@ -28,6 +28,7 @@ import com.jesseoberstein.alert.models.CustomListItem;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserEndpoint;
 import com.jesseoberstein.alert.models.UserRoute;
+import com.jesseoberstein.alert.providers.StationsProvider;
 import com.jesseoberstein.alert.utils.AlarmUtils;
 
 import java.sql.SQLException;
@@ -50,6 +51,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
     private CustomListAdapter myAlarmsAdapter;
     private RuntimeExceptionDao<UserAlarm, Integer> userAlarmDao;
     private RuntimeExceptionDao<UserEndpoint, Integer> userEndpointDao;
+    private StationsProvider stationsProvider;
     private AlarmManager alarmManager;
 
     @Override
@@ -57,6 +59,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
         super.onCreate(savedInstanceState);
         this.userAlarmDao = new UserAlarmDao(getApplicationContext()).getDao();
         this.userEndpointDao = new UserEndpointDao(getApplicationContext()).getDao();
+        stationsProvider = StationsProvider.init(getAssets());
 
         setContentView(R.layout.activities_view_alarms);
         Bundle selectedBundle = getIntent().getExtras();
@@ -149,6 +152,11 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
         return userAlarmDao;
     }
 
+    private String[] getAlarmStopIds(UserAlarm alarm) {
+        return stationsProvider.getStopIdForStopAndDirection(alarm.getStation(), alarm.getDirection(), selectedRoute)
+                .toArray(new String[]{});
+    }
+
     /**
      * Persist a new alarm and add a new alarm to the alarms list with the given endpoints.
      * @param alarm The given new alarm.
@@ -156,7 +164,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
      */
     private void createAlarm(UserAlarm alarm, List<String> endpoints) {
         userAlarmDao.create(alarm);
-        AlarmUtils.scheduleOrCancelAlarm(alarm, alarmManager, this);
+        AlarmUtils.scheduleOrCancelAlarm(alarm, alarmManager, getApplicationContext(), getAlarmStopIds(alarm));
         Optional.ofNullable(endpoints).orElse(Collections.emptyList())
                 .forEach(endpointName -> {
                     UserEndpoint userEndpoint = new UserEndpoint();
@@ -174,7 +182,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
      */
     private void updateAlarm(UserAlarm alarm) {
         userAlarmDao.update(alarm);
-        AlarmUtils.scheduleOrCancelAlarm(alarm, alarmManager, this);
+        AlarmUtils.scheduleOrCancelAlarm(alarm, alarmManager, getApplicationContext(), getAlarmStopIds(alarm));
         List<String> endpoints = userEndpointDao.queryForEq("alarm_id", alarm.getId()).stream()
                 .map(UserEndpoint::getEndpointName)
                 .collect(Collectors.toList());
