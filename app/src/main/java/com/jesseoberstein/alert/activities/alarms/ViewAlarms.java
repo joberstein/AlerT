@@ -164,7 +164,6 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
      */
     private void createAlarm(UserAlarm alarm, List<String> endpoints) {
         userAlarmDao.create(alarm);
-        AlarmUtils.scheduleOrCancelAlarm(alarm, alarmManager, getApplicationContext(), getAlarmStopIds(alarm));
         Optional.ofNullable(endpoints).orElse(Collections.emptyList())
                 .forEach(endpointName -> {
                     UserEndpoint userEndpoint = new UserEndpoint();
@@ -173,6 +172,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
                     userEndpointDao.create(userEndpoint);
                 });
 
+        AlarmUtils.scheduleOrCancelAlarm(alarm, endpoints, alarmManager, getApplicationContext(), getAlarmStopIds(alarm));
         myAlarmsAdapter.addItem(buildAlarmListItem(alarm, TextUtils.join(", ", endpoints)));
     }
 
@@ -182,11 +182,11 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
      */
     private void updateAlarm(UserAlarm alarm) {
         userAlarmDao.update(alarm);
-        AlarmUtils.scheduleOrCancelAlarm(alarm, alarmManager, getApplicationContext(), getAlarmStopIds(alarm));
         List<String> endpoints = userEndpointDao.queryForEq("alarm_id", alarm.getId()).stream()
                 .map(UserEndpoint::getEndpointName)
                 .collect(Collectors.toList());
 
+        AlarmUtils.scheduleOrCancelAlarm(alarm, endpoints, alarmManager, getApplicationContext(), getAlarmStopIds(alarm));
         myAlarmsAdapter.updateItem(buildAlarmListItem(alarm, TextUtils.join(", ", endpoints)));
     }
 }

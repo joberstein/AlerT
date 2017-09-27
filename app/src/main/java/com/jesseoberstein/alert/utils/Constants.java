@@ -44,5 +44,6 @@ public class Constants {
     public static final String STOP_IDS = "stopId";
 
     public static final int ALARM_START_REQUEST_CODE = 4;
-    public static final int ALARM_STOP_REQUEST_CODE = 5;
+    public static final int ALARM_UPDATE_REQUEST_CODE = 5;
+    public static final int ALARM_STOP_REQUEST_CODE = 6;
 }

@@ -2,6 +2,9 @@ package com.jesseoberstein.mbta.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Collections;
+import java.util.List;
+
 public class Stop {
     @JsonProperty("stop_order")
     private int stopOrder;
@@ -36,8 +39,16 @@ public class Stop {
     @JsonProperty("sch_dep_dt")
     private long scheduledDepartureTime;
 
+    @JsonProperty("mode")
+    private List<Mode> modes;
+
+    @JsonProperty("alert_headers")
+    private List<Alert> alerts;
+
     public Stop() {
         this.parentStationName = "";
+        this.modes = Collections.emptyList();
+        this.alerts = Collections.emptyList();
     }
 
     public int getStopOrder() {
@@ -132,6 +143,22 @@ public class Stop {
         this.scheduledDepartureTime = scheduledDepartureTime;
     }
 
+    public List<Mode> getModes() {
+        return modes;
+    }
+
+    public void setModes(List<Mode> modes) {
+        this.modes = modes;
+    }
+
+    public List<Alert> getAlerts() {
+        return alerts;
+    }
+
+    public void setAlerts(List<Alert> alerts) {
+        this.alerts = alerts;
+    }
+
     @Override
     public String toString() {
         return "Stop{" + "\n" +
@@ -146,6 +173,8 @@ public class Stop {
                 "stop_sequence=" + stopSequence + "\n" +
                 "scheduledArrivalTime=" + scheduledArrivalTime + "\n" +
                 "scheduledDepartureTime=" + scheduledDepartureTime + "\n" +
+                "modes=" + modes + "\n" +
+                "alerts=" + alerts + "\n" +
                 "}\n";
     }
 }

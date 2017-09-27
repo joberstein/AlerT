@@ -17,11 +17,8 @@ class Fetch extends BaseRequest {
         URL url;
         HttpURLConnection urlConnection = null;
         Optional<T> response = Optional.empty();
-
-        try {
-            url = urlBuilder().withEndpoint(endpoint).withQuery(query).build();
-        } catch (MalformedURLException e) {
-            System.out.println(e);
+        url = urlBuilder().withEndpoint(endpoint).withQuery(query).build();
+        if (url == null) {
             return response;
         }
 

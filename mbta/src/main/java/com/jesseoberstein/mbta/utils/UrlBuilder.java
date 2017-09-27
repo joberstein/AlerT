@@ -1,7 +1,5 @@
 package com.jesseoberstein.mbta.utils;
 
-import com.jesseoberstein.mbta.sensitive.SensitiveData;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -61,9 +59,13 @@ public class UrlBuilder {
         return this;
     }
 
-    public URL build() throws MalformedURLException {
+    public URL build() {
         String hostName = (this.port < 0) ? this.host : this.host + ":" + this.port;
-        return new URL(String.format("%s://%s/%s/%s/?%s",
-                this.protocol, hostName, this.basePath, this.endpoint, this.query.build()));
+        try {
+            return new URL(String.format("%s://%s/%s/%s/?%s", this.protocol, hostName, this.basePath, this.endpoint, this.query.build()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.jesseoberstein.alert">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -88,6 +90,8 @@
                 <action android:name="android.intent.action.DELETE"/>
             </intent-filter>
         </receiver>
+
+        <service android:name=".services.MbtaRealtimeUpdatesService"/>
 
     </application>
 

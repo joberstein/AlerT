@@ -10,8 +10,11 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.receivers.OnAlarmStart;
 import com.jesseoberstein.alert.receivers.OnAlarmStop;
+import com.jesseoberstein.alert.services.MbtaRealtimeUpdatesService;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
@@ -20,6 +23,8 @@ import static android.app.AlarmManager.RTC;
 import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.app.PendingIntent.getBroadcast;
+import static android.app.PendingIntent.getService;
+import static com.jesseoberstein.alert.utils.Constants.*;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_START_REQUEST_CODE;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_STOP_REQUEST_CODE;
 
@@ -31,32 +36,39 @@ public class AlarmUtils {
         return selectedDays[calendar.get(Calendar.DAY_OF_WEEK)] == 1;
     }
 
-    public static void scheduleOrCancelAlarm(UserAlarm alarm, AlarmManager alarmManager, Context context, String[] stopIds) {
+    public static void scheduleOrCancelAlarm(UserAlarm alarm, List<String> endpoints, AlarmManager alarmManager, Context context, String[] stopIds) {
         if (alarm.isActive()) {
-            scheduleAlarm(alarm, alarmManager, context, stopIds);
+            scheduleAlarm(alarm, endpoints, alarmManager, context, stopIds);
         } else {
             cancelAlarm(alarm, alarmManager, context);
         }
     }
 
-    private static void scheduleAlarm(UserAlarm alarm, AlarmManager alarmManager, Context context, String[] stopIds) {
+    private static void scheduleAlarm(UserAlarm alarm, List<String> endpoints, AlarmManager alarmManager, Context context, String[] stopIds) {
         setAlarmStartTime(alarm);
-        alarmManager.setRepeating(RTC_WAKEUP, calendar.getTimeInMillis(), INTERVAL_DAY, getAlarmStartIntent(alarm, context, stopIds));
+        alarmManager.setRepeating(RTC_WAKEUP, calendar.getTimeInMillis(), INTERVAL_DAY, getAlarmStartIntent(alarm, endpoints, context, stopIds));
 
         setAlarmEndTime(alarm, context);
         alarmManager.setInexactRepeating(RTC, calendar.getTimeInMillis(), INTERVAL_DAY, getAlarmStopIntent(alarm, context));
     }
 
     private static void cancelAlarm(UserAlarm alarm, AlarmManager alarmManager, Context context) {
-        // Use an empty array for stop ids because extras don't apply in the intent filter.
-        alarmManager.cancel(getAlarmStartIntent(alarm, context, new String[]{}));
+        // Use an empty list/array for endpoints/stop ids because extras don't apply in the intent filter.
+        alarmManager.cancel(getAlarmStartIntent(alarm, Collections.emptyList(), context, new String[]{}));
         alarmManager.cancel(getAlarmStopIntent(alarm, context));
     }
 
-    private static PendingIntent getAlarmStartIntent(UserAlarm alarm, Context context, String[] stopIds) {
+    public static PendingIntent getAlarmUpdateIntent(Context context, Intent receivedIntent) {
+        Intent intent = new Intent(Intent.ACTION_EDIT, receivedIntent.getData(), context, MbtaRealtimeUpdatesService.class);
+        intent.putExtras(receivedIntent.getExtras());
+        return getService(context, ALARM_UPDATE_REQUEST_CODE, intent, 0);
+    }
+
+    private static PendingIntent getAlarmStartIntent(UserAlarm alarm, List<String> endpoints, Context context, String[] stopIds) {
         Intent intent = new Intent(Intent.ACTION_INSERT, buildAlarmUri(alarm.getId()), context, OnAlarmStart.class);
-        intent.putExtra(Constants.DAYS, alarm.getWeekdays());
-        intent.putExtra(Constants.STOP_IDS, stopIds);
+        intent.putExtra(DAYS, alarm.getWeekdays());
+        intent.putExtra(STOP_IDS, stopIds);
+        intent.putExtra(ENDPOINTS, endpoints.toArray(new String[]{}));
         return getBroadcast(context, ALARM_START_REQUEST_CODE, intent, FLAG_UPDATE_CURRENT);
     }
 

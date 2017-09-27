@@ -2,16 +2,21 @@ package com.jesseoberstein.alert.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.jesseoberstein.alert.models.UserRoute;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -114,5 +119,11 @@ public class AlertUtils {
             case THEME:   return userRoute.getTheme();
             default:        return -1;
         }
+    }
+
+    public static List<String> getStringListFromIntent(@Nullable Intent intent, String key) {
+        return Optional.ofNullable(intent)
+                .map(i -> Arrays.asList(i.getExtras().getStringArray(key)))
+                .orElse(Collections.emptyList());
     }
 }

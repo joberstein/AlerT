@@ -19,6 +19,21 @@ public class Trip {
     @JsonProperty("stop")
     private List<Stop> stops;
 
+    @JsonProperty("sch_arr_dt")
+    private long scheduledArrivalTime;
+
+    @JsonProperty("sch_dep_dt")
+    private long scheduleDepartureTime;
+
+    @JsonProperty("pre_dt")
+    private long predictedDepartureTime;
+
+    @JsonProperty("pre_away")
+    private int predictedSecondsAway;
+
+    @JsonProperty("vehicle")
+    private Vehicle vehicle;
+
     public Trip() {
         this.stops = Collections.emptyList();
     }
@@ -50,8 +65,49 @@ public class Trip {
     public List<Stop> getStops() {
         return stops;
     }
+
     public void setStops(List<Stop> stops) {
         this.stops = stops;
+    }
+
+    public long getScheduledArrivalTime() {
+        return scheduledArrivalTime;
+    }
+
+    public void setScheduledArrivalTime(long scheduledArrivalTime) {
+        this.scheduledArrivalTime = scheduledArrivalTime;
+    }
+
+    public long getScheduleDepartureTime() {
+        return scheduleDepartureTime;
+    }
+
+    public void setScheduleDepartureTime(long scheduleDepartureTime) {
+        this.scheduleDepartureTime = scheduleDepartureTime;
+    }
+
+    public long getPredictedDepartureTime() {
+        return predictedDepartureTime;
+    }
+
+    public void setPredictedDepartureTime(long predictedDepartureTime) {
+        this.predictedDepartureTime = predictedDepartureTime;
+    }
+
+    public int getPredictedSecondsAway() {
+        return predictedSecondsAway;
+    }
+
+    public void setPredictedSecondsAway(int predictedSecondsAway) {
+        this.predictedSecondsAway = predictedSecondsAway;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     @Override
@@ -61,6 +117,13 @@ public class Trip {
                 "tripName='" + tripName + "\n\t" +
                 "endpoint='" + endpoint + "\n\t" +
                 "stops=" + stops + "\n" +
+                "scheduledArrivalTime=" + scheduledArrivalTime + "\n" +
+                "scheduledDepartureTime=" + scheduleDepartureTime + "\n" +
+                "predictedDepartureTime=" + predictedDepartureTime + "\n" +
+                "predictedSecondsAway=" + predictedSecondsAway + "\n" +
+                "vehicle=" + vehicle + "\n" +
                 "}\n";
     }
+
+
 }
