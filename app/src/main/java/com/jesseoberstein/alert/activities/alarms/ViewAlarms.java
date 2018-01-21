@@ -129,14 +129,8 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
 
     @Override
     public void onRemoveSelected(Bundle selected) {
-        int alarmId = selected.getInt(ALARM_ID);
-        DeleteBuilder<UserEndpoint, Integer> endpointDeleter = userEndpointDao.deleteBuilder();
-
         try {
-            endpointDeleter.where().eq("alarm_id", alarmId);
-            endpointDeleter.delete();
-            userAlarmDao.deleteById(alarmId);
-            myAlarmsAdapter.removeItemById(alarmId);
+            deleteAlarm(selected.getInt(ALARM_ID));
         } catch (SQLException e) {
             Toast.makeText(this, "Could not delete the selected alarm.", Toast.LENGTH_SHORT).show();
         }
@@ -153,8 +147,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
     }
 
     private String[] getAlarmStopIds(UserAlarm alarm) {
-        return stationsProvider.getStopIdForStopAndDirection(alarm.getStation(), alarm.getDirection(), selectedRoute)
-                .toArray(new String[]{});
+        return stationsProvider.getParentStationName(alarm.getStation(), selectedRoute).toArray(new String[]{});
     }
 
     /**
@@ -188,5 +181,16 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
 
         AlarmUtils.scheduleOrCancelAlarm(alarm, endpoints, alarmManager, getApplicationContext(), getAlarmStopIds(alarm));
         myAlarmsAdapter.updateItem(buildAlarmListItem(alarm, TextUtils.join(", ", endpoints)));
+    }
+
+    private void deleteAlarm(int alarmId) throws SQLException {
+        DeleteBuilder<UserEndpoint, Integer> endpointDeleter = userEndpointDao.deleteBuilder();
+        endpointDeleter.where().eq("alarm_id", alarmId);
+        endpointDeleter.delete();
+
+        UserAlarm alarm = userAlarmDao.queryForId(alarmId);
+        AlarmUtils.cancelAlarm(alarm, alarmManager, getApplicationContext());
+        userAlarmDao.deleteById(alarmId);
+        myAlarmsAdapter.removeItemById(alarmId);
     }
 }

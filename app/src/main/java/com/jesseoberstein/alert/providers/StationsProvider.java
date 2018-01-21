@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class StationsProvider {
@@ -38,6 +39,13 @@ public class StationsProvider {
         return instance;
     }
 
+    public Optional<Stop> getStopById(String stopId) {
+        return this.directions.stream()
+                .flatMap(directions -> directions.getDirections().stream())
+                .flatMap(direction -> direction.getStops().stream())
+                .filter(stop -> stop.getStopId().equals(stopId))
+                .findFirst();
+    }
 
     /**
      * Get all of the stop names for a given route.
@@ -89,6 +97,15 @@ public class StationsProvider {
     public List<String> getStopIdForStopAndDirection(String stopName, String directionName, String parentRoute) {
         return getDirectionsForStop(stopName, parentRoute).stream()
                 .filter(direction -> direction.getDirectionName().equals(directionName))
+                .flatMap(direction -> direction.getStops().stream())
+                .filter(stop -> stop.getRealStopName().equals(stopName))
+                .map(Stop::getStopId)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getParentStationName(String stopName, String parentRoute) {
+        return getDirectionsForStop(stopName, parentRoute).stream()
                 .flatMap(direction -> direction.getStops().stream())
                 .filter(stop -> stop.getRealStopName().equals(stopName))
                 .map(Stop::getStopId)

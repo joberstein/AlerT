@@ -26,7 +26,7 @@ public class Trip {
     private long scheduleDepartureTime;
 
     @JsonProperty("pre_dt")
-    private long predictedDepartureTime;
+    private long predictedArrivalTime;
 
     @JsonProperty("pre_away")
     private int predictedSecondsAway;
@@ -78,20 +78,20 @@ public class Trip {
         this.scheduledArrivalTime = scheduledArrivalTime;
     }
 
-    public long getScheduleDepartureTime() {
+    public long getScheduledDepartureTime() {
         return scheduleDepartureTime;
     }
 
-    public void setScheduleDepartureTime(long scheduleDepartureTime) {
+    public void setScheduledDepartureTime(long scheduleDepartureTime) {
         this.scheduleDepartureTime = scheduleDepartureTime;
     }
 
-    public long getPredictedDepartureTime() {
-        return predictedDepartureTime;
+    public long getPredictedArrivalTime() {
+        return predictedArrivalTime;
     }
 
-    public void setPredictedDepartureTime(long predictedDepartureTime) {
-        this.predictedDepartureTime = predictedDepartureTime;
+    public void setPredictedArrivalTime(long predictedArrivalTime) {
+        this.predictedArrivalTime = predictedArrivalTime;
     }
 
     public int getPredictedSecondsAway() {
@@ -119,7 +119,7 @@ public class Trip {
                 "stops=" + stops + "\n" +
                 "scheduledArrivalTime=" + scheduledArrivalTime + "\n" +
                 "scheduledDepartureTime=" + scheduleDepartureTime + "\n" +
-                "predictedDepartureTime=" + predictedDepartureTime + "\n" +
+                "predictedArrivalTime=" + predictedArrivalTime + "\n" +
                 "predictedSecondsAway=" + predictedSecondsAway + "\n" +
                 "vehicle=" + vehicle + "\n" +
                 "}\n";

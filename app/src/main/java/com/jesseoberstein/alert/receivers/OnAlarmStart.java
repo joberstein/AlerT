@@ -9,6 +9,8 @@ import android.os.SystemClock;
 
 import com.jesseoberstein.alert.utils.AlarmUtils;
 
+import java.util.Calendar;
+
 import static com.jesseoberstein.alert.utils.Constants.DAYS;
 
 public class OnAlarmStart extends BroadcastReceiver {
@@ -20,9 +22,9 @@ public class OnAlarmStart extends BroadcastReceiver {
             alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         }
 
-        if (AlarmUtils.shouldAlarmFireToday(intent.getIntArrayExtra(DAYS))) {
+        if (AlarmUtils.shouldAlarmFireToday(intent.getIntArrayExtra(DAYS), Calendar.getInstance())) {
             PendingIntent pendingIntent = AlarmUtils.getAlarmUpdateIntent(context, intent);
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60*1000, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 10*1000, 60*1000, pendingIntent);
         }
     }
 }

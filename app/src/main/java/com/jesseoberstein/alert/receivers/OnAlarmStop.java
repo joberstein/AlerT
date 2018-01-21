@@ -1,6 +1,7 @@
 package com.jesseoberstein.alert.receivers;
 
 import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,8 @@ public class OnAlarmStop extends BroadcastReceiver {
             alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         }
 
-        alarmManager.cancel(AlarmUtils.getAlarmUpdateIntent(context, intent));
+        PendingIntent pendingIntent = AlarmUtils.getAlarmUpdateIntent(context, intent);
+        alarmManager.cancel(pendingIntent);
+        pendingIntent.cancel();
     }
 }

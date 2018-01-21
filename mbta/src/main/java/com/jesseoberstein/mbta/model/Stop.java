@@ -39,6 +39,12 @@ public class Stop {
     @JsonProperty("sch_dep_dt")
     private long scheduledDepartureTime;
 
+    @JsonProperty("pre_dt")
+    private long predictedArrivalTime;
+
+    @JsonProperty("pre_away")
+    private int predictedSecondsAway;
+
     @JsonProperty("mode")
     private List<Mode> modes;
 
@@ -143,6 +149,22 @@ public class Stop {
         this.scheduledDepartureTime = scheduledDepartureTime;
     }
 
+    public long getPredictedArrivalTime() {
+        return predictedArrivalTime;
+    }
+
+    public void setPredictedArrivalTime(long predictedArrivalTime) {
+        this.predictedArrivalTime = predictedArrivalTime;
+    }
+
+    public int getPredictedSecondsAway() {
+        return predictedSecondsAway;
+    }
+
+    public void setPredictedSecondsAway(int predictedSecondsAway) {
+        this.predictedSecondsAway = predictedSecondsAway;
+    }
+
     public List<Mode> getModes() {
         return modes;
     }
@@ -173,6 +195,8 @@ public class Stop {
                 "stop_sequence=" + stopSequence + "\n" +
                 "scheduledArrivalTime=" + scheduledArrivalTime + "\n" +
                 "scheduledDepartureTime=" + scheduledDepartureTime + "\n" +
+                "predictedArrivalTime=" + predictedArrivalTime + "\n" +
+                "predictedSecondsAway=" + predictedSecondsAway + "\n" +
                 "modes=" + modes + "\n" +
                 "alerts=" + alerts + "\n" +
                 "}\n";

@@ -16,6 +16,9 @@ public class Vehicle {
     @JsonProperty("vehicle_bearing")
     private int bearing;
 
+    @JsonProperty("vehicle_speed")
+    private int speed;
+
     @JsonProperty("vehicle_timestamp")
     private long timestamp;
 
@@ -56,6 +59,14 @@ public class Vehicle {
         this.bearing = bearing;
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public long getTimestamp() {
         return timestamp;
     }
@@ -79,6 +90,7 @@ public class Vehicle {
                 "latitude=" + latitude + "\n\t" +
                 "longitude=" + longitude + "\n\t" +
                 "bearing=" + bearing + "\n\t" +
+                "speed=" + speed + "\n\t" +
                 "timestamp=" + timestamp + "\n\t" +
                 "label='" + label + "\n\t" +
                 '}';

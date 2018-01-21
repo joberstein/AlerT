@@ -8,6 +8,9 @@ public class Routes {
     @JsonProperty("mode")
     List<Mode> modes;
 
+    @JsonProperty("alert_headers")
+    private List<Alert> alerts;
+
     public Routes() {}
 
     public Routes(List<Mode> modes) {
@@ -22,11 +25,20 @@ public class Routes {
         this.modes = modes;
     }
 
+    public List<Alert> getAlerts() {
+        return alerts;
+    }
+
+    public void setAlerts(List<Alert> alerts) {
+        this.alerts = alerts;
+    }
+
     @Override
     public String toString() {
         return "\n" +
                 "{" + "\n\t" +
-                "directions: " + modes + "\n" +
+                "modes: " + modes + "\n" +
+                "alerts: " + alerts + "\n" +
                 "}";
     }
 }

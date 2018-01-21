@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static android.app.AlarmManager.INTERVAL_DAY;
@@ -31,7 +32,7 @@ import static com.jesseoberstein.alert.utils.Constants.ALARM_STOP_REQUEST_CODE;
 public class AlarmUtils {
     private static Calendar calendar = Calendar.getInstance();
 
-    public static boolean shouldAlarmFireToday(int[] selectedDays) {
+    public static boolean shouldAlarmFireToday(int[] selectedDays, Calendar calendar) {
         calendar.setTimeInMillis(System.currentTimeMillis());
         return selectedDays[calendar.get(Calendar.DAY_OF_WEEK)] == 1;
     }
@@ -52,27 +53,32 @@ public class AlarmUtils {
         alarmManager.setInexactRepeating(RTC, calendar.getTimeInMillis(), INTERVAL_DAY, getAlarmStopIntent(alarm, context));
     }
 
-    private static void cancelAlarm(UserAlarm alarm, AlarmManager alarmManager, Context context) {
+    public static void cancelAlarm(UserAlarm alarm, AlarmManager alarmManager, Context context) {
         // Use an empty list/array for endpoints/stop ids because extras don't apply in the intent filter.
         alarmManager.cancel(getAlarmStartIntent(alarm, Collections.emptyList(), context, new String[]{}));
+        alarmManager.cancel(getAlarmUpdateIntent(context, new Intent(Intent.ACTION_EDIT, buildAlarmUri(alarm.getId()))));
         alarmManager.cancel(getAlarmStopIntent(alarm, context));
     }
 
     public static PendingIntent getAlarmUpdateIntent(Context context, Intent receivedIntent) {
         Intent intent = new Intent(Intent.ACTION_EDIT, receivedIntent.getData(), context, MbtaRealtimeUpdatesService.class);
-        intent.putExtras(receivedIntent.getExtras());
-        return getService(context, ALARM_UPDATE_REQUEST_CODE, intent, 0);
+        Optional.ofNullable(receivedIntent.getExtras()).ifPresent(intent::putExtras);
+        return getService(context, ALARM_UPDATE_REQUEST_CODE, intent, FLAG_UPDATE_CURRENT);
     }
 
-    private static PendingIntent getAlarmStartIntent(UserAlarm alarm, List<String> endpoints, Context context, String[] stopIds) {
+    public static PendingIntent getAlarmStartIntent(UserAlarm alarm, List<String> endpoints, Context context, String[] stopIds) {
         Intent intent = new Intent(Intent.ACTION_INSERT, buildAlarmUri(alarm.getId()), context, OnAlarmStart.class);
+        intent.putExtra(ROUTE, alarm.getRoute().getRouteName());
+        intent.putExtra(ALARM_ID, alarm.getId());
+        intent.putExtra(NICKNAME, alarm.getNickname());
+        intent.putExtra(COLOR, AlertUtils.getRouteResource(alarm.getRoute().getRouteName(), COLOR));
         intent.putExtra(DAYS, alarm.getWeekdays());
         intent.putExtra(STOP_IDS, stopIds);
         intent.putExtra(ENDPOINTS, endpoints.toArray(new String[]{}));
         return getBroadcast(context, ALARM_START_REQUEST_CODE, intent, FLAG_UPDATE_CURRENT);
     }
 
-    private static PendingIntent getAlarmStopIntent(UserAlarm alarm, Context context) {
+    public static PendingIntent getAlarmStopIntent(UserAlarm alarm, Context context) {
         Intent intent = new Intent(Intent.ACTION_DELETE, buildAlarmUri(alarm.getId()), context, OnAlarmStop.class);
         return getBroadcast(context, ALARM_STOP_REQUEST_CODE, intent, FLAG_UPDATE_CURRENT);
     }

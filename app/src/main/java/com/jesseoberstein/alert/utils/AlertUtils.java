@@ -121,9 +121,9 @@ public class AlertUtils {
         }
     }
 
-    public static List<String> getStringListFromIntent(@Nullable Intent intent, String key) {
+    public static Optional<Object> getObjectFromIntent(@Nullable Intent intent, String key) {
         return Optional.ofNullable(intent)
-                .map(i -> Arrays.asList(i.getExtras().getStringArray(key)))
-                .orElse(Collections.emptyList());
+                .map(i -> Optional.ofNullable(i.getExtras().get(key)))
+                .orElse(Optional.empty());
     }
 }

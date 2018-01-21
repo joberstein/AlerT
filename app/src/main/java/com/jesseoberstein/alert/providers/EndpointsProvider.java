@@ -42,26 +42,19 @@ public class EndpointsProvider {
         return instance;
     }
 
-    /**
-     * Get all of the endpoints for a route.
-     * @param parentRoute The parent route to get endpoints for.
-     * @return A list of endpoint stop names.
-     */
-    public List<String> getEndpointsForRoute(String parentRoute) {
+    public List<Route> getRoutesFromEndpoints(List<String> endpoints, String parentRoute) {
         return this.routeSchedules.stream()
-                .filter(routes -> !routes.getModes().stream()
-                        .filter(mode -> !mode.getRoutes().stream()
-                                .filter(route -> route.getParentRoute().equals(parentRoute))
-                                .collect(Collectors.toList())
-                                .isEmpty())
-                        .collect(Collectors.toList())
-                        .isEmpty())
                 .flatMap(routes -> routes.getModes().stream())
                 .flatMap(mode -> mode.getRoutes().stream())
-                .flatMap(route -> route.getDirections().stream())
-                .flatMap(direction -> direction.getTrips().stream())
-                .map(Trip::getEndpoint)
-                .distinct()
+                .filter(route -> route.getParentRoute().equals(parentRoute) &&
+                        !route.getDirections().stream()
+                                .filter(direction -> !direction.getTrips().stream()
+                                        .map(Trip::getEndpoint)
+                                        .filter(endpoints::contains)
+                                        .collect(Collectors.toList())
+                                        .isEmpty())
+                        .collect(Collectors.toList())
+                        .isEmpty())
                 .collect(Collectors.toList());
     }
 
