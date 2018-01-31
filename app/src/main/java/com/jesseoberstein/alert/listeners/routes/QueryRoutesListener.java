@@ -7,6 +7,9 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
+import com.jesseoberstein.alert.providers.RoutesProvider;
+import com.jesseoberstein.mbta.model.Route;
+
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -15,14 +18,14 @@ import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 public class QueryRoutesListener implements SearchView.OnQueryTextListener {
     private Activity activity;
     private final String[] columnNames;
-    private String[] suggestions;
+    private Route[] routes;
     private SimpleCursorAdapter adapter;
 
-    public QueryRoutesListener(Activity activity, String[] columnNames, String[] suggestions,
+    public QueryRoutesListener(Activity activity, String[] columnNames, Route[] routes,
                                SimpleCursorAdapter adapter) {
         this.activity = activity;
         this.columnNames = columnNames;
-        this.suggestions = suggestions;
+        this.routes = routes;
         this.adapter = adapter;
     }
 
@@ -34,7 +37,7 @@ public class QueryRoutesListener implements SearchView.OnQueryTextListener {
 
         int position = getQueryIndex(cursor, query);
         if (position >= 0) {
-            SelectRouteOnClick selectOnClick = new SelectRouteOnClick(this.activity, this.adapter, this.columnNames);
+            SelectRouteOnClick selectOnClick = new SelectRouteOnClick(this.activity, this.columnNames, this.routes, this.adapter);
             selectOnClick.onSuggestionClick(position);
         }
         else {
@@ -48,8 +51,8 @@ public class QueryRoutesListener implements SearchView.OnQueryTextListener {
     public boolean onQueryTextChange(String newText) {
         final String newTextLower = newText.toLowerCase();
         MatrixCursor cursor = getNewCursor();
-        IntStream.range(0, this.suggestions.length).boxed()
-                .map(index -> new String[] {index.toString(), this.suggestions[index]})
+        IntStream.range(0, this.routes.length).boxed()
+                .map(index -> new String[] {index.toString(), RoutesProvider.getRouteName(this.routes[index])})
                 .filter(suggestion -> suggestion[1].toLowerCase().startsWith(newTextLower))
                 .forEach(cursor::addRow);
 

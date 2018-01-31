@@ -1,5 +1,6 @@
 package com.jesseoberstein.alert.activities.routes;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -59,8 +60,8 @@ public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
         if (SearchRoutes.REQUEST_CODE == requestCode)  {
             if (RESULT_OK == resultCode) {
                 Bundle selected = data.getBundleExtra(SELECTED_ROUTE);
-                String routeName = selected.getString(ROUTE);
-                UserRoute userRoute = new UserRoute(routeName);
+                String routeId = selected.getString(ROUTE);
+                UserRoute userRoute = new UserRoute(routeId);
                 userRouteDao.create(userRoute);
                 myRoutesAdapter.addItem(buildRoutesListItem(userRoute));
                 updateAddRouteListener();
@@ -87,8 +88,8 @@ public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
      */
     private Bundle getRoutesListBundle() {
         Bundle bundle = new Bundle();
-        bundle.putStringArrayList("query", myRoutesAdapter.getItems().stream()
-                .map(CustomListItem::getPrimaryText)
+        bundle.putStringArrayList(SearchManager.QUERY, myRoutesAdapter.getItems().stream()
+                .map(userRoute -> ((String) userRoute.getId()))
                 .collect(Collectors.toCollection(ArrayList::new)));
         return bundle;
     }

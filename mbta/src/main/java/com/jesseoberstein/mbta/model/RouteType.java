@@ -1,6 +1,6 @@
 package com.jesseoberstein.mbta.model;
 
-public enum RouteType {
+public enum RouteType implements MbtaDataType {
     LIGHT_RAIL(0),
     SUBWAY(1),
     COMMUTER_RAIL(2),

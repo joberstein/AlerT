@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 
 /**
- * DatabaseConfigUtl writes a configuration file to avoid using annotation processing in runtime which is very slow
+ * DatabaseConfigUtil writes a configuration file to avoid using annotation processing in runtime which is very slow
  * under Android. This gains a noticeable performance improvement.
  *
  * The configuration file is written to /res/raw/ by default. More info at: http://ormlite.com/docs/table-config

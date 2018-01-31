@@ -14,7 +14,10 @@ import static com.jesseoberstein.alert.utils.Constants.THEME;
 @DatabaseTable(tableName = "user_routes")
 public class UserRoute implements Serializable {
 
-    @DatabaseField(id = true, columnName = "route_name")
+    @DatabaseField(columnName = "route_id", id = true)
+    private String routeId;
+
+    @DatabaseField(columnName = "route_name")
     private String routeName;
 
     @DatabaseField
@@ -41,6 +44,14 @@ public class UserRoute implements Serializable {
         this.color = color;
         this.icon = icon;
         this.theme = theme;
+    }
+
+    public String getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
     }
 
     public String getRouteName() {
@@ -101,6 +112,8 @@ public class UserRoute implements Serializable {
         if (icon != userRoute.icon) return false;
         if (theme != userRoute.theme) return false;
         if (color != userRoute.color) return false;
+        if (routeId != null ? !routeId.equals(userRoute.routeId) : userRoute.routeId != null)
+            return false;
         if (routeName != null ? !routeName.equals(userRoute.routeName) : userRoute.routeName != null)
             return false;
         return alerts != null ? alerts.equals(userRoute.alerts) : userRoute.alerts == null;
@@ -108,7 +121,8 @@ public class UserRoute implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = routeName != null ? routeName.hashCode() : 0;
+        int result = routeId != null ? routeId.hashCode() : 0;
+        result = 31 * result + (routeName != null ? routeName.hashCode() : 0);
         result = 31 * result + (alerts != null ? alerts.hashCode() : 0);
         result = 31 * result + icon;
         result = 31 * result + theme;

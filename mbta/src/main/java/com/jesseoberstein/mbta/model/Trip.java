@@ -1,129 +1,91 @@
 package com.jesseoberstein.mbta.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.jasminb.jsonapi.annotations.Relationship;
+import com.github.jasminb.jsonapi.annotations.Type;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Trip {
+@Type("trip")
+public class Trip extends BaseResource implements MbtaDataType {
 
-    @JsonProperty("trip_id")
-    private String tripId;
+    @JsonProperty("name")
+    private String name;
 
-    @JsonProperty("trip_name")
-    private String tripName;
+    @JsonProperty("wheelchair_accessible")
+    private int wheelchairAccessible;
 
-    @JsonProperty("trip_headsign")
-    private String endpoint;
+    @JsonProperty("headsign")
+    private String headsign;
 
-    @JsonProperty("stop")
-    private List<Stop> stops;
+    @JsonProperty("direction_id")
+    private int directionId;
 
-    @JsonProperty("sch_arr_dt")
-    private long scheduledArrivalTime;
+    @JsonProperty("block_id")
+    private String blockId;
 
-    @JsonProperty("sch_dep_dt")
-    private long scheduleDepartureTime;
+    @Relationship("route")
+    private Route route;
 
-    @JsonProperty("pre_dt")
-    private long predictedArrivalTime;
-
-    @JsonProperty("pre_away")
-    private int predictedSecondsAway;
-
-    @JsonProperty("vehicle")
-    private Vehicle vehicle;
-
-    public Trip() {
-        this.stops = Collections.emptyList();
+    public String getName() {
+        return name;
     }
 
-    public String getTripId() {
-        return tripId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setTripId(String tripId) {
-        this.tripId = tripId;
+    public int getWheelchairAccessible() {
+        return wheelchairAccessible;
     }
 
-    public String getTripName() {
-        return tripName;
+    public void setWheelchairAccessible(int wheelchairAccessible) {
+        this.wheelchairAccessible = wheelchairAccessible;
     }
 
-    public void setTripName(String tripName) {
-        this.tripName = tripName;
+    public String getHeadsign() {
+        return headsign;
     }
 
-    public String getEndpoint() {
-        return endpoint;
+    public void setHeadsign(String headsign) {
+        this.headsign = headsign;
     }
 
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
+    public int getDirectionId() {
+        return directionId;
     }
 
-    public List<Stop> getStops() {
-        return stops;
+    public void setDirectionId(int directionId) {
+        this.directionId = directionId;
     }
 
-    public void setStops(List<Stop> stops) {
-        this.stops = stops;
+    public String getBlockId() {
+        return blockId;
     }
 
-    public long getScheduledArrivalTime() {
-        return scheduledArrivalTime;
+    public void setBlockId(String blockId) {
+        this.blockId = blockId;
     }
 
-    public void setScheduledArrivalTime(long scheduledArrivalTime) {
-        this.scheduledArrivalTime = scheduledArrivalTime;
+    public Route getRoute() {
+        return this.route;
     }
 
-    public long getScheduledDepartureTime() {
-        return scheduleDepartureTime;
-    }
-
-    public void setScheduledDepartureTime(long scheduleDepartureTime) {
-        this.scheduleDepartureTime = scheduleDepartureTime;
-    }
-
-    public long getPredictedArrivalTime() {
-        return predictedArrivalTime;
-    }
-
-    public void setPredictedArrivalTime(long predictedArrivalTime) {
-        this.predictedArrivalTime = predictedArrivalTime;
-    }
-
-    public int getPredictedSecondsAway() {
-        return predictedSecondsAway;
-    }
-
-    public void setPredictedSecondsAway(int predictedSecondsAway) {
-        this.predictedSecondsAway = predictedSecondsAway;
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
     @Override
     public String toString() {
-        return "{" + "\n\t" +
-                "tripId='" + tripId + "\n\t" +
-                "tripName='" + tripName + "\n\t" +
-                "endpoint='" + endpoint + "\n\t" +
-                "stops=" + stops + "\n" +
-                "scheduledArrivalTime=" + scheduledArrivalTime + "\n" +
-                "scheduledDepartureTime=" + scheduleDepartureTime + "\n" +
-                "predictedArrivalTime=" + predictedArrivalTime + "\n" +
-                "predictedSecondsAway=" + predictedSecondsAway + "\n" +
-                "vehicle=" + vehicle + "\n" +
-                "}\n";
+        return "\n" +
+                "Trip {" +
+                super.toString() +
+                "name='" + name + '\'' +
+                ", wheelchairAccessible=" + wheelchairAccessible +
+                ", headsign='" + headsign + '\'' +
+                ", directionId=" + directionId +
+                ", blockId='" + blockId + '\'' +
+                '}';
     }
-
-
 }

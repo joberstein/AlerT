@@ -1,0 +1,3456 @@
+[ {
+  "name" : "Braintree",
+  "route_id" : "Red",
+  "direction_id" : 0,
+  "direction_name" : "Southbound"
+}, {
+  "name" : "Alewife",
+  "route_id" : "Red",
+  "direction_id" : 1,
+  "direction_name" : "Northbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "Red",
+  "direction_id" : 0,
+  "direction_name" : "Southbound"
+}, {
+  "name" : "Oak Grove",
+  "route_id" : "Orange",
+  "direction_id" : 1,
+  "direction_name" : "Northbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "Orange",
+  "direction_id" : 0,
+  "direction_name" : "Southbound"
+}, {
+  "name" : "Boston College",
+  "route_id" : "Green-B",
+  "direction_id" : 0,
+  "direction_name" : "Westbound"
+}, {
+  "name" : "Park Street",
+  "route_id" : "Green-B",
+  "direction_id" : 1,
+  "direction_name" : "Eastbound"
+}, {
+  "name" : "Lechmere",
+  "route_id" : "Green-B",
+  "direction_id" : 1,
+  "direction_name" : "Eastbound"
+}, {
+  "name" : "Cleveland Circle",
+  "route_id" : "Green-C",
+  "direction_id" : 0,
+  "direction_name" : "Westbound"
+}, {
+  "name" : "North Station",
+  "route_id" : "Green-C",
+  "direction_id" : 1,
+  "direction_name" : "Eastbound"
+}, {
+  "name" : "Lechmere",
+  "route_id" : "Green-C",
+  "direction_id" : 1,
+  "direction_name" : "Eastbound"
+}, {
+  "name" : "Riverside",
+  "route_id" : "Green-D",
+  "direction_id" : 0,
+  "direction_name" : "Westbound"
+}, {
+  "name" : "Government Center",
+  "route_id" : "Green-D",
+  "direction_id" : 1,
+  "direction_name" : "Eastbound"
+}, {
+  "name" : "Lechmere",
+  "route_id" : "Green-D",
+  "direction_id" : 1,
+  "direction_name" : "Eastbound"
+}, {
+  "name" : "Reservoir",
+  "route_id" : "Green-D",
+  "direction_id" : 0,
+  "direction_name" : "Westbound"
+}, {
+  "name" : "Heath Street",
+  "route_id" : "Green-E",
+  "direction_id" : 0,
+  "direction_name" : "Westbound"
+}, {
+  "name" : "Lechmere",
+  "route_id" : "Green-E",
+  "direction_id" : 1,
+  "direction_name" : "Eastbound"
+}, {
+  "name" : "Wonderland",
+  "route_id" : "Blue",
+  "direction_id" : 1,
+  "direction_name" : "Eastbound"
+}, {
+  "name" : "Bowdoin",
+  "route_id" : "Blue",
+  "direction_id" : 0,
+  "direction_name" : "Westbound"
+}, {
+  "name" : "Mattapan",
+  "route_id" : "Mattapan",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "Mattapan",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "741",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Logan Airport",
+  "route_id" : "741",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Drydock",
+  "route_id" : "742",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "742",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Dudley",
+  "route_id" : "751",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "751",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Dudley",
+  "route_id" : "749",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown",
+  "route_id" : "749",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Readville (Shuttle)",
+  "route_id" : "CR-Fairmount",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "CR-Fairmount",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Readville",
+  "route_id" : "CR-Fairmount",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "North Station",
+  "route_id" : "CR-Fitchburg",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Littleton/Rte 495",
+  "route_id" : "CR-Fitchburg",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wachusett",
+  "route_id" : "CR-Fitchburg",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "CR-Worcester",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Framingham",
+  "route_id" : "CR-Worcester",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ashland",
+  "route_id" : "CR-Worcester",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Worcester",
+  "route_id" : "CR-Worcester",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "CR-Franklin",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Walpole",
+  "route_id" : "CR-Franklin",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Norwood Central",
+  "route_id" : "CR-Franklin",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forge Park/495",
+  "route_id" : "CR-Franklin",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Greenbush",
+  "route_id" : "CR-Greenbush",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "CR-Greenbush",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Station",
+  "route_id" : "CR-Haverhill",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Reading",
+  "route_id" : "CR-Haverhill",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Haverhill",
+  "route_id" : "CR-Haverhill",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Plymouth",
+  "route_id" : "CR-Kingston",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "CR-Kingston",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Kingston",
+  "route_id" : "CR-Kingston",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Lowell",
+  "route_id" : "CR-Lowell",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "North Station",
+  "route_id" : "CR-Lowell",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Middleborough/Lakeville",
+  "route_id" : "CR-Middleborough",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "CR-Middleborough",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Needham Heights",
+  "route_id" : "CR-Needham",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "CR-Needham",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Station",
+  "route_id" : "CR-Newburyport",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Beverly",
+  "route_id" : "CR-Newburyport",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Newburyport",
+  "route_id" : "CR-Newburyport",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Rockport",
+  "route_id" : "CR-Newburyport",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "South Station",
+  "route_id" : "CR-Providence",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Stoughton",
+  "route_id" : "CR-Providence",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wickford Junction",
+  "route_id" : "CR-Providence",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Attleboro",
+  "route_id" : "CR-Providence",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Providence",
+  "route_id" : "CR-Providence",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square (Limited Stops)",
+  "route_id" : "701",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Boston Medical Center (Limited Stops)",
+  "route_id" : "701",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Sullivan (Limited Stops)",
+  "route_id" : "747",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ruggles (Limited Stops)",
+  "route_id" : "747",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Andrew (Limited Stops)",
+  "route_id" : "708",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Boston Medical Center (Limited Stops)",
+  "route_id" : "708",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Beth Israel (Limited Stops)",
+  "route_id" : "708",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Dudley",
+  "route_id" : "1",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "1",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "North Station via South Station",
+  "route_id" : "4",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Tide St",
+  "route_id" : "4",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Tide St via South Station",
+  "route_id" : "4",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Station",
+  "route_id" : "4",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "McCormack",
+  "route_id" : "5",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "City Point",
+  "route_id" : "5",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "City Point",
+  "route_id" : "7",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Otis & Summer",
+  "route_id" : "7",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "City Point via East First St",
+  "route_id" : "7",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Congress & Atlantic",
+  "route_id" : "7",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Kenmore",
+  "route_id" : "8",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Harbor Point via South Bay Center",
+  "route_id" : "8",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Kenmore via South Bay Center",
+  "route_id" : "8",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Harbor Point",
+  "route_id" : "8",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ruggles",
+  "route_id" : "8",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Dudley",
+  "route_id" : "8",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "City Point",
+  "route_id" : "9",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Copley",
+  "route_id" : "9",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "City Point via Andrew",
+  "route_id" : "9",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Kenmore via Boston Latin",
+  "route_id" : "9",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Copley via South Bay Center",
+  "route_id" : "10",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "City Point",
+  "route_id" : "10",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "City Point via South Bay Center",
+  "route_id" : "10",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Copley",
+  "route_id" : "10",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Andrew via South Bay Center",
+  "route_id" : "10",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Andrew via Boston Medical Center",
+  "route_id" : "10",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Dudley",
+  "route_id" : "10",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Downtown",
+  "route_id" : "11",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Bayview",
+  "route_id" : "11",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Kneeland St",
+  "route_id" : "11",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Roslindale Square",
+  "route_id" : "14",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Heath St",
+  "route_id" : "14",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Dudley",
+  "route_id" : "14",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Mattapan via Dudley & Fields Corner",
+  "route_id" : "15",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Haymarket via Dudley & Fields Corner",
+  "route_id" : "15",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Kane Square",
+  "route_id" : "15",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ruggles",
+  "route_id" : "15",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Fields Corner",
+  "route_id" : "15",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Dudley via Fields Corner",
+  "route_id" : "15",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "St Peter's Square",
+  "route_id" : "15",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Dudley",
+  "route_id" : "15",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills via South Bay Center",
+  "route_id" : "16",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Andrew via South Bay Center",
+  "route_id" : "16",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "16",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Andrew",
+  "route_id" : "16",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "UMass",
+  "route_id" : "16",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "UMass via South Bay Center",
+  "route_id" : "16",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Andrew",
+  "route_id" : "17",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Fields Corner",
+  "route_id" : "17",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Andrew",
+  "route_id" : "18",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "18",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ruggles",
+  "route_id" : "19",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Kenmore",
+  "route_id" : "19",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Fields Corner",
+  "route_id" : "19",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Louis Pasteur Ave",
+  "route_id" : "19",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Adams & Gallivan",
+  "route_id" : "19",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "21",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "21",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Ruggles",
+  "route_id" : "22",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "22",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "23",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ruggles",
+  "route_id" : "23",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Dudley",
+  "route_id" : "23",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Franklin Park",
+  "route_id" : "23",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Mattapan",
+  "route_id" : "24",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wakefield Ave",
+  "route_id" : "24",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ashmont via Norfolk St",
+  "route_id" : "26",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Gallivan Blvd via Washington St",
+  "route_id" : "26",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Ashmont via Washington St",
+  "route_id" : "26",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Gallivan Blvd via Norfolk St",
+  "route_id" : "26",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "27",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Mattapan",
+  "route_id" : "27",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Mattapan",
+  "route_id" : "28",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Dudley",
+  "route_id" : "28",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Ruggles",
+  "route_id" : "28",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Mattapan via Franklin Field",
+  "route_id" : "29",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Jackson via Franklin Field",
+  "route_id" : "29",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Jackson",
+  "route_id" : "29",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Mattapan",
+  "route_id" : "29",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ruggles",
+  "route_id" : "29",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Roslindale Square",
+  "route_id" : "30",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Mattapan",
+  "route_id" : "30",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "30",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Mattapan",
+  "route_id" : "31",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "31",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "32",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wolcott Square",
+  "route_id" : "32",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Cleary Square",
+  "route_id" : "32",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Townsend & Humboldt",
+  "route_id" : "32",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Ave Louis Pasteur via Forest Hills",
+  "route_id" : "32",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Mattapan",
+  "route_id" : "33",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "River & Milton St",
+  "route_id" : "33",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "33",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "34",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Dedham Line",
+  "route_id" : "34",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Townsend & Humboldt",
+  "route_id" : "34",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills via Mall & Walpole St",
+  "route_id" : "34E",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Walpole Center via Dedham Mall",
+  "route_id" : "34E",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forest Hills via Dedham Mall",
+  "route_id" : "34E",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "East Walpole via Dedham Mall",
+  "route_id" : "34E",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "34E",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "East Walpole",
+  "route_id" : "34E",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Walpole Center via Washington St",
+  "route_id" : "34E",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Walpole Center (Express to Lagrange)",
+  "route_id" : "34E",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Walpole Center",
+  "route_id" : "34E",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Walpole Center via Walpole St",
+  "route_id" : "34E",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Walpole Center via Dedham Mall (Express to Lagrange)",
+  "route_id" : "34E",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Dedham Mall",
+  "route_id" : "35",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "35",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Stimson St",
+  "route_id" : "35",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Louis Pasteur Ave",
+  "route_id" : "35",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills via Belgrade Ave",
+  "route_id" : "36",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Millennium Park via VA Hospital",
+  "route_id" : "36",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Roslindale Square",
+  "route_id" : "36",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "36",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Charles River Loop",
+  "route_id" : "36",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "VA Hospital",
+  "route_id" : "36",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Townsend & Humboldt",
+  "route_id" : "36",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Rivermoor Industrial Park",
+  "route_id" : "36",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "37",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "LaGrange & Corey St",
+  "route_id" : "37",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Baker & Vermont St",
+  "route_id" : "37",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wren St",
+  "route_id" : "38",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "38",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Louis Pasteur Ave",
+  "route_id" : "38",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "39",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Back Bay",
+  "route_id" : "39",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Longwood Ave",
+  "route_id" : "39",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Haymarket via Forest Hills",
+  "route_id" : "39",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "40",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Georgetowne",
+  "route_id" : "40",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Centre & Eliot St",
+  "route_id" : "41",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "JFK/Umass",
+  "route_id" : "41",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Dudley",
+  "route_id" : "42",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "42",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Park & Tremont St",
+  "route_id" : "43",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Ruggles",
+  "route_id" : "43",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ruggles",
+  "route_id" : "44",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Jackson Square",
+  "route_id" : "44",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Franklin Park",
+  "route_id" : "45",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ruggles",
+  "route_id" : "45",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "45",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Malcolm X Blvd",
+  "route_id" : "45",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Broadway",
+  "route_id" : "47",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Central Square",
+  "route_id" : "47",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Boston Medical Center",
+  "route_id" : "47",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "50",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Cleary Square",
+  "route_id" : "50",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Forest Hills",
+  "route_id" : "51",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Reservoir",
+  "route_id" : "51",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Union Square Allston",
+  "route_id" : "51",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Charles River Loop",
+  "route_id" : "52",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Watertown Yard via Winchester St",
+  "route_id" : "52",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Dedham Mall",
+  "route_id" : "52",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Watertown Yard",
+  "route_id" : "52",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Dedham Mall via Winchester St",
+  "route_id" : "52",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Charles River via Winchester St",
+  "route_id" : "52",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Queensberry St",
+  "route_id" : "55",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Copley",
+  "route_id" : "55",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Park St via Copley",
+  "route_id" : "55",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Watertown Yard",
+  "route_id" : "57",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Kenmore",
+  "route_id" : "57",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Watertown via Kenmore",
+  "route_id" : "57",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Haymarket via Kenmore",
+  "route_id" : "57",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Union Square Allston",
+  "route_id" : "57",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Kenmore",
+  "route_id" : "57A",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Oak Square",
+  "route_id" : "57A",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Watertown Square",
+  "route_id" : "59",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Needham Junction",
+  "route_id" : "59",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Needham Junction via Needham St",
+  "route_id" : "59",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Watertown Square via Needham St",
+  "route_id" : "59",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Chestnut Hill Mall",
+  "route_id" : "60",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Kenmore",
+  "route_id" : "60",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Brookline Village",
+  "route_id" : "60",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Alewife",
+  "route_id" : "62",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Bedford VA",
+  "route_id" : "62",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Bedford Center",
+  "route_id" : "62",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Lexington Center",
+  "route_id" : "62",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Faneuil Square",
+  "route_id" : "64",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "University Park",
+  "route_id" : "64",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Oak Square",
+  "route_id" : "64",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Kendall/MIT",
+  "route_id" : "64",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Brighton Center",
+  "route_id" : "65",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Kenmore",
+  "route_id" : "65",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Dudley via Allston",
+  "route_id" : "66",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Harvard via Allston",
+  "route_id" : "66",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Brighton Center via Brookline",
+  "route_id" : "66",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Union Square Allston via Brookline",
+  "route_id" : "66",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Alewife & Arlington Center",
+  "route_id" : "67",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Turkey Hill & Arlington Center",
+  "route_id" : "67",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "68",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Kendall/MIT",
+  "route_id" : "68",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "69",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Lechmere",
+  "route_id" : "69",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "University Park",
+  "route_id" : "70",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Waltham Center",
+  "route_id" : "70",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Cedarwood",
+  "route_id" : "70",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Market Place Dr",
+  "route_id" : "70",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Watertown Square",
+  "route_id" : "70",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square",
+  "route_id" : "70",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "University Park",
+  "route_id" : "70A",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Waltham",
+  "route_id" : "70A",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "71",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Watertown Square",
+  "route_id" : "71",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "72",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Huron Ave",
+  "route_id" : "72",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Cambridge St & Felton St",
+  "route_id" : "72",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "73",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Waverley",
+  "route_id" : "73",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "74",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Belmont Center",
+  "route_id" : "74",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Belmont Center",
+  "route_id" : "75",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "75",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Alewife",
+  "route_id" : "76",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Hanscom Civil Airport & Lincoln Lab",
+  "route_id" : "76",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Five Forks via Lexington Center",
+  "route_id" : "76",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "North Cambridge",
+  "route_id" : "77",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "77",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Arlington Heights",
+  "route_id" : "77",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Arlmont Village",
+  "route_id" : "78",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "78",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Arlington Heights",
+  "route_id" : "78",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Alewife",
+  "route_id" : "79",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Arlington Heights",
+  "route_id" : "79",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Lechmere",
+  "route_id" : "80",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Arlington Center",
+  "route_id" : "80",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Rindge Ave",
+  "route_id" : "83",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square",
+  "route_id" : "83",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Arlmont Village",
+  "route_id" : "84",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Alewife",
+  "route_id" : "84",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Kendall/MIT",
+  "route_id" : "85",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Spring Hill",
+  "route_id" : "85",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Sullivan",
+  "route_id" : "86",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Reservoir",
+  "route_id" : "86",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Arlington Center",
+  "route_id" : "87",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Lechmere",
+  "route_id" : "87",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Clarendon Hill",
+  "route_id" : "87",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Clarendon Hill",
+  "route_id" : "88",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Lechmere",
+  "route_id" : "88",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Davis",
+  "route_id" : "88",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Clarendon Hill",
+  "route_id" : "89",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Sullivan",
+  "route_id" : "89",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Davis",
+  "route_id" : "89",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Clarendon Hill via Davis",
+  "route_id" : "89",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington",
+  "route_id" : "90",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Davis",
+  "route_id" : "90",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square",
+  "route_id" : "91",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Sullivan",
+  "route_id" : "91",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Assembly via Sullivan",
+  "route_id" : "92",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown",
+  "route_id" : "92",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Sullivan",
+  "route_id" : "92",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Haymarket",
+  "route_id" : "92",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Downtown",
+  "route_id" : "93",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Sullivan",
+  "route_id" : "93",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Sullivan via Navy Yard",
+  "route_id" : "93",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown via Navy Yard",
+  "route_id" : "93",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Haymarket",
+  "route_id" : "93",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Medford Square",
+  "route_id" : "94",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Davis",
+  "route_id" : "94",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Sullivan",
+  "route_id" : "95",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "West Medford",
+  "route_id" : "95",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Winthrop & Brooks via Medford Square",
+  "route_id" : "95",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Fellsway Garage via High St",
+  "route_id" : "95",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "West Medford via High St",
+  "route_id" : "95",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Fellsway Garage via Winthrop",
+  "route_id" : "95",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Harvard",
+  "route_id" : "96",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Medford Square",
+  "route_id" : "96",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Davis",
+  "route_id" : "96",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "97",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington",
+  "route_id" : "97",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Boston Regional Medical Center",
+  "route_id" : "99",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington",
+  "route_id" : "99",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Boston Regional Medical Ctr via Gateway Ctr",
+  "route_id" : "99",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington via Gateway Center",
+  "route_id" : "99",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "99",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Elm St",
+  "route_id" : "100",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington",
+  "route_id" : "100",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Roosevelt Cir via Fellsway",
+  "route_id" : "100",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Fells Garage via Fellsway",
+  "route_id" : "100",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "101",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Sullivan",
+  "route_id" : "101",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Medford Square",
+  "route_id" : "101",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Winthrop St & Brooks St",
+  "route_id" : "101",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Stevens Square",
+  "route_id" : "101",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "104",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Sullivan",
+  "route_id" : "104",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Sullivan",
+  "route_id" : "105",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "105",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Lebanon Loop",
+  "route_id" : "106",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington",
+  "route_id" : "106",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "106",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Franklin Square",
+  "route_id" : "106",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Linwood & Lynde",
+  "route_id" : "106",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Franklin Square via Lebanon Loop",
+  "route_id" : "106",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Linden Square",
+  "route_id" : "108",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington",
+  "route_id" : "108",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Linden Square via Pearl St",
+  "route_id" : "108",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington via Pearl St",
+  "route_id" : "108",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "108",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Linden Square",
+  "route_id" : "109",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Glendale Square",
+  "route_id" : "109",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Sullivan",
+  "route_id" : "109",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Broadway & Park",
+  "route_id" : "110",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington",
+  "route_id" : "110",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wonderland",
+  "route_id" : "110",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Woodlawn",
+  "route_id" : "110",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Woodlawn",
+  "route_id" : "111",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Haymarket",
+  "route_id" : "111",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Broadway & Park",
+  "route_id" : "111",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Cary Square",
+  "route_id" : "111",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington via Admiral's Hill & Market Basket",
+  "route_id" : "112",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wood Island via Market Basket & Admiral's Hill",
+  "route_id" : "112",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wood Island via Soldiers' Home & Admiral's Hill",
+  "route_id" : "112",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wellington via Admiral's Hill & Soldiers' Home",
+  "route_id" : "112",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Maverick",
+  "route_id" : "114",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Market Basket",
+  "route_id" : "114",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Maverick",
+  "route_id" : "116",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wonderland",
+  "route_id" : "116",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Maverick",
+  "route_id" : "117",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Haymarket via Maverick",
+  "route_id" : "117",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wonderland",
+  "route_id" : "117",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Logan Airport Terminal C",
+  "route_id" : "117",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Broadway & Central",
+  "route_id" : "117",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Maverick",
+  "route_id" : "117",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Northgate",
+  "route_id" : "119",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Beachmont",
+  "route_id" : "119",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Linden Square",
+  "route_id" : "119",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Maverick via Jeffries Point",
+  "route_id" : "120",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Orient Heights",
+  "route_id" : "120",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Maverick",
+  "route_id" : "120",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Eagle Square",
+  "route_id" : "121",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Maverick",
+  "route_id" : "121",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wood Island",
+  "route_id" : "121",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Melrose Highlands via East Side",
+  "route_id" : "131",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "131",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Oak Grove",
+  "route_id" : "131",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Melrose Highlands",
+  "route_id" : "131",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Oak Grove via East Side",
+  "route_id" : "131",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Redstone",
+  "route_id" : "132",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "132",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wellington",
+  "route_id" : "134",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Woburn",
+  "route_id" : "134",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Medford Square",
+  "route_id" : "134",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Winthrop St",
+  "route_id" : "134",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington via Veterans Senior Center",
+  "route_id" : "134",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Woburn via Veterans Senior Center",
+  "route_id" : "134",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Middlesex Ave & Second St",
+  "route_id" : "134",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Winthrop & Brooks",
+  "route_id" : "134",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Woburn Square",
+  "route_id" : "134",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "136",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wakefield Square",
+  "route_id" : "136",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Reading Depot",
+  "route_id" : "136",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Oak Grove",
+  "route_id" : "136",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "137",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Reading Depot",
+  "route_id" : "137",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Dudley (Express)",
+  "route_id" : "170",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Waltham Central Square",
+  "route_id" : "170",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Logan Airport via Andrew",
+  "route_id" : "171",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown via Park St",
+  "route_id" : "195",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Adams & Gallivan via Neponset Ave",
+  "route_id" : "201",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Fields Corner via Adams St",
+  "route_id" : "201",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Garage via Neponset Ave & Hancock St",
+  "route_id" : "201",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "North Quincy via Neponset Ave & Puritan Mall",
+  "route_id" : "201",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Fields Corner via Keystone Apts",
+  "route_id" : "201",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Keystone Apts via Neponset Ave & Puritan Mall",
+  "route_id" : "201",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Keystone Apts via Neponset Ave",
+  "route_id" : "201",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Fields Corner via Neponset Ave",
+  "route_id" : "202",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Quincy via Adams St & Keystone Apts",
+  "route_id" : "202",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Garage via Hancock St",
+  "route_id" : "202",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Keystone Apts via Adams St",
+  "route_id" : "202",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Fields Corner via Neponset Ave & Puritan Mall",
+  "route_id" : "202",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Hallet Square via Adams St",
+  "route_id" : "202",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "North Quincy",
+  "route_id" : "210",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "210",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Braintree",
+  "route_id" : "210",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Fields Corner",
+  "route_id" : "210",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "211",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Squantum",
+  "route_id" : "211",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Squantum via Billings Rd",
+  "route_id" : "211",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center via Billings Rd",
+  "route_id" : "211",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "North Quincy",
+  "route_id" : "212",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "212",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Germantown via Coddington",
+  "route_id" : "214",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Germantown via McGrath",
+  "route_id" : "214",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center via Coddington",
+  "route_id" : "214",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center via McGrath",
+  "route_id" : "214",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Germantown",
+  "route_id" : "214",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "215",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "215",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Quincy",
+  "route_id" : "215",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Fields Corner",
+  "route_id" : "215",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "East Milton",
+  "route_id" : "215",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center via McGrath",
+  "route_id" : "216",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Houghs Neck via McGrath",
+  "route_id" : "216",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Houghs Neck",
+  "route_id" : "216",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "216",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "217",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center via North Quincy",
+  "route_id" : "217",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "217",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Bryant Ave & Upton St",
+  "route_id" : "217",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "220",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Hingham Square",
+  "route_id" : "220",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Hingham Square via Center",
+  "route_id" : "220",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Hingham Square via Shipyard",
+  "route_id" : "220",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center via Shipyard",
+  "route_id" : "220",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center via Des Moines",
+  "route_id" : "221",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Fort Point via Des Moines",
+  "route_id" : "221",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "222",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Washington & Pleasant St Weymouth",
+  "route_id" : "222",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "East Weymouth",
+  "route_id" : "222",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center via Essex St",
+  "route_id" : "222",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "East Weymouth via Essex St",
+  "route_id" : "222",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "225",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Columbian Square",
+  "route_id" : "225",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center via Shaw St",
+  "route_id" : "225",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Columbian Square via Shaw St",
+  "route_id" : "225",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Weymouth Landing",
+  "route_id" : "225",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Weymouth Landing via Shaw St",
+  "route_id" : "225",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center via Quincy Ave",
+  "route_id" : "225",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Weymouth Landing via Quincy Ave",
+  "route_id" : "225",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Fore River Shipyard via Shaw St",
+  "route_id" : "225",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Braintree",
+  "route_id" : "230",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Montello",
+  "route_id" : "230",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "230",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center via Holbrook Court",
+  "route_id" : "230",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Montello via Holbrook Court",
+  "route_id" : "230",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "236",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "South Shore Plaza",
+  "route_id" : "236",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Braintree",
+  "route_id" : "236",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Holbrook/Randolph",
+  "route_id" : "238",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Avon Square",
+  "route_id" : "238",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Crawford Square",
+  "route_id" : "238",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Adams",
+  "route_id" : "238",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center via North Randolph",
+  "route_id" : "240",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Crawford Square",
+  "route_id" : "240",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Ashmont",
+  "route_id" : "240",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Avon Square",
+  "route_id" : "240",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Holbrook/Randolph via Crawford Square",
+  "route_id" : "240",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Center",
+  "route_id" : "245",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Mattapan",
+  "route_id" : "245",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center via Brook Rd",
+  "route_id" : "245",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Mattapan via Brook Rd",
+  "route_id" : "245",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Quincy Center via Canton Ave",
+  "route_id" : "245",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Quincy Ctr via Brook Rd & Alleyne St",
+  "route_id" : "245",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Beale & Newport",
+  "route_id" : "245",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Haymarket (Express)",
+  "route_id" : "325",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Elm St Medford (Express)",
+  "route_id" : "325",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Redstone via Medford (Express)",
+  "route_id" : "325",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Roosevelt Cir (Express)",
+  "route_id" : "325",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Haymarket via I-93 (Express)",
+  "route_id" : "325",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Haymarket (Express)",
+  "route_id" : "326",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "West Medford (Express)",
+  "route_id" : "326",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Medford Square (Express)",
+  "route_id" : "326",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Burlington via Mall",
+  "route_id" : "350",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Alewife via Mall",
+  "route_id" : "350",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Burlington via Mall Rd",
+  "route_id" : "350",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Alewife",
+  "route_id" : "350",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Burlington",
+  "route_id" : "350",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Burlington Mall",
+  "route_id" : "350",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Arlington Center",
+  "route_id" : "350",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Oak Park & Bedford Woods (Express)",
+  "route_id" : "351",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Alewife (Express)",
+  "route_id" : "351",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Burlington (Express)",
+  "route_id" : "352",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Boston (Express)",
+  "route_id" : "352",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Burlington (Express)",
+  "route_id" : "354",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Woburn via Medford Square (Express)",
+  "route_id" : "354",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Boston (Express)",
+  "route_id" : "354",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Boston via West Cummings (Express)",
+  "route_id" : "354",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Boston via Medford Square (Express)",
+  "route_id" : "354",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Woburn (Express)",
+  "route_id" : "354",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Woburn via West Cummings (Express)",
+  "route_id" : "354",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "411",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Revere House",
+  "route_id" : "411",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Granada Highlands",
+  "route_id" : "411",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Eastern & Essex via Western Ave (Express)",
+  "route_id" : "424",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wonderland",
+  "route_id" : "424",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Central Square via Cliftondale",
+  "route_id" : "426",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Haymarket via Cliftondale",
+  "route_id" : "426",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "West Lynn via Cliftondale",
+  "route_id" : "426",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square",
+  "route_id" : "426",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wonderland via Cliftondale",
+  "route_id" : "426",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Haymarket via Cliftondale (Express)",
+  "route_id" : "428",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Oaklandvale via Cliftondale (Express)",
+  "route_id" : "428",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Northgate Shopping Ctr via Square One Mall",
+  "route_id" : "429",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square via Square One Mall",
+  "route_id" : "429",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Northgate Shopping Ctr",
+  "route_id" : "429",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square",
+  "route_id" : "429",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Kings Lynn",
+  "route_id" : "429",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Saugus Center via Granada & Square One Mall",
+  "route_id" : "430",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Malden via Square One Mall",
+  "route_id" : "430",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Saugus Center via Square One Mall",
+  "route_id" : "430",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Malden via Square One Mall & Granada",
+  "route_id" : "430",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Malden",
+  "route_id" : "430",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Saugus Center",
+  "route_id" : "430",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Square One Mall",
+  "route_id" : "430",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Haymarket via Goodwins Cir & Western Ave (Express)",
+  "route_id" : "434",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Peabody Square via Western Ave & Goodwins Cir (Express)",
+  "route_id" : "434",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Danvers Square via Malls",
+  "route_id" : "435",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square via Malls",
+  "route_id" : "435",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Liberty Tree Mall via Danvers",
+  "route_id" : "435",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Peabody Square via Pine Hill",
+  "route_id" : "435",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square via Pine Hill",
+  "route_id" : "435",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Central Square",
+  "route_id" : "435",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Liberty Tree Mall via Pine Hill & N Shore Mall",
+  "route_id" : "435",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Neptune Towers via Central Sq",
+  "route_id" : "435",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Neptune Towers via Pine Hill & Central Sq",
+  "route_id" : "435",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Liberty Tree Mall via North Shore Mall",
+  "route_id" : "435",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Liberty Tree Mall via N Shore Mall",
+  "route_id" : "435",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Liberty Tree via North Shore Mall & Lynnfield St",
+  "route_id" : "436",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square via Lynnfield St",
+  "route_id" : "436",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Goodwin Circle",
+  "route_id" : "436",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Neptune Towers via Central Sq",
+  "route_id" : "436",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Shore Mall via Lynnfield St",
+  "route_id" : "436",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square via Malls & Lynnfield St",
+  "route_id" : "436",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Central Square",
+  "route_id" : "436",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "West Lynn Garage via Central Square",
+  "route_id" : "436",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Central Square",
+  "route_id" : "439",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wonderland via Central Square",
+  "route_id" : "439",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Nahant via Central Square",
+  "route_id" : "439",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Nahant",
+  "route_id" : "439",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Marblehead via Central Square & Paradise Rd",
+  "route_id" : "441",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "West Lynn via Paradise Rd & Central Square",
+  "route_id" : "441",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Salem St & Humphrey",
+  "route_id" : "441",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wonderland via Paradise Rd & Central Square",
+  "route_id" : "441",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Marblehead via Central Square & Humphrey",
+  "route_id" : "442",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "West Lynn via Central Square & Humphrey",
+  "route_id" : "442",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Salem St & Humphrey",
+  "route_id" : "442",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wonderland via Central Square & Humphrey",
+  "route_id" : "442",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Marblehead via Paradise Rd & Central Sq (Express)",
+  "route_id" : "448",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown Express via Airport and Paradise Rd",
+  "route_id" : "448",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Marblehead via Humphrey St & Central Sq (Express)",
+  "route_id" : "449",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown Express via Airport and Humphrey St",
+  "route_id" : "449",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Salem Depot",
+  "route_id" : "450",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "West Lynn Garage",
+  "route_id" : "450",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Haymarket",
+  "route_id" : "450",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wonderland",
+  "route_id" : "450",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Beverly via Tozer Rd",
+  "route_id" : "451",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Salem Depot via Tozer Rd",
+  "route_id" : "451",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Salem Depot via Cabot St",
+  "route_id" : "451",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "North Beverly via Cabot St",
+  "route_id" : "451",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Salem Depot via Central Square",
+  "route_id" : "455",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wonderland via Central Square",
+  "route_id" : "455",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wonderland",
+  "route_id" : "455",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "West Lynn via Central Square",
+  "route_id" : "455",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Salem Depot",
+  "route_id" : "456",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Central Square",
+  "route_id" : "456",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Salem Depot via Airport & Central Square (Express)",
+  "route_id" : "459",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown via Central Square & Airport (Express)",
+  "route_id" : "459",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Salem Depot via Malls & Peabody Square",
+  "route_id" : "465",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Danvers Square via Peabody Square & Malls",
+  "route_id" : "465",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Salem Depot via North & Margin",
+  "route_id" : "465",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Danvers Square via North & Margin",
+  "route_id" : "465",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown (Express)",
+  "route_id" : "501",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Brighton (Express)",
+  "route_id" : "501",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Copley (Express)",
+  "route_id" : "502",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Watertown (Express)",
+  "route_id" : "502",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Copley (Express)",
+  "route_id" : "503",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Brighton Center (Express)",
+  "route_id" : "503",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Brighton Center via Cambridge St (Express)",
+  "route_id" : "503",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Watertown via Copley (Express)",
+  "route_id" : "504",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown via Copley (Express)",
+  "route_id" : "504",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Watertown (Express)",
+  "route_id" : "504",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown (Express)",
+  "route_id" : "504",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Waltham Central Square (Express)",
+  "route_id" : "505",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown (Express)",
+  "route_id" : "505",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Newton Corner",
+  "route_id" : "553",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Roberts",
+  "route_id" : "553",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Waltham via Copley (Express)",
+  "route_id" : "553",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown via Copley (Express)",
+  "route_id" : "553",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Downtown (Express)",
+  "route_id" : "553",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Roberts (Express)",
+  "route_id" : "553",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown via Trapelo Rd (Express)",
+  "route_id" : "554",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Waverley (Express)",
+  "route_id" : "554",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown (Express)",
+  "route_id" : "554",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Waverley via Trapelo Rd (Express)",
+  "route_id" : "554",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown (Express)",
+  "route_id" : "556",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Waltham Highlands",
+  "route_id" : "556",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Newton Corner",
+  "route_id" : "556",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Waltham Highland (Express)",
+  "route_id" : "556",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Downtown (Express)",
+  "route_id" : "558",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Riverside (Express)",
+  "route_id" : "558",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Riverside",
+  "route_id" : "558",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Newton Corner",
+  "route_id" : "558",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Highland/Doonan",
+  "route_id" : "710",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Wellington (No Mall)",
+  "route_id" : "710",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Wellington",
+  "route_id" : "710",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Super Stop & Shop",
+  "route_id" : "710",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Meadow Glen Mall",
+  "route_id" : "710",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Highland/Doonan (No Mall)",
+  "route_id" : "710",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Orient Heights",
+  "route_id" : "712",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Point Shirley",
+  "route_id" : "712",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Winthrop Beach",
+  "route_id" : "712",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Orient Heights",
+  "route_id" : "713",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Winthrop Beach",
+  "route_id" : "713",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Point Shirley",
+  "route_id" : "713",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Station Street Hingham",
+  "route_id" : "714",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Pemberton Point via Hull Medical Center",
+  "route_id" : "714",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Station Street via Hull Medical Center",
+  "route_id" : "714",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Pemberton Point via Washington Boulevard",
+  "route_id" : "714",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Pemberton Point Hull",
+  "route_id" : "714",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Station Street via Washington Boulevard",
+  "route_id" : "714",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Cobbs Corner Canton",
+  "route_id" : "716",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Mattapan",
+  "route_id" : "716",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Boston-Long Wharf",
+  "route_id" : "Boat-F4",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Charlestown Navy Yard",
+  "route_id" : "Boat-F4",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Hingham via Hull",
+  "route_id" : "Boat-F1",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Boston-Long Wharf via Hull",
+  "route_id" : "Boat-F1",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Hingham via Logan Airport",
+  "route_id" : "Boat-F1",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Hingham via Logan Airport & Hull",
+  "route_id" : "Boat-F1",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Boston-Long Wharf",
+  "route_id" : "Boat-F1",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Hingham",
+  "route_id" : "Boat-F1",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Boston-Rowes Wharf",
+  "route_id" : "Boat-F1",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Boston-Long Wharf via Logan Airport",
+  "route_id" : "Boat-F1",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Hull",
+  "route_id" : "Boat-F1",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+}, {
+  "name" : "Boston-Long Wharf via Hull & Logan Airport",
+  "route_id" : "Boat-F1",
+  "direction_id" : 1,
+  "direction_name" : "Inbound"
+}, {
+  "name" : "Hull via Logan Airport",
+  "route_id" : "Boat-F1",
+  "direction_id" : 0,
+  "direction_name" : "Outbound"
+} ]

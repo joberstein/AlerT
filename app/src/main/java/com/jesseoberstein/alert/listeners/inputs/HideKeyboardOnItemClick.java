@@ -23,6 +23,6 @@ public class HideKeyboardOnItemClick implements AdapterView.OnItemClickListener 
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         CreateAlarm createAlarm = (CreateAlarm) activity;
         hideKeyboardForLastInput(createAlarm.getStationAutoComplete(), createAlarm.getFocusHolder());
-        createAlarm.setUpDirectionTabs(((TextView) view).getText().toString());
+        createAlarm.setUpDirectionTabs();
     }
 }

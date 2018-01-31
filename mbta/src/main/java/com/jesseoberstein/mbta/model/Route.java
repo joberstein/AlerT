@@ -1,98 +1,114 @@
 package com.jesseoberstein.mbta.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jesseoberstein.mbta.utils.RouteName;
+import com.github.jasminb.jsonapi.annotations.Type;
 
-import java.util.Collections;
 import java.util.List;
 
-public class Route {
-    @JsonProperty("route_id")
-    private String routeId;
+@Type("route")
+public class Route extends BaseResource implements MbtaDataType {
 
-    @JsonProperty("route_name")
-    private String routeName;
+    @JsonProperty("type")
+    private RouteType routeType;
 
-    @JsonProperty("route_hide")
-    private boolean routeHide;
+    @JsonProperty("sort_order")
+    private int sortOrder;
 
-    @JsonProperty("parent_route")
-    private String parentRoute;
+    @JsonProperty("short_name")
+    private String shortName;
 
-    @JsonProperty("direction")
-    private List<Direction> directions;
+    @JsonProperty("long_name")
+    private String longName;
 
-    public Route() {}
+    @JsonProperty("direction_names")
+    private List<String> directionNames;
 
-    public Route(String routeName) {
-        setRouteName(routeName);
-        this.routeId = routeName;
-        this.routeHide = false;
-        this.directions = Collections.emptyList();
+    @JsonProperty("description")
+    private String description;
+
+    @JsonProperty("color")
+    private String color;
+
+    @JsonProperty("text_color")
+    private String textColor;
+
+    public RouteType getRouteType() {
+        return routeType;
     }
 
-    public String getRouteId() {
-        return routeId;
+    public void setRouteType(RouteType routeType) {
+        this.routeType = routeType;
     }
 
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
+    public int getSortOrder() {
+        return sortOrder;
     }
 
-    public String getRouteName() {
-        return routeName;
+    public void setSortOrder(int sortOrder) {
+        this.sortOrder = sortOrder;
     }
 
-    public void setRouteName(String routeName) {
-        this.routeName = routeName;
-        setParentRoute();
+    public String getShortName() {
+        return shortName;
     }
 
-    public boolean isRouteHide() {
-        return routeHide;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
-    public void setRouteHide(boolean routeHide) {
-        this.routeHide = routeHide;
+    public String getLongName() {
+        return longName;
     }
 
-    private void setParentRoute() {
-        String normalizedRouteName = this.routeName.toLowerCase().trim();
-        if (normalizedRouteName.contains(RouteName.GREEN.toString().toLowerCase())) {
-            this.parentRoute = RouteName.GREEN.toString();
-        }
-        else if (normalizedRouteName.contains(RouteName.SILVER.toString().toLowerCase())) {
-            this.parentRoute = RouteName.SILVER.toString();
-        }
-        else {
-            this.parentRoute = this.routeName;
-        }
+    public void setLongName(String longName) {
+        this.longName = longName;
     }
 
-    public String getParentRoute() {
-        return this.parentRoute;
+    public List<String> getDirectionNames() {
+        return directionNames;
     }
 
-    public void setParentRoute(String parentRoute) {
-        this.parentRoute = parentRoute;
+    public void setDirectionNames(List<String> directionNames) {
+        this.directionNames = directionNames;
     }
 
-    public List<Direction> getDirections() {
-        return directions;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDirections(List<Direction> directions) {
-        this.directions = directions;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(String textColor) {
+        this.textColor = textColor;
     }
 
     @Override
     public String toString() {
-        return "\n\t\t\t\t" +
-                "{" + "\n\t\t\t\t\t" +
-                "routeId: " + routeId + "\n\t\t\t\t\t" +
-                "routeName: " + routeName + "\n\t\t\t\t\t" +
-                "routeHide: " + routeHide + "\n\t\t\t\t" +
-                "directions: " + directions + "\n\t\t\t\t" +
-                "}";
+        return "\n" +
+                "Route {" +
+                super.toString() +
+                ", routeType=" + routeType.name() +
+                ", sortOrder=" + sortOrder +
+                ", shortName='" + shortName + '\'' +
+                ", longName='" + longName + '\'' +
+                ", directionNames=" + directionNames +
+                ", description='" + description + '\'' +
+                ", color='" + color + '\'' +
+                ", textColor='" + textColor + '\'' +
+                '}';
     }
 }

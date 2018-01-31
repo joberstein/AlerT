@@ -19,7 +19,7 @@ class QueryBuilder {
     QueryBuilder addParam(String key, String value) {
         String normalKey = normalize(key);
         if (!this.params.containsKey(normalKey)) {
-            this.params.put(normalKey, normalize(value));
+            this.params.put(normalKey, value);
         }
         return this;
     }

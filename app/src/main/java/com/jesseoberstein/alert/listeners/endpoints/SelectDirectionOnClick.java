@@ -26,9 +26,8 @@ public class SelectDirectionOnClick implements OnTabSelectedListener {
         switch (className) {
             case "CreateAlarm":
                 CreateAlarm createAlarm = (CreateAlarm) context;
-                createAlarm.getLinesView().setVisibility(View.GONE);
                 createAlarm.getEndpointsView().setVisibility(View.GONE);
-                createAlarm.setUpLineAndEndpointButtons(tabText);
+                createAlarm.setUpEndpointButtons(tabText);
         }
     }
 

@@ -1,204 +1,76 @@
 package com.jesseoberstein.mbta.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.jasminb.jsonapi.annotations.Type;
 
-import java.util.Collections;
-import java.util.List;
+@Type("stop")
+public class Stop extends BaseResource implements MbtaDataType {
 
-public class Stop {
-    @JsonProperty("stop_order")
-    private int stopOrder;
+    @JsonProperty("name")
+    private String name;
 
-    @JsonProperty("stop_id")
-    private String stopId;
+    @JsonProperty("route_id")
+    private String routeId;
 
-    @JsonProperty("stop_name")
-    private String stopName;
+    @JsonProperty("wheelchair_boarding")
+    private int wheelchairBoarding;
 
-    @JsonProperty("parent_station")
-    private String parentStation;
+    @JsonProperty("longitude")
+    private double longitude;
 
-    @JsonProperty("parent_station_name")
-    private String parentStationName;
+    @JsonProperty("latitude")
+    private double latitude;
 
-    @JsonProperty("stop_lat")
-    private double stopLatitude;
-
-    @JsonProperty("stop_lon")
-    private double stopLongitude;
-
-    @JsonProperty("real_stop_name")
-    private String realStopName;
-
-    @JsonProperty("stop_sequence")
-    private int stopSequence;
-
-    @JsonProperty("sch_arr_dt")
-    private long scheduledArrivalTime;
-
-    @JsonProperty("sch_dep_dt")
-    private long scheduledDepartureTime;
-
-    @JsonProperty("pre_dt")
-    private long predictedArrivalTime;
-
-    @JsonProperty("pre_away")
-    private int predictedSecondsAway;
-
-    @JsonProperty("mode")
-    private List<Mode> modes;
-
-    @JsonProperty("alert_headers")
-    private List<Alert> alerts;
-
-    public Stop() {
-        this.parentStationName = "";
-        this.modes = Collections.emptyList();
-        this.alerts = Collections.emptyList();
+    public String getName() {
+        return name;
     }
 
-    public int getStopOrder() {
-        return stopOrder;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setStopOrder(int stopOrder) {
-        this.stopOrder = stopOrder;
+    public int getWheelchairBoarding() {
+        return wheelchairBoarding;
     }
 
-    public String getStopId() {
-        return stopId;
+    public void setWheelchairBoarding(int wheelchairBoarding) {
+        this.wheelchairBoarding = wheelchairBoarding;
     }
 
-    public void setStopId(String stopId) {
-        this.stopId = stopId;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public String getStopName() {
-        return stopName;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
-    public void setStopName(String stopName) {
-        this.stopName = stopName;
-        this.realStopName = stopName;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public String getParentStation() {
-        return parentStation;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public void setParentStation(String parentStation) {
-        this.parentStation = parentStation;
+    public String getRouteId() {
+        return routeId;
     }
 
-    public String getParentStationName() {
-        return parentStationName;
-    }
-
-    public void setParentStationName(String parentStationName) {
-        this.parentStationName = parentStationName;
-        if (!parentStationName.isEmpty()) {
-            this.realStopName = parentStationName;
-        }
-    }
-
-    public double getStopLatitude() {
-        return stopLatitude;
-    }
-
-    public void setStopLatitude(double stopLatitude) {
-        this.stopLatitude = stopLatitude;
-    }
-
-    public double getStopLongitude() {
-        return stopLongitude;
-    }
-
-    public void setStopLongitude(double stopLongitude) {
-        this.stopLongitude = stopLongitude;
-    }
-
-    public String getRealStopName() {
-        return this.realStopName;
-    }
-
-    public void setRealStopName(String realStopName) {
-        this.realStopName = realStopName;
-    }
-
-    public int getStopSequence() {
-        return stopSequence;
-    }
-
-    public void setStopSequence(int stopSequence) {
-        this.stopSequence = stopSequence;
-    }
-
-    public long getScheduledArrivalTime() {
-        return scheduledArrivalTime;
-    }
-
-    public void setScheduledArrivalTime(long scheduledArrivalTime) {
-        this.scheduledArrivalTime = scheduledArrivalTime;
-    }
-
-    public long getScheduledDepartureTime() {
-        return scheduledDepartureTime;
-    }
-
-    public void setScheduledDepartureTime(long scheduledDepartureTime) {
-        this.scheduledDepartureTime = scheduledDepartureTime;
-    }
-
-    public long getPredictedArrivalTime() {
-        return predictedArrivalTime;
-    }
-
-    public void setPredictedArrivalTime(long predictedArrivalTime) {
-        this.predictedArrivalTime = predictedArrivalTime;
-    }
-
-    public int getPredictedSecondsAway() {
-        return predictedSecondsAway;
-    }
-
-    public void setPredictedSecondsAway(int predictedSecondsAway) {
-        this.predictedSecondsAway = predictedSecondsAway;
-    }
-
-    public List<Mode> getModes() {
-        return modes;
-    }
-
-    public void setModes(List<Mode> modes) {
-        this.modes = modes;
-    }
-
-    public List<Alert> getAlerts() {
-        return alerts;
-    }
-
-    public void setAlerts(List<Alert> alerts) {
-        this.alerts = alerts;
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
     }
 
     @Override
     public String toString() {
-        return "Stop{" + "\n" +
-                "stopOrder=" + stopOrder + "\n" +
-                "stopId=" + stopId + "\n" +
-                "stopName=" + stopName + "\n" +
-                "parentStation='" + parentStation + "\n" +
-                "parentStationName=" + parentStationName + "\n" +
-                "realStopName=" + realStopName + "\n" +
-                "stopLatitude=" + stopLatitude + "\n" +
-                "stopLongitude=" + stopLongitude + "\n" +
-                "stop_sequence=" + stopSequence + "\n" +
-                "scheduledArrivalTime=" + scheduledArrivalTime + "\n" +
-                "scheduledDepartureTime=" + scheduledDepartureTime + "\n" +
-                "predictedArrivalTime=" + predictedArrivalTime + "\n" +
-                "predictedSecondsAway=" + predictedSecondsAway + "\n" +
-                "modes=" + modes + "\n" +
-                "alerts=" + alerts + "\n" +
-                "}\n";
+        return "\n" +
+                "Stop {" +
+                super.toString() +
+                ", name='" + name + '\'' +
+                ", routeId=" + routeId +
+                ", wheelchairBoarding=" + wheelchairBoarding +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                "}";
     }
 }

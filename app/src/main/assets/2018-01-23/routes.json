@@ -1,0 +1,3513 @@
+{
+  "data" : [ {
+    "links" : {
+      "self" : {
+        "href" : "/routes/Red"
+      }
+    },
+    "type" : "route",
+    "id" : "Red",
+    "attributes" : {
+      "type" : "SUBWAY",
+      "sort_order" : 1,
+      "short_name" : "",
+      "long_name" : "Red Line",
+      "direction_names" : [ "Southbound", "Northbound" ],
+      "description" : "Rapid Transit",
+      "color" : "DA291C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/Orange"
+      }
+    },
+    "type" : "route",
+    "id" : "Orange",
+    "attributes" : {
+      "type" : "SUBWAY",
+      "sort_order" : 2,
+      "short_name" : "",
+      "long_name" : "Orange Line",
+      "direction_names" : [ "Southbound", "Northbound" ],
+      "description" : "Rapid Transit",
+      "color" : "ED8B00",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/Green-B"
+      }
+    },
+    "type" : "route",
+    "id" : "Green-B",
+    "attributes" : {
+      "type" : "LIGHT_RAIL",
+      "sort_order" : 3,
+      "short_name" : "B",
+      "long_name" : "Green Line B",
+      "direction_names" : [ "Westbound", "Eastbound" ],
+      "description" : "Rapid Transit",
+      "color" : "00843D",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/Green-C"
+      }
+    },
+    "type" : "route",
+    "id" : "Green-C",
+    "attributes" : {
+      "type" : "LIGHT_RAIL",
+      "sort_order" : 4,
+      "short_name" : "C",
+      "long_name" : "Green Line C",
+      "direction_names" : [ "Westbound", "Eastbound" ],
+      "description" : "Rapid Transit",
+      "color" : "00843D",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/Green-D"
+      }
+    },
+    "type" : "route",
+    "id" : "Green-D",
+    "attributes" : {
+      "type" : "LIGHT_RAIL",
+      "sort_order" : 5,
+      "short_name" : "D",
+      "long_name" : "Green Line D",
+      "direction_names" : [ "Westbound", "Eastbound" ],
+      "description" : "Rapid Transit",
+      "color" : "00843D",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/Green-E"
+      }
+    },
+    "type" : "route",
+    "id" : "Green-E",
+    "attributes" : {
+      "type" : "LIGHT_RAIL",
+      "sort_order" : 6,
+      "short_name" : "E",
+      "long_name" : "Green Line E",
+      "direction_names" : [ "Westbound", "Eastbound" ],
+      "description" : "Rapid Transit",
+      "color" : "00843D",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/Blue"
+      }
+    },
+    "type" : "route",
+    "id" : "Blue",
+    "attributes" : {
+      "type" : "SUBWAY",
+      "sort_order" : 7,
+      "short_name" : "",
+      "long_name" : "Blue Line",
+      "direction_names" : [ "Westbound", "Eastbound" ],
+      "description" : "Rapid Transit",
+      "color" : "003DA5",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/Mattapan"
+      }
+    },
+    "type" : "route",
+    "id" : "Mattapan",
+    "attributes" : {
+      "type" : "LIGHT_RAIL",
+      "sort_order" : 8,
+      "short_name" : "",
+      "long_name" : "Mattapan Trolley",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Rapid Transit",
+      "color" : "DA291C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/741"
+      }
+    },
+    "type" : "route",
+    "id" : "741",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 9,
+      "short_name" : "SL1",
+      "long_name" : "Silver Line SL1",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Rapid Transit",
+      "color" : "7C878E",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/742"
+      }
+    },
+    "type" : "route",
+    "id" : "742",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 10,
+      "short_name" : "SL2",
+      "long_name" : "Silver Line SL2",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Rapid Transit",
+      "color" : "7C878E",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/751"
+      }
+    },
+    "type" : "route",
+    "id" : "751",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 11,
+      "short_name" : "SL4",
+      "long_name" : "Silver Line SL4",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Rapid Transit",
+      "color" : "7C878E",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/749"
+      }
+    },
+    "type" : "route",
+    "id" : "749",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 12,
+      "short_name" : "SL5",
+      "long_name" : "Silver Line SL5",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Rapid Transit",
+      "color" : "7C878E",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Fairmount"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Fairmount",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 51,
+      "short_name" : "",
+      "long_name" : "Fairmount Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Fitchburg"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Fitchburg",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 52,
+      "short_name" : "",
+      "long_name" : "Fitchburg Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Worcester"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Worcester",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 53,
+      "short_name" : "",
+      "long_name" : "Framingham/Worcester Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Franklin"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Franklin",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 54,
+      "short_name" : "",
+      "long_name" : "Franklin Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Greenbush"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Greenbush",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 55,
+      "short_name" : "",
+      "long_name" : "Greenbush Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Haverhill"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Haverhill",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 56,
+      "short_name" : "",
+      "long_name" : "Haverhill Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Kingston"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Kingston",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 57,
+      "short_name" : "",
+      "long_name" : "Kingston/Plymouth Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Lowell"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Lowell",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 58,
+      "short_name" : "",
+      "long_name" : "Lowell Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Middleborough"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Middleborough",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 59,
+      "short_name" : "",
+      "long_name" : "Middleborough/Lakeville Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Needham"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Needham",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 60,
+      "short_name" : "",
+      "long_name" : "Needham Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Newburyport"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Newburyport",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 61,
+      "short_name" : "",
+      "long_name" : "Newburyport/Rockport Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Providence"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Providence",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 62,
+      "short_name" : "",
+      "long_name" : "Providence/Stoughton Line",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Commuter Rail",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/CR-Foxboro"
+      }
+    },
+    "type" : "route",
+    "id" : "CR-Foxboro",
+    "attributes" : {
+      "type" : "COMMUTER_RAIL",
+      "sort_order" : 63,
+      "short_name" : "",
+      "long_name" : "Foxboro (Special Events)",
+      "direction_names" : [ "South Station", "TF Green Airport" ],
+      "description" : "Limited Service",
+      "color" : "80276C",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/701"
+      }
+    },
+    "type" : "route",
+    "id" : "701",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 81,
+      "short_name" : "CT1",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/747"
+      }
+    },
+    "type" : "route",
+    "id" : "747",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 82,
+      "short_name" : "CT2",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/708"
+      }
+    },
+    "type" : "route",
+    "id" : "708",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 83,
+      "short_name" : "CT3",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/1"
+      }
+    },
+    "type" : "route",
+    "id" : "1",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 100,
+      "short_name" : "1",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/4"
+      }
+    },
+    "type" : "route",
+    "id" : "4",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 400,
+      "short_name" : "4",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/5"
+      }
+    },
+    "type" : "route",
+    "id" : "5",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 500,
+      "short_name" : "5",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/7"
+      }
+    },
+    "type" : "route",
+    "id" : "7",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 700,
+      "short_name" : "7",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/8"
+      }
+    },
+    "type" : "route",
+    "id" : "8",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 800,
+      "short_name" : "8",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/9"
+      }
+    },
+    "type" : "route",
+    "id" : "9",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 900,
+      "short_name" : "9",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/10"
+      }
+    },
+    "type" : "route",
+    "id" : "10",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 1000,
+      "short_name" : "10",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/11"
+      }
+    },
+    "type" : "route",
+    "id" : "11",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 1100,
+      "short_name" : "11",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/14"
+      }
+    },
+    "type" : "route",
+    "id" : "14",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 1400,
+      "short_name" : "14",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/15"
+      }
+    },
+    "type" : "route",
+    "id" : "15",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 1500,
+      "short_name" : "15",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/16"
+      }
+    },
+    "type" : "route",
+    "id" : "16",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 1600,
+      "short_name" : "16",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/17"
+      }
+    },
+    "type" : "route",
+    "id" : "17",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 1700,
+      "short_name" : "17",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/18"
+      }
+    },
+    "type" : "route",
+    "id" : "18",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 1800,
+      "short_name" : "18",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/19"
+      }
+    },
+    "type" : "route",
+    "id" : "19",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 1900,
+      "short_name" : "19",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/21"
+      }
+    },
+    "type" : "route",
+    "id" : "21",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 2100,
+      "short_name" : "21",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/22"
+      }
+    },
+    "type" : "route",
+    "id" : "22",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 2200,
+      "short_name" : "22",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/23"
+      }
+    },
+    "type" : "route",
+    "id" : "23",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 2300,
+      "short_name" : "23",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/24"
+      }
+    },
+    "type" : "route",
+    "id" : "24",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 2400,
+      "short_name" : "24",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/26"
+      }
+    },
+    "type" : "route",
+    "id" : "26",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 2600,
+      "short_name" : "26",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/27"
+      }
+    },
+    "type" : "route",
+    "id" : "27",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 2700,
+      "short_name" : "27",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/28"
+      }
+    },
+    "type" : "route",
+    "id" : "28",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 2800,
+      "short_name" : "28",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/29"
+      }
+    },
+    "type" : "route",
+    "id" : "29",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 2900,
+      "short_name" : "29",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/30"
+      }
+    },
+    "type" : "route",
+    "id" : "30",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3000,
+      "short_name" : "30",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/31"
+      }
+    },
+    "type" : "route",
+    "id" : "31",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3100,
+      "short_name" : "31",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/32"
+      }
+    },
+    "type" : "route",
+    "id" : "32",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3200,
+      "short_name" : "32",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/33"
+      }
+    },
+    "type" : "route",
+    "id" : "33",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3300,
+      "short_name" : "33",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/34"
+      }
+    },
+    "type" : "route",
+    "id" : "34",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3400,
+      "short_name" : "34",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/34E"
+      }
+    },
+    "type" : "route",
+    "id" : "34E",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3401,
+      "short_name" : "34E",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/35"
+      }
+    },
+    "type" : "route",
+    "id" : "35",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3500,
+      "short_name" : "35",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/36"
+      }
+    },
+    "type" : "route",
+    "id" : "36",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3600,
+      "short_name" : "36",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/37"
+      }
+    },
+    "type" : "route",
+    "id" : "37",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3700,
+      "short_name" : "37",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/38"
+      }
+    },
+    "type" : "route",
+    "id" : "38",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3800,
+      "short_name" : "38",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/39"
+      }
+    },
+    "type" : "route",
+    "id" : "39",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 3900,
+      "short_name" : "39",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/40"
+      }
+    },
+    "type" : "route",
+    "id" : "40",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 4000,
+      "short_name" : "40",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/41"
+      }
+    },
+    "type" : "route",
+    "id" : "41",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 4100,
+      "short_name" : "41",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/42"
+      }
+    },
+    "type" : "route",
+    "id" : "42",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 4200,
+      "short_name" : "42",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/43"
+      }
+    },
+    "type" : "route",
+    "id" : "43",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 4300,
+      "short_name" : "43",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/44"
+      }
+    },
+    "type" : "route",
+    "id" : "44",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 4400,
+      "short_name" : "44",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/45"
+      }
+    },
+    "type" : "route",
+    "id" : "45",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 4500,
+      "short_name" : "45",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/47"
+      }
+    },
+    "type" : "route",
+    "id" : "47",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 4700,
+      "short_name" : "47",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/50"
+      }
+    },
+    "type" : "route",
+    "id" : "50",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 5000,
+      "short_name" : "50",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/51"
+      }
+    },
+    "type" : "route",
+    "id" : "51",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 5100,
+      "short_name" : "51",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/52"
+      }
+    },
+    "type" : "route",
+    "id" : "52",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 5200,
+      "short_name" : "52",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/55"
+      }
+    },
+    "type" : "route",
+    "id" : "55",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 5500,
+      "short_name" : "55",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/57"
+      }
+    },
+    "type" : "route",
+    "id" : "57",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 5700,
+      "short_name" : "57",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/57A"
+      }
+    },
+    "type" : "route",
+    "id" : "57A",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 5701,
+      "short_name" : "57A",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/59"
+      }
+    },
+    "type" : "route",
+    "id" : "59",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 5900,
+      "short_name" : "59",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/60"
+      }
+    },
+    "type" : "route",
+    "id" : "60",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 6000,
+      "short_name" : "60",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/62"
+      }
+    },
+    "type" : "route",
+    "id" : "62",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 6200,
+      "short_name" : "62",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/64"
+      }
+    },
+    "type" : "route",
+    "id" : "64",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 6400,
+      "short_name" : "64",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/65"
+      }
+    },
+    "type" : "route",
+    "id" : "65",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 6500,
+      "short_name" : "65",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/66"
+      }
+    },
+    "type" : "route",
+    "id" : "66",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 6600,
+      "short_name" : "66",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/67"
+      }
+    },
+    "type" : "route",
+    "id" : "67",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 6700,
+      "short_name" : "67",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/68"
+      }
+    },
+    "type" : "route",
+    "id" : "68",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 6800,
+      "short_name" : "68",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/69"
+      }
+    },
+    "type" : "route",
+    "id" : "69",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 6900,
+      "short_name" : "69",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/70"
+      }
+    },
+    "type" : "route",
+    "id" : "70",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7000,
+      "short_name" : "70",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/70A"
+      }
+    },
+    "type" : "route",
+    "id" : "70A",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7001,
+      "short_name" : "70A",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/71"
+      }
+    },
+    "type" : "route",
+    "id" : "71",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7100,
+      "short_name" : "71",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/72"
+      }
+    },
+    "type" : "route",
+    "id" : "72",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7200,
+      "short_name" : "72",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/73"
+      }
+    },
+    "type" : "route",
+    "id" : "73",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7300,
+      "short_name" : "73",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/74"
+      }
+    },
+    "type" : "route",
+    "id" : "74",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7400,
+      "short_name" : "74",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/75"
+      }
+    },
+    "type" : "route",
+    "id" : "75",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7500,
+      "short_name" : "75",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/76"
+      }
+    },
+    "type" : "route",
+    "id" : "76",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7600,
+      "short_name" : "76",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/77"
+      }
+    },
+    "type" : "route",
+    "id" : "77",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7700,
+      "short_name" : "77",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/78"
+      }
+    },
+    "type" : "route",
+    "id" : "78",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7800,
+      "short_name" : "78",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/79"
+      }
+    },
+    "type" : "route",
+    "id" : "79",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 7900,
+      "short_name" : "79",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/80"
+      }
+    },
+    "type" : "route",
+    "id" : "80",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 8000,
+      "short_name" : "80",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/83"
+      }
+    },
+    "type" : "route",
+    "id" : "83",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 8300,
+      "short_name" : "83",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/84"
+      }
+    },
+    "type" : "route",
+    "id" : "84",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 8400,
+      "short_name" : "84",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/85"
+      }
+    },
+    "type" : "route",
+    "id" : "85",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 8500,
+      "short_name" : "85",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/86"
+      }
+    },
+    "type" : "route",
+    "id" : "86",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 8600,
+      "short_name" : "86",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/87"
+      }
+    },
+    "type" : "route",
+    "id" : "87",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 8700,
+      "short_name" : "87",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/88"
+      }
+    },
+    "type" : "route",
+    "id" : "88",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 8800,
+      "short_name" : "88",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/89"
+      }
+    },
+    "type" : "route",
+    "id" : "89",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 8900,
+      "short_name" : "89",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/90"
+      }
+    },
+    "type" : "route",
+    "id" : "90",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 9000,
+      "short_name" : "90",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/91"
+      }
+    },
+    "type" : "route",
+    "id" : "91",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 9100,
+      "short_name" : "91",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/92"
+      }
+    },
+    "type" : "route",
+    "id" : "92",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 9200,
+      "short_name" : "92",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/93"
+      }
+    },
+    "type" : "route",
+    "id" : "93",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 9300,
+      "short_name" : "93",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/94"
+      }
+    },
+    "type" : "route",
+    "id" : "94",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 9400,
+      "short_name" : "94",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/95"
+      }
+    },
+    "type" : "route",
+    "id" : "95",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 9500,
+      "short_name" : "95",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/96"
+      }
+    },
+    "type" : "route",
+    "id" : "96",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 9600,
+      "short_name" : "96",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/97"
+      }
+    },
+    "type" : "route",
+    "id" : "97",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 9700,
+      "short_name" : "97",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/99"
+      }
+    },
+    "type" : "route",
+    "id" : "99",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 9900,
+      "short_name" : "99",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/100"
+      }
+    },
+    "type" : "route",
+    "id" : "100",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 10000,
+      "short_name" : "100",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/101"
+      }
+    },
+    "type" : "route",
+    "id" : "101",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 10100,
+      "short_name" : "101",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/104"
+      }
+    },
+    "type" : "route",
+    "id" : "104",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 10400,
+      "short_name" : "104",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/105"
+      }
+    },
+    "type" : "route",
+    "id" : "105",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 10500,
+      "short_name" : "105",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/106"
+      }
+    },
+    "type" : "route",
+    "id" : "106",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 10600,
+      "short_name" : "106",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/108"
+      }
+    },
+    "type" : "route",
+    "id" : "108",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 10800,
+      "short_name" : "108",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/109"
+      }
+    },
+    "type" : "route",
+    "id" : "109",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 10900,
+      "short_name" : "109",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/110"
+      }
+    },
+    "type" : "route",
+    "id" : "110",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 11000,
+      "short_name" : "110",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/111"
+      }
+    },
+    "type" : "route",
+    "id" : "111",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 11100,
+      "short_name" : "111",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/112"
+      }
+    },
+    "type" : "route",
+    "id" : "112",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 11200,
+      "short_name" : "112",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/114"
+      }
+    },
+    "type" : "route",
+    "id" : "114",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 11400,
+      "short_name" : "114",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/116"
+      }
+    },
+    "type" : "route",
+    "id" : "116",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 11600,
+      "short_name" : "116",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/117"
+      }
+    },
+    "type" : "route",
+    "id" : "117",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 11700,
+      "short_name" : "117",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Key Bus Route (Frequent Service)",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/119"
+      }
+    },
+    "type" : "route",
+    "id" : "119",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 11900,
+      "short_name" : "119",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/120"
+      }
+    },
+    "type" : "route",
+    "id" : "120",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 12000,
+      "short_name" : "120",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/121"
+      }
+    },
+    "type" : "route",
+    "id" : "121",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 12100,
+      "short_name" : "121",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/131"
+      }
+    },
+    "type" : "route",
+    "id" : "131",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 13100,
+      "short_name" : "131",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/132"
+      }
+    },
+    "type" : "route",
+    "id" : "132",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 13200,
+      "short_name" : "132",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/134"
+      }
+    },
+    "type" : "route",
+    "id" : "134",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 13400,
+      "short_name" : "134",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/136"
+      }
+    },
+    "type" : "route",
+    "id" : "136",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 13600,
+      "short_name" : "136",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/137"
+      }
+    },
+    "type" : "route",
+    "id" : "137",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 13700,
+      "short_name" : "137",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/170"
+      }
+    },
+    "type" : "route",
+    "id" : "170",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 17000,
+      "short_name" : "170",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/171"
+      }
+    },
+    "type" : "route",
+    "id" : "171",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 17100,
+      "short_name" : "171",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/195"
+      }
+    },
+    "type" : "route",
+    "id" : "195",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 19500,
+      "short_name" : "195",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/201"
+      }
+    },
+    "type" : "route",
+    "id" : "201",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 20100,
+      "short_name" : "201",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/202"
+      }
+    },
+    "type" : "route",
+    "id" : "202",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 20200,
+      "short_name" : "202",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/210"
+      }
+    },
+    "type" : "route",
+    "id" : "210",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 21000,
+      "short_name" : "210",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/211"
+      }
+    },
+    "type" : "route",
+    "id" : "211",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 21100,
+      "short_name" : "211",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/212"
+      }
+    },
+    "type" : "route",
+    "id" : "212",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 21200,
+      "short_name" : "212",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/214"
+      }
+    },
+    "type" : "route",
+    "id" : "214",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 21400,
+      "short_name" : "214",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/215"
+      }
+    },
+    "type" : "route",
+    "id" : "215",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 21500,
+      "short_name" : "215",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/216"
+      }
+    },
+    "type" : "route",
+    "id" : "216",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 21600,
+      "short_name" : "216",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/217"
+      }
+    },
+    "type" : "route",
+    "id" : "217",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 21700,
+      "short_name" : "217",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/220"
+      }
+    },
+    "type" : "route",
+    "id" : "220",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 22000,
+      "short_name" : "220",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/221"
+      }
+    },
+    "type" : "route",
+    "id" : "221",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 22100,
+      "short_name" : "221",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/222"
+      }
+    },
+    "type" : "route",
+    "id" : "222",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 22200,
+      "short_name" : "222",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/225"
+      }
+    },
+    "type" : "route",
+    "id" : "225",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 22500,
+      "short_name" : "225",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/230"
+      }
+    },
+    "type" : "route",
+    "id" : "230",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 23000,
+      "short_name" : "230",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/236"
+      }
+    },
+    "type" : "route",
+    "id" : "236",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 23600,
+      "short_name" : "236",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/238"
+      }
+    },
+    "type" : "route",
+    "id" : "238",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 23800,
+      "short_name" : "238",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/240"
+      }
+    },
+    "type" : "route",
+    "id" : "240",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 24000,
+      "short_name" : "240",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/245"
+      }
+    },
+    "type" : "route",
+    "id" : "245",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 24500,
+      "short_name" : "245",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/325"
+      }
+    },
+    "type" : "route",
+    "id" : "325",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 32500,
+      "short_name" : "325",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/326"
+      }
+    },
+    "type" : "route",
+    "id" : "326",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 32600,
+      "short_name" : "326",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/350"
+      }
+    },
+    "type" : "route",
+    "id" : "350",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 35000,
+      "short_name" : "350",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/351"
+      }
+    },
+    "type" : "route",
+    "id" : "351",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 35100,
+      "short_name" : "351",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/352"
+      }
+    },
+    "type" : "route",
+    "id" : "352",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 35200,
+      "short_name" : "352",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/354"
+      }
+    },
+    "type" : "route",
+    "id" : "354",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 35400,
+      "short_name" : "354",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/411"
+      }
+    },
+    "type" : "route",
+    "id" : "411",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 41100,
+      "short_name" : "411",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/424"
+      }
+    },
+    "type" : "route",
+    "id" : "424",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 42400,
+      "short_name" : "424",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/426"
+      }
+    },
+    "type" : "route",
+    "id" : "426",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 42600,
+      "short_name" : "426",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/428"
+      }
+    },
+    "type" : "route",
+    "id" : "428",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 42800,
+      "short_name" : "428",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/429"
+      }
+    },
+    "type" : "route",
+    "id" : "429",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 42900,
+      "short_name" : "429",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/430"
+      }
+    },
+    "type" : "route",
+    "id" : "430",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 43000,
+      "short_name" : "430",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/434"
+      }
+    },
+    "type" : "route",
+    "id" : "434",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 43400,
+      "short_name" : "434",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/435"
+      }
+    },
+    "type" : "route",
+    "id" : "435",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 43500,
+      "short_name" : "435",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/436"
+      }
+    },
+    "type" : "route",
+    "id" : "436",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 43600,
+      "short_name" : "436",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/439"
+      }
+    },
+    "type" : "route",
+    "id" : "439",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 43900,
+      "short_name" : "439",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/441"
+      }
+    },
+    "type" : "route",
+    "id" : "441",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 44100,
+      "short_name" : "441",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/442"
+      }
+    },
+    "type" : "route",
+    "id" : "442",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 44200,
+      "short_name" : "442",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/448"
+      }
+    },
+    "type" : "route",
+    "id" : "448",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 44800,
+      "short_name" : "448",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/449"
+      }
+    },
+    "type" : "route",
+    "id" : "449",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 44900,
+      "short_name" : "449",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/450"
+      }
+    },
+    "type" : "route",
+    "id" : "450",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 45000,
+      "short_name" : "450",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/451"
+      }
+    },
+    "type" : "route",
+    "id" : "451",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 45100,
+      "short_name" : "451",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/455"
+      }
+    },
+    "type" : "route",
+    "id" : "455",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 45500,
+      "short_name" : "455",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/456"
+      }
+    },
+    "type" : "route",
+    "id" : "456",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 45600,
+      "short_name" : "456",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Limited Service",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/459"
+      }
+    },
+    "type" : "route",
+    "id" : "459",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 45900,
+      "short_name" : "459",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/465"
+      }
+    },
+    "type" : "route",
+    "id" : "465",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 46500,
+      "short_name" : "465",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/501"
+      }
+    },
+    "type" : "route",
+    "id" : "501",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 50100,
+      "short_name" : "501",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/502"
+      }
+    },
+    "type" : "route",
+    "id" : "502",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 50200,
+      "short_name" : "502",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/503"
+      }
+    },
+    "type" : "route",
+    "id" : "503",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 50300,
+      "short_name" : "503",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/504"
+      }
+    },
+    "type" : "route",
+    "id" : "504",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 50400,
+      "short_name" : "504",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/505"
+      }
+    },
+    "type" : "route",
+    "id" : "505",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 50500,
+      "short_name" : "505",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/553"
+      }
+    },
+    "type" : "route",
+    "id" : "553",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 55300,
+      "short_name" : "553",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/554"
+      }
+    },
+    "type" : "route",
+    "id" : "554",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 55400,
+      "short_name" : "554",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/556"
+      }
+    },
+    "type" : "route",
+    "id" : "556",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 55600,
+      "short_name" : "556",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/558"
+      }
+    },
+    "type" : "route",
+    "id" : "558",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 55800,
+      "short_name" : "558",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Express Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/710"
+      }
+    },
+    "type" : "route",
+    "id" : "710",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 71000,
+      "short_name" : "710",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/712"
+      }
+    },
+    "type" : "route",
+    "id" : "712",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 71200,
+      "short_name" : "712",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/713"
+      }
+    },
+    "type" : "route",
+    "id" : "713",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 71300,
+      "short_name" : "713",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/714"
+      }
+    },
+    "type" : "route",
+    "id" : "714",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 71400,
+      "short_name" : "714",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/716"
+      }
+    },
+    "type" : "route",
+    "id" : "716",
+    "attributes" : {
+      "type" : "BUS",
+      "sort_order" : 71600,
+      "short_name" : "716",
+      "long_name" : "",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Local Bus",
+      "color" : "FFC72C",
+      "text_color" : "000000"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/Boat-F4"
+      }
+    },
+    "type" : "route",
+    "id" : "Boat-F4",
+    "attributes" : {
+      "type" : "BOAT",
+      "sort_order" : 1000001,
+      "short_name" : "",
+      "long_name" : "Charlestown Ferry",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Ferry",
+      "color" : "008EAA",
+      "text_color" : "FFFFFF"
+    }
+  }, {
+    "links" : {
+      "self" : {
+        "href" : "/routes/Boat-F1"
+      }
+    },
+    "type" : "route",
+    "id" : "Boat-F1",
+    "attributes" : {
+      "type" : "BOAT",
+      "sort_order" : 1000002,
+      "short_name" : "",
+      "long_name" : "Hingham/Hull Ferry",
+      "direction_names" : [ "Outbound", "Inbound" ],
+      "description" : "Ferry",
+      "color" : "008EAA",
+      "text_color" : "FFFFFF"
+    }
+  } ]
+}

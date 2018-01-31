@@ -26,7 +26,7 @@ public class RemoveAlarmOnLongClick implements OnItemLongClickListener {
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         CustomListItem item = (CustomListItem) parent.getItemAtPosition(position);
         Bundle bundle = new Bundle();
-        bundle.putInt(ALARM_ID, item.getId());
+        bundle.putInt(ALARM_ID, (int) item.getId());
         bundle.putString(NICKNAME, item.getPrimaryText());
 
         DialogFragment dialog = new RemoveAlarmDialog();

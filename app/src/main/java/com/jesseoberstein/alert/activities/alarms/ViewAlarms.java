@@ -28,8 +28,9 @@ import com.jesseoberstein.alert.models.CustomListItem;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserEndpoint;
 import com.jesseoberstein.alert.models.UserRoute;
-import com.jesseoberstein.alert.providers.StationsProvider;
+import com.jesseoberstein.alert.providers.StopsProvider;
 import com.jesseoberstein.alert.utils.AlarmUtils;
+import com.jesseoberstein.mbta.model.Stop;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
     private CustomListAdapter myAlarmsAdapter;
     private RuntimeExceptionDao<UserAlarm, Integer> userAlarmDao;
     private RuntimeExceptionDao<UserEndpoint, Integer> userEndpointDao;
-    private StationsProvider stationsProvider;
+    private StopsProvider stopsProvider;
     private AlarmManager alarmManager;
 
     @Override
@@ -59,12 +60,12 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
         super.onCreate(savedInstanceState);
         this.userAlarmDao = new UserAlarmDao(getApplicationContext()).getDao();
         this.userEndpointDao = new UserEndpointDao(getApplicationContext()).getDao();
-        stationsProvider = StationsProvider.init(getAssets());
 
         setContentView(R.layout.activities_view_alarms);
         Bundle selectedBundle = getIntent().getExtras();
-        selectedRoute = selectedBundle.getString(ROUTE);
         themeColor = selectedBundle.getInt(COLOR);
+        selectedRoute = selectedBundle.getString(ROUTE);
+        stopsProvider = new StopsProvider(getAssets(), selectedRoute);
 
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
@@ -146,8 +147,11 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
         return userAlarmDao;
     }
 
-    private String[] getAlarmStopIds(UserAlarm alarm) {
-        return stationsProvider.getParentStationName(alarm.getStation(), selectedRoute).toArray(new String[]{});
+    private String getAlarmStopId(UserAlarm alarm) {
+        return stopsProvider.getStops().stream()
+                .filter(stop -> stop.getName().equals(alarm.getStation()))
+                .map(Stop::getId)
+                .findFirst().orElse("");
     }
 
     /**
@@ -165,7 +169,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
                     userEndpointDao.create(userEndpoint);
                 });
 
-        AlarmUtils.scheduleOrCancelAlarm(alarm, endpoints, alarmManager, getApplicationContext(), getAlarmStopIds(alarm));
+        AlarmUtils.scheduleOrCancelAlarm(alarm, endpoints, alarmManager, getApplicationContext(), getAlarmStopId(alarm));
         myAlarmsAdapter.addItem(buildAlarmListItem(alarm, TextUtils.join(", ", endpoints)));
     }
 
@@ -179,7 +183,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
                 .map(UserEndpoint::getEndpointName)
                 .collect(Collectors.toList());
 
-        AlarmUtils.scheduleOrCancelAlarm(alarm, endpoints, alarmManager, getApplicationContext(), getAlarmStopIds(alarm));
+        AlarmUtils.scheduleOrCancelAlarm(alarm, endpoints, alarmManager, getApplicationContext(), getAlarmStopId(alarm));
         myAlarmsAdapter.updateItem(buildAlarmListItem(alarm, TextUtils.join(", ", endpoints)));
     }
 

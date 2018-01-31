@@ -16,6 +16,7 @@ public class RouteListItem extends CustomListItem {
         String info = (!alerts.isEmpty() && Integer.parseInt(alerts) > 0) ? alerts : null;
 
         return new CustomListItem()
+                .withId(userRoute.getRouteId())
                 .withPrimaryText(userRoute.getRouteName())
                 .withIcon(userRoute.getIcon())
                 .withInfo(info)

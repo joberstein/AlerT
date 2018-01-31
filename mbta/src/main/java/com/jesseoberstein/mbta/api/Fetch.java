@@ -2,21 +2,20 @@ package com.jesseoberstein.mbta.api;
 
 import com.jesseoberstein.mbta.utils.ResponseParser;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Optional;
+import java.util.Collections;
+import java.util.List;
 
 import static com.jesseoberstein.mbta.utils.UrlBuilder.urlBuilder;
 
-class Fetch extends BaseRequest {
+class Fetch {
 
-    static <T> Optional<T> fetch(String endpoint, String query, Class<T> responseClass) {
+    static <T> List<T> fetch(String endpoint, String query, Class<T> responseClass) {
         URL url;
         HttpURLConnection urlConnection = null;
-        Optional<T> response = Optional.empty();
+        List<T> response = Collections.emptyList();
         url = urlBuilder().withEndpoint(endpoint).withQuery(query).build();
         if (url == null) {
             return response;
@@ -25,10 +24,9 @@ class Fetch extends BaseRequest {
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.connect();
-            String content = ResponseParser.read(new BufferedInputStream(urlConnection.getInputStream()));
-            response = ResponseParser.parse(content, responseClass);
+            response = ResponseParser.parseJSONApi(urlConnection.getInputStream(), responseClass);
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         } finally {
             if (null != urlConnection) {
                 urlConnection.disconnect();

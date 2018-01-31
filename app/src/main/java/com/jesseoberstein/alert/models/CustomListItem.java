@@ -3,7 +3,7 @@ package com.jesseoberstein.alert.models;
 import com.jesseoberstein.alert.R;
 
 public class CustomListItem {
-    private int id;
+    private Object id;
     private int icon;               // R.drawable
     private String primaryText;
     private String secondaryText;
@@ -27,7 +27,7 @@ public class CustomListItem {
         return new CustomListItem().asDivider();
     }
 
-    CustomListItem withId(int id) {
+    CustomListItem withId(Object id) {
         this.id = id;
         return this;
     }
@@ -70,7 +70,7 @@ public class CustomListItem {
     /************************
      * Getters
      ************************/
-    public int getId() { return this.id; }
+    public Object getId() { return this.id; }
     public int getIcon() { return this.icon; }
     public String getPrimaryText() { return this.primaryText; }
     public String getSecondaryText() { return this.secondaryText; }
@@ -86,10 +86,10 @@ public class CustomListItem {
 
         CustomListItem that = (CustomListItem) o;
 
-        if (id != that.id) return false;
         if (icon != that.icon) return false;
         if (chevron != that.chevron) return false;
         if (isDivider != that.isDivider) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (primaryText != null ? !primaryText.equals(that.primaryText) : that.primaryText != null)
             return false;
         if (secondaryText != null ? !secondaryText.equals(that.secondaryText) : that.secondaryText != null)
@@ -101,7 +101,7 @@ public class CustomListItem {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + icon;
         result = 31 * result + (primaryText != null ? primaryText.hashCode() : 0);
         result = 31 * result + (secondaryText != null ? secondaryText.hashCode() : 0);

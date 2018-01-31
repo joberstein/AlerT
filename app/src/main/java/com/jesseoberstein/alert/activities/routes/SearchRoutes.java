@@ -21,10 +21,12 @@ import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.listeners.routes.QueryRoutesListener;
 import com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick;
 import com.jesseoberstein.alert.providers.RoutesProvider;
+import com.jesseoberstein.mbta.model.Route;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static android.support.v7.appcompat.R.id;
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
@@ -72,17 +74,12 @@ public class SearchRoutes extends AppCompatActivity implements OnDialogClick {
                         CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
         List<String> queryVal = Optional.ofNullable(query).orElse(Collections.emptyList());
-        QueryRoutesListener queryTextListener = new QueryRoutesListener(
-                this,
-                COLUMN_NAMES,
-                routesProvider.getRouteNames().stream()
-                        .filter(route -> !queryVal.contains(route))
-                        .toArray(String[]::new),
-                adapter);
+        QueryRoutesListener queryTextListener = new QueryRoutesListener(this, COLUMN_NAMES, getAvailableRoutes(queryVal), adapter);
+        SelectRouteOnClick selectRouteListner = new SelectRouteOnClick(this, COLUMN_NAMES, getAvailableRoutes(queryVal), adapter);
 
         searchView.setSuggestionsAdapter(adapter);
         searchView.setOnQueryTextListener(queryTextListener);
-        searchView.setOnSuggestionListener(new SelectRouteOnClick(this, adapter, COLUMN_NAMES));
+        searchView.setOnSuggestionListener(selectRouteListner);
 
         AutoCompleteTextView suggestions = (AutoCompleteTextView) searchView.findViewById(id.search_src_text);
         suggestions.setDropDownBackgroundResource(android.R.color.transparent);
@@ -92,6 +89,12 @@ public class SearchRoutes extends AppCompatActivity implements OnDialogClick {
             dropdown.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) ->
                 suggestions.setDropDownWidth(ViewGroup.LayoutParams.MATCH_PARENT));
         });
+    }
+
+    private Route[] getAvailableRoutes(List<String> queryVal) {
+        return routesProvider.getRoutes().stream()
+                .filter(route -> !queryVal.contains(route.getId()))
+                .toArray(Route[]::new);
     }
 
     @Override
