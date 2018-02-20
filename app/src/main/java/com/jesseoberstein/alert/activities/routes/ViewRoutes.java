@@ -11,7 +11,7 @@ import android.widget.ListView;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
-import com.jesseoberstein.alert.adapters.CustomListAdapter;
+import com.jesseoberstein.alert.adapters.CustomItemsAdapter;
 import com.jesseoberstein.alert.data.UserRouteDao;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
@@ -29,7 +29,7 @@ import static com.jesseoberstein.alert.models.RouteListItem.buildRoutesListItem;
 import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 
 public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
-    private CustomListAdapter myRoutesAdapter;
+    private CustomItemsAdapter myRoutesAdapter;
     RuntimeExceptionDao<UserRoute, String> userRouteDao;
 
     @Override
@@ -44,7 +44,7 @@ public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
         setContentView(R.layout.activities_view_routes);
         Optional<ActionBar> actionBarOptional = Optional.ofNullable(getSupportActionBar());
         actionBarOptional.ifPresent(bar -> bar.setTitle(R.string.routes_page));
-        myRoutesAdapter = new CustomListAdapter(this, R.layout.list_routes, userRoutes);
+        myRoutesAdapter = new CustomItemsAdapter(this, R.layout.list_routes, userRoutes);
 
         ListView listView = (ListView) findViewById(R.id.route_list);
         listView.setAdapter(myRoutesAdapter);

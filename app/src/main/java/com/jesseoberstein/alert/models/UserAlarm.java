@@ -4,6 +4,10 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static android.icu.util.Calendar.FRIDAY;
@@ -222,6 +226,10 @@ public class UserAlarm implements Serializable {
         return weekdays;
     }
 
+    public int[] getWeekdaysUnpadded() {
+        return Arrays.stream(this.getWeekdays()).filter(day -> day >= 0).toArray();
+    }
+
     private int getMonday() {
         return monday;
     }
@@ -276,6 +284,12 @@ public class UserAlarm implements Serializable {
 
     private void setSunday(int sunday) {
         this.sunday = sunday;
+    }
+
+    public String getTime() {
+        int hour = (this.hour == 12 || this.hour == 0) ? 12 : this.hour % 12;
+        String suffix = this.hour < 12 ? "am" : "pm";
+        return String.format(Locale.US, "%d:%d %s", hour, this.minutes, suffix);
     }
 
     @Override

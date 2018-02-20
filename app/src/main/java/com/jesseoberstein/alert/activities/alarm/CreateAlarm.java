@@ -71,7 +71,6 @@ public class CreateAlarm extends AppCompatActivity {
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
             bar.setTitle(R.string.create_alarm_page);
-            bar.setBackgroundDrawable(getDrawable(themeColor));
             bar.setDisplayHomeAsUpEnabled(true);
         });
 

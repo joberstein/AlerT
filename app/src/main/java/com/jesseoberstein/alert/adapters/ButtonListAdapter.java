@@ -6,23 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
-import com.jesseoberstein.alert.models.CustomListItem;
-import com.jesseoberstein.alert.utils.ListProp;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
-
-import static com.jesseoberstein.alert.utils.AlertUtils.listsToMap;
-import static com.jesseoberstein.alert.utils.Constants.CUSTOM_LIST_IDS;
-import static com.jesseoberstein.alert.utils.Constants.CUSTOM_LIST_PROPS;
 
 public class ButtonListAdapter extends ArrayAdapter<String> {
     private final LayoutInflater inflater;

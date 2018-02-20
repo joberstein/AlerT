@@ -9,15 +9,6 @@ import java.util.List;
 public class Constants {
     public static final String MBTA_DATA_DATE = "2018-01-23";
 
-    public static List<ListProp> CUSTOM_LIST_PROPS = Arrays.asList(
-            ListProp.ICON, ListProp.PRIMARY_TEXT, ListProp.SECONDARY_TEXT,
-            ListProp.TERTIARY_TEXT, ListProp.INFO, ListProp.CHEVRON
-    );
-
-    public static List<Integer> CUSTOM_LIST_IDS = Arrays.asList(
-            R.id.custom_item_icon, R.id.custom_item_primary_text, R.id.custom_item_secondary_text,
-            R.id.custom_item_tertiary_text, R.id.custom_item_info, R.id.custom_item_chevron);
-
     static final List<UserRoute> USER_ROUTES = Arrays.asList(
 //            new UserRoute(BLUE.toString(), R.color.blue_line, R.drawable.circle_blue, R.style.BlueLine),
 //            new UserRoute(GREEN.toString(), R.color.green_line, R.drawable.circle_green, R.style.GreenLine),

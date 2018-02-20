@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
-import com.jesseoberstein.alert.adapters.CustomListAdapter;
+import com.jesseoberstein.alert.adapters.CustomItemsAdapter;
 import com.jesseoberstein.alert.interfaces.OnAlarmSubmit;
 import com.jesseoberstein.alert.listeners.ToggleColorOnClick;
 import com.jesseoberstein.alert.models.CustomListItem;
@@ -69,7 +69,7 @@ public class DayFragment extends AlarmBaseFragment implements OnAlarmSubmit {
         TextView stepText = (TextView) view.findViewById(R.id.stepText);
         stepText.setText(R.string.step_2);
 
-        CustomListAdapter adapter = new CustomListAdapter(view.getContext(), R.layout.list_weekdays, generateWeekdays(view));
+        CustomItemsAdapter adapter = new CustomItemsAdapter(view.getContext(), R.layout.list_weekdays, generateWeekdays(view));
         daysListView = (ListView) view.findViewById(R.id.weekdays_list);
         daysListView.setAdapter(adapter);
 

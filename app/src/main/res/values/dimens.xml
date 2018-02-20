@@ -18,6 +18,11 @@
     <dimen name="single_line_list_avatar_size">38dp</dimen>
     <dimen name="single_line_list_font_size_primary">22sp</dimen>
 
+    <!--Double-Line List-->
+    <dimen name="double_line_list_tile_height">78dp</dimen>
+    <dimen name="double_line_list_font_size_primary">16sp</dimen>
+    <dimen name="double_line_list_font_size_secondary">13sp</dimen>
+    <dimen name="double_line_list_padding">5dp</dimen>
     <!--Triple-Line List w/ Icon-->
     <dimen name="triple_line_list_tile_height">88dp</dimen>
     <dimen name="triple_line_list_avatar_size">36dp</dimen>
@@ -30,4 +35,14 @@
     <dimen name="bottom_nav_padding_end">8dp</dimen>
     <dimen name="bottom_nav_margin_between">18dp</dimen>
     <dimen name="default_icon_size">32dp</dimen>
+
+    <dimen name="grid_view_padding">15dp</dimen>
+    <dimen name="grid_item_size">150dp</dimen>
+    <dimen name="grid_item_padding_vertical">5dp</dimen>
+    <dimen name="grid_item_padding_horizontal">10dp</dimen>
+    <dimen name="grid_item_secondary_action_size">15dp</dimen>
+    <dimen name="grid_item_primary_font_size">22sp</dimen>
+    <dimen name="grid_item_secondary_font_size">16sp</dimen>
+    <dimen name="grid_item_tertiary_font_size">12sp</dimen>
+    <dimen name="grid_item_quaternary_font_size">10sp</dimen>
 </resources>

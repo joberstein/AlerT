@@ -133,10 +133,10 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
     }
 
     private void forwardToSelectedAlarm(CustomListItem item) {
-        UserAlarm userAlarm = ((ViewAlarms) this.origin).getUserAlarmDao().queryForId((int) item.getId());
-        this.extras.putSerializable(ALARM, userAlarm);
-        this.extras.putStringArrayList(ENDPOINTS,
-                Arrays.stream(item.getTertiaryText().split(","))
-                        .collect(Collectors.toCollection(ArrayList::new)));
+//        UserAlarm userAlarm = ((ViewAlarms) this.origin).getUserAlarmDao().queryForId((int) item.getId());
+//        this.extras.putSerializable(ALARM, userAlarm);
+//        this.extras.putStringArrayList(ENDPOINTS,
+//                Arrays.stream(item.getTertiaryText().split(","))
+//                        .collect(Collectors.toCollection(ArrayList::new)));
     }
 }
