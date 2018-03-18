@@ -22,9 +22,11 @@ import com.jesseoberstein.alert.adapters.EmptyRecyclerViewObserver;
 import com.jesseoberstein.alert.data.UserAlarmDao;
 import com.jesseoberstein.alert.data.UserEndpointDao;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
+import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserEndpoint;
 import com.jesseoberstein.alert.models.UserRoute;
+import com.jesseoberstein.alert.utils.ActivityUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -100,7 +102,10 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
         alarmsView.setLayoutManager(new GridLayoutManager(this, 2));
 
         FloatingActionButton addAlarmView = (FloatingActionButton) findViewById(R.id.add_alarm);
-        addAlarmView.setOnClickListener(view -> myAlarmsAdapter.addItem(testAlarm));
+        addAlarmView.setOnClickListener(new StartActivityOnClick(this, EditAlarm.class)
+                .withAction(Intent.ACTION_INSERT)
+                .withBundle(new Bundle())
+                .withRequestCode(CreateAlarm.REQUEST_CODE));
 
         alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
     }
@@ -109,6 +114,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.alarms_options, menu);
+        ActivityUtils.setIconColor(this, menu.getItem(0).getIcon(), R.attr.menuItemIconColor);
         return true;
     }
 

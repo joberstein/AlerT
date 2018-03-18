@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="menuItemIconColor">@color/white</item>
     </style>
 
     <style name="BlueLine" parent="AppTheme">
@@ -38,11 +39,62 @@
         <item name="colorAccent">@color/default_route</item>
     </style>
 
-    <style name="White" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="White" parent="AppTheme">
         <item name="colorButtonNormal">@color/white</item>
         <item name="android:textColor">@color/default_route</item>
         <item name="android:strokeColor">@color/default_route</item>
         <item name="android:strokeWidth">2</item>
+    </style>
+
+    <style name="AlarmSettingsLight" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@android:color/black</item>
+        <item name="menuItemIconColor">@android:color/black</item>
+        <item name="tabsBackgroundColor">@color/white</item>
+        <item name="tabIconColor">@android:color/black</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="AlarmSettingsDark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorAccent">@color/white</item>
+        <item name="menuItemIconColor">@color/white</item>
+        <item name="tabsBackgroundColor">@color/white</item>
+        <item name="tabIconColor">@android:color/black</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="AlarmSettingsDark.Blue">
+        <item name="colorPrimary">@color/blue_line</item>
+        <item name="tabSelectedIndicatorColor">@color/blue_line</item>
+    </style>
+
+    <style name="AlarmSettingsLight.Bus">
+        <item name="colorPrimary">@color/bus</item>
+        <item name="tabSelectedIndicatorColor">@color/bus</item>
+    </style>
+
+    <style name="AlarmSettingsDark.Default">
+        <item name="colorPrimary">@color/default_route</item>
+        <item name="tabSelectedIndicatorColor">@color/default_route</item>
+    </style>
+
+    <style name="AlarmSettingsDark.Green">
+        <item name="colorPrimary">@color/green_line</item>
+        <item name="tabSelectedIndicatorColor">@color/green_line</item>
+    </style>
+
+    <style name="AlarmSettingsDark.Red">
+        <item name="colorPrimary">@color/red_line</item>
+        <item name="tabSelectedIndicatorColor">@color/red_line</item>
+    </style>
+
+    <style name="AlarmSettingsDark.Orange">
+        <item name="colorPrimary">@color/orange_line</item>
+        <item name="tabSelectedIndicatorColor">@color/orange_line</item>
+    </style>
+
+    <style name="AlarmSettingsDark.Silver">
+        <item name="colorPrimary">@color/silver_line</item>
+        <item name="tabSelectedIndicatorColor">@color/silver_line</item>
     </style>
 
     <style name="AlarmPagerBottomNavigation">

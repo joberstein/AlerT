@@ -5,15 +5,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import com.jesseoberstein.alert.fragments.DayFragment;
-import com.jesseoberstein.alert.fragments.SettingsFragment;
-import com.jesseoberstein.alert.fragments.TimeFragment;
+import com.jesseoberstein.alert.fragments.MbtaSettingsFragment;
+import com.jesseoberstein.alert.fragments.TimeSettingsFragment;
 
 public class AlarmPagerAdapter extends FragmentPagerAdapter {
-    public static int NUM_PAGES = 3;
-    private TimeFragment timeFragment;
-    private DayFragment dayFragment;
-    private SettingsFragment settingsFragment;
+    private static final int TIME_TAB_PAGE_ID = 0;
+    private static final int MBTA_TAB_PAGE_ID = 1;
+    private TimeSettingsFragment timeSettingsFragment;
+    private MbtaSettingsFragment mbtaSettingsFragment;
 
     public AlarmPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
@@ -25,7 +24,7 @@ public class AlarmPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return NUM_PAGES;
+        return 2;
     }
 
     /**
@@ -36,14 +35,9 @@ public class AlarmPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0:
-                return TimeFragment.newInstance(position);
-            case 1:
-                return DayFragment.newInstance(position);
-            case 2:
-                return SettingsFragment.newInstance(position);
-            default:
-                return null;
+            case TIME_TAB_PAGE_ID: return TimeSettingsFragment.newInstance(position);
+            case MBTA_TAB_PAGE_ID: return MbtaSettingsFragment.newInstance(position);
+            default: return null;
         }
     }
 
@@ -51,28 +45,22 @@ public class AlarmPagerAdapter extends FragmentPagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
         switch (position) {
-            case 0:
-                timeFragment = (TimeFragment) createdFragment;
+            case TIME_TAB_PAGE_ID:
+                timeSettingsFragment = (TimeSettingsFragment) createdFragment;
                 break;
-            case 1:
-                dayFragment = (DayFragment) createdFragment;
+            case MBTA_TAB_PAGE_ID:
+                mbtaSettingsFragment = (MbtaSettingsFragment) createdFragment;
                 break;
-            case 2:
-                settingsFragment = (SettingsFragment) createdFragment;
         }
 
         return createdFragment;
     }
 
-    public TimeFragment getTimeFragment() {
-        return timeFragment;
+    public TimeSettingsFragment getTimeSettingsFragment() {
+        return timeSettingsFragment;
     }
 
-    public DayFragment getDayFragment() {
-        return dayFragment;
-    }
-
-    public SettingsFragment getSettingsFragment() {
-        return settingsFragment;
+    public MbtaSettingsFragment getMbtaSettingsFragment() {
+        return mbtaSettingsFragment;
     }
 }

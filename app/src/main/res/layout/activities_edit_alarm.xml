@@ -28,7 +28,8 @@
         android:id="@+id/previous_step"
         android:text="@string/back"
         android:layout_alignParentStart="true"
-        android:drawableStart="@drawable/ic_chevron_left_white"
+        android:drawableStart="@drawable/ic_chevron_left"
+        android:drawableTint="@color/white"
         android:visibility="invisible"
         style="@style/AlarmPagerBottomNavigation"/>
 
@@ -36,7 +37,8 @@
         android:id="@+id/next_step"
         android:text="@string/next"
         android:layout_alignParentEnd="true"
-        android:drawableEnd="@drawable/ic_chevron_right_white"
+        android:drawableEnd="@drawable/ic_chevron_right"
+        android:drawableTint="@color/white"
         style="@style/AlarmPagerBottomNavigation"/>
 
     <TextView

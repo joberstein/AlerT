@@ -22,13 +22,12 @@ public class UpdateAlarmOnClick implements OnClickListener {
     @Override
     public void onClick(View view) {
         AlarmPagerAdapter adapter = this.activity.getAlarmPagerAdapter();
-        adapter.getTimeFragment().onAlarmSubmit();
-        adapter.getDayFragment().onAlarmSubmit();
-        adapter.getSettingsFragment().onAlarmSubmit();
+        adapter.getTimeSettingsFragment().onAlarmSubmit();
+        adapter.getMbtaSettingsFragment().onAlarmSubmit();
 
         Bundle alarmBundle = new Bundle();
         alarmBundle.putSerializable(ALARM, this.activity.getAlarm());
-        alarmBundle.putStringArrayList(ENDPOINTS, this.activity.getEndpoints());
+//        alarmBundle.putStringArrayList(ENDPOINTS, this.activity.getEndpoints());
 
         DialogFragment dialog = new AddAlarmDialog();
         dialog.setArguments(alarmBundle);
