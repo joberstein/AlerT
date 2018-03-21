@@ -5,25 +5,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.interfaces.OnAlarmSubmit;
-import com.jesseoberstein.alert.models.CustomListItem;
+import com.jesseoberstein.alert.listeners.alarm.OnSectionTimeSet;
 import com.jesseoberstein.alert.models.UserAlarm;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-import static java.util.Calendar.MINUTE;
-import static java.util.Calendar.getInstance;
+import static android.view.View.OnClickListener;
+import static com.jesseoberstein.alert.utils.ActivityUtils.setSectionLabelText;
+import static com.jesseoberstein.alert.utils.ActivityUtils.setSectionValueText;
 
 public class TimeSettingsFragment extends AlarmBaseFragment implements OnAlarmSubmit {
-    UserAlarm alarm;
+    private UserAlarm currentAlarm;
+    private UserAlarm newAlarm;
 
     public static TimeSettingsFragment newInstance(int page) {
         return (TimeSettingsFragment) AlarmBaseFragment.newInstance(page, new TimeSettingsFragment());
@@ -31,9 +28,41 @@ public class TimeSettingsFragment extends AlarmBaseFragment implements OnAlarmSu
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_alarm_settings_time, container, false);
+        View view = inflater.inflate(R.layout.fragment_alarm_settings_time, container, false);
+
+        // Clone the alarm, just in case the user decides to cancel their edits.
+        // The alarms will be merged if the user submits their changes.
+        currentAlarm = ((EditAlarm) getActivity()).getAlarm();
+        newAlarm = currentAlarm.clone();
+
+        View timeSection = view.findViewById(R.id.alarmSettings_time);
+        setUpSection(timeSection, "Time", "Select a time...", 24, this::showTimePickerDialog);
+
+        return view;
     }
 
     @Override
     public void onAlarmSubmit() {}
+
+    /**
+     * Create a UI section for the time settings tab. Sets the label, value, and an on click listener.
+     */
+    private void setUpSection(View section, String label, String defaultValue, int valueSize, OnClickListener onClickListener) {
+        setSectionLabelText(section, label);
+        setSectionValueText(section, defaultValue, valueSize);
+        section.setOnClickListener(onClickListener);
+    }
+
+    /**
+     * Show the time picker and pair the given view with the on click listener.
+     */
+    private void showTimePickerDialog(View view) {
+        Bundle bundle = new Bundle();
+        Optional.ofNullable(newAlarm.getHour()).ifPresent(hour -> bundle.putInt("hour", hour));
+        Optional.ofNullable(newAlarm.getMinutes()).ifPresent(minute -> bundle.putInt("minute", minute));
+
+        TimePickerFragment timePickerDialog = new TimePickerFragment(new OnSectionTimeSet(view, newAlarm));
+        timePickerDialog.setArguments(bundle);
+        timePickerDialog.show(getActivity().getSupportFragmentManager(), "timePicker");
+    }
 }

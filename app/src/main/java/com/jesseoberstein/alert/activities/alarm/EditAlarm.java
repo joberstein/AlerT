@@ -28,7 +28,7 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick {
     public static final int REQUEST_CODE = 3;
     private AlarmPagerAdapter alarmPagerAdapter;
     private ArrayList<String> endpoints;
-    private UserAlarm alarm;
+    private UserAlarm alarm = new UserAlarm(); // TODO for testing only
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

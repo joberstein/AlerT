@@ -4,4 +4,5 @@
     <attr name="tabsBackgroundColor" format="reference" />
     <attr name="tabIconColor" format="reference" />
     <attr name="tabSelectedIndicatorColor" format="reference" />
+    <attr name="sectionLabelColor" format="color" />
 </resources>

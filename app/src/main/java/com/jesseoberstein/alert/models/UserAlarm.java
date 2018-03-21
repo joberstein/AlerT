@@ -5,9 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static android.icu.util.Calendar.FRIDAY;
@@ -37,10 +35,10 @@ public class UserAlarm implements Serializable {
     private String station;
 
     @DatabaseField
-    private int hour;
+    private Integer hour;
 
     @DatabaseField
-    private int minutes;
+    private Integer minutes;
 
     @DatabaseField
     private int monday;
@@ -117,19 +115,19 @@ public class UserAlarm implements Serializable {
         this.station = station;
     }
 
-    public int getHour() {
+    public Integer getHour() {
         return hour;
     }
 
-    public void setHour(int hour) {
+    public void setHour(Integer hour) {
         this.hour = hour;
     }
 
-    public int getMinutes() {
+    public Integer getMinutes() {
         return minutes;
     }
 
-    public void setMinutes(int minutes) {
+    public void setMinutes(Integer minutes) {
         this.minutes = minutes;
     }
 
@@ -287,9 +285,27 @@ public class UserAlarm implements Serializable {
     }
 
     public String getTime() {
-        int hour = (this.hour == 12 || this.hour == 0) ? 12 : this.hour % 12;
+        int hour = (this.hour % 12 == 0) ? 12 : this.hour % 12;
+        String minute = (this.minutes < 10 ? "0" : "") + this.minutes;
         String suffix = this.hour < 12 ? "am" : "pm";
-        return String.format(Locale.US, "%d:%d %s", hour, this.minutes, suffix);
+        return String.format(Locale.US, "%d:%s %s", hour, minute, suffix);
+    }
+
+    public UserAlarm clone() {
+        UserAlarm newAlarm = new UserAlarm();
+        newAlarm.setId(this.id);
+        newAlarm.setRoute(this.route);
+        newAlarm.setNickname(this.nickname);
+        newAlarm.setDirection(this.direction);
+        newAlarm.setStation(this.station);
+        newAlarm.setHour(this.hour);
+        newAlarm.setMinutes(this.minutes);
+        newAlarm.setWeekdays(this.getWeekdays());
+        newAlarm.setDuration(this.duration);
+        newAlarm.setDurationType(this.durationType);
+        newAlarm.setRepeat(this.repeat);
+        newAlarm.setActive(this.active);
+        return newAlarm;
     }
 
     @Override
@@ -298,6 +314,7 @@ public class UserAlarm implements Serializable {
                 "id=" + id +
                 ", route=" + route +
                 ", nickname='" + nickname + '\'' +
+                ", direction='" + direction + '\'' +
                 ", station='" + station + '\'' +
                 ", hour=" + hour +
                 ", minutes=" + minutes +
