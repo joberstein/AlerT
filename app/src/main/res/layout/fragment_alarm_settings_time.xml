@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/fragment_alarm_settings_section"
-        android:id="@+id/alarmSettings_time"/>
+    <data class="TimeSettingsBinding">
+        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+    </data>
 
-</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/fragment_alarm_settings_section_time"
+            android:id="@+id/alarmSettings_time"
+            bind:alarm="@{alarm}"/>
+
+        <include layout="@layout/fragment_alarm_settings_section_name"
+            android:id="@+id/alarmSettings_name"
+            bind:alarm="@{alarm}"/>
+
+    </LinearLayout>
+
+</layout>

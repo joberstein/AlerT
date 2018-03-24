@@ -73,8 +73,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
 
         UserAlarm testAlarm = new UserAlarm();
         testAlarm.setActive(true);
-        testAlarm.setHour(12);
-        testAlarm.setMinutes(30);
+        testAlarm.setTime(12, 30);
         testAlarm.setWeekdays(new int[]{-1, 0,1,1,1,1,1,0});
         testAlarm.setNickname("Test");
         testAlarm.setRoute(testRoute);
@@ -83,8 +82,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
 
         UserAlarm testAlarm2 = new UserAlarm();
         testAlarm2.setActive(true);
-        testAlarm2.setHour(5);
-        testAlarm2.setMinutes(30);
+        testAlarm2.setTime(5, 30);
         testAlarm2.setWeekdays(new int[]{-1, 1,0,1,0,1,0,1});
         testAlarm2.setNickname("Test 2");
         testAlarm2.setRoute(testRoute);

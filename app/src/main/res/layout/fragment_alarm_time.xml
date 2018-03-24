@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
 
-    <include layout="@layout/step_text"/>
+    <data class="AlarmTimeBinding">
+        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+    </data>
 
     <TimePicker
         android:id="@+id/alarm_time_picker"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        bind:hour="@{alarm.hour}"
+        bind:minutes="@{alarm.minutes}"
+        bind:is24HourMode="@{false}"/>
 
-</LinearLayout>
+</layout>

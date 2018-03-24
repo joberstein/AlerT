@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
+import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.models.UserAlarm;
 
@@ -23,19 +24,28 @@ import java.util.stream.IntStream;
 
 import static com.jesseoberstein.alert.utils.ActivityUtils.getAttrValue;
 import static com.jesseoberstein.alert.utils.ActivityUtils.setIconColor;
+import static com.jesseoberstein.alert.utils.Constants.ALARM;
+import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
 
-public class EditAlarm extends AppCompatActivity implements OnDialogClick {
+public class EditAlarm extends AppCompatActivity implements OnDialogClick, AlarmTimeSetter {
     public static final int REQUEST_CODE = 3;
     private AlarmPagerAdapter alarmPagerAdapter;
     private ArrayList<String> endpoints;
     private UserAlarm alarm = new UserAlarm(); // TODO for testing only
+    private UserAlarm draftAlarm = new UserAlarm(alarm);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AlarmSettingsDark_Orange);
 
+        if (savedInstanceState != null) {
+            this.alarm = (UserAlarm) savedInstanceState.getSerializable(ALARM);
+            this.draftAlarm = (UserAlarm) savedInstanceState.getSerializable(DRAFT_ALARM);
+        }
+
+        setTheme(R.style.AlarmSettingsDark_Orange);
         setContentView(R.layout.activities_edit_alarm_new);
+
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
             bar.setTitle("Edit Alarm");
@@ -61,6 +71,13 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick {
         return true;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable(DRAFT_ALARM, getDraftAlarm());
+        savedInstanceState.putSerializable(ALARM, getAlarm());
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
     public AlarmPagerAdapter getAlarmPagerAdapter() {
         return alarmPagerAdapter;
     }
@@ -71,6 +88,14 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick {
 
     public UserAlarm getAlarm() {
         return alarm;
+    }
+
+    /**
+     * Get the cloned alarm to modify. If the user decides not to save the alarm, the original
+     * instance is preserved.
+     */
+    public UserAlarm getDraftAlarm() {
+        return draftAlarm;
     }
 
     private void styleSettingsTabs(TabLayout tabs) {
@@ -107,4 +132,8 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick {
 
     @Override
     public void onCancelSelected(Bundle alarm) {}
+
+    public void onAlarmTimeSet(int hour, int minute) {
+        draftAlarm.setTime(hour, minute);
+    }
 }

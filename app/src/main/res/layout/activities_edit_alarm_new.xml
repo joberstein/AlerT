@@ -17,6 +17,7 @@
             android:background="@color/white"
             android:elevation="3dp"
             app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
             app:tabIndicatorHeight="3dp" />
 
     </android.support.v4.view.ViewPager>

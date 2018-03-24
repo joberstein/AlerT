@@ -1,0 +1,75 @@
+package com.jesseoberstein.alert.fragments;
+
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.databinding.BindingAdapter;
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TimePicker;
+
+import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.databinding.AlarmTimeBinding;
+import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
+
+import java.util.Calendar;
+import java.util.Optional;
+
+import static java.util.Calendar.HOUR_OF_DAY;
+import static java.util.Calendar.MINUTE;
+import static java.util.Calendar.getInstance;
+
+/**
+ * A dialog fragment that shows a time picker.
+ */
+public class SetTimeFragment extends DialogFragment {
+    private AlarmTimeSetter alarmTimeSetter;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            this.alarmTimeSetter = (AlarmTimeSetter) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement AlarmTimeSetter");
+        }
+    }
+
+    @Override
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlarmTimeBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_time, null, false);
+        binding.setAlarm(this.alarmTimeSetter.getDraftAlarm());
+
+        View timePickerDialog = binding.getRoot();
+        TimePicker timePicker = (TimePicker) timePickerDialog.findViewById(R.id.alarm_time_picker);
+
+        return new AlertDialog.Builder(getActivity())
+                .setView(timePickerDialog)
+                .setPositiveButton(R.string.ok, ((dialogInterface, i) -> this.onPositiveButtonClick(timePicker)))
+                .setNegativeButton(R.string.cancel, ((dialogInterface, i) -> {}))
+                .create();
+    }
+
+    public void onPositiveButtonClick(TimePicker timePicker) {
+        this.alarmTimeSetter.onAlarmTimeSet(timePicker.getHour(), timePicker.getMinute());
+    }
+
+    @BindingAdapter({"bind:hour", "bind:minutes", "bind:is24HourMode"})
+    public static void setTime(TimePicker timePicker, Integer hour, Integer minutes, boolean is24HourMode) {
+        Calendar calendar = getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        int hourToSet = Optional.ofNullable(hour).orElse(calendar.get(HOUR_OF_DAY));
+        int minutesToSet = Optional.ofNullable(minutes).orElse(calendar.get(MINUTE));
+
+        timePicker.setHour(hourToSet);
+        timePicker.setMinute(minutesToSet);
+        timePicker.setIs24HourView(is24HourMode);
+    }
+}

@@ -1,27 +1,27 @@
 package com.jesseoberstein.alert.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.jesseoberstein.alert.models.UserRoute;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.jesseoberstein.alert.utils.Constants.*;
+import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.DEFAULT_ROUTE;
+import static com.jesseoberstein.alert.utils.Constants.ICON;
+import static com.jesseoberstein.alert.utils.Constants.THEME;
 import static com.jesseoberstein.alert.utils.Constants.USER_ROUTES;
 
 public class AlertUtils {
@@ -50,10 +50,10 @@ public class AlertUtils {
 
     /**
      * Show the keyboard for the given view.
-     * @param activity The activity to show the keyboard for.
+     * @param window The window to show the keyboard for.
      */
-    public static void showKeyboard(Activity activity) {
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    public static void showKeyboard(Window window) {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
     /**

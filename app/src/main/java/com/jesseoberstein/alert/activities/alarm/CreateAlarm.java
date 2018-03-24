@@ -85,7 +85,7 @@ public class CreateAlarm extends AppCompatActivity {
         Button createAlarmButton = (Button) findViewById(R.id.create_alarm);
 
         // Set up the page elements.
-        AlertUtils.showKeyboard(this);
+        AlertUtils.showKeyboard(this.getWindow());
         setUpNickname(nicknameText, createAlarmButton);
         setUpAutoComplete(createAlarmButton);
         setUpCreateAlarmButton(createAlarmButton, themeColor, R.color.white);

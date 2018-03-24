@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="AlarmNicknameBinding">
+        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/alarm_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:textSize="20sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:maxLength="12"
+            android:lineSpacingExtra="10dp"
+            android:inputType="textNoSuggestions|textCapWords|text"
+            android:hint="@string/nickname_default"
+            android:text="@={alarm.nickname}"
+            app:isCursorAtEnd="@{true}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@{alarm.nickname.length() > 11 ? @android:color/holo_red_light : @android:color/black}"
+            android:gravity="end"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@{alarm.nickname.length() + `/12`, default=`0/12`}" />
+
+    </LinearLayout>
+
+</layout>

@@ -1,7 +1,13 @@
 package com.jesseoberstein.alert.models;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.jesseoberstein.alert.BR;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -9,15 +15,18 @@ import java.util.Locale;
 import java.util.stream.IntStream;
 
 import static android.icu.util.Calendar.FRIDAY;
+import static android.icu.util.Calendar.HOUR_OF_DAY;
+import static android.icu.util.Calendar.MINUTE;
 import static android.icu.util.Calendar.MONDAY;
 import static android.icu.util.Calendar.SATURDAY;
 import static android.icu.util.Calendar.SUNDAY;
 import static android.icu.util.Calendar.THURSDAY;
 import static android.icu.util.Calendar.TUESDAY;
 import static android.icu.util.Calendar.WEDNESDAY;
+import static android.icu.util.Calendar.getInstance;
 
 @DatabaseTable(tableName = "user_alarms")
-public class UserAlarm implements Serializable {
+public class UserAlarm extends BaseObservable implements Serializable {
 
     @DatabaseField(generatedId = true)
     private int id;
@@ -73,14 +82,32 @@ public class UserAlarm implements Serializable {
     @DatabaseField
     private boolean active;
 
+    private String time;
+
     public UserAlarm() {}
 
+    public UserAlarm(UserAlarm alarm) {
+        setId(alarm.getId());
+        setRoute(alarm.getRoute());
+        setNickname(alarm.getNickname());
+        setDirection(alarm.getDirection());
+        setStation(alarm.getStation());
+        setTime(alarm.getHour(), alarm.getMinutes());
+        setWeekdays(alarm.getWeekdays());
+        setDuration(alarm.getDuration());
+        setDurationType(alarm.getDurationType());
+        setRepeat(alarm.getRepeat());
+        setActive(alarm.isActive());
+    }
+
+    @Bindable
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+        notifyPropertyChanged(BR.id);
     }
 
     public UserRoute getRoute() {
@@ -91,12 +118,14 @@ public class UserAlarm implements Serializable {
         this.route = route;
     }
 
+    @Bindable
     public String getNickname() {
         return nickname;
     }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+        notifyPropertyChanged(BR.nickname);
     }
 
     public String getDirection() {
@@ -284,28 +313,34 @@ public class UserAlarm implements Serializable {
         this.sunday = sunday;
     }
 
+    @Bindable
     public String getTime() {
-        int hour = (this.hour % 12 == 0) ? 12 : this.hour % 12;
-        String minute = (this.minutes < 10 ? "0" : "") + this.minutes;
-        String suffix = this.hour < 12 ? "am" : "pm";
-        return String.format(Locale.US, "%d:%s %s", hour, minute, suffix);
+        if (this.hour == null || this.minutes == null) {
+            return null;
+        }
+
+        return time;
     }
 
-    public UserAlarm clone() {
-        UserAlarm newAlarm = new UserAlarm();
-        newAlarm.setId(this.id);
-        newAlarm.setRoute(this.route);
-        newAlarm.setNickname(this.nickname);
-        newAlarm.setDirection(this.direction);
-        newAlarm.setStation(this.station);
-        newAlarm.setHour(this.hour);
-        newAlarm.setMinutes(this.minutes);
-        newAlarm.setWeekdays(this.getWeekdays());
-        newAlarm.setDuration(this.duration);
-        newAlarm.setDurationType(this.durationType);
-        newAlarm.setRepeat(this.repeat);
-        newAlarm.setActive(this.active);
-        return newAlarm;
+    public void setTime(Integer newHour, Integer newMinutes) {
+        if (newHour == null || newMinutes == null) {
+            return;
+        }
+
+        // If the time is the same as it was before, no need to update the time.
+        if (newHour.equals(this.hour) && newMinutes.equals(this.minutes)) {
+            return;
+        }
+
+        setHour(newHour);
+        setMinutes(newMinutes);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(HOUR_OF_DAY, hour);
+        calendar.set(MINUTE, minutes);
+
+        this.time = new SimpleDateFormat("h:mm a").format(calendar).toLowerCase();
+        notifyPropertyChanged(BR.time);
     }
 
     @Override

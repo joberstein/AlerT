@@ -27,6 +27,7 @@ public class Constants {
     public static final String ROUTE = "route";
 
     public static final String ALARM = "alarm";
+    public static final String DRAFT_ALARM = "draftAlarm";
     public static final String ALARM_ID = "alarmId";
     public static final String NICKNAME = "nickname";
     public static final String ENDPOINTS = "endpoints";

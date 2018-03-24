@@ -19,7 +19,12 @@
         <item>Saturday</item>
     </string-array>
 
+    <string name="time">Time</string>
+
     <string name="nickname">Nickname</string>
+    <string name="nickname_dialog_title">Alarm Name (optional)</string>
+    <string name="nickname_default">New Alarm</string>
+
     <string name="station">Station</string>
     <string name="directions">Directions</string>
     <string name="lines">Lines</string>
@@ -55,6 +60,7 @@
     <string name="update_alarm_dialog">Update this alarm?</string>
     <string name="remove_alarm_dialog">Remove "%1$s" from your alarms?</string>
 
+    <string name="ok">Ok</string>
     <string name="add">Add</string>
     <string name="update">Update</string>
     <string name="remove">Remove</string>
