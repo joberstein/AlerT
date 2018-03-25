@@ -8,17 +8,17 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.interfaces.AlarmRepeatSetter;
-import com.jesseoberstein.alert.models.RepeatType;
 
-import static com.jesseoberstein.alert.models.RepeatType.*;
+import static com.jesseoberstein.alert.models.RepeatType.getRepeatTypes;
+import static com.jesseoberstein.alert.models.RepeatType.values;
 
 /**
  * A dialog fragment that shows a dialog for setting the alarm repeat type.
  */
 public class SetRepeatTypeDialog extends AlarmModifierDialog {
     private AlarmRepeatSetter alarmRepeatSetter;
-    private int previousRepeatType;
 
     @Override
     public void onAttach(Context context) {
@@ -34,18 +34,16 @@ public class SetRepeatTypeDialog extends AlarmModifierDialog {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        this.previousRepeatType = getDraftAlarm().getRepeatType().ordinal();
+        int currentRepeatType = getDraftAlarm().getRepeatType().ordinal();
 
         return new AlertDialog.Builder(getActivity())
-                .setTitle("Set Repeat Type")
-                .setSingleChoiceItems(getRepeatTypes(), this.previousRepeatType, this::onItemSelected)
+                .setTitle(R.string.repeat_dialog_title)
+                .setSingleChoiceItems(getRepeatTypes(), currentRepeatType, this::onItemSelected)
                 .create();
     }
 
     private void onItemSelected(DialogInterface dialogInterface, int selectedIndex) {
-        RepeatType selected = values()[selectedIndex];
-        RepeatType previous = values()[this.previousRepeatType];
-        this.alarmRepeatSetter.onAlarmRepeatSet(selected, previous);
+        this.alarmRepeatSetter.onAlarmRepeatSet(values()[selectedIndex]);
         new android.os.Handler().postDelayed(dialogInterface::dismiss,500);
     }
 }

@@ -90,14 +90,14 @@ public class AlarmUtils {
     }
 
     private static void setAlarmEndTime(UserAlarm alarm, Context context) {
-        String[] durations = context.getResources().getStringArray(R.array.duration_list);
-        int durationType = IntStream.range(0, durations.length)
-                .mapToObj(i -> (durations[i].equals(alarm.getDurationType())) ?
-                        (i == 0 ? Calendar.HOUR : Calendar.MINUTE) : null)
-                .filter(Objects::nonNull)
-                .findFirst().orElse(-1);
-
-        calendar.add(durationType, alarm.getDuration());
+//        String[] durations = context.getResources().getStringArray(R.array.duration_list);
+//        int durationType = IntStream.range(0, durations.length)
+//                .mapToObj(i -> (durations[i].equals(alarm.getDurationType())) ?
+//                        (i == 0 ? Calendar.HOUR : Calendar.MINUTE) : null)
+//                .filter(Objects::nonNull)
+//                .findFirst().orElse(-1);
+//
+//        calendar.add(durationType, alarm.getDuration());
     }
 
     private static Uri buildAlarmUri(int alarmId) {

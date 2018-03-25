@@ -24,6 +24,10 @@
             android:id="@+id/alarmSettings_repeat"
             bind:alarm="@{alarm}"/>
 
+        <include layout="@layout/fragment_alarm_settings_section_duration"
+            android:id="@+id/alarmSettings_duration"
+            bind:alarm="@{alarm}"/>
+
     </LinearLayout>
 
 </layout>

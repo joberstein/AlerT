@@ -26,7 +26,12 @@
     <string name="nickname_default">New Alarm</string>
 
     <string name="repeat">Repeat</string>
+    <string name="repeat_dialog_title">Set Repeat Type</string>
     <string name="repeat_custom_dialog_title">Select Custom Repeat</string>
+
+
+    <string name="duration">Duration</string>
+    <string name="duration_dialog_title">Receive notifications for:</string>
 
     <string name="station">Station</string>
     <string name="directions">Directions</string>
@@ -40,12 +45,6 @@
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="done">Done</string>
-
-    <string name="duration">Duration</string>
-    <string-array name="duration_list">
-        <item>HOURS</item>
-        <item>MINUTES</item>
-    </string-array>
 
     <string name="status">Status</string>
 

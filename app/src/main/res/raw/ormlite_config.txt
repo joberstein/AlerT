@@ -53,10 +53,6 @@ fieldName=sunday
 fieldName=duration
 # --field-end--
 # --field-start--
-fieldName=durationType
-columnName=duration_type
-# --field-end--
-# --field-start--
 fieldName=repeatType
 # --field-end--
 # --field-start--

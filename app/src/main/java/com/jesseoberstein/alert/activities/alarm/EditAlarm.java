@@ -15,6 +15,7 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetDaysDialog;
 import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
+import com.jesseoberstein.alert.interfaces.AlarmDurationSetter;
 import com.jesseoberstein.alert.interfaces.AlarmRepeatSetter;
 import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
@@ -33,7 +34,7 @@ import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
 
 public class EditAlarm
         extends AppCompatActivity
-        implements OnDialogClick, AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter {
+        implements OnDialogClick, AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter, AlarmDurationSetter {
 
     public static final int REQUEST_CODE = 3;
     private AlarmPagerAdapter alarmPagerAdapter;
@@ -145,15 +146,10 @@ public class EditAlarm
     }
 
     @Override
-    public void onAlarmRepeatSet(RepeatType selected, RepeatType previous) {
-        this.draftAlarm.setRepeatType(selected);
+    public void onAlarmRepeatSet(RepeatType repeatType) {
+        this.draftAlarm.setRepeatType(repeatType);
 
-        // If switching to custom from a different repeat type, reset all of the selected days.
-        if (!selected.equals(previous)) {
-            this.draftAlarm.setWeekdays(RepeatType.NEVER.getSelectedDays());
-        }
-
-        if (RepeatType.CUSTOM.equals(selected)) {
+        if (RepeatType.CUSTOM.equals(repeatType)) {
             new SetDaysDialog().show(getSupportFragmentManager(), "setDays");
         }
     }
@@ -161,5 +157,10 @@ public class EditAlarm
     @Override
     public void onAlarmDaysSet(int[] days) {
         this.draftAlarm.setWeekdays(days);
+    }
+
+    @Override
+    public void onAlarmDurationSet(long duration) {
+        this.draftAlarm.setDuration(duration);
     }
 }

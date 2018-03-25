@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data class="RepeatSectionBinding">
-        <import type="com.jesseoberstein.alert.models.RepeatType"/>
+    <data class="DurationSectionBinding">
+        <import type="com.jesseoberstein.alert.utils.DateTimeUtils"/>
         <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
     </data>
 
@@ -20,23 +20,23 @@
             android:paddingEnd="10dp">
 
             <TextView
-                android:id="@+id/alarmSettings_section_label_repeat"
+                android:id="@+id/alarmSettings_section_label_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/repeat"
+                android:text="@string/duration"
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textColor="?attr/sectionLabelColor"
                 android:layout_marginBottom="5dp"/>
 
             <TextView
-                android:id="@+id/alarmSettings_section_value_repeat"
+                android:id="@+id/alarmSettings_section_value_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{alarm.repeatType.toString()}"
+                android:text="@{DateTimeUtils.getFormattedDuration(alarm.duration)}"
                 android:textSize="20sp"
                 android:textColor="@color/gray"
-                android:layout_below="@id/alarmSettings_section_label_repeat"
+                android:layout_below="@id/alarmSettings_section_label_duration"
                 android:layout_marginBottom="15dp"/>
 
         </RelativeLayout>

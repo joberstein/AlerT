@@ -9,7 +9,7 @@ public enum RepeatType {
     WEEKDAYS(new int[]{0, 1, 1, 1, 1, 1, 0}),
     WEEKENDS(new int[]{1, 0, 0, 0, 0, 0, 1}),
     DAILY(new int[]{1, 1, 1, 1, 1, 1, 1}),
-    CUSTOM(new int[]{});
+    CUSTOM(new int[]{0, 0, 0, 0, 0, 0, 0});
 
     private int[] selectedDays;
 

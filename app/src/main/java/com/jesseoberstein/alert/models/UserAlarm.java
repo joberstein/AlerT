@@ -2,29 +2,28 @@ package com.jesseoberstein.alert.models;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jesseoberstein.alert.BR;
 
 import java.io.Serializable;
-import java.text.CollationElementIterator;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.stream.IntStream;
 
-import static android.icu.util.Calendar.FRIDAY;
-import static android.icu.util.Calendar.HOUR_OF_DAY;
-import static android.icu.util.Calendar.MINUTE;
-import static android.icu.util.Calendar.MONDAY;
-import static android.icu.util.Calendar.SATURDAY;
-import static android.icu.util.Calendar.SUNDAY;
-import static android.icu.util.Calendar.THURSDAY;
-import static android.icu.util.Calendar.TUESDAY;
-import static android.icu.util.Calendar.WEDNESDAY;
+import static java.util.Calendar.FRIDAY;
+import static java.util.Calendar.HOUR_OF_DAY;
+import static java.util.Calendar.MINUTE;
+import static java.util.Calendar.MONDAY;
+import static java.util.Calendar.SATURDAY;
+import static java.util.Calendar.SUNDAY;
+import static java.util.Calendar.THURSDAY;
+import static java.util.Calendar.TUESDAY;
+import static java.util.Calendar.WEDNESDAY;
 
 @DatabaseTable(tableName = "user_alarms")
 public class UserAlarm extends BaseObservable implements Serializable {
@@ -72,10 +71,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
     private int sunday;
 
     @DatabaseField
-    private int duration;
-
-    @DatabaseField(columnName = "duration_type")
-    private String durationType;
+    private long duration;
 
     @DatabaseField
     private RepeatType repeatType;
@@ -86,7 +82,8 @@ public class UserAlarm extends BaseObservable implements Serializable {
     private String time;
 
     public UserAlarm() {
-        this.repeatType = RepeatType.NEVER;
+        setRepeatType(RepeatType.NEVER);
+        setDuration(30);
     }
 
     public UserAlarm(UserAlarm alarm) {
@@ -98,7 +95,6 @@ public class UserAlarm extends BaseObservable implements Serializable {
         setTime(alarm.getHour(), alarm.getMinutes());
         setWeekdays(alarm.getWeekdays());
         setDuration(alarm.getDuration());
-        setDurationType(alarm.getDurationType());
         setRepeatType(alarm.getRepeatType());
         setActive(alarm.isActive());
     }
@@ -163,20 +159,14 @@ public class UserAlarm extends BaseObservable implements Serializable {
         this.minutes = minutes;
     }
 
-    public int getDuration() {
+    @Bindable
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
-    }
-
-    public String getDurationType() {
-        return durationType;
-    }
-
-    public void setDurationType(String durationType) {
-        this.durationType = durationType;
+        notifyPropertyChanged(BR.duration);
     }
 
     @Bindable
@@ -185,16 +175,14 @@ public class UserAlarm extends BaseObservable implements Serializable {
     }
 
     public void setRepeatType(RepeatType repeatType) {
+        if (repeatType.equals(this.repeatType)) {
+            return;
+        }
+
         this.repeatType = repeatType;
         notifyPropertyChanged(BR.repeatType);
 
-        Set<RepeatType> staticRepeatTypes = Arrays.stream(RepeatType.values())
-                .filter(type -> !type.equals(RepeatType.CUSTOM))
-                .collect(Collectors.toSet());
-
-        if (staticRepeatTypes.contains(repeatType)) {
-            setWeekdays(repeatType.getSelectedDays());
-        }
+        setWeekdays(repeatType.getSelectedDays());
     }
 
     public boolean isActive() {
@@ -272,59 +260,59 @@ public class UserAlarm extends BaseObservable implements Serializable {
         return Arrays.copyOfRange(weekdays, 1, weekdays.length);
     }
 
-    private int getMonday() {
+    public int getMonday() {
         return monday;
     }
 
-    private void setMonday(int monday) {
+    public void setMonday(int monday) {
         this.monday = monday;
     }
 
-    private int getTuesday() {
+    public int getTuesday() {
         return tuesday;
     }
 
-    private void setTuesday(int tuesday) {
+    public void setTuesday(int tuesday) {
         this.tuesday = tuesday;
     }
 
-    private int getWednesday() {
+    public int getWednesday() {
         return wednesday;
     }
 
-    private void setWednesday(int wednesday) {
+    public void setWednesday(int wednesday) {
         this.wednesday = wednesday;
     }
 
-    private int getThursday() {
+    public int getThursday() {
         return thursday;
     }
 
-    private void setThursday(int thursday) {
+    public void setThursday(int thursday) {
         this.thursday = thursday;
     }
 
-    private int getFriday() {
+    public int getFriday() {
         return friday;
     }
 
-    private void setFriday(int friday) {
+    public void setFriday(int friday) {
         this.friday = friday;
     }
 
-    private int getSaturday() {
+    public int getSaturday() {
         return saturday;
     }
 
-    private void setSaturday(int saturday) {
+    public void setSaturday(int saturday) {
         this.saturday = saturday;
     }
 
-    private int getSunday() {
+    public int getSunday() {
         return sunday;
     }
 
-    private void setSunday(int sunday) {
+    public void setSunday(int sunday) {
         this.sunday = sunday;
     }
 
@@ -354,7 +342,10 @@ public class UserAlarm extends BaseObservable implements Serializable {
         calendar.set(HOUR_OF_DAY, hour);
         calendar.set(MINUTE, minutes);
 
-        this.time = new SimpleDateFormat("h:mm a").format(calendar).toLowerCase();
+        Date date = new Date();
+        date.setTime(calendar.getTimeInMillis());
+
+        this.time = new SimpleDateFormat("h:mm a", Locale.ENGLISH).format(date).toLowerCase();
         notifyPropertyChanged(BR.time);
     }
 
@@ -376,7 +367,6 @@ public class UserAlarm extends BaseObservable implements Serializable {
                 ", saturday=" + saturday +
                 ", sunday=" + sunday +
                 ", duration=" + duration +
-                ", durationType='" + durationType + '\'' +
                 ", repeatType='" + repeatType + '\'' +
                 ", active=" + active +
                 '}';
@@ -390,8 +380,6 @@ public class UserAlarm extends BaseObservable implements Serializable {
         UserAlarm userAlarm = (UserAlarm) o;
 
         if (id != userAlarm.id) return false;
-        if (hour != userAlarm.hour) return false;
-        if (minutes != userAlarm.minutes) return false;
         if (monday != userAlarm.monday) return false;
         if (tuesday != userAlarm.tuesday) return false;
         if (wednesday != userAlarm.wednesday) return false;
@@ -408,9 +396,11 @@ public class UserAlarm extends BaseObservable implements Serializable {
             return false;
         if (station != null ? !station.equals(userAlarm.station) : userAlarm.station != null)
             return false;
-        if (durationType != null ? !durationType.equals(userAlarm.durationType) : userAlarm.durationType != null)
+        if (hour != null ? !hour.equals(userAlarm.hour) : userAlarm.hour != null) return false;
+        if (minutes != null ? !minutes.equals(userAlarm.minutes) : userAlarm.minutes != null)
             return false;
-        return repeatType != null ? repeatType.equals(userAlarm.repeatType) : userAlarm.repeatType == null;
+        if (repeatType != userAlarm.repeatType) return false;
+        return time != null ? time.equals(userAlarm.time) : userAlarm.time == null;
     }
 
     @Override
@@ -420,8 +410,8 @@ public class UserAlarm extends BaseObservable implements Serializable {
         result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
         result = 31 * result + (station != null ? station.hashCode() : 0);
-        result = 31 * result + hour;
-        result = 31 * result + minutes;
+        result = 31 * result + (hour != null ? hour.hashCode() : 0);
+        result = 31 * result + (minutes != null ? minutes.hashCode() : 0);
         result = 31 * result + monday;
         result = 31 * result + tuesday;
         result = 31 * result + wednesday;
@@ -429,10 +419,10 @@ public class UserAlarm extends BaseObservable implements Serializable {
         result = 31 * result + friday;
         result = 31 * result + saturday;
         result = 31 * result + sunday;
-        result = 31 * result + duration;
-        result = 31 * result + (durationType != null ? durationType.hashCode() : 0);
+        result = 31 * result + (int) (duration ^ (duration >>> 32));
         result = 31 * result + (repeatType != null ? repeatType.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + (time != null ? time.hashCode() : 0);
         return result;
     }
 }

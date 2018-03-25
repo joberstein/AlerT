@@ -1,7 +1,6 @@
 package com.jesseoberstein.alert.fragments;
 
 
-import android.databinding.BindingConversion;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -12,11 +11,11 @@ import android.view.ViewGroup;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.databinding.TimeSettingsBinding;
+import com.jesseoberstein.alert.fragments.dialog.alarm.SetDurationDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetNicknameDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetRepeatTypeDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetTimeDialog;
 import com.jesseoberstein.alert.interfaces.OnAlarmSubmit;
-import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
 
 public class TimeSettingsFragment extends AlarmBaseFragment implements OnAlarmSubmit {
@@ -36,6 +35,7 @@ public class TimeSettingsFragment extends AlarmBaseFragment implements OnAlarmSu
         view.findViewById(R.id.alarmSettings_time).setOnClickListener(this::showTimePickerDialog);
         view.findViewById(R.id.alarmSettings_name).setOnClickListener(this::showNicknameDialog);
         view.findViewById(R.id.alarmSettings_repeat).setOnClickListener(this::showRepeatDialog);
+        view.findViewById(R.id.alarmSettings_duration).setOnClickListener(this::showDurationDialog);
 
         return view;
     }
@@ -55,12 +55,11 @@ public class TimeSettingsFragment extends AlarmBaseFragment implements OnAlarmSu
         this.showDialogFragment(new SetRepeatTypeDialog(), "setRepeat");
     }
 
-    private void showDialogFragment(DialogFragment dialog, String tagName) {
-        dialog.show(getActivity().getSupportFragmentManager(), tagName);
+    private void showDurationDialog(View view) {
+        this.showDialogFragment(new SetDurationDialog(), "setDuration");
     }
 
-    @BindingConversion
-    public static String stringifyRepeatType(RepeatType repeatType) {
-        return repeatType.toString();
+    private void showDialogFragment(DialogFragment dialog, String tagName) {
+        dialog.show(getActivity().getSupportFragmentManager(), tagName);
     }
 }
