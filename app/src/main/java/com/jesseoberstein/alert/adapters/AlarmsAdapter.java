@@ -39,7 +39,7 @@ public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarm> {
         int alarmStatusId = alarm.isActive() ? R.drawable.circle_light_green : R.drawable.circle_light_gray;
         alarmHolder.status.setImageResource(alarmStatusId);
 
-        List<Integer> days = Arrays.stream(alarm.getWeekdaysUnpadded()).boxed().collect(Collectors.toList());
+        List<Integer> days = Arrays.stream(alarm.getWeekdays()).boxed().collect(Collectors.toList());
         alarmHolder.days.setAdapter(new DaysAdapter(R.layout.alarm_day, days));
         alarmHolder.days.setLayoutManager(new LinearLayoutManager(alarmHolder.context, LinearLayout.HORIZONTAL, false));
 

@@ -57,7 +57,7 @@ fieldName=durationType
 columnName=duration_type
 # --field-end--
 # --field-start--
-fieldName=repeat
+fieldName=repeatType
 # --field-end--
 # --field-start--
 fieldName=active

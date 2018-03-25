@@ -13,8 +13,12 @@ import android.view.MenuInflater;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
+import com.jesseoberstein.alert.fragments.dialog.alarm.SetDaysDialog;
+import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
+import com.jesseoberstein.alert.interfaces.AlarmRepeatSetter;
 import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
+import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
 
 import java.util.ArrayList;
@@ -27,7 +31,10 @@ import static com.jesseoberstein.alert.utils.ActivityUtils.setIconColor;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
 
-public class EditAlarm extends AppCompatActivity implements OnDialogClick, AlarmTimeSetter {
+public class EditAlarm
+        extends AppCompatActivity
+        implements OnDialogClick, AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter {
+
     public static final int REQUEST_CODE = 3;
     private AlarmPagerAdapter alarmPagerAdapter;
     private ArrayList<String> endpoints;
@@ -135,5 +142,24 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick, Alarm
 
     public void onAlarmTimeSet(int hour, int minute) {
         draftAlarm.setTime(hour, minute);
+    }
+
+    @Override
+    public void onAlarmRepeatSet(RepeatType selected, RepeatType previous) {
+        this.draftAlarm.setRepeatType(selected);
+
+        // If switching to custom from a different repeat type, reset all of the selected days.
+        if (!selected.equals(previous)) {
+            this.draftAlarm.setWeekdays(RepeatType.NEVER.getSelectedDays());
+        }
+
+        if (RepeatType.CUSTOM.equals(selected)) {
+            new SetDaysDialog().show(getSupportFragmentManager(), "setDays");
+        }
+    }
+
+    @Override
+    public void onAlarmDaysSet(int[] days) {
+        this.draftAlarm.setWeekdays(days);
     }
 }

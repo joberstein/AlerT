@@ -1,4 +1,4 @@
-package com.jesseoberstein.alert.fragments;
+package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 
 import android.app.AlertDialog;
@@ -8,7 +8,6 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TimePicker;
@@ -27,14 +26,14 @@ import static java.util.Calendar.getInstance;
 /**
  * A dialog fragment that shows a time picker.
  */
-public class SetTimeFragment extends DialogFragment {
+public class SetTimeDialog extends AlarmModifierDialog {
     private AlarmTimeSetter alarmTimeSetter;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            this.alarmTimeSetter = (AlarmTimeSetter) context;
+            this.alarmTimeSetter = (AlarmTimeSetter) getAlarmModifier();
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement AlarmTimeSetter");
         }
@@ -44,7 +43,7 @@ public class SetTimeFragment extends DialogFragment {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlarmTimeBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_time, null, false);
-        binding.setAlarm(this.alarmTimeSetter.getDraftAlarm());
+        binding.setAlarm(getDraftAlarm());
 
         View timePickerDialog = binding.getRoot();
         TimePicker timePicker = (TimePicker) timePickerDialog.findViewById(R.id.alarm_time_picker);

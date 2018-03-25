@@ -51,7 +51,7 @@ public class SettingsFragment extends AlarmBaseFragment implements OnAlarmSubmit
         setSpinnerSelection(durationDropdown, alarm.getDurationType());
 
         repeatDropdown = ((Spinner) view.findViewById(R.id.repeat_dropdown));
-        setSpinnerSelection(repeatDropdown, alarm.getRepeat());
+        setSpinnerSelection(repeatDropdown, alarm.getRepeatType().toString());
 
         statusView = ((Switch) view.findViewById(R.id.status_toggle));
         statusView.setChecked(alarm.isActive());
@@ -64,7 +64,7 @@ public class SettingsFragment extends AlarmBaseFragment implements OnAlarmSubmit
         alarm.setNickname(nicknameView.getText().toString());
         alarm.setDuration(Integer.valueOf(durationView.getText().toString()));
         alarm.setDurationType(durationDropdown.getSelectedItem().toString());
-        alarm.setRepeat(repeatDropdown.getSelectedItem().toString());
+//        alarm.setRepeatType(repeatDropdown.getSelectedItem().toString());
         alarm.setActive(statusView.isChecked());
     }
 

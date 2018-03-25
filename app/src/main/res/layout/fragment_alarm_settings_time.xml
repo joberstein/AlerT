@@ -20,6 +20,10 @@
             android:id="@+id/alarmSettings_name"
             bind:alarm="@{alarm}"/>
 
+        <include layout="@layout/fragment_alarm_settings_section_repeat"
+            android:id="@+id/alarmSettings_repeat"
+            bind:alarm="@{alarm}"/>
+
     </LinearLayout>
 
 </layout>

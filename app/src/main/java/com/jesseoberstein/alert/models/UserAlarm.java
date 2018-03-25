@@ -10,8 +10,10 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.jesseoberstein.alert.BR;
 
 import java.io.Serializable;
+import java.text.CollationElementIterator;
 import java.util.Arrays;
-import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static android.icu.util.Calendar.FRIDAY;
@@ -23,7 +25,6 @@ import static android.icu.util.Calendar.SUNDAY;
 import static android.icu.util.Calendar.THURSDAY;
 import static android.icu.util.Calendar.TUESDAY;
 import static android.icu.util.Calendar.WEDNESDAY;
-import static android.icu.util.Calendar.getInstance;
 
 @DatabaseTable(tableName = "user_alarms")
 public class UserAlarm extends BaseObservable implements Serializable {
@@ -77,14 +78,16 @@ public class UserAlarm extends BaseObservable implements Serializable {
     private String durationType;
 
     @DatabaseField
-    private String repeat;
+    private RepeatType repeatType;
 
     @DatabaseField
     private boolean active;
 
     private String time;
 
-    public UserAlarm() {}
+    public UserAlarm() {
+        this.repeatType = RepeatType.NEVER;
+    }
 
     public UserAlarm(UserAlarm alarm) {
         setId(alarm.getId());
@@ -96,7 +99,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
         setWeekdays(alarm.getWeekdays());
         setDuration(alarm.getDuration());
         setDurationType(alarm.getDurationType());
-        setRepeat(alarm.getRepeat());
+        setRepeatType(alarm.getRepeatType());
         setActive(alarm.isActive());
     }
 
@@ -176,12 +179,22 @@ public class UserAlarm extends BaseObservable implements Serializable {
         this.durationType = durationType;
     }
 
-    public String getRepeat() {
-        return repeat;
+    @Bindable
+    public RepeatType getRepeatType() {
+        return repeatType;
     }
 
-    public void setRepeat(String repeat) {
-        this.repeat = repeat;
+    public void setRepeatType(RepeatType repeatType) {
+        this.repeatType = repeatType;
+        notifyPropertyChanged(BR.repeatType);
+
+        Set<RepeatType> staticRepeatTypes = Arrays.stream(RepeatType.values())
+                .filter(type -> !type.equals(RepeatType.CUSTOM))
+                .collect(Collectors.toSet());
+
+        if (staticRepeatTypes.contains(repeatType)) {
+            setWeekdays(repeatType.getSelectedDays());
+        }
     }
 
     public boolean isActive() {
@@ -193,8 +206,14 @@ public class UserAlarm extends BaseObservable implements Serializable {
     }
 
     public void setWeekdays(int[] weekdays) {
-        IntStream.range(SUNDAY, SATURDAY + 1).forEach(i -> {
-            int isSelected = weekdays[i];
+        if (weekdays.length != 7) {
+            String msg = "Could not set weekdays for alarm: given array has " + weekdays.length + " elements; should have exactly 7.";
+            throw new RuntimeException(msg);
+        }
+
+        IntStream.range(1, SATURDAY + 1).forEach(i -> {
+            // arr[i - 1] because weekdays has only 7 elements, but Calendar dates use indices 1-7.
+            int isSelected = weekdays[i - 1];
 
             switch (i) {
                 case SUNDAY:
@@ -223,7 +242,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
 
     public int[] getWeekdays() {
         int[] weekdays = new int[SATURDAY + 1];
-        weekdays[0] = -1; // should not be used; Calendar days are indices 1 - 7.
+        Arrays.fill(weekdays, 0);
 
         IntStream.range(SUNDAY, SATURDAY + 1).forEach(i -> {
             switch (i) {
@@ -250,11 +269,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
             }
         });
 
-        return weekdays;
-    }
-
-    public int[] getWeekdaysUnpadded() {
-        return Arrays.stream(this.getWeekdays()).filter(day -> day >= 0).toArray();
+        return Arrays.copyOfRange(weekdays, 1, weekdays.length);
     }
 
     private int getMonday() {
@@ -362,7 +377,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
                 ", sunday=" + sunday +
                 ", duration=" + duration +
                 ", durationType='" + durationType + '\'' +
-                ", repeat='" + repeat + '\'' +
+                ", repeatType='" + repeatType + '\'' +
                 ", active=" + active +
                 '}';
     }
@@ -395,7 +410,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
             return false;
         if (durationType != null ? !durationType.equals(userAlarm.durationType) : userAlarm.durationType != null)
             return false;
-        return repeat != null ? repeat.equals(userAlarm.repeat) : userAlarm.repeat == null;
+        return repeatType != null ? repeatType.equals(userAlarm.repeatType) : userAlarm.repeatType == null;
     }
 
     @Override
@@ -416,7 +431,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
         result = 31 * result + sunday;
         result = 31 * result + duration;
         result = 31 * result + (durationType != null ? durationType.hashCode() : 0);
-        result = 31 * result + (repeat != null ? repeat.hashCode() : 0);
+        result = 31 * result + (repeatType != null ? repeatType.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
         return result;
     }
