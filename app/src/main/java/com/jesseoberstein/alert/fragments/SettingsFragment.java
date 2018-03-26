@@ -19,7 +19,7 @@ import com.jesseoberstein.alert.models.UserAlarm;
 import java.util.Locale;
 import java.util.stream.IntStream;
 
-public class SettingsFragment extends AlarmBaseFragment implements OnAlarmSubmit {
+public class SettingsFragment extends AlarmSettingsFragment implements OnAlarmSubmit {
     private UserAlarm alarm;
     private EditText nicknameView;
     private EditText durationView;
@@ -28,7 +28,7 @@ public class SettingsFragment extends AlarmBaseFragment implements OnAlarmSubmit
     private Switch statusView;
 
     public static SettingsFragment newInstance(int page) {
-        return (SettingsFragment) AlarmBaseFragment.newInstance(page, new SettingsFragment());
+        return (SettingsFragment) AlarmSettingsFragment.newInstance(page, new SettingsFragment());
     }
 
     @Override

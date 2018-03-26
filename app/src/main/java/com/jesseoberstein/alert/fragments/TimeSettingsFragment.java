@@ -18,10 +18,10 @@ import com.jesseoberstein.alert.fragments.dialog.alarm.SetTimeDialog;
 import com.jesseoberstein.alert.interfaces.OnAlarmSubmit;
 import com.jesseoberstein.alert.models.UserAlarm;
 
-public class TimeSettingsFragment extends AlarmBaseFragment implements OnAlarmSubmit {
+public class TimeSettingsFragment extends AlarmSettingsFragment implements OnAlarmSubmit {
 
     public static TimeSettingsFragment newInstance(int page) {
-        return (TimeSettingsFragment) AlarmBaseFragment.newInstance(page, new TimeSettingsFragment());
+        return (TimeSettingsFragment) AlarmSettingsFragment.newInstance(page, new TimeSettingsFragment());
     }
 
     @Override

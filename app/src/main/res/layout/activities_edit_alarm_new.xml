@@ -6,19 +6,21 @@
     android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/alarm_pager"
+        android:id="@+id/alarm_settings_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/alarm_settings"
+            android:id="@+id/alarm_settings_tabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_nav_height"
             android:background="@color/white"
             android:elevation="3dp"
+            app:tabBackground="?attr/tabsBackgroundColor"
             app:tabGravity="fill"
             app:tabMaxWidth="0dp"
-            app:tabIndicatorHeight="3dp" />
+            app:tabIndicatorHeight="3dp"
+            app:tabIndicatorColor="?attr/tabSelectedIndicatorColor"/>
 
     </android.support.v4.view.ViewPager>
 

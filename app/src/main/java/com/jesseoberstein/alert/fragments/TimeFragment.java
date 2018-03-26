@@ -14,16 +14,15 @@ import com.jesseoberstein.alert.models.UserAlarm;
 
 import java.util.Calendar;
 
-import static java.util.Calendar.HOUR;
 import static java.util.Calendar.MINUTE;
 import static java.util.Calendar.getInstance;
 
-public class TimeFragment extends AlarmBaseFragment implements OnAlarmSubmit {
+public class TimeFragment extends AlarmSettingsFragment implements OnAlarmSubmit {
     private TimePicker timePicker;
     private UserAlarm alarm;
 
     public static TimeFragment newInstance(int page) {
-        return (TimeFragment) AlarmBaseFragment.newInstance(page, new TimeFragment());
+        return (TimeFragment) AlarmSettingsFragment.newInstance(page, new TimeFragment());
     }
 
     @Override

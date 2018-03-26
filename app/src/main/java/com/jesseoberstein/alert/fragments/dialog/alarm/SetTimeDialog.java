@@ -16,13 +16,6 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmTimeBinding;
 import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 
-import java.util.Calendar;
-import java.util.Optional;
-
-import static java.util.Calendar.HOUR_OF_DAY;
-import static java.util.Calendar.MINUTE;
-import static java.util.Calendar.getInstance;
-
 /**
  * A dialog fragment that shows a time picker.
  */
@@ -61,14 +54,8 @@ public class SetTimeDialog extends AlarmModifierDialog {
 
     @BindingAdapter({"bind:hour", "bind:minutes", "bind:is24HourMode"})
     public static void setTime(TimePicker timePicker, Integer hour, Integer minutes, boolean is24HourMode) {
-        Calendar calendar = getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-
-        int hourToSet = Optional.ofNullable(hour).orElse(calendar.get(HOUR_OF_DAY));
-        int minutesToSet = Optional.ofNullable(minutes).orElse(calendar.get(MINUTE));
-
-        timePicker.setHour(hourToSet);
-        timePicker.setMinute(minutesToSet);
+        timePicker.setHour(hour);
+        timePicker.setMinute(minutes);
         timePicker.setIs24HourView(is24HourMode);
     }
 }

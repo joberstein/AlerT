@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="menuItemIconColor" format="reference" />
-    <attr name="tabsBackgroundColor" format="reference" />
-    <attr name="tabIconColor" format="reference" />
-    <attr name="tabSelectedIndicatorColor" format="reference" />
-    <attr name="sectionLabelColor" format="color" />
+    <attr name="menuItemIconColor" format="reference|color" />
+    <attr name="tabsBackgroundColor" format="reference|color" />
+    <attr name="tabSelectedIndicatorColor" format="reference|color" />
+    <attr name="sectionLabelColor" format="reference|color" />
 </resources>

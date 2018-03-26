@@ -49,7 +49,6 @@
     <style name="AlarmSettingsLight" parent="Theme.AppCompat.Light">
         <item name="menuItemIconColor">@android:color/black</item>
         <item name="tabsBackgroundColor">@color/white</item>
-        <item name="tabIconColor">@android:color/black</item>
         <item name="sectionLabelColor">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
@@ -57,7 +56,6 @@
     <style name="AlarmSettingsDark" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="menuItemIconColor">@color/white</item>
         <item name="tabsBackgroundColor">@color/white</item>
-        <item name="tabIconColor">@android:color/black</item>
         <item name="sectionLabelColor">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/black</item>
     </style>

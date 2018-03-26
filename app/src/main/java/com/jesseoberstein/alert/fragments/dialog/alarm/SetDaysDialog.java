@@ -43,6 +43,8 @@ public class SetDaysDialog extends AlarmModifierDialog {
         this.selectedDays = getDraftAlarm().getWeekdays();
 
         String[] daysList = Arrays.copyOfRange(getInstance().getWeekdays(), SUNDAY, SATURDAY + 1);
+
+        // The alert dialog needs a boolean array instead of an int array, so converting it here.
         int numDays = daysList.length;
         boolean[] convertedDays = new boolean[numDays];
         IntStream.range(0, numDays).forEach(i -> convertedDays[i] = (this.selectedDays[i] == 1));

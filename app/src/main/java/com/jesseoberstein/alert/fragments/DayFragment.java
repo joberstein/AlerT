@@ -24,13 +24,13 @@ import java.util.stream.IntStream;
 
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
 
-public class DayFragment extends AlarmBaseFragment implements OnAlarmSubmit {
+public class DayFragment extends AlarmSettingsFragment implements OnAlarmSubmit {
     UserAlarm alarm;
     private ListView daysListView;
     private boolean initialView = true;
 
     public static DayFragment newInstance(int page) {
-        return (DayFragment) AlarmBaseFragment.newInstance(page, new DayFragment());
+        return (DayFragment) AlarmSettingsFragment.newInstance(page, new DayFragment());
     }
 
     /**

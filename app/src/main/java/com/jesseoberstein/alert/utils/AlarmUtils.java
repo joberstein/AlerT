@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.receivers.OnAlarmStart;
 import com.jesseoberstein.alert.receivers.OnAlarmStop;
@@ -15,9 +14,7 @@ import com.jesseoberstein.alert.services.MbtaRealtimeUpdatesService;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 import static android.app.AlarmManager.INTERVAL_DAY;
 import static android.app.AlarmManager.RTC;
@@ -25,9 +22,18 @@ import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.app.PendingIntent.getBroadcast;
 import static android.app.PendingIntent.getService;
-import static com.jesseoberstein.alert.utils.Constants.*;
+import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_START_REQUEST_CODE;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_STOP_REQUEST_CODE;
+import static com.jesseoberstein.alert.utils.Constants.ALARM_UPDATE_REQUEST_CODE;
+import static com.jesseoberstein.alert.utils.Constants.COLOR;
+import static com.jesseoberstein.alert.utils.Constants.DAYS;
+import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
+import static com.jesseoberstein.alert.utils.Constants.NICKNAME;
+import static com.jesseoberstein.alert.utils.Constants.ROUTE;
+import static com.jesseoberstein.alert.utils.Constants.STOP_ID;
+import static java.util.Calendar.SATURDAY;
+import static java.util.Calendar.SUNDAY;
 
 public class AlarmUtils {
     private static Calendar calendar = Calendar.getInstance();
@@ -105,5 +111,39 @@ public class AlarmUtils {
                 .scheme("content")
                 .path("alarms/" + alarmId)
                 .build();
+    }
+
+    /**
+     * Get the day of the week that the given alarm should be fired next by taking into account the
+     * alarm's hour/minutes and repeat days.
+     * @param alarm The given alarm to calculate the next firing day with.
+     * @return A {@link Calendar#DAY_OF_WEEK} value of the next firing day.
+     */
+    public static int getNextFiringDay(UserAlarm alarm) {
+        int today = DateTimeUtils.getCurrentDay();
+        long now = DateTimeUtils.getCurrentTimeInMillis();
+        long alarmFiringTime = DateTimeUtils.getTimeInMillis(alarm.getHour(), alarm.getMinutes());
+        boolean isPastAlarmFiringTime = alarmFiringTime <= now;
+        int[] selectedDays = alarm.getWeekdays();
+
+        for (int day = today - 1; day < today + selectedDays.length; day++) {
+            // Use an adjusted day to compensate for the offset between today and Sunday (0).
+            int adjustedDay = day % 7;
+            boolean isDaySelected = selectedDays[adjustedDay] == 1;
+            boolean isDayToday = today == (adjustedDay + 1);
+
+            if (isDaySelected) {
+                if (isDayToday && isPastAlarmFiringTime) {
+                    continue;
+                }
+
+                return adjustedDay + 1;
+            }
+        }
+
+        // At this point, either no days have been selected, or only today has been selected.
+        int tomorrow = (today == SATURDAY) ? SUNDAY : today + 1;
+        boolean isTodaySelected = selectedDays[today - 1] == 1;
+        return isPastAlarmFiringTime && !isTodaySelected ? tomorrow : today;
     }
 }

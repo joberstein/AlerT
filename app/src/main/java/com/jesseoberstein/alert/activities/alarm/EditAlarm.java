@@ -2,7 +2,6 @@ package com.jesseoberstein.alert.activities.alarm;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -23,11 +22,9 @@ import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static com.jesseoberstein.alert.utils.ActivityUtils.getAttrValue;
 import static com.jesseoberstein.alert.utils.ActivityUtils.setIconColor;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
@@ -62,13 +59,13 @@ public class EditAlarm
 
         alarmPagerAdapter = new AlarmPagerAdapter(getSupportFragmentManager());
 
-        ViewPager pager = (ViewPager) findViewById(R.id.alarm_pager);
+        ViewPager pager = (ViewPager) findViewById(R.id.alarm_settings_pager);
         pager.setAdapter(alarmPagerAdapter);
         pager.setCurrentItem(0);
 
-        TabLayout settingsTabs = (TabLayout) findViewById(R.id.alarm_settings);
+        TabLayout settingsTabs = (TabLayout) findViewById(R.id.alarm_settings_tabs);
         settingsTabs.setupWithViewPager(pager, true);
-        styleSettingsTabs(settingsTabs);
+        setTabIcons(settingsTabs);
     }
 
     @Override
@@ -106,25 +103,9 @@ public class EditAlarm
         return draftAlarm;
     }
 
-    private void styleSettingsTabs(TabLayout tabs) {
-        // Set selected tab indicator color.
-        tabs.setBackgroundColor(getAttrValue(this, R.attr.tabsBackgroundColor));
-        tabs.setSelectedTabIndicatorColor(getAttrValue(this, R.attr.tabSelectedIndicatorColor));
-
-        // Set each tab's icon.
-        int numTabs = tabs.getTabCount();
-        int[] icons = new int[numTabs];
-        Arrays.fill(icons, 0);
-        icons[0] = R.drawable.ic_alarm;
-        icons[1] = R.drawable.ic_train;
-
-        IntStream.range(0, numTabs)
-            .filter(i -> icons[i] != 0)
-            .forEach(i -> {
-                Drawable icon = getDrawable(icons[i]);
-                setIconColor(this, icon, R.attr.tabIconColor);
-                tabs.getTabAt(i).setIcon(icon);
-            });
+    private void setTabIcons(TabLayout tabs) {
+        int[] icons = {R.drawable.ic_alarm, R.drawable.ic_train};
+        IntStream.range(0, icons.length).forEach(i -> tabs.getTabAt(i).setIcon(icons[i]));
     }
 
     @Override

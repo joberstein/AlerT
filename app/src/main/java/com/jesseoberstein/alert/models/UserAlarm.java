@@ -6,8 +6,11 @@ import android.databinding.Bindable;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jesseoberstein.alert.BR;
+import com.jesseoberstein.alert.utils.AlarmUtils;
+import com.jesseoberstein.alert.utils.DateTimeUtils;
 
 import java.io.Serializable;
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -81,7 +84,14 @@ public class UserAlarm extends BaseObservable implements Serializable {
 
     private String time;
 
+    private String nextFiringDayString;
+
     public UserAlarm() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.HOUR, 1);
+
+        setTime(calendar.get(HOUR_OF_DAY), calendar.get(MINUTE));
         setRepeatType(RepeatType.NEVER);
         setDuration(30);
     }
@@ -226,6 +236,8 @@ public class UserAlarm extends BaseObservable implements Serializable {
                     setSaturday(isSelected);
             }
         });
+
+        setNextFiringDayString();
     }
 
     public int[] getWeekdays() {
@@ -317,6 +329,27 @@ public class UserAlarm extends BaseObservable implements Serializable {
     }
 
     @Bindable
+    public String getNextFiringDayString() {
+        return this.nextFiringDayString;
+    }
+
+    public void setNextFiringDayString() {
+        String[] weekdayList = DateFormatSymbols.getInstance().getWeekdays();
+
+        long now = DateTimeUtils.getCurrentTimeInMillis();
+        long alarmFiringTime = DateTimeUtils.getTimeInMillis(this.hour, this.minutes);
+        boolean isPastAlarmFiringTime = alarmFiringTime <= now;
+
+        int nextFiringDay = AlarmUtils.getNextFiringDay(this);
+        String nextFiringDayString = weekdayList[nextFiringDay];
+        String firingDayTodayString = isPastAlarmFiringTime ? "Next " + nextFiringDayString : "Today";
+        boolean isNextFiringDayToday = DateTimeUtils.getCurrentDay() == nextFiringDay;
+
+        this.nextFiringDayString = isNextFiringDayToday ? firingDayTodayString : nextFiringDayString;
+        notifyPropertyChanged(BR.nextFiringDayString);
+    }
+
+    @Bindable
     public String getTime() {
         if (this.hour == null || this.minutes == null) {
             return null;
@@ -338,15 +371,12 @@ public class UserAlarm extends BaseObservable implements Serializable {
         setHour(newHour);
         setMinutes(newMinutes);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(HOUR_OF_DAY, hour);
-        calendar.set(MINUTE, minutes);
-
         Date date = new Date();
-        date.setTime(calendar.getTimeInMillis());
+        date.setTime(DateTimeUtils.getTimeInMillis(this.hour, this.minutes));
 
         this.time = new SimpleDateFormat("h:mm a", Locale.ENGLISH).format(date).toLowerCase();
         notifyPropertyChanged(BR.time);
+        setNextFiringDayString();
     }
 
     @Override

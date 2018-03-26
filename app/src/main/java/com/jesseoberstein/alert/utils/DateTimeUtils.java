@@ -5,6 +5,7 @@ import android.content.Context;
 import org.threeten.bp.Duration;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -89,5 +90,38 @@ public class DateTimeUtils {
 
         long duration = Long.parseLong(matcher.group(1));
         return String.format(Locale.US, "%d %s%s", duration, unit, (duration == 1 ? "" : "s"));
+    }
+
+    /**
+     * Gets the current day of a calendar instance.
+     * @return One of the Calendar day constants.
+     */
+    public static int getCurrentDay() {
+        Calendar calendar = getInstance();
+        calendar.setTime(new Date());
+        return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
+    /**
+     * Gets the current time in milliseconds.
+     * @return The current time in milliseconds.
+     */
+    public static long getCurrentTimeInMillis() {
+        Calendar calendar = getInstance();
+        calendar.setTime(new Date());
+        return calendar.getTimeInMillis();
+    }
+
+    /**
+     * Gets the time using the given hour of day and minutes in milliseconds.
+     * @param hour Set as the calendar's {@link Calendar#HOUR_OF_DAY}
+     * @param minutes Set as the calendar's {@link Calendar#MINUTE}
+     */
+    public static long getTimeInMillis(int hour, int minutes) {
+        Calendar calendar = getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minutes);
+        return calendar.getTimeInMillis();
     }
 }

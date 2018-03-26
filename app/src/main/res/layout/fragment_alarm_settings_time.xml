@@ -28,6 +28,23 @@
             android:id="@+id/alarmSettings_duration"
             bind:alarm="@{alarm}"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="@string/next_firing_time"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:paddingTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="@{alarm.nextFiringDayString + ` at ` + alarm.time}"/>
+
     </LinearLayout>
 
 </layout>

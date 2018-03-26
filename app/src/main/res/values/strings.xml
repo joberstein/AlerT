@@ -29,9 +29,10 @@
     <string name="repeat_dialog_title">Set Repeat Type</string>
     <string name="repeat_custom_dialog_title">Select Custom Repeat</string>
 
-
     <string name="duration">Duration</string>
     <string name="duration_dialog_title">Receive notifications for:</string>
+
+    <string name="next_firing_time">Next firing time:</string>
 
     <string name="station">Station</string>
     <string name="directions">Directions</string>
