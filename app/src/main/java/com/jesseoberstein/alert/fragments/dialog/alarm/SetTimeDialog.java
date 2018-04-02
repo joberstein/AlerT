@@ -35,7 +35,7 @@ public class SetTimeDialog extends AlarmModifierDialog {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlarmTimeBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_time, null, false);
+        AlarmTimeBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_time, null, false);
         binding.setAlarm(getDraftAlarm());
 
         View timePickerDialog = binding.getRoot();
@@ -52,7 +52,7 @@ public class SetTimeDialog extends AlarmModifierDialog {
         this.alarmTimeSetter.onAlarmTimeSet(timePicker.getHour(), timePicker.getMinute());
     }
 
-    @BindingAdapter({"bind:hour", "bind:minutes", "bind:is24HourMode"})
+    @BindingAdapter({"hour", "minutes", "is24HourMode"})
     public static void setTime(TimePicker timePicker, Integer hour, Integer minutes, boolean is24HourMode) {
         timePicker.setHour(hour);
         timePicker.setMinute(minutes);

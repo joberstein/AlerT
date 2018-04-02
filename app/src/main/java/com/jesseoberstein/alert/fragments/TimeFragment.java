@@ -27,7 +27,7 @@ public class TimeFragment extends AlarmSettingsFragment implements OnAlarmSubmit
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_alarm_time, container, false);
+        View view = inflater.inflate(R.layout.fragment_alarm_dialog_time, container, false);
         alarm = ((EditAlarm) getActivity()).getAlarm();
 
         TextView stepText = (TextView) view.findViewById(R.id.stepText);

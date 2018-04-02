@@ -25,7 +25,7 @@ public class SetNicknameDialog extends AlarmModifierDialog {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        AlarmNicknameBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_nickname, null, false);
+        AlarmNicknameBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_nickname, null, false);
         binding.setAlarm(getDraftAlarm());
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
@@ -46,7 +46,7 @@ public class SetNicknameDialog extends AlarmModifierDialog {
         return true;
     }
 
-    @BindingAdapter("app:isCursorAtEnd")
+    @BindingAdapter("isCursorAtEnd")
     public static void setEditTextCursor(EditText editText, boolean isCursorAtEnd) {
         if (isCursorAtEnd) {
             editText.setSelection(editText.getText().length());

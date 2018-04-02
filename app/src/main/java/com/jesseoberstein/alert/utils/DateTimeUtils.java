@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.threeten.bp.Duration;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -123,5 +124,11 @@ public class DateTimeUtils {
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minutes);
         return calendar.getTimeInMillis();
+    }
+
+    public static String getFormattedTime(int hour, int minutes) {
+        Date date = new Date();
+        date.setTime(DateTimeUtils.getTimeInMillis(hour, minutes));
+        return new SimpleDateFormat("h:mm a", Locale.ENGLISH).format(date).toLowerCase();
     }
 }

@@ -66,10 +66,22 @@
         <item name="colorAccent">@color/blue_line</item>
     </style>
 
+    <style name="AlarmSettingsDark.Boat">
+        <item name="colorPrimary">@color/ferry</item>
+        <item name="tabSelectedIndicatorColor">@color/ferry</item>
+        <item name="colorAccent">@color/ferry</item>
+    </style>
+
     <style name="AlarmSettingsLight.Bus">
         <item name="colorPrimary">@color/bus</item>
         <item name="tabSelectedIndicatorColor">@color/bus</item>
         <item name="colorAccent">@color/bus</item>
+    </style>
+
+    <style name="AlarmSettingsDark.Commuter">
+        <item name="colorPrimary">@color/commuter</item>
+        <item name="tabSelectedIndicatorColor">@color/commuter</item>
+        <item name="colorAccent">@color/commuter</item>
     </style>
 
     <style name="AlarmSettingsDark.Default">

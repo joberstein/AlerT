@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.jesseoberstein.alert.models.RepeatType.values;
+import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
 /**
  * A dialog fragment that shows a dialog for setting the alarm duration.
@@ -55,6 +56,6 @@ public class SetDurationDialog extends AlarmModifierDialog {
 
     private void onItemSelected(DialogInterface dialogInterface, int selectedIndex) {
         this.alarmDurationSetter.onAlarmDurationSet(this.durationList[selectedIndex]);
-        new android.os.Handler().postDelayed(dialogInterface::dismiss,500);
+        new android.os.Handler().postDelayed(dialogInterface::dismiss, DELAY_DIALOG_DISMISS);
     }
 }

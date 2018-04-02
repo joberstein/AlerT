@@ -10,7 +10,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.models.UserRoute;
+import com.jesseoberstein.mbta.model.RouteType;
 
 import java.util.List;
 import java.util.Map;
@@ -125,5 +127,55 @@ public class AlertUtils {
         return Optional.ofNullable(intent)
                 .map(i -> Optional.ofNullable(i.getExtras().get(key)))
                 .orElse(Optional.empty());
+    }
+
+    /**
+     * Given a route, get it's theme based on the route type and then route id if necessary.
+     * @param route A UserRoute to get the theme for.
+     * @return The theme for the given route. Defaults to a dark gray theme.
+     */
+    public static int getTheme(UserRoute route) {
+        String routeId = Optional.ofNullable(route).map(UserRoute::getRouteId).orElse("");
+
+        if (routeId.matches("Green-\\w{1}")) {
+            return R.style.AlarmSettingsDark_Green;
+        } else if (routeId.matches("SL\\d{1}")) {
+            return R.style.AlarmSettingsDark_Silver;
+        }
+
+        switch (routeId) {
+            case "Blue":
+                return R.style.AlarmSettingsDark_Blue;
+            case "Orange":
+                return R.style.AlarmSettingsDark_Orange;
+            case "Red":
+            case "Mattapan":
+                return R.style.AlarmSettingsDark_Red;
+            default:
+                return getThemeByRouteType(route);
+        }
+    }
+
+    /**
+     * Given a route id, get the theme by route type.
+     * @param route A UserRoute to get the theme for.
+     * @return The theme for the given route id. Defaults to a dark gray theme.
+     */
+    private static int getThemeByRouteType(UserRoute route) {
+        int defaultTheme = R.style.AlarmSettingsDark_Default;
+        if (route == null) {
+            return defaultTheme;
+        }
+
+        switch (route.getRouteType()) {
+            case BOAT:
+                return R.style.AlarmSettingsDark_Boat;
+            case BUS:
+                return R.style.AlarmSettingsLight_Bus;
+            case COMMUTER_RAIL:
+                return R.style.AlarmSettingsDark_Commuter;
+            default:
+                return defaultTheme;
+        }
     }
 }

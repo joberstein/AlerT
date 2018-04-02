@@ -62,4 +62,13 @@ public class DateTimeUtilsTest {
             assertEquals(entry.getValue(), parseDurationUnit(Duration.ofMinutes(entry.getKey()).toString(), MINUTE));
         });
     }
+
+    @Test
+    public void testGetFormattedTime() {
+        assertEquals("12:00 am", DateTimeUtils.getFormattedTime(0, 0));
+        assertEquals("7:09 am", DateTimeUtils.getFormattedTime(7, 9));
+        assertEquals("1:30 pm", DateTimeUtils.getFormattedTime(13, 30));
+        assertEquals("7:00 pm", DateTimeUtils.getFormattedTime(18, 60));
+        assertEquals("11:59 pm", DateTimeUtils.getFormattedTime(23, 59));
+    }
 }

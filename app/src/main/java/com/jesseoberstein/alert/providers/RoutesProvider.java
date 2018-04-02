@@ -27,7 +27,7 @@ public class RoutesProvider {
     }
 
     /**
-     * Initialize the MbtaDataProvider if it doesn't already exist.
+     * Initialize the RoutesProvider if it doesn't already exist.
      * @param assetManager The android's context asset manager.
      * @return RoutesProvider
      */

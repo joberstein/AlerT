@@ -13,6 +13,7 @@ import com.jesseoberstein.alert.interfaces.AlarmRepeatSetter;
 
 import static com.jesseoberstein.alert.models.RepeatType.getRepeatTypes;
 import static com.jesseoberstein.alert.models.RepeatType.values;
+import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
 /**
  * A dialog fragment that shows a dialog for setting the alarm repeat type.
@@ -44,6 +45,6 @@ public class SetRepeatTypeDialog extends AlarmModifierDialog {
 
     private void onItemSelected(DialogInterface dialogInterface, int selectedIndex) {
         this.alarmRepeatSetter.onAlarmRepeatSet(values()[selectedIndex]);
-        new android.os.Handler().postDelayed(dialogInterface::dismiss,500);
+        new android.os.Handler().postDelayed(dialogInterface::dismiss, DELAY_DIALOG_DISMISS);
     }
 }

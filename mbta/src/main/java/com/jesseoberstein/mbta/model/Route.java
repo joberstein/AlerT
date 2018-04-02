@@ -98,17 +98,6 @@ public class Route extends BaseResource implements MbtaDataType {
 
     @Override
     public String toString() {
-        return "\n" +
-                "Route {" +
-                super.toString() +
-                ", routeType=" + routeType.name() +
-                ", sortOrder=" + sortOrder +
-                ", shortName='" + shortName + '\'' +
-                ", longName='" + longName + '\'' +
-                ", directionNames=" + directionNames +
-                ", description='" + description + '\'' +
-                ", color='" + color + '\'' +
-                ", textColor='" + textColor + '\'' +
-                '}';
+        return this.longName.isEmpty() ? this.shortName : this.longName;
     }
 }

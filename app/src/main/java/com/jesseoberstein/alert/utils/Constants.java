@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constants {
-    public static final String MBTA_DATA_DATE = "2018-01-23";
+    public static final String MBTA_DATA_DATE = "2018-03-29";
 
     static final List<UserRoute> USER_ROUTES = Arrays.asList(
 //            new UserRoute(BLUE.toString(), R.color.blue_line, R.drawable.circle_blue, R.style.BlueLine),
@@ -25,6 +25,8 @@ public class Constants {
     public static final String COLOR = "color";
     public static final String ICON = "icon";
     public static final String ROUTE = "route";
+    public static final String CURRENT_TAB = "currentTab";
+    public static final int DELAY_DIALOG_DISMISS = 500;
 
     public static final String ALARM = "alarm";
     public static final String DRAFT_ALARM = "draftAlarm";

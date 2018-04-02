@@ -28,7 +28,7 @@ public class FetchMbtaData {
         return routes.stream()
                 .map(route -> {
                     List<Stop> stopsForRoute = fetchStopsByRoute(route.getId());
-                    stopsForRoute.forEach(stop -> stop.setRouteId(route.getId()));
+                    stopsForRoute.forEach(stop -> stop.addRouteId(route.getId()));
                     return stopsForRoute;
                 })
                 .flatMap(Collection::stream)

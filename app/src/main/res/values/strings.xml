@@ -34,6 +34,11 @@
 
     <string name="next_firing_time">Next firing time:</string>
 
+    <string name="route">Route</string>
+    <string name="route_default">Select a route…</string>
+    <string name="route_dialog_title">Route Selection</string>
+    <string name="route_dialog_default">Type a route…</string>
+
     <string name="station">Station</string>
     <string name="directions">Directions</string>
     <string name="lines">Lines</string>

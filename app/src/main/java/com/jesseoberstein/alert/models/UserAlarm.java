@@ -11,11 +11,9 @@ import com.jesseoberstein.alert.utils.DateTimeUtils;
 
 import java.io.Serializable;
 import java.text.DateFormatSymbols;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.stream.IntStream;
 
 import static java.util.Calendar.FRIDAY;
@@ -119,12 +117,14 @@ public class UserAlarm extends BaseObservable implements Serializable {
         notifyPropertyChanged(BR.id);
     }
 
+    @Bindable
     public UserRoute getRoute() {
         return route;
     }
 
     public void setRoute(UserRoute route) {
         this.route = route;
+        notifyPropertyChanged(BR.route);
     }
 
     @Bindable
@@ -370,12 +370,9 @@ public class UserAlarm extends BaseObservable implements Serializable {
 
         setHour(newHour);
         setMinutes(newMinutes);
-
-        Date date = new Date();
-        date.setTime(DateTimeUtils.getTimeInMillis(this.hour, this.minutes));
-
-        this.time = new SimpleDateFormat("h:mm a", Locale.ENGLISH).format(date).toLowerCase();
+        this.time = DateTimeUtils.getFormattedTime(this.hour, this.minutes);
         notifyPropertyChanged(BR.time);
+
         setNextFiringDayString();
     }
 

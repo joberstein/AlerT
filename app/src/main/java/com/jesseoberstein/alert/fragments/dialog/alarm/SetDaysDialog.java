@@ -62,7 +62,6 @@ public class SetDaysDialog extends AlarmModifierDialog {
     }
 
     private void onPositiveButtonClick(DialogInterface dialogInterface, int i) {
-        Log.v("Days to set", Arrays.toString(this.selectedDays));
         this.alarmDaySetter.onAlarmDaysSet(this.selectedDays);
     }
 

@@ -1,7 +1,13 @@
 package com.jesseoberstein.alert.models;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.jesseoberstein.alert.BR;
+import com.jesseoberstein.mbta.model.Route;
+import com.jesseoberstein.mbta.model.RouteType;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -12,13 +18,16 @@ import static com.jesseoberstein.alert.utils.Constants.ICON;
 import static com.jesseoberstein.alert.utils.Constants.THEME;
 
 @DatabaseTable(tableName = "user_routes")
-public class UserRoute implements Serializable {
+public class UserRoute extends BaseObservable implements Serializable {
 
     @DatabaseField(columnName = "route_id", id = true)
     private String routeId;
 
     @DatabaseField(columnName = "route_name")
     private String routeName;
+
+    @DatabaseField(columnName = "route_type")
+    private RouteType routeType;
 
     @DatabaseField
     private String alerts;
@@ -33,6 +42,12 @@ public class UserRoute implements Serializable {
         this.routeName = routeName;
         this.alerts = "";
         setRouteResources();
+    }
+
+    public UserRoute(Route route) {
+        this.routeId = route.getId();
+        this.routeName = route.toString();
+        this.routeType = route.getRouteType();
     }
 
     /**
@@ -54,12 +69,22 @@ public class UserRoute implements Serializable {
         this.routeId = routeId;
     }
 
+    @Bindable
     public String getRouteName() {
         return routeName;
     }
 
     public void setRouteName(String routeName) {
         this.routeName = routeName;
+        notifyPropertyChanged(BR.routeName);
+    }
+
+    public RouteType getRouteType() {
+        return routeType;
+    }
+
+    public void setRouteType(RouteType routeType) {
+        this.routeType = routeType;
     }
 
     public void setRouteResources() {

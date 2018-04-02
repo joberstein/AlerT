@@ -16,10 +16,13 @@ import com.jesseoberstein.alert.fragments.dialog.alarm.SetDaysDialog;
 import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
 import com.jesseoberstein.alert.interfaces.AlarmDurationSetter;
 import com.jesseoberstein.alert.interfaces.AlarmRepeatSetter;
+import com.jesseoberstein.alert.interfaces.AlarmRouteSetter;
 import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.UserRoute;
+import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -27,28 +30,36 @@ import java.util.stream.IntStream;
 
 import static com.jesseoberstein.alert.utils.ActivityUtils.setIconColor;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
+import static com.jesseoberstein.alert.utils.Constants.CURRENT_TAB;
 import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
 
 public class EditAlarm
         extends AppCompatActivity
-        implements OnDialogClick, AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter, AlarmDurationSetter {
+        implements OnDialogClick, AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter,
+                   AlarmDurationSetter, AlarmRouteSetter {
 
     public static final int REQUEST_CODE = 3;
+    private ViewPager pager;
     private AlarmPagerAdapter alarmPagerAdapter;
     private ArrayList<String> endpoints;
     private UserAlarm alarm = new UserAlarm(); // TODO for testing only
-    private UserAlarm draftAlarm = new UserAlarm(alarm);
+    private UserAlarm draftAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // If the activity has been restarted (e.g. to apply a new theme), restore the current
+        // instance of the draft alarm if it exists.  Otherwise, clone the existing alarm.
+        UserAlarm currentDraftAlarm = (UserAlarm) getIntent().getSerializableExtra(DRAFT_ALARM);
+        this.draftAlarm = Optional.ofNullable(currentDraftAlarm).orElse(new UserAlarm(alarm));
 
         if (savedInstanceState != null) {
             this.alarm = (UserAlarm) savedInstanceState.getSerializable(ALARM);
             this.draftAlarm = (UserAlarm) savedInstanceState.getSerializable(DRAFT_ALARM);
         }
 
-        setTheme(R.style.AlarmSettingsDark_Orange);
+        setTheme(AlertUtils.getTheme(this.draftAlarm.getRoute()));
         setContentView(R.layout.activities_edit_alarm_new);
 
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
@@ -59,9 +70,9 @@ public class EditAlarm
 
         alarmPagerAdapter = new AlarmPagerAdapter(getSupportFragmentManager());
 
-        ViewPager pager = (ViewPager) findViewById(R.id.alarm_settings_pager);
+        pager = (ViewPager) findViewById(R.id.alarm_settings_pager);
         pager.setAdapter(alarmPagerAdapter);
-        pager.setCurrentItem(0);
+        pager.setCurrentItem(getIntent().getIntExtra(CURRENT_TAB, 0));
 
         TabLayout settingsTabs = (TabLayout) findViewById(R.id.alarm_settings_tabs);
         settingsTabs.setupWithViewPager(pager, true);
@@ -105,7 +116,12 @@ public class EditAlarm
 
     private void setTabIcons(TabLayout tabs) {
         int[] icons = {R.drawable.ic_alarm, R.drawable.ic_train};
-        IntStream.range(0, icons.length).forEach(i -> tabs.getTabAt(i).setIcon(icons[i]));
+        IntStream.range(0, icons.length).forEach(i ->
+            Optional.ofNullable(tabs.getTabAt(i)).ifPresent(tab -> {
+                tab.setIcon(icons[i]);
+                tab.setContentDescription("tab " + Integer.toString(icons[i]));
+            })
+        );
     }
 
     @Override
@@ -143,5 +159,16 @@ public class EditAlarm
     @Override
     public void onAlarmDurationSet(long duration) {
         this.draftAlarm.setDuration(duration);
+    }
+
+    @Override
+    public void onAlarmRouteSet(UserRoute route) {
+        this.draftAlarm.setRoute(route);
+        // Once the route is set, restart the activity to apply the selected route'
+        Intent intent = getIntent();
+        intent.putExtra(DRAFT_ALARM, this.draftAlarm);
+        intent.putExtra(CURRENT_TAB, pager.getCurrentItem());
+        startActivity(intent);
+        finish();
     }
 }

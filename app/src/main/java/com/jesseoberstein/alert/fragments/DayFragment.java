@@ -63,7 +63,7 @@ public class DayFragment extends AlarmSettingsFragment implements OnAlarmSubmit 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_alarm_day, container, false);
+        View view = inflater.inflate(R.layout.fragment_alarm_dialog_day, container, false);
         alarm = ((EditAlarm) getActivity()).getAlarm();
 
         TextView stepText = (TextView) view.findViewById(R.id.stepText);

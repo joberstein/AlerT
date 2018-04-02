@@ -28,7 +28,7 @@ public class TimeSettingsFragment extends AlarmSettingsFragment implements OnAla
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         UserAlarm newAlarm = ((EditAlarm) getActivity()).getDraftAlarm();
 
-        TimeSettingsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_settings_time, container, false);
+        TimeSettingsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_settings_tab_time, container, false);
         binding.setAlarm(newAlarm);
 
         View view = binding.getRoot();

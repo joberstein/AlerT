@@ -45,7 +45,7 @@ public class StopsProvider {
         try {
             InputStream inputStream = assetManager.open( MBTA_DATA_DATE +"/stops.json");
             stops = ResponseParser.parseJSONApi(inputStream, Stop.class).stream()
-                    .filter(stop -> stop.getRouteId().equals(routeId))
+                    .filter(stop -> stop.getRouteIds().contains(routeId))
                     .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();

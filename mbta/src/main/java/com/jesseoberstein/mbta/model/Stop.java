@@ -3,14 +3,16 @@ package com.jesseoberstein.mbta.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Type;
 
+import java.util.HashSet;
+
 @Type("stop")
 public class Stop extends BaseResource implements MbtaDataType {
 
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("route_id")
-    private String routeId;
+    @JsonProperty("route_ids")
+    private HashSet<String> routeIds;
 
     @JsonProperty("wheelchair_boarding")
     private int wheelchairBoarding;
@@ -20,6 +22,10 @@ public class Stop extends BaseResource implements MbtaDataType {
 
     @JsonProperty("latitude")
     private double latitude;
+
+    Stop() {
+        this.routeIds = new HashSet<>();
+    }
 
     public String getName() {
         return name;
@@ -53,24 +59,16 @@ public class Stop extends BaseResource implements MbtaDataType {
         this.latitude = latitude;
     }
 
-    public String getRouteId() {
-        return routeId;
+    public HashSet<String> getRouteIds() {
+        return routeIds;
     }
 
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
+    public void addRouteId(String routeId) {
+        this.routeIds.add(routeId);
     }
 
     @Override
     public String toString() {
-        return "\n" +
-                "Stop {" +
-                super.toString() +
-                ", name='" + name + '\'' +
-                ", routeId=" + routeId +
-                ", wheelchairBoarding=" + wheelchairBoarding +
-                ", longitude=" + longitude +
-                ", latitude=" + latitude +
-                "}";
+        return this.name;
     }
 }
