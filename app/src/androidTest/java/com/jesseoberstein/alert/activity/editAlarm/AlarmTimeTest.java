@@ -40,7 +40,7 @@ public class AlarmTimeTest extends BaseEditAlarmTest {
         onView(withId(R.id.alarm_time_picker)).perform(TestUtils.setTime(14, 7));
 
         // Save new time.
-        onView(withText("Ok")).perform(click());
+        onView(withText(R.string.ok)).perform(click());
 
         // Check new alarm time is saved.
         onView(withId(R.id.alarmSettings_section_value_time))

@@ -97,7 +97,7 @@ public class MbtaRealtimeUpdatesService extends IntentService {
     }
 
     private String createNotificationMessage(List<String> arrivalTimes) {
-        String stopName = stopsProvider.getStopById(this.stopId).getName();
+        String stopName = "";
         List<Endpoint> endpoints = endpointsProvider.getEndpointsForDirection(this.directionId);
         List<String> endpointNames = endpointsProvider.getEndpointNames(endpoints);
         String stopAndEndpoint = endpoints.isEmpty() ? "" : String.format("%s \u2022 %s", stopName, endpointNames.get(0));
@@ -142,7 +142,7 @@ public class MbtaRealtimeUpdatesService extends IntentService {
 
     private void initializeIntentProperties(Intent intent) {
         this.routeId = (String) getObjectFromIntent(intent, ROUTE).orElse("");
-        this.stopsProvider = new StopsProvider(getAssets(), this.routeId);
+        this.stopsProvider = StopsProvider.init(getAssets());
         this.endpointsProvider = new EndpointsProvider(getAssets(), this.routeId);
         this.alarmId = (int) getObjectFromIntent(intent, ALARM_ID).orElse(-1);
         this.alarmNickname = (String) getObjectFromIntent(intent, NICKNAME).orElse("Your Alarm");

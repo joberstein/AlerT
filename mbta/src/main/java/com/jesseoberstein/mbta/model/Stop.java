@@ -11,9 +11,6 @@ public class Stop extends BaseResource implements MbtaDataType {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("route_ids")
-    private HashSet<String> routeIds;
-
     @JsonProperty("wheelchair_boarding")
     private int wheelchairBoarding;
 
@@ -22,10 +19,6 @@ public class Stop extends BaseResource implements MbtaDataType {
 
     @JsonProperty("latitude")
     private double latitude;
-
-    Stop() {
-        this.routeIds = new HashSet<>();
-    }
 
     public String getName() {
         return name;
@@ -57,14 +50,6 @@ public class Stop extends BaseResource implements MbtaDataType {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
-    }
-
-    public HashSet<String> getRouteIds() {
-        return routeIds;
-    }
-
-    public void addRouteId(String routeId) {
-        this.routeIds.add(routeId);
     }
 
     @Override

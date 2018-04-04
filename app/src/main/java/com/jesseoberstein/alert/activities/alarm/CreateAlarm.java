@@ -65,7 +65,7 @@ public class CreateAlarm extends AppCompatActivity {
         receivedBundle = getIntent().getExtras();
         themeColor = receivedBundle.getInt(COLOR);
         String selectedRoute = receivedBundle.getString(ROUTE);
-        stopsProvider = new StopsProvider(getAssets(), selectedRoute);
+        stopsProvider = StopsProvider.init(getAssets());
         endpointsProvider = new EndpointsProvider(getAssets(), selectedRoute);
 
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
@@ -118,7 +118,7 @@ public class CreateAlarm extends AppCompatActivity {
      */
     private void setUpAutoComplete(Button submit) {
         String error = "Not a valid station.";
-        String[] stations = stopsProvider.getStopNames().toArray(new String[]{});
+        String[] stations = new String[]{};
         Predicate<String> isValidStation = isValidStation(stations);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, stations);
         CreateAlarmTextValidator createAlarmTextValidator = new CreateAlarmTextValidator(this, isValidStation, error, submit, STATION_KEY);

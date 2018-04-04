@@ -3,37 +3,31 @@ package com.jesseoberstein.mbta;
 import com.github.jasminb.jsonapi.exceptions.DocumentSerializationException;
 import com.jesseoberstein.mbta.model.Endpoint;
 import com.jesseoberstein.mbta.model.Route;
-import com.jesseoberstein.mbta.model.Stop;
 import com.jesseoberstein.mbta.utils.ResponseParser;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.jesseoberstein.mbta.api.MbtaApi.fetchRoutes;
 import static com.jesseoberstein.mbta.api.MbtaApi.fetchStopsByRoute;
 import static com.jesseoberstein.mbta.api.MbtaApi.fetchTripsByRoute;
+import static com.jesseoberstein.mbta.utils.ResponseParser.*;
 
 public class FetchMbtaData {
 
     public static void main(String[] args) throws DocumentSerializationException {
         List<Route> routes = fetchRoutes();
 
-        ResponseParser.writeJSONApi(routes, "routes");
-        ResponseParser.writeJSONApi(getStops(routes), "stops");
-        ResponseParser.write(getEndpoints(routes), "endpoints");
+        writeJSONApiToFile(routes, "routes");
+        writeToFile(getStops(routes), "stops");
+        writeToFile(getEndpoints(routes), "endpoints");
     }
 
-    private static List<Stop> getStops(List<Route> routes) {
-        return routes.stream()
-                .map(route -> {
-                    List<Stop> stopsForRoute = fetchStopsByRoute(route.getId());
-                    stopsForRoute.forEach(stop -> stop.addRouteId(route.getId()));
-                    return stopsForRoute;
-                })
-                .flatMap(Collection::stream)
-                .distinct()
-                .collect(Collectors.toList());
+    private static Map<String, byte[]> getStops(List<Route> routes) {
+        return routes.stream().collect(Collectors.toMap(
+                route -> route.getId(),
+                route -> ResponseParser.writeJSONApiToBytes(fetchStopsByRoute(route.getId()))));
     }
 
     private static List<Endpoint> getEndpoints(List<Route> routes) {

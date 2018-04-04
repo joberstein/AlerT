@@ -11,6 +11,7 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserEndpoint;
 import com.jesseoberstein.alert.models.UserRoute;
+import com.jesseoberstein.alert.models.UserStop;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -18,9 +19,9 @@ import java.util.List;
 
 abstract class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "alert";
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 15;
     private static List<Class<?>> DAO_CLASSES = Arrays.asList(
-            UserRoute.class, UserAlarm.class, UserEndpoint.class
+            UserRoute.class, UserStop.class, UserAlarm.class, UserEndpoint.class
     );
 
     DatabaseHelper(Context context) {

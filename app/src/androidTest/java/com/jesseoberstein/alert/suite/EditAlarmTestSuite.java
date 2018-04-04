@@ -4,6 +4,7 @@ import com.jesseoberstein.alert.activity.editAlarm.AlarmDurationTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmNameTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmRepeatTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmRouteTest;
+import com.jesseoberstein.alert.activity.editAlarm.AlarmStopTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmTimeTest;
 
 import org.junit.runner.RunWith;
@@ -15,6 +16,7 @@ import org.junit.runners.Suite;
     AlarmNameTest.class,
     AlarmDurationTest.class,
     AlarmRepeatTest.class,
-    AlarmRouteTest.class
+    AlarmRouteTest.class,
+    AlarmStopTest.class
 })
 public class EditAlarmTestSuite {}

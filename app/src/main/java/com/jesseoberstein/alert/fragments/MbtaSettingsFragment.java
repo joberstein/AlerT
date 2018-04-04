@@ -12,6 +12,7 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.databinding.MbtaSettingsBinding;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetRouteDialog;
+import com.jesseoberstein.alert.fragments.dialog.alarm.SetStopDialog;
 import com.jesseoberstein.alert.interfaces.OnAlarmSubmit;
 import com.jesseoberstein.alert.models.UserAlarm;
 
@@ -30,6 +31,7 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment implements OnAla
 
         View view = binding.getRoot();
         view.findViewById(R.id.alarmSettings_route).setOnClickListener(this::showRouteDialog);
+        view.findViewById(R.id.alarmSettings_stop).setOnClickListener(this::showStopDialog);
 
         return view;
     }
@@ -39,6 +41,10 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment implements OnAla
 
     private void showRouteDialog(View view) {
         this.showDialogFragment(new SetRouteDialog(), "setRoute");
+    }
+
+    private void showStopDialog(View view) {
+        this.showDialogFragment(new SetStopDialog(), "setStop");
     }
 
     private void showDialogFragment(DialogFragment dialog, String tagName) {

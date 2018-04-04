@@ -4,6 +4,7 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data class="MbtaSettingsBinding">
+        <import type="android.view.View"/>
         <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
     </data>
 
@@ -14,6 +15,11 @@
 
         <include layout="@layout/fragment_alarm_settings_section_route"
             android:id="@+id/alarmSettings_route"
+            bind:alarm="@{alarm}"/>
+
+        <include layout="@layout/fragment_alarm_settings_section_stop"
+            android:id="@+id/alarmSettings_stop"
+            android:visibility="@{alarm.route == null ? View.GONE : View.VISIBLE}"
             bind:alarm="@{alarm}"/>
 
     </LinearLayout>

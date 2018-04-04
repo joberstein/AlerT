@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="AlarmStopBinding">
+        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="autocomplete" type="com.jesseoberstein.alert.models.AutoComplete"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/alarm_stop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textNoSuggestions|textCapWords"
+            android:completionThreshold="1"
+            android:imeOptions="actionDone"
+            android:hint="@string/route_dialog_default"
+            android:text="@{alarm.station}"
+            app:adapter="@{autocomplete.adapter}"
+            app:validator="@{autocomplete.validator}"
+            app:onItemClick="@{autocomplete.itemClickListener}"
+            app:isCursorAtEnd="@{true}" />
+
+    </LinearLayout>
+
+</layout>

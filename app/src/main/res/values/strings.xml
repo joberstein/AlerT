@@ -39,6 +39,11 @@
     <string name="route_dialog_title">Route Selection</string>
     <string name="route_dialog_default">Type a route…</string>
 
+    <string name="stop">Stop</string>
+    <string name="stop_default">Select a stop…</string>
+    <string name="stop_dialog_title">Stop Selection</string>
+    <string name="stop_dialog_default">Type a stop…</string>
+
     <string name="station">Station</string>
     <string name="directions">Directions</string>
     <string name="lines">Lines</string>
@@ -61,7 +66,7 @@
     <string name="update_alarm_dialog">Update this alarm?</string>
     <string name="remove_alarm_dialog">Remove "%1$s" from your alarms?</string>
 
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="add">Add</string>
     <string name="update">Update</string>
     <string name="remove">Remove</string>

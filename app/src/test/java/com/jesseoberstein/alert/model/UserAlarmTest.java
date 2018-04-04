@@ -2,6 +2,9 @@ package com.jesseoberstein.alert.model;
 
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.UserRoute;
+import com.jesseoberstein.alert.models.UserStop;
+import com.jesseoberstein.mbta.model.RouteType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +12,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 public class UserAlarmTest {
     private UserAlarm testAlarm;
@@ -105,6 +109,25 @@ public class UserAlarmTest {
 
         testAlarm.setTime(23, 4);
         assertEquals("11:04 pm", testAlarm.getTime());
+    }
+
+    @Test
+    public void verifyStopIsResetWhenRouteChanged() {
+        UserRoute testRoute = new UserRoute();
+        testRoute.setRouteId("Orange");
+        testRoute.setRouteName("Orange Line");
+        testRoute.setRouteType(RouteType.SUBWAY);
+
+        UserStop testStop = new UserStop();
+        testStop.setStopId("place-forhl");
+        testStop.setStopName("Forest Hills");
+
+        testAlarm.setRoute(testRoute);
+        testAlarm.setStop(testStop);
+        assertEquals(testStop, testAlarm.getStop());
+
+        testAlarm.setRoute(new UserRoute());
+        assertNull(testAlarm.getStop());
     }
 
     private void verifyAlarmWeekdays(int[] expected) {

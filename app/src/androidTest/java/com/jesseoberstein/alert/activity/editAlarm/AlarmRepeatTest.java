@@ -34,7 +34,7 @@ public class AlarmRepeatTest extends BaseEditAlarmTest {
         onView(withText("Monday")).perform(click()).check(matches(isChecked()));
 
         // Save day selection.
-        onView(withText("Ok")).perform(click());
+        onView(withText(R.string.ok)).perform(click());
 
         // Confirm that alarm repeat has been saved.
         onView(withId(R.id.alarmSettings_section_value_repeat))

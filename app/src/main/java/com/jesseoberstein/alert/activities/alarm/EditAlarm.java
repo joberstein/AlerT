@@ -17,11 +17,13 @@ import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
 import com.jesseoberstein.alert.interfaces.AlarmDurationSetter;
 import com.jesseoberstein.alert.interfaces.AlarmRepeatSetter;
 import com.jesseoberstein.alert.interfaces.AlarmRouteSetter;
+import com.jesseoberstein.alert.interfaces.AlarmStopSetter;
 import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserRoute;
+import com.jesseoberstein.alert.models.UserStop;
 import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
 public class EditAlarm
         extends AppCompatActivity
         implements OnDialogClick, AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter,
-                   AlarmDurationSetter, AlarmRouteSetter {
+                   AlarmDurationSetter, AlarmRouteSetter, AlarmStopSetter {
 
     public static final int REQUEST_CODE = 3;
     private ViewPager pager;
@@ -170,5 +172,10 @@ public class EditAlarm
         intent.putExtra(CURRENT_TAB, pager.getCurrentItem());
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onAlarmStopSet(UserStop stop) {
+        this.draftAlarm.setStop(stop);
     }
 }

@@ -3,20 +3,13 @@ package com.jesseoberstein.alert.utils;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.models.UserRoute;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Constants {
-    public static final String MBTA_DATA_DATE = "2018-03-29";
+    public static final String MBTA_DATA_DATE = "2018-04-04";
 
-    static final List<UserRoute> USER_ROUTES = Arrays.asList(
-//            new UserRoute(BLUE.toString(), R.color.blue_line, R.drawable.circle_blue, R.style.BlueLine),
-//            new UserRoute(GREEN.toString(), R.color.green_line, R.drawable.circle_green, R.style.GreenLine),
-//            new UserRoute(ORANGE.toString(), R.color.orange_line, R.drawable.circle_orange, R.style.OrangeLine),
-//            new UserRoute(RED.toString(), R.color.red_line, R.drawable.circle_red, R.style.RedLine),
-//            new UserRoute(MATTAPAN.toString(), R.color.red_line, R.drawable.circle_red, R.style.RedLine),
-//            new UserRoute(SILVER.toString(), R.color.silver_line, R.drawable.circle_silver, R.style.SilverLine)
-    );
+    static final List<UserRoute> USER_ROUTES = Collections.EMPTY_LIST;
 
     static final UserRoute DEFAULT_ROUTE =
             new UserRoute("", R.color.default_route, R.drawable.circle_black, R.style.DefaultRoute);

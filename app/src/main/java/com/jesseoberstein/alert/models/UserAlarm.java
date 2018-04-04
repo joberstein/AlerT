@@ -41,7 +41,10 @@ public class UserAlarm extends BaseObservable implements Serializable {
     @DatabaseField
     private String direction;
 
-    @DatabaseField
+    @DatabaseField(foreign = true)
+    private UserStop stop;
+
+    @Deprecated
     private String station;
 
     @DatabaseField
@@ -125,6 +128,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
     public void setRoute(UserRoute route) {
         this.route = route;
         notifyPropertyChanged(BR.route);
+        setStop(null);
     }
 
     @Bindable
@@ -145,12 +149,24 @@ public class UserAlarm extends BaseObservable implements Serializable {
         this.direction = direction;
     }
 
+    @Deprecated
     public String getStation() {
         return station;
     }
 
+    @Deprecated
     public void setStation(String station) {
         this.station = station;
+    }
+
+    @Bindable
+    public UserStop getStop() {
+        return stop;
+    }
+
+    public void setStop(UserStop stop) {
+        this.stop = stop;
+        notifyPropertyChanged(BR.stop);
     }
 
     public Integer getHour() {
@@ -417,6 +433,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
         if (duration != userAlarm.duration) return false;
         if (active != userAlarm.active) return false;
         if (route != null ? !route.equals(userAlarm.route) : userAlarm.route != null) return false;
+        if (stop != null ? !stop.equals(userAlarm.stop) : userAlarm.stop != null) return false;
         if (nickname != null ? !nickname.equals(userAlarm.nickname) : userAlarm.nickname != null)
             return false;
         if (direction != null ? !direction.equals(userAlarm.direction) : userAlarm.direction != null)
@@ -434,6 +451,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
     public int hashCode() {
         int result = id;
         result = 31 * result + (route != null ? route.hashCode() : 0);
+        result = 31 * result + (stop != null ? stop.hashCode() : 0);
         result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
         result = 31 * result + (station != null ? station.hashCode() : 0);
