@@ -22,8 +22,8 @@ import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.models.UserRoute;
-import com.jesseoberstein.alert.models.UserStop;
+import com.jesseoberstein.alert.models.mbta.Route;
+import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.ArrayList;
@@ -164,7 +164,7 @@ public class EditAlarm
     }
 
     @Override
-    public void onAlarmRouteSet(UserRoute route) {
+    public void onAlarmRouteSet(Route route) {
         this.draftAlarm.setRoute(route);
         // Once the route is set, restart the activity to apply the selected route'
         Intent intent = getIntent();
@@ -175,7 +175,7 @@ public class EditAlarm
     }
 
     @Override
-    public void onAlarmStopSet(UserStop stop) {
+    public void onAlarmStopSet(Stop stop) {
         this.draftAlarm.setStop(stop);
     }
 }

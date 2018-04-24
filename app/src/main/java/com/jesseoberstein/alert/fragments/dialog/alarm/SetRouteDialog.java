@@ -17,13 +17,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.data.RouteDao;
 import com.jesseoberstein.alert.databinding.AlarmRouteBinding;
 import com.jesseoberstein.alert.interfaces.AlarmRouteSetter;
 import com.jesseoberstein.alert.models.AutoComplete;
-import com.jesseoberstein.alert.models.UserRoute;
-import com.jesseoberstein.alert.providers.RoutesProvider;
+import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.utils.AlertUtils;
-import com.jesseoberstein.mbta.model.Route;
+
+import java.util.List;
 
 import static android.widget.AdapterView.OnItemClickListener;
 
@@ -47,8 +48,8 @@ public class SetRouteDialog extends AlarmModifierDialog {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        RoutesProvider routesProvider = RoutesProvider.init(getActivity().getAssets());
-        AutoComplete<Route> autoComplete = new AutoComplete<>(routesProvider.getRoutes(), this::onAutoCompleteItemSelected);
+        List<Route> routes = RouteDao.getRoutes();
+        AutoComplete<Route> autoComplete = new AutoComplete<>(routes, this::onAutoCompleteItemSelected);
         autoComplete.attachAdapter(getActivity());
 
         AlarmRouteBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_route, null, false);
@@ -67,7 +68,7 @@ public class SetRouteDialog extends AlarmModifierDialog {
 
     void onAutoCompleteItemSelected(AdapterView adapterView, View view, int i, long l) {
         Route selectedRoute = (Route) adapterView.getItemAtPosition(i);
-        this.alarmRouteSetter.onAlarmRouteSet(new UserRoute(selectedRoute));
+        this.alarmRouteSetter.onAlarmRouteSet(selectedRoute);
     }
 
     boolean onKeyPressed(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {

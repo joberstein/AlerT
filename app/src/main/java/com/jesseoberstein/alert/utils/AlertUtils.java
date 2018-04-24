@@ -11,20 +11,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.models.UserRoute;
-import com.jesseoberstein.mbta.model.RouteType;
+import com.jesseoberstein.alert.models.mbta.Route;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static com.jesseoberstein.alert.utils.Constants.COLOR;
-import static com.jesseoberstein.alert.utils.Constants.DEFAULT_ROUTE;
-import static com.jesseoberstein.alert.utils.Constants.ICON;
-import static com.jesseoberstein.alert.utils.Constants.THEME;
-import static com.jesseoberstein.alert.utils.Constants.USER_ROUTES;
 
 public class AlertUtils {
 
@@ -105,24 +98,6 @@ public class AlertUtils {
         }
     }
 
-    /**
-     * Get the icon for the corresponding route; if a route cannot be found, default to a black circle.
-     * @param routeName The name of the route to get the icon for.
-     * @return A drawable representing a route icon.
-     */
-    public static int getRouteResource(String routeName, String resourceType) {
-        UserRoute userRoute = USER_ROUTES.stream()
-                .filter(route -> route.getRouteName().equals(routeName))
-                .findFirst().orElseGet(() -> DEFAULT_ROUTE);
-
-        switch (resourceType) {
-            case ICON:    return userRoute.getIcon();
-            case COLOR:   return userRoute.getColor();
-            case THEME:   return userRoute.getTheme();
-            default:        return -1;
-        }
-    }
-
     public static Optional<Object> getObjectFromIntent(@Nullable Intent intent, String key) {
         return Optional.ofNullable(intent)
                 .map(i -> Optional.ofNullable(i.getExtras().get(key)))
@@ -131,11 +106,11 @@ public class AlertUtils {
 
     /**
      * Given a route, get it's theme based on the route type and then route id if necessary.
-     * @param route A UserRoute to get the theme for.
+     * @param route A Route to get the theme for.
      * @return The theme for the given route. Defaults to a dark gray theme.
      */
-    public static int getTheme(UserRoute route) {
-        String routeId = Optional.ofNullable(route).map(UserRoute::getRouteId).orElse("");
+    public static int getTheme(Route route) {
+        String routeId = Optional.ofNullable(route).map(Route::getId).orElse("");
 
         if (routeId.matches("Green-\\w{1}")) {
             return R.style.AlarmSettingsDark_Green;
@@ -158,10 +133,10 @@ public class AlertUtils {
 
     /**
      * Given a route id, get the theme by route type.
-     * @param route A UserRoute to get the theme for.
+     * @param route A Route to get the theme for.
      * @return The theme for the given route id. Defaults to a dark gray theme.
      */
-    private static int getThemeByRouteType(UserRoute route) {
+    private static int getThemeByRouteType(Route route) {
         int defaultTheme = R.style.AlarmSettingsDark_Default;
         if (route == null) {
             return defaultTheme;

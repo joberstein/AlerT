@@ -2,9 +2,9 @@ package com.jesseoberstein.alert.model;
 
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.models.UserRoute;
-import com.jesseoberstein.alert.models.UserStop;
-import com.jesseoberstein.mbta.model.RouteType;
+import com.jesseoberstein.alert.models.mbta.Route;
+import com.jesseoberstein.alert.models.mbta.RouteType;
+import com.jesseoberstein.alert.models.mbta.Stop;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -113,20 +113,20 @@ public class UserAlarmTest {
 
     @Test
     public void verifyStopIsResetWhenRouteChanged() {
-        UserRoute testRoute = new UserRoute();
-        testRoute.setRouteId("Orange");
-        testRoute.setRouteName("Orange Line");
+        Route testRoute = new Route();
+        testRoute.setId("Orange");
+        testRoute.setLongName("Orange Line");
         testRoute.setRouteType(RouteType.SUBWAY);
 
-        UserStop testStop = new UserStop();
-        testStop.setStopId("place-forhl");
-        testStop.setStopName("Forest Hills");
+        Stop testStop = new Stop();
+        testStop.setId("place-forhl");
+        testStop.setName("Forest Hills");
 
         testAlarm.setRoute(testRoute);
         testAlarm.setStop(testStop);
         assertEquals(testStop, testAlarm.getStop());
 
-        testAlarm.setRoute(new UserRoute());
+        testAlarm.setRoute(new Route());
         assertNull(testAlarm.getStop());
     }
 

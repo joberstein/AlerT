@@ -20,12 +20,11 @@ import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.adapters.AlarmsAdapter;
 import com.jesseoberstein.alert.adapters.EmptyRecyclerViewObserver;
 import com.jesseoberstein.alert.data.UserAlarmDao;
-import com.jesseoberstein.alert.data.UserEndpointDao;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.models.UserEndpoint;
-import com.jesseoberstein.alert.models.UserRoute;
+import com.jesseoberstein.alert.models.mbta.Endpoint;
+import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 
 import java.sql.SQLException;
@@ -41,14 +40,14 @@ import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
 public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
     private AlarmsAdapter myAlarmsAdapter;
     private RuntimeExceptionDao<UserAlarm, Integer> userAlarmDao;
-    private RuntimeExceptionDao<UserEndpoint, Integer> userEndpointDao;
+    private RuntimeExceptionDao<Endpoint, Integer> userEndpointDao;
     private AlarmManager alarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.userAlarmDao = new UserAlarmDao(getApplicationContext()).getDao();
-        this.userEndpointDao = new UserEndpointDao(getApplicationContext()).getDao();
+        this.userAlarmDao = UserAlarmDao.get();
+//        this.userEndpointDao = new UserEndpointDao(getApplicationContext()).getDao();
 
         setContentView(R.layout.activities_view_alarms);
 
@@ -67,9 +66,9 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
 //                    return buildAlarmListItem(alarm, endpoints);
 //                })
 //                .collect(Collectors.toCollection(ArrayList::new));
-        UserRoute testRoute = new UserRoute();
-        testRoute.setRouteId("Orange");
-        testRoute.setRouteName("Orange Line");
+        Route testRoute = new Route();
+        testRoute.setId("Orange");
+        testRoute.setLongName("Orange Line");
 
         UserAlarm testAlarm = new UserAlarm();
         testAlarm.setActive(true);

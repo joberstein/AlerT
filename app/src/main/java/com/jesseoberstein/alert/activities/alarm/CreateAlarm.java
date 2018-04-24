@@ -15,22 +15,16 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.adapters.ButtonListAdapter;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.listeners.endpoints.SelectDirectionOnClick;
 import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnItemClick;
 import com.jesseoberstein.alert.listeners.inputs.HideKeyboardOnNextAction;
-import com.jesseoberstein.alert.providers.EndpointsProvider;
-import com.jesseoberstein.alert.providers.StopsProvider;
 import com.jesseoberstein.alert.utils.AlertUtils;
 import com.jesseoberstein.alert.utils.Tints;
 import com.jesseoberstein.alert.validation.AbstractValidator;
 import com.jesseoberstein.alert.validation.AutoCompleteValidator;
 import com.jesseoberstein.alert.validation.CreateAlarmTextValidator;
-import com.jesseoberstein.mbta.model.Endpoint;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -47,8 +41,8 @@ public class CreateAlarm extends AppCompatActivity {
     private int themeColor;
 
     private Bundle receivedBundle;
-    private StopsProvider stopsProvider;
-    private EndpointsProvider endpointsProvider;
+//    private StopsProvider stopsProvider;
+//    private EndpointsProvider endpointsProvider;
 
     private EditText nicknameText;
     private AutoCompleteTextView stationAutoComplete;
@@ -65,8 +59,8 @@ public class CreateAlarm extends AppCompatActivity {
         receivedBundle = getIntent().getExtras();
         themeColor = receivedBundle.getInt(COLOR);
         String selectedRoute = receivedBundle.getString(ROUTE);
-        stopsProvider = StopsProvider.init(getAssets());
-        endpointsProvider = new EndpointsProvider(getAssets(), selectedRoute);
+//        stopsProvider = StopsProvider.init(getAssets());
+//        endpointsProvider = new EndpointsProvider(getAssets(), selectedRoute);
 
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
@@ -166,8 +160,8 @@ public class CreateAlarm extends AppCompatActivity {
         directionTabs.addOnTabSelectedListener(new SelectDirectionOnClick(this));
 
         // Add a tab for each stop direction.
-        endpointsProvider.getEndpointDirections().forEach(name ->
-                directionTabs.addTab(directionTabs.newTab().setText(name)));
+//        endpointsProvider.getEndpointDirections().forEach(name ->
+//                directionTabs.addTab(directionTabs.newTab().setText(name)));
 
         int selectedTabIdx = directionTabs.getSelectedTabPosition();
         String defaultDirectionName = Optional.ofNullable(directionTabs.getTabAt(selectedTabIdx))
@@ -180,10 +174,10 @@ public class CreateAlarm extends AppCompatActivity {
      * Create the endpoint and line buttons for the given stop, and add them to the view.
      */
     public void setUpEndpointButtons(String defaultDirectionName) {
-        List<Endpoint> endpoints = endpointsProvider.getEndpointsForDirection(defaultDirectionName);
-        List<String> endpointNames = endpointsProvider.getEndpointNames(endpoints);
-        ButtonListAdapter endpointsAdapter = new ButtonListAdapter(this, R.layout.button_direction, themeColor, endpointNames);
-        endpointButtons.setAdapter(endpointsAdapter);
+//        List<Endpoint> endpoints = endpointsProvider.getEndpointsForDirection(defaultDirectionName);
+//        List<String> endpointNames = endpointsProvider.getEndpointNames(endpoints);
+//        ButtonListAdapter endpointsAdapter = new ButtonListAdapter(this, R.layout.button_direction, themeColor, endpointNames);
+//        endpointButtons.setAdapter(endpointsAdapter);
         endpointsView.setVisibility(View.VISIBLE);
     }
 

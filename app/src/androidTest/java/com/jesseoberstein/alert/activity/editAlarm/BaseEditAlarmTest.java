@@ -2,10 +2,12 @@ package com.jesseoberstein.alert.activity.editAlarm;
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
+import android.view.View;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,7 +24,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 public class BaseEditAlarmTest {
-    Intent intent;
+    private Intent intent;
 
     @Rule
     public ActivityTestRule<EditAlarm> activityRule;
@@ -54,11 +56,12 @@ public class BaseEditAlarmTest {
     }
 
     private void moveToSettingsTab(int tabIcon) {
-        String description = "tab " + Integer.toString(tabIcon);
-        onView(allOf(
-                isDescendantOfA(withId(R.id.alarm_settings_tabs)),
-                withChild(withContentDescription(is(description)))))
-                .perform(click())
-                .check(matches(isCompletelyDisplayed()));
+        String tabDescription = "tab " + Integer.toString(tabIcon);
+        Matcher<View> tabView = allOf(
+            isDescendantOfA(withId(R.id.alarm_settings_tabs)),
+            withChild(withContentDescription(is(tabDescription)))
+        );
+
+        onView(tabView).perform(click()).check(matches(isCompletelyDisplayed()));
     }
 }

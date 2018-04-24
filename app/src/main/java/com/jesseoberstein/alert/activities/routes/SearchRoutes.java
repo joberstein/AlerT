@@ -20,13 +20,11 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.listeners.routes.QueryRoutesListener;
 import com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick;
-import com.jesseoberstein.alert.providers.RoutesProvider;
-import com.jesseoberstein.mbta.model.Route;
+import com.jesseoberstein.alert.models.mbta.Route;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static android.support.v7.appcompat.R.id;
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
@@ -35,7 +33,7 @@ import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 public class SearchRoutes extends AppCompatActivity implements OnDialogClick {
     public static final int REQUEST_CODE = 1;
     public static final String[] COLUMN_NAMES = new String[]{BaseColumns._ID, ROUTE};
-    private RoutesProvider routesProvider;
+//    private RoutesProvider routesProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +45,7 @@ public class SearchRoutes extends AppCompatActivity implements OnDialogClick {
         Optional<ActionBar> supportActionBar = Optional.ofNullable(getSupportActionBar());
         supportActionBar.ifPresent(bar -> bar.setDisplayHomeAsUpEnabled(true));
 
-        routesProvider = RoutesProvider.init(getAssets());
+//        routesProvider = RoutesProvider.init(getAssets());
 
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
@@ -92,9 +90,10 @@ public class SearchRoutes extends AppCompatActivity implements OnDialogClick {
     }
 
     private Route[] getAvailableRoutes(List<String> queryVal) {
-        return routesProvider.getRoutes().stream()
-                .filter(route -> !queryVal.contains(route.getId()))
-                .toArray(Route[]::new);
+//        return routesProvider.getRoutes().stream()
+//                .filter(route -> !queryVal.contains(route.getId()))
+//                .toArray(Route[]::new);
+        return new Route[]{};
     }
 
     @Override

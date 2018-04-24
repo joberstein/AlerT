@@ -1,9 +1,8 @@
 package com.jesseoberstein.alert.utils;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.models.UserRoute;
-import com.jesseoberstein.mbta.model.Route;
-import com.jesseoberstein.mbta.model.RouteType;
+import com.jesseoberstein.alert.models.mbta.Route;
+import com.jesseoberstein.alert.models.mbta.RouteType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,15 +13,14 @@ import java.util.Map;
 import static junit.framework.Assert.assertEquals;
 
 public class AlertUtilsTest {
-    private UserRoute testUserRoute;
+    private Route testRoute;
 
     @Before
     public void setup() {
-        Route testRoute = new Route();
+        testRoute = new Route();
         testRoute.setId("id");
         testRoute.setLongName("test route");
         testRoute.setShortName("test");
-        testUserRoute = new UserRoute(testRoute);
     }
 
     @Test
@@ -37,8 +35,8 @@ public class AlertUtilsTest {
 
         themes.forEach((key, value) -> {
             System.out.println("Get theme for route id: " + key);
-            testUserRoute.setRouteId(key);
-            assertEquals(value.intValue(), AlertUtils.getTheme(testUserRoute));
+            testRoute.setId(key);
+            assertEquals(value.intValue(), AlertUtils.getTheme(testRoute));
         });
     }
 
@@ -51,8 +49,8 @@ public class AlertUtilsTest {
 
         themes.forEach((key, value) -> {
             System.out.println("Get theme for route type: " + key);
-            testUserRoute.setRouteType(key);
-            assertEquals(value.intValue(), AlertUtils.getTheme(testUserRoute));
+            testRoute.setRouteType(key);
+            assertEquals(value.intValue(), AlertUtils.getTheme(testRoute));
         });
     }
 }

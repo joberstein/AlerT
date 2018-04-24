@@ -74,10 +74,9 @@ public class AlarmUtils {
 
     public static PendingIntent getAlarmStartIntent(UserAlarm alarm, List<String> endpoints, Context context, String stopId) {
         Intent intent = new Intent(Intent.ACTION_INSERT, buildAlarmUri(alarm.getId()), context, OnAlarmStart.class);
-        intent.putExtra(ROUTE, alarm.getRoute().getRouteName());
+        intent.putExtra(ROUTE, alarm.getRoute().toString());
         intent.putExtra(ALARM_ID, alarm.getId());
         intent.putExtra(NICKNAME, alarm.getNickname());
-        intent.putExtra(COLOR, AlertUtils.getRouteResource(alarm.getRoute().getRouteName(), COLOR));
         intent.putExtra(DAYS, alarm.getWeekdays());
         intent.putExtra(STOP_ID, stopId);
         intent.putExtra(ENDPOINTS, endpoints.toArray(new String[]{}));

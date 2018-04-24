@@ -14,13 +14,13 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.data.StopDao;
 import com.jesseoberstein.alert.databinding.AlarmStopBinding;
 import com.jesseoberstein.alert.interfaces.AlarmStopSetter;
 import com.jesseoberstein.alert.models.AutoComplete;
-import com.jesseoberstein.alert.models.UserStop;
-import com.jesseoberstein.alert.providers.StopsProvider;
+import com.jesseoberstein.alert.models.mbta.Route;
+import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.AlertUtils;
-import com.jesseoberstein.mbta.model.Stop;
 
 import java.util.List;
 
@@ -46,9 +46,8 @@ public class SetStopDialog extends AlarmModifierDialog {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        StopsProvider stopsProvider = StopsProvider.init(getActivity().getAssets());
-        String routeId = getDraftAlarm().getRoute().getRouteId();
-        List<Stop> stops = stopsProvider.getStopsByRoute(routeId);
+        Route route = getDraftAlarm().getRoute();
+        List<Stop> stops = StopDao.getStopsForRoute(route);
         AutoComplete<Stop> autoComplete = new AutoComplete<>(stops, this::onAutoCompleteItemSelected);
         autoComplete.attachAdapter(getActivity());
 
@@ -68,7 +67,7 @@ public class SetStopDialog extends AlarmModifierDialog {
 
     void onAutoCompleteItemSelected(AdapterView adapterView, View view, int i, long l) {
         Stop selectedStop = (Stop) adapterView.getItemAtPosition(i);
-        this.alarmStopSetter.onAlarmStopSet(new UserStop(selectedStop));
+        this.alarmStopSetter.onAlarmStopSet(selectedStop);
         new android.os.Handler().postDelayed(this::dismiss, DELAY_DIALOG_DISMISS);
     }
 

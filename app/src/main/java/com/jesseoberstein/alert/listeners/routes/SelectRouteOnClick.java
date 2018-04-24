@@ -9,12 +9,9 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.widget.Adapter;
 
 import com.jesseoberstein.alert.fragments.dialog.route.AddRouteDialog;
-import com.jesseoberstein.alert.providers.RoutesProvider;
-import com.jesseoberstein.alert.utils.AlertUtils;
-import com.jesseoberstein.mbta.model.Route;
+import com.jesseoberstein.alert.models.mbta.Route;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 import static android.support.v7.widget.SearchView.OnSuggestionListener;
 import static com.jesseoberstein.alert.utils.Constants.ROUTE;
@@ -48,7 +45,7 @@ public class SelectRouteOnClick implements OnSuggestionListener {
             MatrixCursor selected = (MatrixCursor) adapter.getItem(position);
             int routeColumnIdx = Arrays.asList(this.columnNames).indexOf(ROUTE);
             String routeId = Arrays.stream(this.routes)
-                    .filter(route -> RoutesProvider.getRouteName(route).equals(selected.getString(routeColumnIdx)))
+//                    .filter(route -> RoutesProvider.getRouteName(route).equals(selected.getString(routeColumnIdx)))
                     .findFirst()
                     .map(Route::getId).orElse("");
 

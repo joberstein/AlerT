@@ -8,38 +8,34 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
-import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.adapters.CustomItemsAdapter;
-import com.jesseoberstein.alert.data.UserRouteDao;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.listeners.routes.RemoveRouteOnLongClick;
 import com.jesseoberstein.alert.models.CustomListItem;
-import com.jesseoberstein.alert.models.RouteListItem;
-import com.jesseoberstein.alert.models.UserRoute;
 
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.jesseoberstein.alert.listeners.routes.SelectRouteOnClick.SELECTED_ROUTE;
-import static com.jesseoberstein.alert.models.RouteListItem.buildRoutesListItem;
 import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 
 public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
     private CustomItemsAdapter myRoutesAdapter;
-    RuntimeExceptionDao<UserRoute, String> userRouteDao;
+//    RuntimeExceptionDao<UserRoute, String> userRouteDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UserRouteDao userRouteDao = new UserRouteDao(getApplicationContext());
-        this.userRouteDao = userRouteDao.getDao();
-        ArrayList<CustomListItem> userRoutes = this.userRouteDao.queryForAll().stream()
-                .map(RouteListItem::buildRoutesListItem)
-                .collect(Collectors.toCollection(ArrayList::new));
+//        UserRouteDao userRouteDao = new UserRouteDao(getApplicationContext());
+//        this.userRouteDao = userRouteDao.getDao();
+        ArrayList<CustomListItem> userRoutes = new ArrayList<>();
+//        this.userRouteDao.queryForAll().stream()
+//                .map(RouteListItem::buildRoutesListItem)
+//                .collect(Collectors.toCollection(ArrayList::new));
 
         setContentView(R.layout.activities_view_routes);
         Optional<ActionBar> actionBarOptional = Optional.ofNullable(getSupportActionBar());
@@ -61,9 +57,9 @@ public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
             if (RESULT_OK == resultCode) {
                 Bundle selected = data.getBundleExtra(SELECTED_ROUTE);
                 String routeId = selected.getString(ROUTE);
-                UserRoute userRoute = new UserRoute(routeId);
-                userRouteDao.create(userRoute);
-                myRoutesAdapter.addItem(buildRoutesListItem(userRoute));
+//                UserRoute userRoute = new UserRoute(routeId);
+//                userRouteDao.create(userRoute);
+//                myRoutesAdapter.addItem(buildRoutesListItem(userRoute));
                 updateAddRouteListener();
             }
         }
@@ -97,7 +93,7 @@ public class ViewRoutes extends AppCompatActivity implements OnDialogClick {
     @Override
     public void onRemoveSelected(Bundle selected) {
         String routeName = selected.getString(ROUTE);
-        userRouteDao.deleteById(routeName);
+//        userRouteDao.deleteById(routeName);
         myRoutesAdapter.removeItemByPrimaryText(routeName);
         updateAddRouteListener();
     }

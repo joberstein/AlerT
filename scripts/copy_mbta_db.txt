@@ -1,0 +1,6 @@
+run-as com.jesseoberstein.alert
+cd databases
+sed -i /.*android_metadata.*/d mbta.db
+cp mbta.db //sdcard/Apps/com.jesseoberstein.alert
+exit
+exit

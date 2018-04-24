@@ -1,0 +1,6 @@
+run-as com.jesseoberstein.alert
+cd databases
+sqlite3 mbta
+.output mbta.db
+.dump
+.exit

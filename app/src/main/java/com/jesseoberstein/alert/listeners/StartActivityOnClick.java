@@ -13,23 +13,17 @@ import android.widget.GridView;
 import android.widget.ToggleButton;
 
 import com.jesseoberstein.alert.activities.alarm.CreateAlarm;
-import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.models.CustomListItem;
 import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.models.UserRoute;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static android.view.View.OnClickListener;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
-import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
-import static com.jesseoberstein.alert.utils.Constants.ROUTE;
-import static com.jesseoberstein.alert.utils.Constants.THEME;
 
 public class StartActivityOnClick implements OnClickListener, OnItemClickListener {
     private Activity origin;
@@ -125,11 +119,11 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
     }
 
     private void forwardToSelectedRoute(CustomListItem item) {
-        UserRoute userRoute = new UserRoute(item.getPrimaryText());
-        userRoute.setRouteResources();
-        this.extras.putString(ROUTE, userRoute.getRouteName());
-        this.extras.putInt(COLOR, userRoute.getColor());
-        this.extras.putInt(THEME, userRoute.getTheme());
+//        UserRoute userRoute = new UserRoute(item.getPrimaryText());
+//        userRoute.setRouteResources();
+//        this.extras.putString(ROUTE, userRoute.getRouteName());
+//        this.extras.putInt(COLOR, userRoute.getColor());
+//        this.extras.putInt(THEME, userRoute.getTheme());
     }
 
     private void forwardToSelectedAlarm(CustomListItem item) {

@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/route_default"
-                android:text="@{alarm.route.routeName}"
+                android:text="@{alarm.route.toString()}"
                 android:textSize="20sp"
                 android:textColor="@color/gray"
                 android:layout_below="@id/alarmSettings_section_label_route"

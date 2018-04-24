@@ -7,8 +7,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
-import com.jesseoberstein.alert.providers.RoutesProvider;
-import com.jesseoberstein.mbta.model.Route;
+import com.jesseoberstein.alert.models.mbta.Route;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -51,10 +50,10 @@ public class QueryRoutesListener implements SearchView.OnQueryTextListener {
     public boolean onQueryTextChange(String newText) {
         final String newTextLower = newText.toLowerCase();
         MatrixCursor cursor = getNewCursor();
-        IntStream.range(0, this.routes.length).boxed()
-                .map(index -> new String[] {index.toString(), RoutesProvider.getRouteName(this.routes[index])})
-                .filter(suggestion -> suggestion[1].toLowerCase().startsWith(newTextLower))
-                .forEach(cursor::addRow);
+//        IntStream.range(0, this.routes.length).boxed()
+//                .map(index -> new String[] {index.toString(), RoutesProvider.getRouteName(this.routes[index])})
+//                .filter(suggestion -> suggestion[1].toLowerCase().startsWith(newTextLower))
+//                .forEach(cursor::addRow);
 
         this.adapter.changeCursor(cursor);
         return false;

@@ -21,7 +21,7 @@
             android:completionThreshold="1"
             android:imeOptions="actionDone"
             android:hint="@string/route_dialog_default"
-            android:text="@{alarm.route.routeName}"
+            android:text="@{alarm.route.toString()}"
             app:adapter="@{autocomplete.adapter}"
             app:validator="@{autocomplete.validator}"
             app:onItemClick="@{autocomplete.itemClickListener}"

@@ -1,6 +1,123 @@
 #
-# generated on 2018/04/04 02:22:42
+# generated on 2018/04/13 12:22:03
 #
+# --table-start--
+dataClass=com.jesseoberstein.alert.models.mbta.BaseResource
+tableName=baseresource
+# --table-fields-start--
+# --field-start--
+fieldName=id
+columnName=id
+id=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.jesseoberstein.alert.models.mbta.Endpoint
+tableName=endpoints
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=directionId
+columnName=direction_id
+# --field-end--
+# --field-start--
+fieldName=directionName
+columnName=direction_name
+# --field-end--
+# --field-start--
+fieldName=route
+foreign=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.jesseoberstein.alert.models.mbta.Prediction
+tableName=prediction
+# --table-fields-start--
+# --field-start--
+fieldName=id
+columnName=id
+id=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.jesseoberstein.alert.models.mbta.Route
+tableName=routes
+# --table-fields-start--
+# --field-start--
+fieldName=routeType
+# --field-end--
+# --field-start--
+fieldName=shortName
+columnName=short_name
+# --field-end--
+# --field-start--
+fieldName=longName
+columnName=long_name
+# --field-end--
+# --field-start--
+fieldName=description
+# --field-end--
+# --field-start--
+fieldName=id
+columnName=id
+id=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.jesseoberstein.alert.models.mbta.Stop
+tableName=stops
+# --table-fields-start--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=wheelchairBoarding
+columnName=wheelchair_boarding
+# --field-end--
+# --field-start--
+fieldName=longitude
+# --field-end--
+# --field-start--
+fieldName=latitude
+# --field-end--
+# --field-start--
+fieldName=route
+foreign=true
+# --field-end--
+# --field-start--
+fieldName=id
+columnName=id
+id=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.jesseoberstein.alert.models.mbta.Trip
+tableName=trip
+# --table-fields-start--
+# --field-start--
+fieldName=id
+columnName=id
+id=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
 # --table-start--
 dataClass=com.jesseoberstein.alert.models.UserAlarm
 tableName=user_alarms
@@ -58,64 +175,6 @@ fieldName=repeatType
 # --field-end--
 # --field-start--
 fieldName=active
-# --field-end--
-# --table-fields-end--
-# --table-end--
-#################################
-# --table-start--
-dataClass=com.jesseoberstein.alert.models.UserEndpoint
-tableName=user_endpoints
-# --table-fields-start--
-# --field-start--
-fieldName=id
-generatedId=true
-# --field-end--
-# --field-start--
-fieldName=alarm
-foreign=true
-# --field-end--
-# --field-start--
-fieldName=endpointName
-columnName=endpoint_name
-# --field-end--
-# --table-fields-end--
-# --table-end--
-#################################
-# --table-start--
-dataClass=com.jesseoberstein.alert.models.UserRoute
-tableName=user_routes
-# --table-fields-start--
-# --field-start--
-fieldName=routeId
-columnName=route_id
-id=true
-# --field-end--
-# --field-start--
-fieldName=routeName
-columnName=route_name
-# --field-end--
-# --field-start--
-fieldName=routeType
-columnName=route_type
-# --field-end--
-# --field-start--
-fieldName=alerts
-# --field-end--
-# --table-fields-end--
-# --table-end--
-#################################
-# --table-start--
-dataClass=com.jesseoberstein.alert.models.UserStop
-tableName=user_stops
-# --table-fields-start--
-# --field-start--
-fieldName=stopId
-columnName=stop_id
-id=true
-# --field-end--
-# --field-start--
-fieldName=stopName
-columnName=stop_name
 # --field-end--
 # --table-fields-end--
 # --table-end--

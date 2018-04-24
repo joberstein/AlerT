@@ -17,13 +17,19 @@ import static org.mockito.Mockito.when;
 public class AlarmUtilsTest {
     private Calendar mockCalendar;
     private UserAlarm testAlarm;
+    private int calendarToday;
+    private int calendarTomorrow;
     private int today;
+    private int tomorrow;
 
     @Before
     public void setup() {
         mockCalendar = mock(Calendar.class);
         testAlarm = mock(UserAlarm.class);
-        today = DateTimeUtils.getCurrentDay();
+        calendarToday = DateTimeUtils.getCurrentDay();
+        calendarTomorrow = getFutureDay(calendarToday, 1);
+        today = calendarToday - 1;
+        tomorrow = getFutureDay(today, 1);
     }
 
     private void mockAlarmTime(int hour, int minutes) {
@@ -54,30 +60,31 @@ public class AlarmUtilsTest {
 
         // Set the alarm time one minute in the future.
         setAlarmTimeInNumMinutesFromNow(1);
-        assertEquals(today, AlarmUtils.getNextFiringDay(testAlarm));
+        assertEquals(calendarToday, AlarmUtils.getNextFiringDay(testAlarm));
 
         // Set the alarm time one minute in the past.
         setAlarmTimeInNumMinutesFromNow(-1);
-        assertEquals(today + 1, AlarmUtils.getNextFiringDay(testAlarm));
+        int tomorrow = calendarTomorrow;
+        assertEquals(tomorrow, AlarmUtils.getNextFiringDay(testAlarm));
     }
 
     @Test
     public void nextFiringDayWhenOnlyTodaySelected() {
-        selectDays(today - 1);
+        selectDays(today);
 
         // Set the alarm time one minute in the future.
         setAlarmTimeInNumMinutesFromNow(1);
-        assertEquals(today, AlarmUtils.getNextFiringDay(testAlarm));
+        assertEquals(calendarToday, AlarmUtils.getNextFiringDay(testAlarm));
 
         // Set the alarm time one minute in the past.
         setAlarmTimeInNumMinutesFromNow(-1);
-        assertEquals(today, AlarmUtils.getNextFiringDay(testAlarm));
+        assertEquals(calendarToday, AlarmUtils.getNextFiringDay(testAlarm));
     }
 
     @Test
     public void nextFiringDayWhenTodayNotSelected() {
-        int selectedDay = (today + 3) % 7;
-        int calendarSelectedDay = selectedDay + 1;
+        int selectedDay = getFutureDay(today, 3);
+        int calendarSelectedDay = getFutureDay(calendarToday, 3);
         selectDays(selectedDay);
 
         // Set the alarm time one minute in the future.
@@ -91,12 +98,11 @@ public class AlarmUtilsTest {
 
     @Test
     public void nextFiringDayWhenTodayAndTomorrowSelected() {
-        int calendarTomorrow = today + 1;
-        selectDays(today - 1, today);
+        selectDays(today, tomorrow);
 
         // Set the alarm time one minute in the future.
         setAlarmTimeInNumMinutesFromNow(1);
-        assertEquals(today, AlarmUtils.getNextFiringDay(testAlarm));
+        assertEquals(calendarToday, AlarmUtils.getNextFiringDay(testAlarm));
 
         // Set the alarm time one minute in the past.
         setAlarmTimeInNumMinutesFromNow(-1);
@@ -112,6 +118,10 @@ public class AlarmUtilsTest {
         }
 
         mockAlarmDays(selectedDays);
+    }
+
+    private int getFutureDay(int day, int numDays) {
+        return (day + numDays) % 7;
     }
 
     private void setAlarmTimeInNumMinutesFromNow(int numMinutes) {

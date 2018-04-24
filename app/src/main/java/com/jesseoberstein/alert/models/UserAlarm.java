@@ -6,6 +6,8 @@ import android.databinding.Bindable;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.jesseoberstein.alert.BR;
+import com.jesseoberstein.alert.models.mbta.Route;
+import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.AlarmUtils;
 import com.jesseoberstein.alert.utils.DateTimeUtils;
 
@@ -33,7 +35,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
     private int id;
 
     @DatabaseField(foreign = true)
-    private UserRoute route;
+    private Route route;
 
     @DatabaseField
     private String nickname;
@@ -42,7 +44,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
     private String direction;
 
     @DatabaseField(foreign = true)
-    private UserStop stop;
+    private Stop stop;
 
     @Deprecated
     private String station;
@@ -121,11 +123,11 @@ public class UserAlarm extends BaseObservable implements Serializable {
     }
 
     @Bindable
-    public UserRoute getRoute() {
+    public Route getRoute() {
         return route;
     }
 
-    public void setRoute(UserRoute route) {
+    public void setRoute(Route route) {
         this.route = route;
         notifyPropertyChanged(BR.route);
         setStop(null);
@@ -160,11 +162,11 @@ public class UserAlarm extends BaseObservable implements Serializable {
     }
 
     @Bindable
-    public UserStop getStop() {
+    public Stop getStop() {
         return stop;
     }
 
-    public void setStop(UserStop stop) {
+    public void setStop(Stop stop) {
         this.stop = stop;
         notifyPropertyChanged(BR.stop);
     }

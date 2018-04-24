@@ -19,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -72,7 +73,7 @@ public class ResponseParser {
      * Parse the given input stream into a list of objects of the given class.
      * @param content The content to parseJSONApi.
      * @param objectClass The class to parseJSONApi the content into.
-     * @param <T> The type of the object class to parseJSONApi.
+     * @param <T> The type of the object class to parse.
      * @return The list of parsed objects, or an empty list if there was an error parsing.
      */
     public static <T> List<T> parseJSONApi(InputStream content, Class<T> objectClass) {
@@ -87,9 +88,9 @@ public class ResponseParser {
 
     /**
      * Parse the given byte array into a list of objects of the given class.
-     * @param bytes The byte array to parseJSONApi.
-     * @param objectClass The class to parseJSONApi the content into.
-     * @param <T> The type of the object class to parseJSONApi.
+     * @param bytes The byte array to parse.
+     * @param objectClass The class to parse the content into.
+     * @param <T> The type of the object class to parse.
      * @return The list of parsed objects, or an empty list if there was an error parsing.
      */
     public static <T> List<T> parseJSONApi(byte[] bytes, Class<T> objectClass) {
@@ -135,7 +136,7 @@ public class ResponseParser {
     public static <T> void writeToFile(T object, String fileName) {
         try {
             String content = getObjectMapper().writeValueAsString(object);
-            Path writePath = Paths.get(BASE_WRITE_PATH + fileName + ".json").toAbsolutePath();
+            Path writePath = Paths.get(BASE_WRITE_PATH + fileName + ".txt").toAbsolutePath();
             Files.createDirectories(Paths.get(BASE_WRITE_PATH));
             Files.write(writePath, content.getBytes());
         } catch (IOException e) {
@@ -149,7 +150,7 @@ public class ResponseParser {
      * @param fileName The name of the file to write to. Placed in the {@link ResponseParser#BASE_WRITE_PATH} directory.
      * @param <T> The type of the object list to write to a file.
      */
-    public static <T> void writeJSONApiToFile(List<T> objects, String fileName) throws DocumentSerializationException {
+    public static <T> void writeJSONApiToFile(Collection<T> objects, String fileName) throws DocumentSerializationException {
         try {
             byte[] content = getResourceConverter().writeDocumentCollection(new JSONAPIDocument<>(objects));
             Path writePath = Paths.get(BASE_WRITE_PATH + fileName + ".json").toAbsolutePath();

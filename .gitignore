@@ -57,4 +57,5 @@ freeline_project_description.json
 sensitive/
 
 # Assets
-app/src/main/assets/
+app/src/main/assets/**
+!app/src/main/assets/mbta.db

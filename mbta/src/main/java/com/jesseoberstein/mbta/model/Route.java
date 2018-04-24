@@ -3,6 +3,7 @@ package com.jesseoberstein.mbta.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Type;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Type("route")
@@ -94,6 +95,22 @@ public class Route extends BaseResource implements MbtaDataType {
 
     public void setTextColor(String textColor) {
         this.textColor = textColor;
+    }
+
+    public String getValues() {
+        List<String> values = Arrays.asList(
+                getId(),
+                Integer.toString(sortOrder),
+                this.shortName,
+                this.longName,
+                this.routeType.toString(),
+                Integer.toString(this.sortOrder),
+                this.directionNames.toString(),
+                this.description,
+                this.color,
+                this.textColor);
+
+        return String.join("|", values);
     }
 
     @Override

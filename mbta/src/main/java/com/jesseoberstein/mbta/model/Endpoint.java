@@ -7,22 +7,14 @@ public class Endpoint implements MbtaDataType {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("route_id")
-    private String routeId;
-
-    @JsonProperty("direction_id")
-    private int directionId;
-
-    @JsonProperty("direction_name")
-    private String directionName;
+    @JsonProperty("direction")
+    private Direction direction;
 
     public Endpoint() {}
 
-    public Endpoint(String name, String routeId, int directionId, String directionName) {
+    public Endpoint(String name, Direction direction) {
         this.name = name;
-        this.routeId = routeId;
-        this.directionId = directionId;
-        this.directionName = directionName;
+        this.direction = direction;
     }
 
     public String getName() {
@@ -33,48 +25,29 @@ public class Endpoint implements MbtaDataType {
         this.name = name;
     }
 
-    public String getRouteId() {
-        return routeId;
+    public Direction getDirection() {
+        return direction;
     }
 
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
-    public int getDirectionId() {
-        return directionId;
-    }
-
-    public void setDirectionId(int directionId) {
-        this.directionId = directionId;
-    }
-
-    public String getDirectionName() {
-        return directionName;
-    }
-
-    public void setDirectionName(String directionName) {
-        this.directionName = directionName;
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Endpoint endpoint = (Endpoint) o;
-        return name.equals(endpoint.name) && directionId == endpoint.directionId;
+
+        if (name != null ? !name.equals(endpoint.name) : endpoint.name != null) return false;
+        return direction != null ? direction.equals(endpoint.direction) : endpoint.direction == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + directionId;
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (direction != null ? direction.hashCode() : 0);
         return result;
     }
 
@@ -83,9 +56,7 @@ public class Endpoint implements MbtaDataType {
         return "\n" +
                 "Endpoint {" +
                 "name='" + name + '\'' +
-                ", routeId='" + routeId + '\'' +
-                ", directionId=" + directionId +
-                ", directionName=" + directionName +
+                ", direction='" + direction + '\'' +
                 '}';
     }
 }
