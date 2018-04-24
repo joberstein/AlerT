@@ -77,7 +77,7 @@ public class AlarmUtils {
         intent.putExtra(ROUTE, alarm.getRoute().toString());
         intent.putExtra(ALARM_ID, alarm.getId());
         intent.putExtra(NICKNAME, alarm.getNickname());
-        intent.putExtra(DAYS, alarm.getWeekdays());
+        intent.putExtra(DAYS, alarm.getSelectedDays().toIntArray());
         intent.putExtra(STOP_ID, stopId);
         intent.putExtra(ENDPOINTS, endpoints.toArray(new String[]{}));
         return getBroadcast(context, ALARM_START_REQUEST_CODE, intent, FLAG_UPDATE_CURRENT);
@@ -123,7 +123,7 @@ public class AlarmUtils {
         long now = DateTimeUtils.getCurrentTimeInMillis();
         long alarmFiringTime = DateTimeUtils.getTimeInMillis(alarm.getHour(), alarm.getMinutes());
         boolean isPastAlarmFiringTime = alarmFiringTime <= now;
-        int[] selectedDays = alarm.getWeekdays();
+        int[] selectedDays = alarm.getSelectedDays().toIntArray();
 
         for (int day = today - 1; day < today + selectedDays.length; day++) {
             // Use an adjusted day to compensate for the offset between today and Sunday (0).

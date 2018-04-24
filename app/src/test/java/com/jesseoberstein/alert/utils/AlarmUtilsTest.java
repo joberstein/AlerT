@@ -1,5 +1,6 @@
 package com.jesseoberstein.alert.utils;
 
+import com.jesseoberstein.alert.models.SelectedDays;
 import com.jesseoberstein.alert.models.UserAlarm;
 
 import org.junit.Before;
@@ -38,7 +39,7 @@ public class AlarmUtilsTest {
     }
 
     private void mockAlarmDays(int[] days) {
-        when(testAlarm.getWeekdays()).thenReturn(days);
+        when(testAlarm.getSelectedDays()).thenReturn(new SelectedDays(days));
     }
 
     @Test

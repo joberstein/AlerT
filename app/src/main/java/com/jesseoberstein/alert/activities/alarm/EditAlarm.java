@@ -155,7 +155,7 @@ public class EditAlarm
 
     @Override
     public void onAlarmDaysSet(int[] days) {
-        this.draftAlarm.setWeekdays(days);
+        this.draftAlarm.setSelectedDays(days);
     }
 
     @Override

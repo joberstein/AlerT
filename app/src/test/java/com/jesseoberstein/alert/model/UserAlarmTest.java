@@ -24,14 +24,14 @@ public class UserAlarmTest {
 
     @Test(expected = RuntimeException.class)
     public void throwsExceptionIfWeekdayArrayIsWrongLength() {
-        testAlarm.setWeekdays(new int[]{});
+        testAlarm.setSelectedDays(new int[]{});
     }
 
     @Test
     public void verifyGetsAndSetsDays() {
         int[] expected = {0, 0, 1, 0, 1, 1, 0};
-        testAlarm.setWeekdays(expected);
-        assertEquals(Arrays.toString(expected), Arrays.toString(testAlarm.getWeekdays()));
+        testAlarm.setSelectedDays(expected);
+        assertEquals(Arrays.toString(expected), Arrays.toString(testAlarm.getSelectedDays().toIntArray()));
     }
 
     @Test
@@ -61,10 +61,10 @@ public class UserAlarmTest {
     @Test
     public void verifyRepeatCustomSetsCorrectDays() {
         testAlarm.setRepeatType(RepeatType.CUSTOM);
-        testAlarm.setMonday(1);
-        testAlarm.setWednesday(1);
-        testAlarm.setThursday(1);
-        testAlarm.setSaturday(1);
+        testAlarm.getSelectedDays().setMonday(1);
+        testAlarm.getSelectedDays().setWednesday(1);
+        testAlarm.getSelectedDays().setThursday(1);
+        testAlarm.getSelectedDays().setSaturday(1);
         verifyAlarmWeekdays(new int[]{0, 1, 0, 1, 1, 0, 1});
     }
 
@@ -84,13 +84,13 @@ public class UserAlarmTest {
     @Test
     public void verifyCustomRepeatNotResetWhenReselected() {
         testAlarm.setRepeatType(RepeatType.CUSTOM);
-        testAlarm.setSunday(1);
-        testAlarm.setThursday(1);
+        testAlarm.getSelectedDays().setSunday(1);
+        testAlarm.getSelectedDays().setThursday(1);
         verifyAlarmWeekdays(new int[]{1, 0, 0, 0, 1, 0, 0});
 
         testAlarm.setRepeatType(RepeatType.CUSTOM);
-        assertEquals(1, testAlarm.getSunday());
-        assertEquals(1, testAlarm.getThursday());
+        assertEquals(1, testAlarm.getSelectedDays().getSunday());
+        assertEquals(1, testAlarm.getSelectedDays().getThursday());
     }
 
     @Test
@@ -131,6 +131,6 @@ public class UserAlarmTest {
     }
 
     private void verifyAlarmWeekdays(int[] expected) {
-        assertEquals(Arrays.toString(expected), Arrays.toString(testAlarm.getWeekdays()));
+        assertEquals(Arrays.toString(expected), Arrays.toString(testAlarm.getSelectedDays().toIntArray()));
     }
 }

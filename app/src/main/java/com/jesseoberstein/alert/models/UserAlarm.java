@@ -13,20 +13,11 @@ import com.jesseoberstein.alert.utils.DateTimeUtils;
 
 import java.io.Serializable;
 import java.text.DateFormatSymbols;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.stream.IntStream;
 
-import static java.util.Calendar.FRIDAY;
 import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MINUTE;
-import static java.util.Calendar.MONDAY;
-import static java.util.Calendar.SATURDAY;
-import static java.util.Calendar.SUNDAY;
-import static java.util.Calendar.THURSDAY;
-import static java.util.Calendar.TUESDAY;
-import static java.util.Calendar.WEDNESDAY;
 
 @DatabaseTable(tableName = "user_alarms")
 public class UserAlarm extends BaseObservable implements Serializable {
@@ -55,26 +46,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
     @DatabaseField
     private Integer minutes;
 
-    @DatabaseField
-    private int monday;
-
-    @DatabaseField
-    private int tuesday;
-
-    @DatabaseField
-    private int wednesday;
-
-    @DatabaseField
-    private int thursday;
-
-    @DatabaseField
-    private int friday;
-
-    @DatabaseField
-    private int saturday;
-
-    @DatabaseField
-    private int sunday;
+    private SelectedDays selectedDays;
 
     @DatabaseField
     private long duration;
@@ -96,6 +68,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
 
         setTime(calendar.get(HOUR_OF_DAY), calendar.get(MINUTE));
         setRepeatType(RepeatType.NEVER);
+        setSelectedDays(new SelectedDays());
         setDuration(30);
     }
 
@@ -106,7 +79,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
         setDirection(alarm.getDirection());
         setStation(alarm.getStation());
         setTime(alarm.getHour(), alarm.getMinutes());
-        setWeekdays(alarm.getWeekdays());
+        setSelectedDays(alarm.getSelectedDays());
         setDuration(alarm.getDuration());
         setRepeatType(alarm.getRepeatType());
         setActive(alarm.isActive());
@@ -187,6 +160,20 @@ public class UserAlarm extends BaseObservable implements Serializable {
         this.minutes = minutes;
     }
 
+    public SelectedDays getSelectedDays() {
+        return selectedDays;
+    }
+
+    public void setSelectedDays(SelectedDays selectedDays) {
+        this.selectedDays = selectedDays;
+        setNextFiringDayString();
+    }
+
+    public void setSelectedDays(int[] selectedDays) {
+        this.selectedDays = new SelectedDays(selectedDays);
+        setNextFiringDayString();
+    }
+
     @Bindable
     public long getDuration() {
         return duration;
@@ -210,7 +197,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
         this.repeatType = repeatType;
         notifyPropertyChanged(BR.repeatType);
 
-        setWeekdays(repeatType.getSelectedDays());
+        setSelectedDays(repeatType.getSelectedDays());
     }
 
     public boolean isActive() {
@@ -221,137 +208,16 @@ public class UserAlarm extends BaseObservable implements Serializable {
         this.active = active;
     }
 
-    public void setWeekdays(int[] weekdays) {
-        if (weekdays.length != 7) {
-            String msg = "Could not set weekdays for alarm: given array has " + weekdays.length + " elements; should have exactly 7.";
-            throw new RuntimeException(msg);
-        }
-
-        IntStream.range(1, SATURDAY + 1).forEach(i -> {
-            // arr[i - 1] because weekdays has only 7 elements, but Calendar dates use indices 1-7.
-            int isSelected = weekdays[i - 1];
-
-            switch (i) {
-                case SUNDAY:
-                    setSunday(isSelected);
-                    break;
-                case MONDAY:
-                    setMonday(isSelected);
-                    break;
-                case TUESDAY:
-                    setTuesday(isSelected);
-                    break;
-                case WEDNESDAY:
-                    setWednesday(isSelected);
-                    break;
-                case THURSDAY:
-                    setThursday(isSelected);
-                    break;
-                case FRIDAY:
-                    setFriday(isSelected);
-                    break;
-                case SATURDAY:
-                    setSaturday(isSelected);
-            }
-        });
-
-        setNextFiringDayString();
-    }
-
-    public int[] getWeekdays() {
-        int[] weekdays = new int[SATURDAY + 1];
-        Arrays.fill(weekdays, 0);
-
-        IntStream.range(SUNDAY, SATURDAY + 1).forEach(i -> {
-            switch (i) {
-                case SUNDAY:
-                    weekdays[SUNDAY] = getSunday();
-                    break;
-                case MONDAY:
-                    weekdays[MONDAY] = getMonday();
-                    break;
-                case TUESDAY:
-                    weekdays[TUESDAY] = getTuesday();
-                    break;
-                case WEDNESDAY:
-                    weekdays[WEDNESDAY] = getWednesday();
-                    break;
-                case THURSDAY:
-                    weekdays[THURSDAY] = getThursday();
-                    break;
-                case FRIDAY:
-                    weekdays[FRIDAY] = getFriday();
-                    break;
-                case SATURDAY:
-                    weekdays[SATURDAY] = getSaturday();
-            }
-        });
-
-        return Arrays.copyOfRange(weekdays, 1, weekdays.length);
-    }
-
-    public int getMonday() {
-        return monday;
-    }
-
-    public void setMonday(int monday) {
-        this.monday = monday;
-    }
-
-    public int getTuesday() {
-        return tuesday;
-    }
-
-    public void setTuesday(int tuesday) {
-        this.tuesday = tuesday;
-    }
-
-    public int getWednesday() {
-        return wednesday;
-    }
-
-    public void setWednesday(int wednesday) {
-        this.wednesday = wednesday;
-    }
-
-    public int getThursday() {
-        return thursday;
-    }
-
-    public void setThursday(int thursday) {
-        this.thursday = thursday;
-    }
-
-    public int getFriday() {
-        return friday;
-    }
-
-    public void setFriday(int friday) {
-        this.friday = friday;
-    }
-
-    public int getSaturday() {
-        return saturday;
-    }
-
-    public void setSaturday(int saturday) {
-        this.saturday = saturday;
-    }
-
-    public int getSunday() {
-        return sunday;
-    }
-
-    public void setSunday(int sunday) {
-        this.sunday = sunday;
-    }
-
     @Bindable
     public String getNextFiringDayString() {
         return this.nextFiringDayString;
     }
 
     public void setNextFiringDayString() {
+        if (this.getSelectedDays() == null) {
+            return;
+        }
+
         String[] weekdayList = DateFormatSymbols.getInstance().getWeekdays();
 
         long now = DateTimeUtils.getCurrentTimeInMillis();
@@ -404,13 +270,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
                 ", station='" + station + '\'' +
                 ", hour=" + hour +
                 ", minutes=" + minutes +
-                ", monday=" + monday +
-                ", tuesday=" + tuesday +
-                ", wednesday=" + wednesday +
-                ", thursday=" + thursday +
-                ", friday=" + friday +
-                ", saturday=" + saturday +
-                ", sunday=" + sunday +
+                ", selectedDays=" + selectedDays +
                 ", duration=" + duration +
                 ", repeatType='" + repeatType + '\'' +
                 ", active=" + active +
@@ -425,51 +285,42 @@ public class UserAlarm extends BaseObservable implements Serializable {
         UserAlarm userAlarm = (UserAlarm) o;
 
         if (id != userAlarm.id) return false;
-        if (monday != userAlarm.monday) return false;
-        if (tuesday != userAlarm.tuesday) return false;
-        if (wednesday != userAlarm.wednesday) return false;
-        if (thursday != userAlarm.thursday) return false;
-        if (friday != userAlarm.friday) return false;
-        if (saturday != userAlarm.saturday) return false;
-        if (sunday != userAlarm.sunday) return false;
         if (duration != userAlarm.duration) return false;
         if (active != userAlarm.active) return false;
         if (route != null ? !route.equals(userAlarm.route) : userAlarm.route != null) return false;
-        if (stop != null ? !stop.equals(userAlarm.stop) : userAlarm.stop != null) return false;
         if (nickname != null ? !nickname.equals(userAlarm.nickname) : userAlarm.nickname != null)
             return false;
         if (direction != null ? !direction.equals(userAlarm.direction) : userAlarm.direction != null)
             return false;
+        if (stop != null ? !stop.equals(userAlarm.stop) : userAlarm.stop != null) return false;
         if (station != null ? !station.equals(userAlarm.station) : userAlarm.station != null)
             return false;
         if (hour != null ? !hour.equals(userAlarm.hour) : userAlarm.hour != null) return false;
         if (minutes != null ? !minutes.equals(userAlarm.minutes) : userAlarm.minutes != null)
             return false;
+        if (selectedDays != null ? !selectedDays.equals(userAlarm.selectedDays) : userAlarm.selectedDays != null)
+            return false;
         if (repeatType != userAlarm.repeatType) return false;
-        return time != null ? time.equals(userAlarm.time) : userAlarm.time == null;
+        if (time != null ? !time.equals(userAlarm.time) : userAlarm.time != null) return false;
+        return nextFiringDayString != null ? nextFiringDayString.equals(userAlarm.nextFiringDayString) : userAlarm.nextFiringDayString == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (route != null ? route.hashCode() : 0);
-        result = 31 * result + (stop != null ? stop.hashCode() : 0);
         result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
+        result = 31 * result + (stop != null ? stop.hashCode() : 0);
         result = 31 * result + (station != null ? station.hashCode() : 0);
         result = 31 * result + (hour != null ? hour.hashCode() : 0);
         result = 31 * result + (minutes != null ? minutes.hashCode() : 0);
-        result = 31 * result + monday;
-        result = 31 * result + tuesday;
-        result = 31 * result + wednesday;
-        result = 31 * result + thursday;
-        result = 31 * result + friday;
-        result = 31 * result + saturday;
-        result = 31 * result + sunday;
+        result = 31 * result + (selectedDays != null ? selectedDays.hashCode() : 0);
         result = 31 * result + (int) (duration ^ (duration >>> 32));
         result = 31 * result + (repeatType != null ? repeatType.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (nextFiringDayString != null ? nextFiringDayString.hashCode() : 0);
         return result;
     }
 }

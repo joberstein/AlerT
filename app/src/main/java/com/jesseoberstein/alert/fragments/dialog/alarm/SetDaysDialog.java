@@ -7,10 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
+import com.jesseoberstein.alert.models.SelectedDays;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -24,7 +24,7 @@ import static java.util.Calendar.SUNDAY;
  */
 public class SetDaysDialog extends AlarmModifierDialog {
     private AlarmDaySetter alarmDaySetter;
-    private int[] selectedDays;
+    private SelectedDays selectedDays;
 
     @Override
     public void onAttach(Context context) {
@@ -40,29 +40,24 @@ public class SetDaysDialog extends AlarmModifierDialog {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        this.selectedDays = getDraftAlarm().getWeekdays();
+        this.selectedDays = getDraftAlarm().getSelectedDays();
 
         String[] daysList = Arrays.copyOfRange(getInstance().getWeekdays(), SUNDAY, SATURDAY + 1);
 
-        // The alert dialog needs a boolean array instead of an int array, so converting it here.
-        int numDays = daysList.length;
-        boolean[] convertedDays = new boolean[numDays];
-        IntStream.range(0, numDays).forEach(i -> convertedDays[i] = (this.selectedDays[i] == 1));
-
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.repeat_custom_dialog_title)
-                .setMultiChoiceItems(daysList, convertedDays, this::onItemToggle)
+                .setMultiChoiceItems(daysList, this.selectedDays.toBooleanArray(), this::onItemToggle)
                 .setPositiveButton(R.string.ok, this::onPositiveButtonClick)
                 .setNegativeButton(R.string.cancel, this::onNegativeButtonClick)
                 .create();
     }
 
     private void onItemToggle(DialogInterface dialogInterface, int toggleIndex, boolean isChecked) {
-        this.selectedDays[toggleIndex] = isChecked ? 1 : 0;
+        this.selectedDays.setDay(toggleIndex, isChecked);
     }
 
     private void onPositiveButtonClick(DialogInterface dialogInterface, int i) {
-        this.alarmDaySetter.onAlarmDaysSet(this.selectedDays);
+        this.alarmDaySetter.onAlarmDaysSet(this.selectedDays.toIntArray());
     }
 
     private void onNegativeButtonClick(DialogInterface dialogInterface, int i) {}
