@@ -13,17 +13,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.Toast;
 
-import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.CreateAlarm;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.adapters.AlarmsAdapter;
 import com.jesseoberstein.alert.adapters.EmptyRecyclerViewObserver;
-import com.jesseoberstein.alert.data.UserAlarmDao;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 
@@ -39,14 +36,14 @@ import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
 
 public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
     private AlarmsAdapter myAlarmsAdapter;
-    private RuntimeExceptionDao<UserAlarm, Integer> userAlarmDao;
-    private RuntimeExceptionDao<Endpoint, Integer> userEndpointDao;
+//    private RuntimeExceptionDao<UserAlarm, Integer> userAlarmDao;
+//    private RuntimeExceptionDao<Endpoint, Integer> userEndpointDao;
     private AlarmManager alarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.userAlarmDao = UserAlarmDao.get();
+//        this.userAlarmDao = UserAlarmDao.get();
 //        this.userEndpointDao = new UserEndpointDao(getApplicationContext()).getDao();
 
         setContentView(R.layout.activities_view_alarms);

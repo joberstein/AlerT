@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
 public class UserAlarmTest {
     private UserAlarm testAlarm;
@@ -22,16 +23,11 @@ public class UserAlarmTest {
         testAlarm = new UserAlarm();
     }
 
-    @Test(expected = RuntimeException.class)
-    public void throwsExceptionIfWeekdayArrayIsWrongLength() {
-        testAlarm.setSelectedDays(new int[]{});
-    }
-
     @Test
     public void verifyGetsAndSetsDays() {
         int[] expected = {0, 0, 1, 0, 1, 1, 0};
         testAlarm.setSelectedDays(expected);
-        assertEquals(Arrays.toString(expected), Arrays.toString(testAlarm.getSelectedDays().toIntArray()));
+        assertTrue(Arrays.equals(expected, testAlarm.getSelectedDays().toIntArray()));
     }
 
     @Test

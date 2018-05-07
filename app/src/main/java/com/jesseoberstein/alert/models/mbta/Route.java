@@ -1,52 +1,67 @@
 package com.jesseoberstein.alert.models.mbta;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jasminb.jsonapi.annotations.Type;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.List;
 
+@Entity(tableName = "routes", indices = {@Index("type_id")}, primaryKeys = {"id"})
 @Type("route")
-@DatabaseTable(tableName = "routes")
-public class Route extends BaseResource {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Route extends BaseResource implements Parcelable {
 
-    @DatabaseField
+    @ColumnInfo(name = "type_id")
+    @ForeignKey(entity = RouteType.class, parentColumns = "id", childColumns = "type_id")
     @JsonProperty("type")
-    private RouteType routeType;
+    private int routeTypeId;
 
-    @JsonProperty("sort_order")
-    private int sortOrder;
-
-    @DatabaseField(columnName = "short_name")
+    @ColumnInfo(name = "short_name")
     @JsonProperty("short_name")
     private String shortName;
 
-    @DatabaseField(columnName = "long_name")
+    @ColumnInfo(name = "long_name")
     @JsonProperty("long_name")
     private String longName;
 
-    @JsonProperty("direction_names")
-    private List<String> directionNames;
-
-    @DatabaseField
     @JsonProperty("description")
     private String description;
 
+    @Ignore
+    @JsonProperty("sort_order")
+    private int sortOrder;
+
+    @Ignore
+    @JsonProperty("direction_names")
+    private List<String> directionNames;
+
+    @Ignore
     @JsonProperty("color")
     private String color;
 
+    @Ignore
     @JsonProperty("text_color")
     private String textColor;
 
-    public RouteType getRouteType() {
-        return routeType;
+    @Ignore
+    @JsonIgnore
+    private RouteType routeType;
+
+    public int getRouteTypeId() {
+        return routeTypeId;
     }
 
-    public void setRouteType(RouteType routeType) {
-        this.routeType = routeType;
+    public void setRouteTypeId(int routeTypeId) {
+        this.routeTypeId = routeTypeId;
     }
 
     public int getSortOrder() {
@@ -105,6 +120,14 @@ public class Route extends BaseResource {
         this.textColor = textColor;
     }
 
+    public RouteType getRouteType() {
+        return routeType;
+    }
+
+    public void setRouteType(RouteType routeType) {
+        this.routeType = routeType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,8 +135,8 @@ public class Route extends BaseResource {
 
         Route route = (Route) o;
 
+        if (routeTypeId != route.routeTypeId) return false;
         if (sortOrder != route.sortOrder) return false;
-        if (routeType != route.routeType) return false;
         if (shortName != null ? !shortName.equals(route.shortName) : route.shortName != null)
             return false;
         if (longName != null ? !longName.equals(route.longName) : route.longName != null)
@@ -128,7 +151,7 @@ public class Route extends BaseResource {
 
     @Override
     public int hashCode() {
-        int result = routeType != null ? routeType.hashCode() : 0;
+        int result = routeTypeId;
         result = 31 * result + sortOrder;
         result = 31 * result + (shortName != null ? shortName.hashCode() : 0);
         result = 31 * result + (longName != null ? longName.hashCode() : 0);
@@ -143,4 +166,51 @@ public class Route extends BaseResource {
     public String toString() {
         return this.longName.isEmpty() ? this.shortName : this.longName;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.routeTypeId);
+        dest.writeString(this.shortName);
+        dest.writeString(this.longName);
+        dest.writeString(this.description);
+        dest.writeInt(this.sortOrder);
+        dest.writeStringList(this.directionNames);
+        dest.writeString(this.color);
+        dest.writeString(this.textColor);
+        dest.writeSerializable(this.routeType);
+        dest.writeString(this.getId());
+    }
+
+    public Route() {
+    }
+
+    protected Route(Parcel in) {
+        this.routeTypeId = in.readInt();
+        this.shortName = in.readString();
+        this.longName = in.readString();
+        this.description = in.readString();
+        this.sortOrder = in.readInt();
+        this.directionNames = in.createStringArrayList();
+        this.color = in.readString();
+        this.textColor = in.readString();
+        this.routeType = (RouteType) in.readSerializable();
+        this.setId(in.readString());
+    }
+
+    public static final Creator<Route> CREATOR = new Creator<Route>() {
+        @Override
+        public Route createFromParcel(Parcel source) {
+            return new Route(source);
+        }
+
+        @Override
+        public Route[] newArray(int size) {
+            return new Route[size];
+        }
+    };
 }

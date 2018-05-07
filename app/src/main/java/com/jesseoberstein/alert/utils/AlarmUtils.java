@@ -26,7 +26,6 @@ import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_START_REQUEST_CODE;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_STOP_REQUEST_CODE;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_UPDATE_REQUEST_CODE;
-import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.DAYS;
 import static com.jesseoberstein.alert.utils.Constants.ENDPOINTS;
 import static com.jesseoberstein.alert.utils.Constants.NICKNAME;
@@ -74,7 +73,7 @@ public class AlarmUtils {
 
     public static PendingIntent getAlarmStartIntent(UserAlarm alarm, List<String> endpoints, Context context, String stopId) {
         Intent intent = new Intent(Intent.ACTION_INSERT, buildAlarmUri(alarm.getId()), context, OnAlarmStart.class);
-        intent.putExtra(ROUTE, alarm.getRoute().toString());
+        intent.putExtra(ROUTE, alarm.getRouteId().toString());
         intent.putExtra(ALARM_ID, alarm.getId());
         intent.putExtra(NICKNAME, alarm.getNickname());
         intent.putExtra(DAYS, alarm.getSelectedDays().toIntArray());

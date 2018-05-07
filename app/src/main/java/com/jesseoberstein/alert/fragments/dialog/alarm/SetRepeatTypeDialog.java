@@ -10,9 +10,9 @@ import android.support.annotation.NonNull;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.interfaces.AlarmRepeatSetter;
+import com.jesseoberstein.alert.models.RepeatType;
 
 import static com.jesseoberstein.alert.models.RepeatType.getRepeatTypes;
-import static com.jesseoberstein.alert.models.RepeatType.values;
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
 /**
@@ -35,7 +35,7 @@ public class SetRepeatTypeDialog extends AlarmModifierDialog {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        int currentRepeatType = getDraftAlarm().getRepeatType().ordinal();
+        int currentRepeatType = getDraftAlarm().getRepeatType().getId();
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.repeat_dialog_title)
@@ -44,7 +44,7 @@ public class SetRepeatTypeDialog extends AlarmModifierDialog {
     }
 
     private void onItemSelected(DialogInterface dialogInterface, int selectedIndex) {
-        this.alarmRepeatSetter.onAlarmRepeatSet(values()[selectedIndex]);
+        this.alarmRepeatSetter.onAlarmRepeatSet(RepeatType.values()[selectedIndex]);
         new android.os.Handler().postDelayed(dialogInterface::dismiss, DELAY_DIALOG_DISMISS);
     }
 }

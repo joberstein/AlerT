@@ -11,29 +11,26 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.j256.ormlite.dao.RuntimeExceptionDao;
-import com.jesseoberstein.alert.data.DatabaseHelper;
-import com.jesseoberstein.alert.data.EndpointDao;
-import com.jesseoberstein.alert.data.RouteDao;
-import com.jesseoberstein.alert.data.StopDao;
+import com.jesseoberstein.alert.data.database.AppDatabase;
+import com.jesseoberstein.alert.data.database.MbtaDatabase;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.models.mbta.Trip;
 import com.jesseoberstein.alert.network.TaggedRequest;
 import com.jesseoberstein.alert.sensitive.SensitiveData;
+import com.jesseoberstein.alert.tasks.InsertTask;
 import com.jesseoberstein.alert.utils.ResponseParser;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * An activity responsible for creating an in-memory database from the data it fetches from the
- * MBTA api.  It creates a database under the name: {@link DatabaseHelper#MBTA_DATABASE_NAME}, which
- * is different from the app's normal database name: {@link DatabaseHelper#ALERT_DATABASE_NAME}.
+ * MBTA api.  It creates a database under the name: {@link MbtaDatabase#MBTA_DATABASE_NAME}, which
+ * is different from the app's normal database name: {@link AppDatabase#ALERT_DATABASE_NAME}.
  *
  * This activity is currently not meant to be run in production, and it can only be started by
  * modifying the manifest to set this as the launch activity.
@@ -42,14 +39,13 @@ public class InitializeMbtaData extends Activity {
     private static final String MBTA_API_SCHEME = "https";
     private static final String MBTA_API_AUTHORITY = "api-v3.mbta.com";
     private RequestQueue requestQueue;
+    private MbtaDatabase db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.deleteDatabase(DatabaseHelper.MBTA_DATABASE_NAME);
-        DatabaseHelper.init(getApplicationContext(), true);
-
         this.requestQueue = Volley.newRequestQueue(getApplicationContext());
+        this.db = MbtaDatabase.getInstance(getApplicationContext());
         this.fetchRoutes();
     }
 
@@ -66,9 +62,8 @@ public class InitializeMbtaData extends Activity {
     private void onReceiveRoutes(String response) {
         InputStream inputStream = new ByteArrayInputStream(response.getBytes());
         List<Route> routes = ResponseParser.parseJSONApi(inputStream, Route.class);
-        RouteDao.createRoutes(routes);
-        Log.i(Route.class.getName(), "Created " + RouteDao.getRecordCount() + " routes.");
 
+        new InsertTask<>(this.db.routeDao()).execute(routes.toArray(new Route[]{}));
         this.fetchStops(routes);
         this.fetchTrips(routes);
     }
@@ -88,8 +83,8 @@ public class InitializeMbtaData extends Activity {
     private void onReceiveStops(Object tag, String response) {
         InputStream inputStream = new ByteArrayInputStream(response.getBytes());
         List<Stop> stops = ResponseParser.parseJSONApi(inputStream, Stop.class);
-        StopDao.createStopsForRoute(stops, (Route) tag);
-        Log.i(Stop.class.getName(), "Created " + StopDao.getRecordCount() + " stops.");
+        stops.forEach(stop -> stop.setRouteId(((Route) tag).getId()));
+        new InsertTask<>(this.db.stopDao()).execute(stops.toArray(new Stop[]{}));
     }
 
 
@@ -108,9 +103,15 @@ public class InitializeMbtaData extends Activity {
 
     private void onReceiveTrips(Object tag, String response) {
         InputStream inputStream = new ByteArrayInputStream(response.getBytes());
+        Route route = (Route) tag;
         List<Trip> trips = ResponseParser.parseJSONApi(inputStream, Trip.class);
-        EndpointDao.createEndpointsForRoute(trips, (Route) tag);
-        Log.i(Endpoint.class.getName(), "Created " + EndpointDao.getRecordCount() + " endpoints.");
+        List<Endpoint> endpoints = trips.stream().map(trip -> {
+            int directionId = trip.getDirectionId();
+            String directionName = route.getDirectionNames().get(directionId);
+            return new Endpoint(trip.getHeadsign(), directionId, directionName, route.getId());
+        }).distinct().collect(Collectors.toList());
+
+        new InsertTask<>(this.db.endpointDao()).execute(endpoints.toArray(new Endpoint[]{}));
     }
 
 

@@ -1,6 +1,5 @@
 package com.jesseoberstein.alert.fragments.dialog.alarm;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -17,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.data.RouteDao;
 import com.jesseoberstein.alert.databinding.AlarmRouteBinding;
 import com.jesseoberstein.alert.interfaces.AlarmRouteSetter;
 import com.jesseoberstein.alert.models.AutoComplete;
@@ -27,18 +25,21 @@ import com.jesseoberstein.alert.utils.AlertUtils;
 import java.util.List;
 
 import static android.widget.AdapterView.OnItemClickListener;
+import static com.jesseoberstein.alert.utils.Constants.ROUTES;
 
 /**
  * A dialog fragment that shows a dialog for selecting the alarm route.
  */
 public class SetRouteDialog extends AlarmModifierDialog {
     private AlarmRouteSetter alarmRouteSetter;
+    private List<Route> routes;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
             this.alarmRouteSetter = (AlarmRouteSetter) getAlarmModifier();
+            this.routes = this.getArguments().getParcelableArrayList(ROUTES);
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement AlarmRouteSetter");
         }
@@ -48,8 +49,8 @@ public class SetRouteDialog extends AlarmModifierDialog {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        List<Route> routes = RouteDao.getRoutes();
-        AutoComplete<Route> autoComplete = new AutoComplete<>(routes, this::onAutoCompleteItemSelected);
+
+        AutoComplete<Route> autoComplete = new AutoComplete<>(this.routes, this::onAutoCompleteItemSelected);
         autoComplete.attachAdapter(getActivity());
 
         AlarmRouteBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_route, null, false);

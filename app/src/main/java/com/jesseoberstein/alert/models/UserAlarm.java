@@ -1,10 +1,15 @@
 package com.jesseoberstein.alert.models;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import com.jesseoberstein.alert.BR;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
@@ -18,48 +23,59 @@ import java.util.Date;
 
 import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MINUTE;
+import static java.util.Objects.isNull;
 
-@DatabaseTable(tableName = "user_alarms")
+@Entity(
+    tableName = "user_alarms",
+    indices = {@Index("route_id"), @Index("stop_id"), @Index("repeat_type_id")}
+)
 public class UserAlarm extends BaseObservable implements Serializable {
 
-    @DatabaseField(generatedId = true)
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @DatabaseField(foreign = true)
-    private Route route;
+    @ColumnInfo(name = "route_id")
+    @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
+    private String routeId;
 
-    @DatabaseField
     private String nickname;
 
-    @DatabaseField
     private String direction;
 
-    @DatabaseField(foreign = true)
-    private Stop stop;
+    @ColumnInfo(name = "stop_id")
+    @ForeignKey(entity = Stop.class, parentColumns = "id", childColumns = "stop_id")
+    private String stopId;
 
     @Deprecated
     private String station;
-
-    @DatabaseField
     private Integer hour;
-
-    @DatabaseField
     private Integer minutes;
 
+    @Embedded
     private SelectedDays selectedDays;
 
-    @DatabaseField
     private long duration;
 
-    @DatabaseField
-    private RepeatType repeatType;
+    @ColumnInfo(name = "repeat_type_id")
+    @ForeignKey(entity = RepeatType.class, parentColumns = "id", childColumns = "repeat_type_id")
+    private int repeatTypeId;
 
-    @DatabaseField
     private boolean active;
 
+    @Ignore
     private String time;
 
+    @Ignore
     private String nextFiringDayString;
+
+    @Ignore
+    private Route route;
+
+    @Ignore
+    private Stop stop;
+
+    @Ignore
+    private RepeatType repeatType;
 
     public UserAlarm() {
         Calendar calendar = Calendar.getInstance();
@@ -75,6 +91,9 @@ public class UserAlarm extends BaseObservable implements Serializable {
     public UserAlarm(UserAlarm alarm) {
         setId(alarm.getId());
         setRoute(alarm.getRoute());
+        setRouteId(alarm.getRouteId());
+        setStop(alarm.getStop());
+        setStopId(alarm.getStopId());
         setNickname(alarm.getNickname());
         setDirection(alarm.getDirection());
         setStation(alarm.getStation());
@@ -82,6 +101,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
         setSelectedDays(alarm.getSelectedDays());
         setDuration(alarm.getDuration());
         setRepeatType(alarm.getRepeatType());
+        setRepeatTypeId(alarm.getRepeatTypeId());
         setActive(alarm.isActive());
     }
 
@@ -95,15 +115,12 @@ public class UserAlarm extends BaseObservable implements Serializable {
         notifyPropertyChanged(BR.id);
     }
 
-    @Bindable
-    public Route getRoute() {
-        return route;
+    public String getRouteId() {
+        return routeId;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
-        notifyPropertyChanged(BR.route);
-        setStop(null);
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
     }
 
     @Bindable
@@ -134,14 +151,12 @@ public class UserAlarm extends BaseObservable implements Serializable {
         this.station = station;
     }
 
-    @Bindable
-    public Stop getStop() {
-        return stop;
+    public String getStopId() {
+        return stopId;
     }
 
-    public void setStop(Stop stop) {
-        this.stop = stop;
-        notifyPropertyChanged(BR.stop);
+    public void setStopId(String stopId) {
+        this.stopId = stopId;
     }
 
     public Integer getHour() {
@@ -184,20 +199,12 @@ public class UserAlarm extends BaseObservable implements Serializable {
         notifyPropertyChanged(BR.duration);
     }
 
-    @Bindable
-    public RepeatType getRepeatType() {
-        return repeatType;
+    public int getRepeatTypeId() {
+        return repeatTypeId;
     }
 
-    public void setRepeatType(RepeatType repeatType) {
-        if (repeatType.equals(this.repeatType)) {
-            return;
-        }
-
-        this.repeatType = repeatType;
-        notifyPropertyChanged(BR.repeatType);
-
-        setSelectedDays(repeatType.getSelectedDays());
+    public void setRepeatTypeId(int repeatTypeId) {
+        this.repeatTypeId = repeatTypeId;
     }
 
     public boolean isActive() {
@@ -260,11 +267,53 @@ public class UserAlarm extends BaseObservable implements Serializable {
         setNextFiringDayString();
     }
 
+    @Bindable
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+        String routeId = isNull(route) ? null : route.getId();
+        setRouteId(routeId);
+        notifyPropertyChanged(BR.route);
+        setStop(null);
+    }
+
+    @Bindable
+    public Stop getStop() {
+        return stop;
+    }
+
+    public void setStop(Stop stop) {
+        this.stop = stop;
+        String stopId = isNull(stop) ? null : stop.getId();
+        setStopId(stopId);
+        notifyPropertyChanged(BR.stop);
+    }
+
+    @Bindable
+    public RepeatType getRepeatType() {
+        return repeatType;
+    }
+
+    public void setRepeatType(RepeatType repeatType) {
+        if (repeatType == this.repeatType) {
+            return;
+        }
+
+        this.repeatType = repeatType;
+        setRepeatTypeId(repeatType.getId());
+        setSelectedDays(repeatType.getSelectedDays());
+
+        notifyPropertyChanged(BR.repeatType);
+    }
+
     @Override
     public String toString() {
         return "UserAlarm{" +
                 "id=" + id +
-                ", route=" + route +
+                ", routeId=" + routeId +
                 ", nickname='" + nickname + '\'' +
                 ", direction='" + direction + '\'' +
                 ", station='" + station + '\'' +
@@ -272,7 +321,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
                 ", minutes=" + minutes +
                 ", selectedDays=" + selectedDays +
                 ", duration=" + duration +
-                ", repeatType='" + repeatType + '\'' +
+                ", repeatTypeId='" + repeatTypeId + '\'' +
                 ", active=" + active +
                 '}';
     }
@@ -286,13 +335,16 @@ public class UserAlarm extends BaseObservable implements Serializable {
 
         if (id != userAlarm.id) return false;
         if (duration != userAlarm.duration) return false;
+        if (repeatTypeId != userAlarm.repeatTypeId) return false;
         if (active != userAlarm.active) return false;
-        if (route != null ? !route.equals(userAlarm.route) : userAlarm.route != null) return false;
+        if (routeId != null ? !routeId.equals(userAlarm.routeId) : userAlarm.routeId != null)
+            return false;
         if (nickname != null ? !nickname.equals(userAlarm.nickname) : userAlarm.nickname != null)
             return false;
         if (direction != null ? !direction.equals(userAlarm.direction) : userAlarm.direction != null)
             return false;
-        if (stop != null ? !stop.equals(userAlarm.stop) : userAlarm.stop != null) return false;
+        if (stopId != null ? !stopId.equals(userAlarm.stopId) : userAlarm.stopId != null)
+            return false;
         if (station != null ? !station.equals(userAlarm.station) : userAlarm.station != null)
             return false;
         if (hour != null ? !hour.equals(userAlarm.hour) : userAlarm.hour != null) return false;
@@ -300,7 +352,6 @@ public class UserAlarm extends BaseObservable implements Serializable {
             return false;
         if (selectedDays != null ? !selectedDays.equals(userAlarm.selectedDays) : userAlarm.selectedDays != null)
             return false;
-        if (repeatType != userAlarm.repeatType) return false;
         if (time != null ? !time.equals(userAlarm.time) : userAlarm.time != null) return false;
         return nextFiringDayString != null ? nextFiringDayString.equals(userAlarm.nextFiringDayString) : userAlarm.nextFiringDayString == null;
     }
@@ -308,16 +359,16 @@ public class UserAlarm extends BaseObservable implements Serializable {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (route != null ? route.hashCode() : 0);
+        result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
         result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
-        result = 31 * result + (stop != null ? stop.hashCode() : 0);
+        result = 31 * result + (stopId != null ? stopId.hashCode() : 0);
         result = 31 * result + (station != null ? station.hashCode() : 0);
         result = 31 * result + (hour != null ? hour.hashCode() : 0);
         result = 31 * result + (minutes != null ? minutes.hashCode() : 0);
         result = 31 * result + (selectedDays != null ? selectedDays.hashCode() : 0);
         result = 31 * result + (int) (duration ^ (duration >>> 32));
-        result = 31 * result + (repeatType != null ? repeatType.hashCode() : 0);
+        result = 31 * result + repeatTypeId;
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
         result = 31 * result + (nextFiringDayString != null ? nextFiringDayString.hashCode() : 0);

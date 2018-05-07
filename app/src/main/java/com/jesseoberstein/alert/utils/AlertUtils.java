@@ -12,12 +12,15 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.models.mbta.Route;
+import com.jesseoberstein.alert.models.mbta.RouteType;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static com.jesseoberstein.alert.models.mbta.RouteType.*;
 
 public class AlertUtils {
 
@@ -114,8 +117,6 @@ public class AlertUtils {
 
         if (routeId.matches("Green-\\w{1}")) {
             return R.style.AlarmSettingsDark_Green;
-        } else if (routeId.matches("SL\\d{1}")) {
-            return R.style.AlarmSettingsDark_Silver;
         }
 
         switch (routeId) {
@@ -126,6 +127,13 @@ public class AlertUtils {
             case "Red":
             case "Mattapan":
                 return R.style.AlarmSettingsDark_Red;
+            case "741": // SL1
+            case "742": // SL2
+            case "743": // SL3
+            case "746": // SL Waterfront
+            case "749": // SL5
+            case "751": // SL4
+                return R.style.AlarmSettingsDark_Silver;
             default:
                 return getThemeByRouteType(route);
         }
@@ -142,15 +150,15 @@ public class AlertUtils {
             return defaultTheme;
         }
 
-        switch (route.getRouteType()) {
-            case BOAT:
-                return R.style.AlarmSettingsDark_Boat;
-            case BUS:
-                return R.style.AlarmSettingsLight_Bus;
-            case COMMUTER_RAIL:
-                return R.style.AlarmSettingsDark_Commuter;
-            default:
-                return defaultTheme;
+        RouteType routeType = RouteType.valueOf(route.getRouteTypeId());
+        if (BOAT.equals(routeType)) {
+            return R.style.AlarmSettingsDark_Boat;
+        } else if (BUS.equals(routeType)) {
+            return R.style.AlarmSettingsLight_Bus;
+        } else if (COMMUTER_RAIL.equals(routeType)) {
+            return R.style.AlarmSettingsDark_Commuter;
+        } else {
+            return defaultTheme;
         }
     }
 }

@@ -1,18 +1,21 @@
 package com.jesseoberstein.alert.models.mbta;
 
 
+import android.arch.persistence.room.Ignore;
+import android.support.annotation.NonNull;
+
 import com.github.jasminb.jsonapi.Links;
 import com.github.jasminb.jsonapi.annotations.Id;
-import com.j256.ormlite.field.DatabaseField;
 
 import java.io.Serializable;
 
 class BaseResource implements Serializable {
 
     @Id
-    @DatabaseField(columnName = "id", id = true)
+    @NonNull
     private String id;
 
+    @Ignore
     @com.github.jasminb.jsonapi.annotations.Links
     private Links links;
 

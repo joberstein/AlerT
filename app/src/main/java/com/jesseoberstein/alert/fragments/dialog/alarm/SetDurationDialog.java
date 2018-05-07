@@ -10,14 +10,10 @@ import android.support.annotation.NonNull;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.interfaces.AlarmDurationSetter;
-import com.jesseoberstein.alert.interfaces.AlarmRepeatSetter;
-import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.utils.DateTimeUtils;
 
 import java.util.Arrays;
-import java.util.List;
 
-import static com.jesseoberstein.alert.models.RepeatType.values;
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
 /**

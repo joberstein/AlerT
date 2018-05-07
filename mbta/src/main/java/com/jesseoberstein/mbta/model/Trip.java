@@ -1,5 +1,6 @@
 package com.jesseoberstein.mbta.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
@@ -8,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Type("trip")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Trip extends BaseResource implements MbtaDataType {
 
     @JsonProperty("name")

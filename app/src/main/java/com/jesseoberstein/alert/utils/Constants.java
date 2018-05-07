@@ -6,6 +6,9 @@ public class Constants {
     public static final String CURRENT_TAB = "currentTab";
     public static final int DELAY_DIALOG_DISMISS = 500;
 
+    public static final String ROUTES = "routes";
+    public static final String STOPS = "stops";
+
     public static final String ALARM = "alarm";
     public static final String DRAFT_ALARM = "draftAlarm";
     public static final String ALARM_ID = "alarmId";

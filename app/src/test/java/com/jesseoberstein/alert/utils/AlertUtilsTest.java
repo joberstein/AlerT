@@ -31,7 +31,7 @@ public class AlertUtilsTest {
         themes.put("Mattapan", R.style.AlarmSettingsDark_Red);
         themes.put("Orange", R.style.AlarmSettingsDark_Orange);
         themes.put("Red", R.style.AlarmSettingsDark_Red);
-        themes.put("SL4", R.style.AlarmSettingsDark_Silver);
+        themes.put("751", R.style.AlarmSettingsDark_Silver);
 
         themes.forEach((key, value) -> {
             System.out.println("Get theme for route id: " + key);
@@ -49,7 +49,7 @@ public class AlertUtilsTest {
 
         themes.forEach((key, value) -> {
             System.out.println("Get theme for route type: " + key);
-            testRoute.setRouteType(key);
+            testRoute.setRouteTypeId(key.getId());
             assertEquals(value.intValue(), AlertUtils.getTheme(testRoute));
         });
     }

@@ -1,13 +1,13 @@
 package com.jesseoberstein.alert.models;
 
-import com.j256.ormlite.field.DatabaseField;
+import android.arch.persistence.room.Ignore;
+import android.support.annotation.VisibleForTesting;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 public class SelectedDays implements Serializable {
     private static final int SUNDAY = Calendar.SUNDAY - 1;
@@ -19,35 +19,37 @@ public class SelectedDays implements Serializable {
     private static final int SATURDAY = Calendar.SATURDAY - 1;
     private static final List<Integer> DAY_INDICES = Arrays.asList(SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY);
 
-    private int[] selectedDays = new int[7];
-
-    @DatabaseField
     private int monday;
-
-    @DatabaseField
     private int tuesday;
-
-    @DatabaseField
     private int wednesday;
-
-    @DatabaseField
     private int thursday;
-
-    @DatabaseField
     private int friday;
-
-    @DatabaseField
     private int saturday;
-
-    @DatabaseField
     private int sunday;
 
+    @Ignore
+    private int[] selectedDays = new int[7];
+
+    @Ignore
+    @VisibleForTesting
     public SelectedDays() {
         Arrays.fill(this.selectedDays, 0);
     }
 
+    @Ignore
     public SelectedDays(int[] selectedDays) {
         this.setAll(selectedDays);
+    }
+
+    // Constructor for Room
+    public SelectedDays(int sunday, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday) {
+        setSunday(sunday);
+        setMonday(monday);
+        setTuesday(tuesday);
+        setWednesday(wednesday);
+        setThursday(thursday);
+        setFriday(friday);
+        setSaturday(saturday);
     }
 
     public int getMonday() {
@@ -117,7 +119,30 @@ public class SelectedDays implements Serializable {
         if (day < 0 || day > 7) {
             throw new RuntimeException("Could not set day at index: " + day + ". Must in the range [0,7).");
         }
-        this.selectedDays[day] = isSelected ? 1 : 0;
+
+        int selected = isSelected ? 1 : 0;
+        switch (day) {
+            case SUNDAY:
+                setSunday(selected);
+                break;
+            case MONDAY:
+                setMonday(selected);
+                break;
+            case TUESDAY:
+                setTuesday(selected);
+                break;
+            case WEDNESDAY:
+                setWednesday(selected);
+                break;
+            case THURSDAY:
+                setThursday(selected);
+                break;
+            case FRIDAY:
+                setFriday(selected);
+                break;
+            case SATURDAY:
+                setSaturday(selected);
+        }
     }
 
     private void setAll(int[] selectedDays) {
@@ -135,8 +160,36 @@ public class SelectedDays implements Serializable {
 
     public boolean[] toBooleanArray() {
         boolean[] convertedDays = new boolean[this.selectedDays.length];
-        Arrays.stream(this.selectedDays).forEach(day -> convertedDays[day] = (day == 1));
+        IntStream.range(0, convertedDays.length).forEach(i -> convertedDays[i] = (this.selectedDays[i] == 1));
         return convertedDays;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SelectedDays that = (SelectedDays) o;
+
+        if (monday != that.monday) return false;
+        if (tuesday != that.tuesday) return false;
+        if (wednesday != that.wednesday) return false;
+        if (thursday != that.thursday) return false;
+        if (friday != that.friday) return false;
+        if (saturday != that.saturday) return false;
+        return sunday == that.sunday;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = monday;
+        result = 31 * result + tuesday;
+        result = 31 * result + wednesday;
+        result = 31 * result + thursday;
+        result = 31 * result + friday;
+        result = 31 * result + saturday;
+        result = 31 * result + sunday;
+        return result;
     }
 
     @Override

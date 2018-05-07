@@ -1,6 +1,9 @@
 run-as com.jesseoberstein.alert
 cd databases
 sed -i /.*android_metadata.*/d mbta.db
-cp mbta.db //sdcard/Apps/com.jesseoberstein.alert
+sed -i /.*room_master_table.*/d mbta.db
+sed -i /.*sqlite_sequence.*/d mbta.db
+sed -i /.*CREATE.*/d mbta.db
+cp mbta.db //storage/emulated/0/Android/data/com.jesseoberstein.alert/files/
 exit
 exit
