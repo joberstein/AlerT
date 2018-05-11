@@ -4,15 +4,15 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.IntStream;
-
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 public class EndpointDaoTest extends BaseDaoTest {
@@ -24,6 +24,11 @@ public class EndpointDaoTest extends BaseDaoTest {
         this.endpointDao = getTestDatabase().endpointDao();
         this.testEndpoints = getTestEndpoints();
         this.endpointDao.insert(this.testEndpoints);
+    }
+
+    @After
+    public void cleanup() {
+        this.endpointDao.delete(this.testEndpoints);
     }
 
     @Override
@@ -38,42 +43,38 @@ public class EndpointDaoTest extends BaseDaoTest {
 
     @Test
     public void testGetEndpointByRouteAndDirectionIds_invalidRoute() {
-        assertThat(endpointDao.get("Purple", 0), hasSize(0));
+        List<Endpoint> endpoints = endpointDao.get("Purple", 0);
+        assertDaoResults(endpoints, Collections.emptyList());
     }
 
     @Test
     public void testGetEndpointByRouteAndDirectionIds_invalidDirection() {
-        assertThat(endpointDao.get("Orange", 7), hasSize(0));
+        List<Endpoint> endpoints = endpointDao.get("Orange", 7);
+        assertDaoResults(endpoints, Collections.emptyList());
     }
 
     @Test
     public void testGetEndpointByRouteAndDirectionIds_() {
-        assertThat(endpointDao.get("Orange", 1), contains(getTestElements()[1]));
+        List<Endpoint> endpoints = endpointDao.get("Orange", 1);
+        assertDaoResults(endpoints, Collections.singletonList(1));
     }
 
     @Test
     public void testGetEndpointByRouteId_multipleIds() {
-        assertThat(endpointDao.get("Red", 0), contains(getTestElements()[2], getTestElements()[3]));
+        List<Endpoint> endpoints = endpointDao.get("Red", 0);
+        assertDaoResults(endpoints, Arrays.asList(2, 3));
     }
 
     private Endpoint[] getTestEndpoints() {
         Endpoint[] endpoints =  new Endpoint[]{
-            createTestEndpoint("Orange", "Forest Hills", 0),
-            createTestEndpoint("Orange", "Oak Grove", 1),
-            createTestEndpoint("Red", "Ashmont", 0),
-            createTestEndpoint("Red", "Braintree", 0),
-            createTestEndpoint("Red", "Alewife", 1)
+            new Endpoint("Forest Hills", 0, "Orange"),
+            new Endpoint("Oak Grove", 1, "Orange"),
+            new Endpoint("Ashmont", 0, "Red"),
+            new Endpoint("Braintree", 0, "Red"),
+            new Endpoint("Alewife", 1, "Red")
         };
 
         IntStream.range(0, endpoints.length).forEach(i -> endpoints[i].setId(i + 1));
         return endpoints;
-    }
-
-    private Endpoint createTestEndpoint(String routeId, String endpointName, int directionId) {
-        Endpoint endpoint = new Endpoint();
-        endpoint.setName(endpointName);
-        endpoint.setDirectionId(directionId);
-        endpoint.setRouteId(routeId);
-        return endpoint;
     }
 }

@@ -11,6 +11,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.jesseoberstein.alert.BR;
+import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.AlarmUtils;
@@ -20,10 +21,10 @@ import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MINUTE;
-import static java.util.Objects.isNull;
 
 @Entity(
     tableName = "user_alarms",
@@ -38,32 +39,32 @@ public class UserAlarm extends BaseObservable implements Serializable {
     @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
     private String routeId;
 
-    private String nickname;
-
-    private String direction;
+    @ColumnInfo(name = "direction_id")
+    @ForeignKey(entity = Direction.class, parentColumns = "id", childColumns = "direction_id")
+    private int directionId;
 
     @ColumnInfo(name = "stop_id")
     @ForeignKey(entity = Stop.class, parentColumns = "id", childColumns = "stop_id")
     private String stopId;
 
-    @Deprecated
-    private String station;
-    private Integer hour;
-    private Integer minutes;
-
-    @Embedded
-    private SelectedDays selectedDays;
-
-    private long duration;
-
     @ColumnInfo(name = "repeat_type_id")
     @ForeignKey(entity = RepeatType.class, parentColumns = "id", childColumns = "repeat_type_id")
     private int repeatTypeId;
 
+    @Embedded
+    private SelectedDays selectedDays;
+
+    private Integer hour;
+    private Integer minutes;
+    private String nickname;
+    private long duration;
     private boolean active;
 
     @Ignore
     private String time;
+
+    @Ignore
+    private RepeatType repeatType;
 
     @Ignore
     private String nextFiringDayString;
@@ -75,7 +76,10 @@ public class UserAlarm extends BaseObservable implements Serializable {
     private Stop stop;
 
     @Ignore
-    private RepeatType repeatType;
+    private Direction direction;
+
+    @Deprecated
+    private String station;
 
     public UserAlarm() {
         Calendar calendar = Calendar.getInstance();
@@ -115,14 +119,6 @@ public class UserAlarm extends BaseObservable implements Serializable {
         notifyPropertyChanged(BR.id);
     }
 
-    public String getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
     @Bindable
     public String getNickname() {
         return nickname;
@@ -131,32 +127,6 @@ public class UserAlarm extends BaseObservable implements Serializable {
     public void setNickname(String nickname) {
         this.nickname = nickname;
         notifyPropertyChanged(BR.nickname);
-    }
-
-    public String getDirection() {
-        return direction;
-    }
-
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
-
-    @Deprecated
-    public String getStation() {
-        return station;
-    }
-
-    @Deprecated
-    public void setStation(String station) {
-        this.station = station;
-    }
-
-    public String getStopId() {
-        return stopId;
-    }
-
-    public void setStopId(String stopId) {
-        this.stopId = stopId;
     }
 
     public Integer getHour() {
@@ -267,6 +237,30 @@ public class UserAlarm extends BaseObservable implements Serializable {
         setNextFiringDayString();
     }
 
+    public String getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
+    }
+
+    public String getStopId() {
+        return stopId;
+    }
+
+    public void setStopId(String stopId) {
+        this.stopId = stopId;
+    }
+
+    public int getDirectionId() {
+        return directionId;
+    }
+
+    public void setDirectionId(int directionId) {
+        this.directionId = directionId;
+    }
+
     @Bindable
     public Route getRoute() {
         return route;
@@ -274,10 +268,11 @@ public class UserAlarm extends BaseObservable implements Serializable {
 
     public void setRoute(Route route) {
         this.route = route;
-        String routeId = isNull(route) ? null : route.getId();
+        String routeId = Optional.ofNullable(route).map(Route::getId).orElse("");
         setRouteId(routeId);
         notifyPropertyChanged(BR.route);
         setStop(null);
+        setDirection(null);
     }
 
     @Bindable
@@ -287,9 +282,21 @@ public class UserAlarm extends BaseObservable implements Serializable {
 
     public void setStop(Stop stop) {
         this.stop = stop;
-        String stopId = isNull(stop) ? null : stop.getId();
+        String stopId = Optional.ofNullable(stop).map(Stop::getId).orElse("");
         setStopId(stopId);
         notifyPropertyChanged(BR.stop);
+    }
+
+    @Bindable
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+        int directionId = Optional.ofNullable(direction).map(Direction::getId).orElse(-1);
+        setDirectionId(directionId);
+        notifyPropertyChanged(BR.direction);
     }
 
     @Bindable
@@ -310,23 +317,6 @@ public class UserAlarm extends BaseObservable implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "UserAlarm{" +
-                "id=" + id +
-                ", routeId=" + routeId +
-                ", nickname='" + nickname + '\'' +
-                ", direction='" + direction + '\'' +
-                ", station='" + station + '\'' +
-                ", hour=" + hour +
-                ", minutes=" + minutes +
-                ", selectedDays=" + selectedDays +
-                ", duration=" + duration +
-                ", repeatTypeId='" + repeatTypeId + '\'' +
-                ", active=" + active +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -334,44 +324,87 @@ public class UserAlarm extends BaseObservable implements Serializable {
         UserAlarm userAlarm = (UserAlarm) o;
 
         if (id != userAlarm.id) return false;
-        if (duration != userAlarm.duration) return false;
+        if (directionId != userAlarm.directionId) return false;
         if (repeatTypeId != userAlarm.repeatTypeId) return false;
+        if (duration != userAlarm.duration) return false;
         if (active != userAlarm.active) return false;
         if (routeId != null ? !routeId.equals(userAlarm.routeId) : userAlarm.routeId != null)
             return false;
-        if (nickname != null ? !nickname.equals(userAlarm.nickname) : userAlarm.nickname != null)
-            return false;
-        if (direction != null ? !direction.equals(userAlarm.direction) : userAlarm.direction != null)
-            return false;
         if (stopId != null ? !stopId.equals(userAlarm.stopId) : userAlarm.stopId != null)
             return false;
-        if (station != null ? !station.equals(userAlarm.station) : userAlarm.station != null)
+        if (selectedDays != null ? !selectedDays.equals(userAlarm.selectedDays) : userAlarm.selectedDays != null)
             return false;
         if (hour != null ? !hour.equals(userAlarm.hour) : userAlarm.hour != null) return false;
         if (minutes != null ? !minutes.equals(userAlarm.minutes) : userAlarm.minutes != null)
             return false;
-        if (selectedDays != null ? !selectedDays.equals(userAlarm.selectedDays) : userAlarm.selectedDays != null)
+        if (nickname != null ? !nickname.equals(userAlarm.nickname) : userAlarm.nickname != null)
             return false;
         if (time != null ? !time.equals(userAlarm.time) : userAlarm.time != null) return false;
-        return nextFiringDayString != null ? nextFiringDayString.equals(userAlarm.nextFiringDayString) : userAlarm.nextFiringDayString == null;
+        if (repeatType != null ? !repeatType.equals(userAlarm.repeatType) : userAlarm.repeatType != null)
+            return false;
+        if (nextFiringDayString != null ? !nextFiringDayString.equals(userAlarm.nextFiringDayString) : userAlarm.nextFiringDayString != null)
+            return false;
+        if (route != null ? !route.equals(userAlarm.route) : userAlarm.route != null) return false;
+        if (stop != null ? !stop.equals(userAlarm.stop) : userAlarm.stop != null) return false;
+        if (direction != null ? !direction.equals(userAlarm.direction) : userAlarm.direction != null)
+            return false;
+        return station != null ? station.equals(userAlarm.station) : userAlarm.station == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
-        result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
-        result = 31 * result + (direction != null ? direction.hashCode() : 0);
+        result = 31 * result + directionId;
         result = 31 * result + (stopId != null ? stopId.hashCode() : 0);
-        result = 31 * result + (station != null ? station.hashCode() : 0);
+        result = 31 * result + repeatTypeId;
+        result = 31 * result + (selectedDays != null ? selectedDays.hashCode() : 0);
         result = 31 * result + (hour != null ? hour.hashCode() : 0);
         result = 31 * result + (minutes != null ? minutes.hashCode() : 0);
-        result = 31 * result + (selectedDays != null ? selectedDays.hashCode() : 0);
+        result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
         result = 31 * result + (int) (duration ^ (duration >>> 32));
-        result = 31 * result + repeatTypeId;
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (repeatType != null ? repeatType.hashCode() : 0);
         result = 31 * result + (nextFiringDayString != null ? nextFiringDayString.hashCode() : 0);
+        result = 31 * result + (route != null ? route.hashCode() : 0);
+        result = 31 * result + (stop != null ? stop.hashCode() : 0);
+        result = 31 * result + (direction != null ? direction.hashCode() : 0);
+        result = 31 * result + (station != null ? station.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAlarm{" +
+                "id=" + id +
+                ", routeId='" + routeId + '\'' +
+                ", directionId=" + directionId +
+                ", stopId='" + stopId + '\'' +
+                ", repeatTypeId=" + repeatTypeId +
+                ", selectedDays=" + selectedDays +
+                ", hour=" + hour +
+                ", minutes=" + minutes +
+                ", nickname='" + nickname + '\'' +
+                ", duration=" + duration +
+                ", active=" + active +
+                ", time='" + time + '\'' +
+                ", repeatType=" + repeatType +
+                ", nextFiringDayString='" + nextFiringDayString + '\'' +
+                ", route=" + route +
+                ", stop=" + stop +
+                ", direction=" + direction +
+                ", station='" + station + '\'' +
+                '}';
+    }
+
+    @Deprecated
+    public String getStation() {
+        return station;
+    }
+
+    @Deprecated
+    public void setStation(String station) {
+        this.station = station;
     }
 }

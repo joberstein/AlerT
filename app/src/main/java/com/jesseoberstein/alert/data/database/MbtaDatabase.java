@@ -1,21 +1,20 @@
 package com.jesseoberstein.alert.data.database;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.util.Log;
 
+import com.jesseoberstein.alert.data.dao.DirectionDao;
 import com.jesseoberstein.alert.data.dao.EndpointDao;
 import com.jesseoberstein.alert.data.dao.RouteDao;
 import com.jesseoberstein.alert.data.dao.StopDao;
+import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
 
-@Database(entities = {Route.class, Stop.class, Endpoint.class}, version = 1, exportSchema = false)
+@Database(entities = {Route.class, Stop.class, Direction.class, Endpoint.class}, version = 1, exportSchema = false)
 public abstract class MbtaDatabase extends RoomDatabase {
     private static final String MBTA_DATABASE_NAME = "mbta";
     static final String MBTA_DATABASE_FILENAME = MBTA_DATABASE_NAME + ".db";
@@ -23,6 +22,7 @@ public abstract class MbtaDatabase extends RoomDatabase {
 
     public abstract RouteDao routeDao();
     public abstract StopDao stopDao();
+    public abstract DirectionDao directionDao();
     public abstract EndpointDao endpointDao();
 
     public static MbtaDatabase getInstance(Context context) {

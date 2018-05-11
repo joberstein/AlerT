@@ -13,6 +13,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.data.database.MbtaDatabase;
+import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
@@ -105,13 +106,27 @@ public class InitializeMbtaData extends Activity {
         InputStream inputStream = new ByteArrayInputStream(response.getBytes());
         Route route = (Route) tag;
         List<Trip> trips = ResponseParser.parseJSONApi(inputStream, Trip.class);
-        List<Endpoint> endpoints = trips.stream().map(trip -> {
-            int directionId = trip.getDirectionId();
-            String directionName = route.getDirectionNames().get(directionId);
-            return new Endpoint(trip.getHeadsign(), directionId, directionName, route.getId());
-        }).distinct().collect(Collectors.toList());
+        this.insertEndpoints(trips, route);
+        this.insertDirections(trips, route);
+    }
+
+    private void insertEndpoints(List<Trip> trips, Route route) {
+        List<Endpoint> endpoints = trips.stream()
+                .map(trip -> new Endpoint(trip.getHeadsign(), trip.getDirectionId(), route.getId()))
+                .distinct()
+                .collect(Collectors.toList());
 
         new InsertTask<>(this.db.endpointDao()).execute(endpoints.toArray(new Endpoint[]{}));
+    }
+
+    private void insertDirections(List<Trip> trips, Route route) {
+        List<Direction> directions = trips.stream()
+                .map(Trip::getDirectionId)
+                .map(dirId -> new Direction(dirId, route.getDirectionName(dirId), route.getId()))
+                .distinct()
+                .collect(Collectors.toList());
+
+        new InsertTask<>(this.db.directionDao()).execute(directions.toArray(new Direction[]{}));
     }
 
 

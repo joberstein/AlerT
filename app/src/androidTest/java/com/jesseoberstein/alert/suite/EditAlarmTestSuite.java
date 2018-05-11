@@ -1,5 +1,6 @@
 package com.jesseoberstein.alert.suite;
 
+import com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmDurationTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmNameTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmRepeatTest;
@@ -17,6 +18,7 @@ import org.junit.runners.Suite;
     AlarmDurationTest.class,
     AlarmRepeatTest.class,
     AlarmRouteTest.class,
-    AlarmStopTest.class
+    AlarmStopTest.class,
+    AlarmDirectionTest.class
 })
 public class EditAlarmTestSuite {}

@@ -28,7 +28,7 @@ public class AlarmUtilsTest {
         mockCalendar = mock(Calendar.class);
         testAlarm = mock(UserAlarm.class);
         calendarToday = DateTimeUtils.getCurrentDay();
-        calendarTomorrow = getFutureDay(calendarToday, 1);
+        calendarTomorrow = getFutureDayOnCalendar(calendarToday, 1);
         today = calendarToday - 1;
         tomorrow = getFutureDay(today, 1);
     }
@@ -85,7 +85,7 @@ public class AlarmUtilsTest {
     @Test
     public void nextFiringDayWhenTodayNotSelected() {
         int selectedDay = getFutureDay(today, 3);
-        int calendarSelectedDay = getFutureDay(calendarToday, 3);
+        int calendarSelectedDay = getFutureDayOnCalendar(calendarToday, 3);
         selectDays(selectedDay);
 
         // Set the alarm time one minute in the future.
@@ -123,6 +123,11 @@ public class AlarmUtilsTest {
 
     private int getFutureDay(int day, int numDays) {
         return (day + numDays) % 7;
+    }
+
+    private int getFutureDayOnCalendar(int day, int numDays) {
+        int futureDay = day + numDays;
+        return futureDay % 8 == 0 ? 1 : futureDay;
     }
 
     private void setAlarmTimeInNumMinutesFromNow(int numMinutes) {

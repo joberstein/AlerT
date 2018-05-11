@@ -1,6 +1,7 @@
 package com.jesseoberstein.alert.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -22,6 +23,7 @@ public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarm> {
         super(layout, alarms);
     }
 
+    @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parentView, int viewType) {
         return new AlarmViewHolder(this.getInflatedView(parentView));
@@ -34,7 +36,7 @@ public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarm> {
         alarmHolder.time.setText(alarm.getTime());
         alarmHolder.name.setText(alarm.getNickname());
         alarmHolder.stop.setText(alarm.getStation());
-        alarmHolder.direction.setText(alarm.getDirection());
+        alarmHolder.direction.setText(alarm.getDirection().getName());
 
         int alarmStatusId = alarm.isActive() ? R.drawable.circle_light_green : R.drawable.circle_light_gray;
         alarmHolder.status.setImageResource(alarmStatusId);

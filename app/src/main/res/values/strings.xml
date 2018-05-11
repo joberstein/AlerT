@@ -44,6 +44,10 @@
     <string name="stop_dialog_title">Stop Selection</string>
     <string name="stop_dialog_default">Type a stop…</string>
 
+    <string name="direction">Direction</string>
+    <string name="direction_default">Select a direction…</string>
+    <string name="direction_dialog_title">Choose Direction</string>
+
     <string name="station">Station</string>
     <string name="directions">Directions</string>
     <string name="lines">Lines</string>

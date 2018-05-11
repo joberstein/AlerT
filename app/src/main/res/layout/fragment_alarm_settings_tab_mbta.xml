@@ -22,6 +22,11 @@
             android:visibility="@{alarm.route == null ? View.GONE : View.VISIBLE}"
             bind:alarm="@{alarm}"/>
 
+        <include layout="@layout/fragment_alarm_settings_section_direction"
+            android:id="@+id/alarmSettings_direction"
+            android:visibility="@{alarm.route == null ? View.GONE : View.VISIBLE}"
+            bind:alarm="@{alarm}"/>
+
     </LinearLayout>
 
 </layout>

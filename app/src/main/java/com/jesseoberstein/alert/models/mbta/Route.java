@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Type;
 
+import java.util.Collections;
 import java.util.List;
 
 @Entity(tableName = "routes", indices = {@Index("type_id")}, primaryKeys = {"id"})
@@ -94,6 +95,11 @@ public class Route extends BaseResource implements Parcelable {
 
     public void setDirectionNames(List<String> directionNames) {
         this.directionNames = directionNames;
+    }
+
+    public String getDirectionName(int directionId) {
+        boolean isValidDirectionId = directionId >= 0 && directionId < this.directionNames.size();
+        return isValidDirectionId ? this.directionNames.get(directionId) : "";
     }
 
     public String getDescription() {
@@ -187,6 +193,7 @@ public class Route extends BaseResource implements Parcelable {
     }
 
     public Route() {
+        this.directionNames = Collections.emptyList();
     }
 
     protected Route(Parcel in) {

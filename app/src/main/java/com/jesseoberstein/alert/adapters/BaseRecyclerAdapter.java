@@ -1,5 +1,6 @@
 package com.jesseoberstein.alert.adapters;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerAda
         this.items = items;
     }
 
+    @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new BaseViewHolder(this.getInflatedView(parent));

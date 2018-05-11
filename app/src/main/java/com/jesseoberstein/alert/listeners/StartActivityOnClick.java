@@ -100,7 +100,7 @@ public class StartActivityOnClick implements OnClickListener, OnItemClickListene
         newAlarm.setStation(createAlarm.getStationAutoComplete().getText().toString());
 
         TabLayout tabs = createAlarm.getDirectionTabs();
-        newAlarm.setDirection(tabs.getTabAt(tabs.getSelectedTabPosition()).getText().toString());
+//        newAlarm.setDirection(tabs.getTabAt(tabs.getSelectedTabPosition()).getText().toString());
 
         // Defaults
         newAlarm.setActive(true);

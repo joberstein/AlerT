@@ -31,7 +31,6 @@ public class SelectedDays implements Serializable {
     private int[] selectedDays = new int[7];
 
     @Ignore
-    @VisibleForTesting
     public SelectedDays() {
         Arrays.fill(this.selectedDays, 0);
     }

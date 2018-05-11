@@ -36,6 +36,11 @@ public class AppDatabaseTest {
     }
 
     @Test
+    public void testDirectionsInserted() {
+        assertEquals(8, testDb.directionDao().count());
+    }
+
+    @Test
     public void testEndpointsInserted() {
         assertEquals(7, testDb.endpointDao().count());
     }

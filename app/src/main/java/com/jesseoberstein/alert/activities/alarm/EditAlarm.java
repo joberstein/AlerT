@@ -14,6 +14,7 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetDaysDialog;
 import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
+import com.jesseoberstein.alert.interfaces.AlarmDirectionSetter;
 import com.jesseoberstein.alert.interfaces.AlarmDurationSetter;
 import com.jesseoberstein.alert.interfaces.AlarmRepeatSetter;
 import com.jesseoberstein.alert.interfaces.AlarmRouteSetter;
@@ -22,6 +23,7 @@ import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.AlertUtils;
@@ -35,10 +37,9 @@ import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.CURRENT_TAB;
 import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
 
-public class EditAlarm
-        extends AppCompatActivity
-        implements OnDialogClick, AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter,
-                   AlarmDurationSetter, AlarmRouteSetter, AlarmStopSetter {
+public class EditAlarm extends AppCompatActivity implements OnDialogClick,
+        AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter, AlarmDurationSetter,
+        AlarmRouteSetter, AlarmStopSetter, AlarmDirectionSetter {
 
     public static final int REQUEST_CODE = 3;
     private ViewPager pager;
@@ -177,5 +178,10 @@ public class EditAlarm
     @Override
     public void onAlarmStopSet(Stop stop) {
         this.draftAlarm.setStop(stop);
+    }
+
+    @Override
+    public void onAlarmDirectionSet(Direction direction) {
+        this.draftAlarm.setDirection(direction);
     }
 }

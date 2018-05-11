@@ -3,7 +3,6 @@ package com.jesseoberstein.alert.models.mbta;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -11,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-@Entity(tableName = "endpoints", indices = {@Index("route_id")})
+@Entity(tableName = "endpoints", indices = {@Index("direction_id"), @Index("route_id")})
 public class Endpoint implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
@@ -20,27 +19,17 @@ public class Endpoint implements Serializable {
     @JsonProperty("name")
     private String name;
 
+    @ForeignKey(entity = Direction.class, parentColumns = "id", childColumns = "direction_id")
     @ColumnInfo(name = "direction_id")
-    @JsonProperty("direction_id")
     private int directionId;
-
-    @ColumnInfo(name = "direction_name")
-    @JsonProperty("direction_name")
-    private String directionName;
 
     @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
     @ColumnInfo(name = "route_id")
-    @JsonProperty("routeId")
     private String routeId;
 
-    // Empty constructor for Jackson, but ignore for Room
-    @Ignore
-    public Endpoint() {}
-
-    public Endpoint(String name, int directionId, String directionName, String routeId) {
+    public Endpoint(String name, int directionId, String routeId) {
         this.name = name;
         this.directionId = directionId;
-        this.directionName = directionName;
         this.routeId = routeId;
     }
 
@@ -68,14 +57,6 @@ public class Endpoint implements Serializable {
         this.directionId = directionId;
     }
 
-    public String getDirectionName() {
-        return directionName;
-    }
-
-    public void setDirectionName(String directionName) {
-        this.directionName = directionName;
-    }
-
     public String getRouteId() {
         return routeId;
     }
@@ -94,8 +75,6 @@ public class Endpoint implements Serializable {
         if (id != endpoint.id) return false;
         if (directionId != endpoint.directionId) return false;
         if (name != null ? !name.equals(endpoint.name) : endpoint.name != null) return false;
-        if (directionName != null ? !directionName.equals(endpoint.directionName) : endpoint.directionName != null)
-            return false;
         return routeId != null ? routeId.equals(endpoint.routeId) : endpoint.routeId == null;
     }
 
@@ -104,7 +83,6 @@ public class Endpoint implements Serializable {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + directionId;
-        result = 31 * result + (directionName != null ? directionName.hashCode() : 0);
         result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
         return result;
     }
@@ -115,7 +93,6 @@ public class Endpoint implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", directionId=" + directionId +
-                ", directionName='" + directionName + '\'' +
                 ", routeId=" + routeId +
                 '}';
     }

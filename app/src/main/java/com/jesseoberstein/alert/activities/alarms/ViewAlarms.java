@@ -21,6 +21,7 @@ import com.jesseoberstein.alert.adapters.EmptyRecyclerViewObserver;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 
@@ -74,16 +75,20 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick {
         testAlarm.setNickname("Test");
         testAlarm.setRoute(testRoute);
         testAlarm.setStation("North Station");
-        testAlarm.setDirection("Northbound");
+        testAlarm.setDirection(new Direction(0, "Northbound", testRoute.getId()));
+
+        Route testRoute2 = new Route();
+        testRoute2.setId("Green-B");
+        testRoute2.setLongName("Green Line B");
 
         UserAlarm testAlarm2 = new UserAlarm();
         testAlarm2.setActive(true);
         testAlarm2.setTime(5, 30);
         testAlarm2.setSelectedDays(new int[]{1,0,1,0,1,0,1});
         testAlarm2.setNickname("Test 2");
-        testAlarm2.setRoute(testRoute);
+        testAlarm2.setRoute(testRoute2);
         testAlarm2.setStation("Park Street");
-        testAlarm2.setDirection("Eastbound");
+        testAlarm2.setDirection(new Direction(0, "Eastbound", testRoute2.getId()));
         testAlarm2.setActive(false);
         ArrayList<UserAlarm> testUserAlarms = new ArrayList<>(Arrays.asList(
                 testAlarm2, testAlarm, testAlarm, testAlarm2

@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
+import com.jesseoberstein.alert.data.dao.DirectionDao;
 import com.jesseoberstein.alert.data.dao.RouteDao;
 import com.jesseoberstein.alert.data.dao.StopDao;
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.databinding.MbtaSettingsBinding;
 import com.jesseoberstein.alert.interfaces.OnAlarmSubmit;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.tasks.QueryDirectionsTask;
 import com.jesseoberstein.alert.tasks.QueryRoutesTask;
 import com.jesseoberstein.alert.tasks.QueryStopsTask;
 
@@ -39,6 +41,7 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment implements OnAla
         View view = binding.getRoot();
         view.findViewById(R.id.alarmSettings_route).setOnClickListener(this::showRouteDialog);
         view.findViewById(R.id.alarmSettings_stop).setOnClickListener(this::showStopDialog);
+        view.findViewById(R.id.alarmSettings_direction).setOnClickListener(this::showDirectionDialog);
 
         return view;
     }
@@ -53,7 +56,16 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment implements OnAla
 
     private void showStopDialog(View view) {
         StopDao stopDao = AppDatabase.getInstance(getContext()).stopDao();
-        new QueryStopsTask(stopDao, this.fragmentManager).execute(this.newAlarm.getRoute().getId());
+        new QueryStopsTask(stopDao, this.fragmentManager).execute(getSelectedRouteId());
+    }
+
+    private void showDirectionDialog(View view) {
+        DirectionDao directionDao = AppDatabase.getInstance(getContext()).directionDao();
+        new QueryDirectionsTask(directionDao, this.fragmentManager).execute(getSelectedRouteId());
+    }
+
+    private String getSelectedRouteId() {
+        return this.newAlarm.getRoute().getId();
     }
 
     private void showDialogFragment(DialogFragment dialog, String tagName) {

@@ -7,13 +7,14 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
-import android.util.Log;
 
+import com.jesseoberstein.alert.data.dao.DirectionDao;
 import com.jesseoberstein.alert.data.dao.EndpointDao;
 import com.jesseoberstein.alert.data.dao.RouteDao;
 import com.jesseoberstein.alert.data.dao.StopDao;
 import com.jesseoberstein.alert.data.dao.UserAlarmDao;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
@@ -26,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Database(entities = {UserAlarm.class, Route.class, Stop.class, Endpoint.class}, version = 1, exportSchema = false)
+@Database(entities = {UserAlarm.class, Route.class, Stop.class, Direction.class, Endpoint.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String ALERT_DATABASE_NAME = "alert";
     private static AppDatabase instance;
@@ -34,6 +35,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserAlarmDao userAlarmDao();
     public abstract RouteDao routeDao();
     public abstract StopDao stopDao();
+    public abstract DirectionDao directionDao();
     public abstract EndpointDao endpointDao();
 
     public static AppDatabase getInstance(Context context) {
@@ -47,7 +49,7 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     @VisibleForTesting
-    public static Callback buildCallback(Context context) {
+    static Callback buildCallback(Context context) {
         return new Callback() {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {

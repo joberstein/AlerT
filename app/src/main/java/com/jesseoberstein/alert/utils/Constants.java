@@ -8,6 +8,7 @@ public class Constants {
 
     public static final String ROUTES = "routes";
     public static final String STOPS = "stops";
+    public static final String DIRECTIONS = "directions";
 
     public static final String ALARM = "alarm";
     public static final String DRAFT_ALARM = "draftAlarm";

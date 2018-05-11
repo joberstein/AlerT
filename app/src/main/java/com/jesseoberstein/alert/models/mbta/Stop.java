@@ -68,11 +68,12 @@ public class Stop extends BaseResource implements Parcelable {
         this.latitude = latitude;
     }
 
+    @NonNull
     public String getRouteId() {
         return routeId;
     }
 
-    public void setRouteId(String routeId) {
+    public void setRouteId(@NonNull String routeId) {
         this.routeId = routeId;
     }
 
@@ -122,8 +123,7 @@ public class Stop extends BaseResource implements Parcelable {
         dest.writeString(this.getId());
     }
 
-    public Stop() {
-    }
+    public Stop() {}
 
     protected Stop(Parcel in) {
         this.name = in.readString();
