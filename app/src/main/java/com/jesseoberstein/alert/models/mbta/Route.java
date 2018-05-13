@@ -5,21 +5,18 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Type;
 
-import java.util.Collections;
 import java.util.List;
 
 @Entity(tableName = "routes", indices = {@Index("type_id")}, primaryKeys = {"id"})
 @Type("route")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Route extends BaseResource implements Parcelable {
+public class Route extends BaseResource {
 
     @ColumnInfo(name = "type_id")
     @ForeignKey(entity = RouteType.class, parentColumns = "id", childColumns = "type_id")
@@ -172,52 +169,4 @@ public class Route extends BaseResource implements Parcelable {
     public String toString() {
         return this.longName.isEmpty() ? this.shortName : this.longName;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.routeTypeId);
-        dest.writeString(this.shortName);
-        dest.writeString(this.longName);
-        dest.writeString(this.description);
-        dest.writeInt(this.sortOrder);
-        dest.writeStringList(this.directionNames);
-        dest.writeString(this.color);
-        dest.writeString(this.textColor);
-        dest.writeSerializable(this.routeType);
-        dest.writeString(this.getId());
-    }
-
-    public Route() {
-        this.directionNames = Collections.emptyList();
-    }
-
-    protected Route(Parcel in) {
-        this.routeTypeId = in.readInt();
-        this.shortName = in.readString();
-        this.longName = in.readString();
-        this.description = in.readString();
-        this.sortOrder = in.readInt();
-        this.directionNames = in.createStringArrayList();
-        this.color = in.readString();
-        this.textColor = in.readString();
-        this.routeType = (RouteType) in.readSerializable();
-        this.setId(in.readString());
-    }
-
-    public static final Creator<Route> CREATOR = new Creator<Route>() {
-        @Override
-        public Route createFromParcel(Parcel source) {
-            return new Route(source);
-        }
-
-        @Override
-        public Route[] newArray(int size) {
-            return new Route[size];
-        }
-    };
 }

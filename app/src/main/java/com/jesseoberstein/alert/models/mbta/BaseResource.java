@@ -9,7 +9,7 @@ import com.github.jasminb.jsonapi.annotations.Id;
 
 import java.io.Serializable;
 
-class BaseResource implements Serializable {
+public class BaseResource implements Serializable {
 
     @Id
     @NonNull

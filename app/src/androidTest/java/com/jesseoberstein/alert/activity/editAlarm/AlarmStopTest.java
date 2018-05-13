@@ -50,8 +50,13 @@ public class AlarmStopTest extends BaseEditAlarmTest {
         Thread.sleep(DELAY_DIALOG_DISMISS);
     }
 
-    private void confirmStopSelected(String stopName) {
+    static void confirmStopSelected(String stopName) throws InterruptedException {
+        // Check that the stop string is saved.
         onView(withId(R.id.alarmSettings_section_value_stop))
-                .check(matches(withText(stopName)));
+                .check(matches(withText(stopName)))
+                .perform(click());
+
+        // Check that the selected stop persists in the dialog.
+        onView(withId(R.id.alarm_stop)).check(matches(withText(stopName)));
     }
 }

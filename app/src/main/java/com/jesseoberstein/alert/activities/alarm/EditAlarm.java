@@ -16,19 +16,31 @@ import com.jesseoberstein.alert.fragments.dialog.alarm.SetDaysDialog;
 import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
 import com.jesseoberstein.alert.interfaces.AlarmDirectionSetter;
 import com.jesseoberstein.alert.interfaces.AlarmDurationSetter;
+import com.jesseoberstein.alert.interfaces.AlarmEndpointSetter;
 import com.jesseoberstein.alert.interfaces.AlarmRepeatSetter;
 import com.jesseoberstein.alert.interfaces.AlarmRouteSetter;
 import com.jesseoberstein.alert.interfaces.AlarmStopSetter;
 import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
+import com.jesseoberstein.alert.interfaces.data.DirectionsReceiver;
+import com.jesseoberstein.alert.interfaces.data.EndpointsReceiver;
+import com.jesseoberstein.alert.interfaces.data.RoutesReceiver;
+import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Direction;
+import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
+import com.jesseoberstein.alert.tasks.QueryDirectionsTask;
+import com.jesseoberstein.alert.tasks.QueryEndpointsTask;
+import com.jesseoberstein.alert.tasks.QueryRoutesTask;
+import com.jesseoberstein.alert.tasks.QueryStopsTask;
 import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -36,17 +48,22 @@ import static com.jesseoberstein.alert.utils.ActivityUtils.setIconColor;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.CURRENT_TAB;
 import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
+import static java.util.Objects.isNull;
 
 public class EditAlarm extends AppCompatActivity implements OnDialogClick,
         AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter, AlarmDurationSetter,
-        AlarmRouteSetter, AlarmStopSetter, AlarmDirectionSetter {
+        AlarmRouteSetter, AlarmStopSetter, AlarmDirectionSetter, AlarmEndpointSetter,
+        RoutesReceiver, StopsReceiver, DirectionsReceiver, EndpointsReceiver {
 
     public static final int REQUEST_CODE = 3;
     private ViewPager pager;
     private AlarmPagerAdapter alarmPagerAdapter;
-    private ArrayList<String> endpoints;
     private UserAlarm alarm = new UserAlarm(); // TODO for testing only
     private UserAlarm draftAlarm;
+    private List<Route> routeList;
+    private List<Stop> stopList;
+    private List<Direction> directionList;
+    private List<Endpoint> endpointList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +79,17 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
             this.draftAlarm = (UserAlarm) savedInstanceState.getSerializable(DRAFT_ALARM);
         }
 
+        // Query for routes.
+        new QueryRoutesTask(this).execute();
+        String routeId = this.draftAlarm.getRouteId();
+
+        // Query for stops and directions if the activity has been restarted (as the result of selecting a new route).
+        if (!isNull(routeId)) {
+            new QueryStopsTask(this).execute(routeId);
+            new QueryDirectionsTask(this).execute(routeId);
+        }
+
+        // Set the theme, content view, and action bar.
         setTheme(AlertUtils.getTheme(this.draftAlarm.getRoute()));
         setContentView(R.layout.activities_edit_alarm_new);
 
@@ -71,9 +99,9 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
             bar.setDisplayHomeAsUpEnabled(true);
         });
 
+        // Set up the tab layout view pager.
         alarmPagerAdapter = new AlarmPagerAdapter(getSupportFragmentManager());
-
-        pager = (ViewPager) findViewById(R.id.alarm_settings_pager);
+        pager = findViewById(R.id.alarm_settings_pager);
         pager.setAdapter(alarmPagerAdapter);
         pager.setCurrentItem(getIntent().getIntExtra(CURRENT_TAB, 0));
 
@@ -101,10 +129,6 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
         return alarmPagerAdapter;
     }
 
-    public ArrayList<String> getEndpoints() {
-        return endpoints;
-    }
-
     public UserAlarm getAlarm() {
         return alarm;
     }
@@ -115,6 +139,22 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
      */
     public UserAlarm getDraftAlarm() {
         return draftAlarm;
+    }
+
+    public List<Route> getRouteList() {
+        return routeList;
+    }
+
+    public List<Stop> getStopList() {
+        return stopList;
+    }
+
+    public List<Direction> getDirectionList() {
+        return directionList;
+    }
+
+    public List<Endpoint> getEndpointList() {
+        return endpointList;
     }
 
     private void setTabIcons(TabLayout tabs) {
@@ -183,5 +223,36 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
     @Override
     public void onAlarmDirectionSet(Direction direction) {
         this.draftAlarm.setDirection(direction);
+
+        // Once a new direction is set, query for endpoints.
+        String routeId = this.draftAlarm.getRouteId();
+        String directionId = Integer.toString(direction.getId());
+        new QueryEndpointsTask(this).execute(routeId, directionId);
+    }
+
+    @Override
+    public void onAlarmEndpointsSet(List<Endpoint> endpoints) {
+        this.draftAlarm.setEndpoints(endpoints);
+    }
+
+    @Override
+    public void onReceiveRoutes(List<Route> routes) {
+        this.routeList = Collections.unmodifiableList(new ArrayList<>(routes));
+    }
+
+    @Override
+    public void onReceiveStops(List<Stop> stops) {
+        this.stopList = Collections.unmodifiableList(new ArrayList<>(stops));
+    }
+
+    @Override
+    public void onReceiveDirections(List<Direction> directions) {
+        this.directionList = Collections.unmodifiableList(new ArrayList<>(directions));
+    }
+
+    @Override
+    public void onReceiveEndpoints(List<Endpoint> endpoints) {
+        this.endpointList = Collections.unmodifiableList(new ArrayList<>(endpoints));
+        this.draftAlarm.setEndpoints(endpoints);
     }
 }

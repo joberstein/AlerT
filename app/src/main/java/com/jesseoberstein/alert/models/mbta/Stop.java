@@ -4,8 +4,6 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,7 +13,7 @@ import com.github.jasminb.jsonapi.annotations.Type;
 @Entity(tableName = "stops", indices = {@Index("route_id")}, primaryKeys = {"id", "route_id"})
 @Type("stop")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Stop extends BaseResource implements Parcelable {
+public class Stop extends BaseResource {
 
     @JsonProperty("name")
     private String name;
@@ -107,42 +105,4 @@ public class Stop extends BaseResource implements Parcelable {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeInt(this.wheelchairBoarding);
-        dest.writeDouble(this.longitude);
-        dest.writeDouble(this.latitude);
-        dest.writeString(this.routeId);
-        dest.writeString(this.getId());
-    }
-
-    public Stop() {}
-
-    protected Stop(Parcel in) {
-        this.name = in.readString();
-        this.wheelchairBoarding = in.readInt();
-        this.longitude = in.readDouble();
-        this.latitude = in.readDouble();
-        this.routeId = in.readString();
-        this.setId(in.readString());
-    }
-
-    public static final Creator<Stop> CREATOR = new Creator<Stop>() {
-        @Override
-        public Stop createFromParcel(Parcel source) {
-            return new Stop(source);
-        }
-
-        @Override
-        public Stop[] newArray(int size) {
-            return new Stop[size];
-        }
-    };
 }

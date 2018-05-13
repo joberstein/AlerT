@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface DirectionDao extends BaseDao<Direction> {
 
-    @Query("SELECT * FROM directions WHERE route_id IN (:routeIds)")
+    @Query("SELECT * FROM directions WHERE route_id IN (:routeIds) ORDER BY id")
     List<Direction> get(String[] routeIds);
 
     @Override

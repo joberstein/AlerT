@@ -1,25 +1,22 @@
 package com.jesseoberstein.alert.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 
 import com.jesseoberstein.alert.data.dao.RouteDao;
-import com.jesseoberstein.alert.fragments.dialog.alarm.SetRouteDialog;
+import com.jesseoberstein.alert.data.database.AppDatabase;
+import com.jesseoberstein.alert.interfaces.data.RoutesReceiver;
 import com.jesseoberstein.alert.models.mbta.Route;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.jesseoberstein.alert.utils.Constants.ROUTES;
 
 public class QueryRoutesTask extends AsyncTask<Void, Void, List<Route>> {
     private final RouteDao routeDao;
-    private final FragmentManager fragmentManager;
+    private final RoutesReceiver routesReceiver;
 
-    public QueryRoutesTask(RouteDao routeDao, FragmentManager fragmentManager) {
-        this.fragmentManager = fragmentManager;
-        this.routeDao = routeDao;
+    public QueryRoutesTask(Context context) {
+        this.routeDao = AppDatabase.getInstance(context).routeDao();
+        this.routesReceiver = (RoutesReceiver) context;
     }
 
     @Override
@@ -29,10 +26,6 @@ public class QueryRoutesTask extends AsyncTask<Void, Void, List<Route>> {
 
     @Override
     protected void onPostExecute(List<Route> routes) {
-        SetRouteDialog setRouteDialog = new SetRouteDialog();
-        Bundle routesBundle = new Bundle(1);
-        routesBundle.putParcelableArrayList(ROUTES, new ArrayList<>(routes));
-        setRouteDialog.setArguments(routesBundle);
-        setRouteDialog.show(fragmentManager, "setRouteId");
+        this.routesReceiver.onReceiveRoutes(routes);
     }
 }

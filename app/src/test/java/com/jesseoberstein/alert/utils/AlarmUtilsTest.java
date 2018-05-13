@@ -126,8 +126,7 @@ public class AlarmUtilsTest {
     }
 
     private int getFutureDayOnCalendar(int day, int numDays) {
-        int futureDay = day + numDays;
-        return futureDay % 8 == 0 ? 1 : futureDay;
+        return getFutureDay(day - 1, numDays) + 1;
     }
 
     private void setAlarmTimeInNumMinutesFromNow(int numMinutes) {

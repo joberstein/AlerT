@@ -89,11 +89,6 @@ public class Endpoint implements Serializable {
 
     @Override
     public String toString() {
-        return "Endpoint{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", directionId=" + directionId +
-                ", routeId=" + routeId +
-                '}';
+        return this.name;
     }
 }

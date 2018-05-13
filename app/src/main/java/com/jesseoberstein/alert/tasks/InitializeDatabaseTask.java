@@ -1,25 +1,18 @@
 package com.jesseoberstein.alert.tasks;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.room.RoomDatabase;
 import android.os.AsyncTask;
 
-import com.jesseoberstein.alert.data.database.AppDatabase;
-
-import java.io.IOException;
+import java.util.Arrays;
 
 /**
- * An async task responsible for initializing the {@link AppDatabase#ALERT_DATABASE_NAME} db.
+ * An async task responsible for initializing any number of databases by opening them for writing.
  */
-public class InitializeDatabaseTask extends AsyncTask<Void, Void, Void> {
-    private AppDatabase database;
-
-    public InitializeDatabaseTask(AppDatabase database) {
-        this.database = database;
-    }
+public class InitializeDatabaseTask extends AsyncTask<RoomDatabase, Void, Void> {
 
     @Override
-    protected Void doInBackground(Void[] objects) {
-        this.database.getOpenHelper().getWritableDatabase();
+    protected Void doInBackground(RoomDatabase[] databases) {
+        Arrays.stream(databases).forEach(db -> db.getOpenHelper().getWritableDatabase());
         return null;
     }
 }

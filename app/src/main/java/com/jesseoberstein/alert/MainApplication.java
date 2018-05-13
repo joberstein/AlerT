@@ -14,6 +14,7 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        new InitializeDatabaseTask(AppDatabase.getInstance(getApplicationContext())).execute();
+        AppDatabase appDatabase = AppDatabase.getInstance(getApplicationContext());
+        new InitializeDatabaseTask().execute(appDatabase);
     }
 }

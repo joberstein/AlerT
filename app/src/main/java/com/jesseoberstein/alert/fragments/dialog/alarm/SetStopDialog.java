@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmStopBinding;
 import com.jesseoberstein.alert.interfaces.AlarmStopSetter;
+import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
 import com.jesseoberstein.alert.models.AutoComplete;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.AlertUtils;
@@ -22,23 +23,23 @@ import com.jesseoberstein.alert.utils.AlertUtils;
 import java.util.List;
 
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
-import static com.jesseoberstein.alert.utils.Constants.STOPS;
 
 /**
  * A dialog fragment that shows a dialog for selecting the alarm stop.
  */
 public class SetStopDialog extends AlarmModifierDialog {
     private AlarmStopSetter alarmStopSetter;
-    private List<Stop> stops;
+    private StopsReceiver stopsReceiver;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
             this.alarmStopSetter = (AlarmStopSetter) getAlarmModifier();
-            this.stops = getArguments().getParcelableArrayList(STOPS);
+            this.stopsReceiver = (StopsReceiver) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement AlarmStopSetter");
+            String msg = context + " must implement both AlarmStopSetter and StopsReceiver";
+            throw new ClassCastException(msg);
         }
     }
 
@@ -46,7 +47,8 @@ public class SetStopDialog extends AlarmModifierDialog {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        AutoComplete<Stop> autoComplete = new AutoComplete<>(this.stops, this::onAutoCompleteItemSelected);
+        List<Stop> stops = this.stopsReceiver.getStopList();
+        AutoComplete<Stop> autoComplete = new AutoComplete<>(stops, this::onAutoCompleteItemSelected);
         autoComplete.attachAdapter(getActivity());
 
         AlarmStopBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_stop, null, false);

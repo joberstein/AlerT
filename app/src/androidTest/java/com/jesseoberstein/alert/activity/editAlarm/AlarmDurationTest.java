@@ -14,6 +14,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
 public class AlarmDurationTest extends BaseEditAlarmTest {
+    private static final String DEFAULT_DURATION = "30 minutes";
+    private static final String SELECTED_DURATION = "1 hour";
 
     @Test
     public void durationSectionLabelAndValue() throws InterruptedException {
@@ -25,20 +27,23 @@ public class AlarmDurationTest extends BaseEditAlarmTest {
 
         // Check default duration value.
         onView(withId(R.id.alarmSettings_section_value_duration))
-                .check(matches(withText("30 minutes")));
+                .check(matches(withText(DEFAULT_DURATION)));
 
         // Click on duration section.
         onView(withId(R.id.alarmSettings_duration)).perform(click());
 
         // Select new duration.
-        onView(withText("1 hour")).perform(click());
+        onView(withText(SELECTED_DURATION)).perform(click());
 
         // Wait until the dialog is dismissed.
         Thread.sleep(DELAY_DIALOG_DISMISS);
 
         // Confirm that alarm duration has been saved.
         onView(withId(R.id.alarmSettings_section_value_duration))
-                .check(matches(isDisplayed()))
-                .check(matches(withText("1 hour")));
+                .check(matches(withText(SELECTED_DURATION)))
+                .perform(click());
+
+        // Check that the duration persists in the dialog.
+        onView(withText(SELECTED_DURATION)).check(matches(isChecked()));
     }
 }

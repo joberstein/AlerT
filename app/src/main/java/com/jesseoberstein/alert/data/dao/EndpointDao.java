@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface EndpointDao extends BaseDao<Endpoint> {
 
-    @Query("SELECT * FROM endpoints WHERE route_id = :routeId AND direction_id = :directionId")
+    @Query("SELECT * FROM endpoints WHERE route_id = :routeId AND direction_id = :directionId ORDER BY name")
     List<Endpoint> get(String routeId, int directionId);
 
     @Override

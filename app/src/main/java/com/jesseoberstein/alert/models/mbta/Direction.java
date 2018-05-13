@@ -3,19 +3,13 @@ package com.jesseoberstein.alert.models.mbta;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
 @Entity(tableName = "directions", indices = {@Index("route_id")}, primaryKeys = {"id", "route_id"})
-public class Direction implements Serializable, Parcelable {
+public class Direction implements Serializable {
     private int id;
     private String name;
 
@@ -79,35 +73,4 @@ public class Direction implements Serializable, Parcelable {
     public String toString() {
         return this.name;
     }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.routeId);
-    }
-
-    protected Direction(Parcel in) {
-        this.id = in.readInt();
-        this.name = in.readString();
-        this.routeId = in.readString();
-    }
-
-    public static final Parcelable.Creator<Direction> CREATOR = new Parcelable.Creator<Direction>() {
-        @Override
-        public Direction createFromParcel(Parcel source) {
-            return new Direction(source);
-        }
-
-        @Override
-        public Direction[] newArray(int size) {
-            return new Direction[size];
-        }
-    };
 }

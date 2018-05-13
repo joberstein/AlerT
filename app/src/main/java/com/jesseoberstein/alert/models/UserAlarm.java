@@ -11,7 +11,9 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.jesseoberstein.alert.BR;
+import com.jesseoberstein.alert.models.mbta.BaseResource;
 import com.jesseoberstein.alert.models.mbta.Direction;
+import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.AlarmUtils;
@@ -19,8 +21,10 @@ import com.jesseoberstein.alert.utils.DateTimeUtils;
 
 import java.io.Serializable;
 import java.text.DateFormatSymbols;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.Calendar.HOUR_OF_DAY;
@@ -78,6 +82,9 @@ public class UserAlarm extends BaseObservable implements Serializable {
     @Ignore
     private Direction direction;
 
+    @Ignore
+    private List<Endpoint> endpoints;
+
     @Deprecated
     private String station;
 
@@ -90,6 +97,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
         setRepeatType(RepeatType.NEVER);
         setSelectedDays(new SelectedDays());
         setDuration(30);
+        setEndpoints(new ArrayList<>());
     }
 
     public UserAlarm(UserAlarm alarm) {
@@ -100,6 +108,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
         setStopId(alarm.getStopId());
         setNickname(alarm.getNickname());
         setDirection(alarm.getDirection());
+        setEndpoints(alarm.getEndpoints());
         setStation(alarm.getStation());
         setTime(alarm.getHour(), alarm.getMinutes());
         setSelectedDays(alarm.getSelectedDays());
@@ -268,11 +277,12 @@ public class UserAlarm extends BaseObservable implements Serializable {
 
     public void setRoute(Route route) {
         this.route = route;
-        String routeId = Optional.ofNullable(route).map(Route::getId).orElse("");
+        String routeId = Optional.ofNullable(route).map(BaseResource::getId).orElse("");
         setRouteId(routeId);
         notifyPropertyChanged(BR.route);
         setStop(null);
         setDirection(null);
+        setEndpoints(new ArrayList<>());
     }
 
     @Bindable
@@ -297,6 +307,16 @@ public class UserAlarm extends BaseObservable implements Serializable {
         int directionId = Optional.ofNullable(direction).map(Direction::getId).orElse(-1);
         setDirectionId(directionId);
         notifyPropertyChanged(BR.direction);
+    }
+
+    @Bindable
+    public List<Endpoint> getEndpoints() {
+        return endpoints;
+    }
+
+    public void setEndpoints(List<Endpoint> endpoints) {
+        this.endpoints = endpoints;
+        notifyPropertyChanged(BR.endpoints);
     }
 
     @Bindable
@@ -348,6 +368,8 @@ public class UserAlarm extends BaseObservable implements Serializable {
         if (stop != null ? !stop.equals(userAlarm.stop) : userAlarm.stop != null) return false;
         if (direction != null ? !direction.equals(userAlarm.direction) : userAlarm.direction != null)
             return false;
+        if (endpoints != null ? !endpoints.equals(userAlarm.endpoints) : userAlarm.endpoints != null)
+            return false;
         return station != null ? station.equals(userAlarm.station) : userAlarm.station == null;
     }
 
@@ -370,6 +392,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
         result = 31 * result + (route != null ? route.hashCode() : 0);
         result = 31 * result + (stop != null ? stop.hashCode() : 0);
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
+        result = 31 * result + (endpoints != null ? endpoints.hashCode() : 0);
         result = 31 * result + (station != null ? station.hashCode() : 0);
         return result;
     }
@@ -394,6 +417,7 @@ public class UserAlarm extends BaseObservable implements Serializable {
                 ", route=" + route +
                 ", stop=" + stop +
                 ", direction=" + direction +
+                ", endpoints=" + endpoints +
                 ", station='" + station + '\'' +
                 '}';
     }

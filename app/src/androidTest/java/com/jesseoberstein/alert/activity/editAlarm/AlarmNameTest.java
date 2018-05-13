@@ -14,6 +14,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 public class AlarmNameTest extends BaseEditAlarmTest {
+    private static final String TEST_NICKNAME = "Test Name";
 
     @Test
     public void nameSectionLabelAndValue() {
@@ -33,11 +34,15 @@ public class AlarmNameTest extends BaseEditAlarmTest {
         // Type new alarm name and save.
         onView(withId(R.id.alarm_nickname))
                 .check(matches(withHint(R.string.nickname_default)))
-                .perform(replaceText("Test Name"))
+                .perform(replaceText(TEST_NICKNAME))
                 .perform(pressImeActionButton());
 
         // Confirm the new alarm name has been saved.
         onView(withId(R.id.alarmSettings_section_value_name))
-                .check(matches(withText("Test Name")));
+                .check(matches(withText(TEST_NICKNAME)))
+                .perform(click());
+
+        // Check that the new name persists in the dialog.
+        onView(withId(R.id.alarm_nickname)).check(matches(withText(TEST_NICKNAME)));
     }
 }
