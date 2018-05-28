@@ -1,7 +1,6 @@
 package com.jesseoberstein.alert.activity.editAlarm;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.test.TestUtils;
 import com.jesseoberstein.alert.utils.DateTimeUtils;
 
 import org.junit.Test;
@@ -22,34 +21,47 @@ public class AlarmTimeTest extends BaseEditAlarmTest {
     @Test
     public void timeSectionLabelAndValue() {
         moveToTimeSettingsTab();
+        confirmTimeLabelAndDefaultValue();
+        showTimePicker();
+        updateTime(SELECTED_HOUR, SELECTED_MINUTE);
+        saveSelectedTime();
+        confirmTimeSet("2:07 pm", SELECTED_HOUR, SELECTED_MINUTE);
+    }
 
-        // Check time label text.
-        onView(withId(R.id.alarmSettings_section_label_time)).check(matches(withText(R.string.time)));
+    private void showTimePicker() {
+        openSectionDialog(R.id.alarmSettings_time);
+    }
 
+    private void saveSelectedTime() {
+        onView(withText(R.string.ok)).perform(click());
+    }
+
+    private void updateTime(int hour, int minute) {
+        onView(withId(R.id.alarm_time_picker)).perform(setTime(hour, minute));
+    }
+
+    private void confirmTimeSet(String time, int hour, int minute) {
+        // Check that the nickname string is correct.
+        onView(withId(R.id.alarmSettings_section_value_time)).check(matches(withText(time)));
+        showTimePicker();
+
+        // Check selected time persists in the dialog.
+        onView(withId(R.id.alarm_time_picker)).check(withTime(hour, minute));
+
+        saveSelectedTime();
+    }
+
+    private void confirmTimeLabelAndDefaultValue() {
+        confirmSectionLabelAndDefaultValue(
+            R.id.alarmSettings_section_label_time, R.string.time,
+            R.id.alarmSettings_section_value_time, getCurrentTime()
+        );
+    }
+
+    private String getCurrentTime() {
         Calendar calendar = Calendar.getInstance();
         int defaultHour = calendar.get(Calendar.HOUR_OF_DAY) + 1;
         int defaultMinute = calendar.get(Calendar.MINUTE);
-        String defaultTime = DateTimeUtils.getFormattedTime(defaultHour, defaultMinute);
-
-        // Check default time is set (one hour ahead of the current time).
-        onView(withId(R.id.alarmSettings_section_value_time))
-                .check(matches(withText(defaultTime)));
-
-        // Click on time section.
-        onView(withId(R.id.alarmSettings_time)).perform(click());
-
-        // Set new alarm time.
-        onView(withId(R.id.alarm_time_picker)).perform(setTime(SELECTED_HOUR, SELECTED_MINUTE));
-
-        // Save new time.
-        onView(withText(R.string.ok)).perform(click());
-
-        // Check new alarm time is saved.
-        onView(withId(R.id.alarmSettings_section_value_time))
-                .check(matches(withText("2:07 pm")))
-                .perform(click());
-
-        // Check selected time persists in the dialog.
-        onView(withId(R.id.alarm_time_picker)).check(withTime(SELECTED_HOUR, SELECTED_MINUTE));
+        return DateTimeUtils.getFormattedTime(defaultHour, defaultMinute);
     }
 }

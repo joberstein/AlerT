@@ -44,11 +44,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import static com.jesseoberstein.alert.models.mbta.Endpoint.PSUEDO_ENDPOINT_NAMES;
 import static com.jesseoberstein.alert.utils.ActivityUtils.setIconColor;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.CURRENT_TAB;
 import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
 import static java.util.Objects.isNull;
+import static java.util.stream.Collectors.toList;
 
 public class EditAlarm extends AppCompatActivity implements OnDialogClick,
         AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter, AlarmDurationSetter,
@@ -83,9 +85,8 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
         new QueryRoutesTask(this).execute();
         String routeId = this.draftAlarm.getRouteId();
 
-        // Query for stops and directions if the activity has been restarted (as the result of selecting a new route).
+        // Query for directions if the activity has been restarted (as the result of selecting a new route).
         if (!isNull(routeId)) {
-            new QueryStopsTask(this).execute(routeId);
             new QueryDirectionsTask(this).execute(routeId);
         }
 
@@ -145,12 +146,12 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
         return routeList;
     }
 
-    public List<Stop> getStopList() {
-        return stopList;
-    }
-
     public List<Direction> getDirectionList() {
         return directionList;
+    }
+
+    public List<Stop> getStopList() {
+        return stopList;
     }
 
     public List<Endpoint> getEndpointList() {
@@ -207,6 +208,10 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
     @Override
     public void onAlarmRouteSet(Route route) {
         this.draftAlarm.setRoute(route);
+        this.draftAlarm.setDirection(null);
+        this.draftAlarm.setStop(null);
+        this.draftAlarm.setEndpoints(new ArrayList<>());
+
         // Once the route is set, restart the activity to apply the selected route'
         Intent intent = getIntent();
         intent.putExtra(DRAFT_ALARM, this.draftAlarm);
@@ -216,18 +221,18 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
     }
 
     @Override
-    public void onAlarmStopSet(Stop stop) {
-        this.draftAlarm.setStop(stop);
-    }
-
-    @Override
     public void onAlarmDirectionSet(Direction direction) {
         this.draftAlarm.setDirection(direction);
 
-        // Once a new direction is set, query for endpoints.
+        // Once the direction is set, query for endpoints.
         String routeId = this.draftAlarm.getRouteId();
         String directionId = Integer.toString(direction.getId());
         new QueryEndpointsTask(this).execute(routeId, directionId);
+    }
+
+    @Override
+    public void onAlarmStopSet(Stop stop) {
+        this.draftAlarm.setStop(stop);
     }
 
     @Override
@@ -238,11 +243,7 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
     @Override
     public void onReceiveRoutes(List<Route> routes) {
         this.routeList = Collections.unmodifiableList(new ArrayList<>(routes));
-    }
 
-    @Override
-    public void onReceiveStops(List<Stop> stops) {
-        this.stopList = Collections.unmodifiableList(new ArrayList<>(stops));
     }
 
     @Override
@@ -252,7 +253,30 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
 
     @Override
     public void onReceiveEndpoints(List<Endpoint> endpoints) {
-        this.endpointList = Collections.unmodifiableList(new ArrayList<>(endpoints));
-        this.draftAlarm.setEndpoints(endpoints);
+        this.endpointList = Collections.unmodifiableList(new ArrayList<>(endpoints)).stream()
+            .filter(endpoint -> !PSUEDO_ENDPOINT_NAMES.contains(endpoint.getName()))
+            .collect(toList());
+
+        this.draftAlarm.setEndpoints(this.endpointList);
+
+        // Once endpoints are received, query for stops.
+        String routeId = this.draftAlarm.getRouteId();
+        new QueryStopsTask(this).execute(routeId);
+    }
+
+    @Override
+    public void onReceiveStops(List<Stop> stops) {
+        // Before setting the stop list, filter out any endpoints.
+        List<String> endpointNames = this.endpointList.stream().map(Endpoint::getName).collect(toList());
+        List<Stop> stopsWithoutEndpoints = stops.stream()
+                .filter(stop -> !endpointNames.contains(stop.getName()))
+                .collect(toList());
+
+        this.stopList = Collections.unmodifiableList(stopsWithoutEndpoints);
+
+        // If the stop list doesn't contain the selected stop, null out the alarm's stop.
+        if (!this.stopList.contains(this.draftAlarm.getStop())) {
+            this.draftAlarm.setStop(null);
+        }
     }
 }

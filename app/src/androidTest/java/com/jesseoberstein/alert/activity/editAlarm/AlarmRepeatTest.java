@@ -19,40 +19,48 @@ public class AlarmRepeatTest extends BaseEditAlarmTest {
     private static final String[] SELECTED_DAYS = {"Monday", "Wednesday", "Saturday"};
 
     @Test
-    public void repeatSectionLabelAndValue() {
+    public void repeatSectionLabelAndValue() throws InterruptedException {
         moveToTimeSettingsTab();
+        confirmRepeatLabelAndDefaultValue();
 
-        // Check repeat label text.
-        onView(withId(R.id.alarmSettings_section_label_repeat))
-                .check(matches(withText(R.string.repeat)));
+        openRepeatDialog();
+        selectRepeat(SELECTED_REPEAT);
+        selectDays(SELECTED_DAYS);
 
-        // Check default repeat value.
-        onView(withId(R.id.alarmSettings_section_value_repeat)).check(matches(withText(DEFAULT_REPEAT)));
+        confirmRepeatSelected(SELECTED_REPEAT);
+        confirmDaysSelected(SELECTED_DAYS);
+    }
 
-        // Click on repeat section.
-        onView(withId(R.id.alarmSettings_repeat)).perform(click());
+    private void openRepeatDialog() {
+        openSectionDialog(R.id.alarmSettings_repeat);
+    }
 
-        // Select 'Custom' repeat.
-        onView(withText(SELECTED_REPEAT)).perform(click());
+    private void selectRepeat(String repeat) throws InterruptedException {
+        selectItem(repeat);
+    }
 
-        // Toggle 'Monday', 'Wednesday', and 'Saturday' checkboxes.
-        Arrays.stream(SELECTED_DAYS).forEach(day ->
-                onView(withText(day)).perform(click()).check(matches(isChecked())));
+    private void selectDays(String... days) throws InterruptedException {
+        selectItems(days);
+    }
 
-        // Save day selection.
-        onView(withText(R.string.ok)).perform(click());
+    private void confirmRepeatSelected(String repeat) throws InterruptedException {
+        // Check that the repeat string is correct.
+        onView(withId(R.id.alarmSettings_section_value_repeat)).check(matches(withText(repeat)));
+        openRepeatDialog();
 
-        // Confirm that alarm repeat has been saved.
-        onView(withId(R.id.alarmSettings_section_value_repeat))
-                .check(matches(withText(SELECTED_REPEAT)))
-                .perform(click());
+        // Check that the repeat selection persists in the dialog.
+        onView(withText(repeat)).check(matches(isChecked()));
+        selectRepeat(repeat);
+    }
 
-        // Check that the repeat type persists in the dialog.
-        onView(withText(SELECTED_REPEAT)).check(matches(isChecked())).perform(click());
+    private void confirmDaysSelected(String... days) {
+        Arrays.stream(days).forEach(day -> onView(withText(day)).check(matches(isChecked())));
+    }
 
-        // Check that the day selection persists in the dialog.
-        Arrays.stream(SELECTED_DAYS).forEach(day ->
-                onView(withText(day)).check(matches(isChecked())));
-
+    private void confirmRepeatLabelAndDefaultValue() {
+        confirmSectionLabelAndDefaultValue(
+            R.id.alarmSettings_section_label_repeat, R.string.repeat,
+            R.id.alarmSettings_section_value_repeat, DEFAULT_REPEAT
+        );
     }
 }

@@ -107,25 +107,6 @@ public class UserAlarmTest {
         assertEquals("11:04 pm", testAlarm.getTime());
     }
 
-    @Test
-    public void verifyStopIsResetWhenRouteChanged() {
-        Route testRoute = new Route();
-        testRoute.setId("Orange");
-        testRoute.setLongName("Orange Line");
-        testRoute.setRouteType(RouteType.SUBWAY);
-
-        Stop testStop = new Stop();
-        testStop.setId("place-forhl");
-        testStop.setName("Forest Hills");
-
-        testAlarm.setRoute(testRoute);
-        testAlarm.setStop(testStop);
-        assertEquals(testStop, testAlarm.getStop());
-
-        testAlarm.setRoute(new Route());
-        assertNull(testAlarm.getStop());
-    }
-
     private void verifyAlarmWeekdays(int[] expected) {
         assertEquals(Arrays.toString(expected), Arrays.toString(testAlarm.getSelectedDays().toIntArray()));
     }

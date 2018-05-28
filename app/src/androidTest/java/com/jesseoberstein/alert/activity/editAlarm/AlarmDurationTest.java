@@ -20,30 +20,34 @@ public class AlarmDurationTest extends BaseEditAlarmTest {
     @Test
     public void durationSectionLabelAndValue() throws InterruptedException {
         moveToTimeSettingsTab();
+        confirmDurationLabelAndDefaultValue();
+        openDurationDialog();
+        selectDuration(SELECTED_DURATION);
+        confirmDurationSelected(SELECTED_DURATION);
+    }
 
-        // Check duration label text.
-        onView(withId(R.id.alarmSettings_section_label_duration))
-                .check(matches(withText(R.string.duration)));
+    private void openDurationDialog() {
+        openSectionDialog(R.id.alarmSettings_duration);
+    }
 
-        // Check default duration value.
-        onView(withId(R.id.alarmSettings_section_value_duration))
-                .check(matches(withText(DEFAULT_DURATION)));
+    private void selectDuration(String duration) throws InterruptedException {
+        selectItem(duration);
+    }
 
-        // Click on duration section.
-        onView(withId(R.id.alarmSettings_duration)).perform(click());
+    private void confirmDurationSelected(String duration) throws InterruptedException {
+        // Check that the duration string is correct.
+        onView(withId(R.id.alarmSettings_section_value_duration)).check(matches(withText(duration)));
+        openDurationDialog();
 
-        // Select new duration.
-        onView(withText(SELECTED_DURATION)).perform(click());
+        // Check that the duration selection persists in the dialog.
+        onView(withText(duration)).check(matches(isChecked()));
+        selectDuration(duration);
+    }
 
-        // Wait until the dialog is dismissed.
-        Thread.sleep(DELAY_DIALOG_DISMISS);
-
-        // Confirm that alarm duration has been saved.
-        onView(withId(R.id.alarmSettings_section_value_duration))
-                .check(matches(withText(SELECTED_DURATION)))
-                .perform(click());
-
-        // Check that the duration persists in the dialog.
-        onView(withText(SELECTED_DURATION)).check(matches(isChecked()));
+    private void confirmDurationLabelAndDefaultValue() {
+        confirmSectionLabelAndDefaultValue(
+            R.id.alarmSettings_section_label_duration, R.string.duration,
+            R.id.alarmSettings_section_value_duration, DEFAULT_DURATION
+        );
     }
 }

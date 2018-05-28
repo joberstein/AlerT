@@ -280,21 +280,6 @@ public class UserAlarm extends BaseObservable implements Serializable {
         String routeId = Optional.ofNullable(route).map(BaseResource::getId).orElse("");
         setRouteId(routeId);
         notifyPropertyChanged(BR.route);
-        setStop(null);
-        setDirection(null);
-        setEndpoints(new ArrayList<>());
-    }
-
-    @Bindable
-    public Stop getStop() {
-        return stop;
-    }
-
-    public void setStop(Stop stop) {
-        this.stop = stop;
-        String stopId = Optional.ofNullable(stop).map(Stop::getId).orElse("");
-        setStopId(stopId);
-        notifyPropertyChanged(BR.stop);
     }
 
     @Bindable
@@ -307,6 +292,18 @@ public class UserAlarm extends BaseObservable implements Serializable {
         int directionId = Optional.ofNullable(direction).map(Direction::getId).orElse(-1);
         setDirectionId(directionId);
         notifyPropertyChanged(BR.direction);
+    }
+
+    @Bindable
+    public Stop getStop() {
+        return stop;
+    }
+
+    public void setStop(Stop stop) {
+        this.stop = stop;
+        String stopId = Optional.ofNullable(stop).map(Stop::getId).orElse("");
+        setStopId(stopId);
+        notifyPropertyChanged(BR.stop);
     }
 
     @Bindable

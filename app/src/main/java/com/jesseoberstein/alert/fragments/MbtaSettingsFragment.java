@@ -43,8 +43,8 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment implements OnAla
 
         View view = binding.getRoot();
         view.findViewById(R.id.alarmSettings_route).setOnClickListener(this::showRouteDialog);
-        view.findViewById(R.id.alarmSettings_stop).setOnClickListener(this::showStopDialog);
         view.findViewById(R.id.alarmSettings_direction).setOnClickListener(this::showDirectionDialog);
+        view.findViewById(R.id.alarmSettings_stop).setOnClickListener(this::showStopDialog);
         view.findViewById(R.id.alarmSettings_endpoints).setOnClickListener(this::showEndpointsDialog);
 
         return view;
@@ -57,12 +57,12 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment implements OnAla
         this.showDialogFragment(new SetRouteDialog(), "setRoute");
     }
 
-    private void showStopDialog(View view) {
-        this.showDialogFragment(new SetStopDialog(), "setStop");
-    }
-
     private void showDirectionDialog(View view) {
         this.showDialogFragment(new SetDirectionDialog(), "setDirection");
+    }
+
+    private void showStopDialog(View view) {
+        this.showDialogFragment(new SetStopDialog(), "setStop");
     }
 
     private void showEndpointsDialog(View view) {

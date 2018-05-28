@@ -17,14 +17,14 @@
             android:id="@+id/alarmSettings_route"
             bind:alarm="@{alarm}"/>
 
-        <include layout="@layout/fragment_alarm_settings_section_stop"
-            android:id="@+id/alarmSettings_stop"
-            android:visibility="@{alarm.route == null ? View.GONE : View.VISIBLE}"
-            bind:alarm="@{alarm}"/>
-
         <include layout="@layout/fragment_alarm_settings_section_direction"
             android:id="@+id/alarmSettings_direction"
             android:visibility="@{alarm.route == null ? View.GONE : View.VISIBLE}"
+            bind:alarm="@{alarm}"/>
+
+        <include layout="@layout/fragment_alarm_settings_section_stop"
+            android:id="@+id/alarmSettings_stop"
+            android:visibility="@{alarm.direction == null ? View.GONE : View.VISIBLE}"
             bind:alarm="@{alarm}"/>
 
         <include layout="@layout/fragment_alarm_settings_section_endpoints"

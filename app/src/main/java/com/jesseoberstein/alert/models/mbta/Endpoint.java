@@ -9,9 +9,14 @@ import android.arch.persistence.room.PrimaryKey;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity(tableName = "endpoints", indices = {@Index("direction_id"), @Index("route_id")})
 public class Endpoint implements Serializable {
+
+    public static final List<String> PSUEDO_ENDPOINT_NAMES = Arrays.asList(
+            "JFK/Umass", "Quincy Center", "North Quincy", "Quincy Center");
 
     @PrimaryKey(autoGenerate = true)
     private int id;
