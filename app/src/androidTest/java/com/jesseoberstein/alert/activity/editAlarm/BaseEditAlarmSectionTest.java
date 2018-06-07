@@ -18,9 +18,11 @@ import java.util.Arrays;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
@@ -30,7 +32,7 @@ import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
-public class BaseEditAlarmTest {
+public class BaseEditAlarmSectionTest {
     private Intent intent;
 
     @Rule
@@ -60,6 +62,29 @@ public class BaseEditAlarmTest {
     void moveToMbtaSettingsTab() {
         activityRule.launchActivity(intent);
         moveToSettingsTab(R.drawable.ic_train);
+    }
+
+    void verifyErrorMessageShowsOnSave(int errorMessage) {
+        saveAlarm();
+        verifyErrorMessageDisplayed(errorMessage);
+        onView(withText(R.string.fix)).perform(click());
+    }
+
+    void verifyErrorMessageNotShownOnSave(int errorMessage) {
+        saveAlarm();
+        verifyErrorMessageNotDisplayed(errorMessage);
+    }
+
+    void verifyErrorMessageDisplayed(int errorMessage) {
+        onView(withText(errorMessage)).check(matches(isDisplayed()));
+    }
+
+    void verifyErrorMessageNotDisplayed(int errorMessage) {
+        onView(withText(errorMessage)).check(doesNotExist());
+    }
+
+    void saveAlarm() {
+        onView(withContentDescription("Save Alarm")).perform(click());
     }
 
     private void moveToSettingsTab(int tabIcon) {

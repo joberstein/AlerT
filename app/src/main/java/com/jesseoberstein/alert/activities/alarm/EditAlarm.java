@@ -3,12 +3,15 @@ package com.jesseoberstein.alert.activities.alarm;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
@@ -37,6 +40,7 @@ import com.jesseoberstein.alert.tasks.QueryEndpointsTask;
 import com.jesseoberstein.alert.tasks.QueryRoutesTask;
 import com.jesseoberstein.alert.tasks.QueryStopsTask;
 import com.jesseoberstein.alert.utils.AlertUtils;
+import com.jesseoberstein.alert.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,6 +70,7 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
     private List<Stop> stopList;
     private List<Direction> directionList;
     private List<Endpoint> endpointList;
+    private Snackbar validationSnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +111,7 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
         pager.setAdapter(alarmPagerAdapter);
         pager.setCurrentItem(getIntent().getIntExtra(CURRENT_TAB, 0));
 
-        TabLayout settingsTabs = (TabLayout) findViewById(R.id.alarm_settings_tabs);
+        TabLayout settingsTabs = findViewById(R.id.alarm_settings_tabs);
         settingsTabs.setupWithViewPager(pager, true);
         setTabIcons(settingsTabs);
     }
@@ -115,7 +120,12 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.alarms_save, menu);
-        setIconColor(this, menu.getItem(0).getIcon(), R.attr.menuItemIconColor);
+
+        MenuItem save = menu.getItem(0);
+        save.setContentDescription("Save Alarm");
+        setIconColor(this, save.getIcon(), R.attr.menuItemIconColor);
+        save.setOnMenuItemClickListener(this::saveAlarm);
+
         return true;
     }
 
@@ -142,6 +152,10 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
         return draftAlarm;
     }
 
+    public Snackbar getValidationSnackbar() {
+        return validationSnackbar;
+    }
+
     public List<Route> getRouteList() {
         return routeList;
     }
@@ -166,6 +180,78 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
                 tab.setContentDescription("tab " + Integer.toString(icons[i]));
             })
         );
+    }
+
+    /**
+     * If the draft alarm is valid, save it to the database.  If not, show the validation snackbar.
+     * @param item dummy arg
+     * @return Always returns false so that this method doesn't consume the click.
+     */
+    private boolean saveAlarm(MenuItem item) {
+        if (this.draftAlarm.isValid()) {
+            finish();
+        } else {
+            this.validationSnackbar = createValidationSnackbar();
+            this.validationSnackbar.show();
+        }
+        return false;
+    }
+
+    /**
+     * Create a snackbar to show for an alarm validation error.
+     * @return A snackbar containing the validation error and an action button for fixing it.
+     */
+    private Snackbar createValidationSnackbar() {
+        Snackbar snackbar = Snackbar.make(pager, getValidationErrorMessage(), Snackbar.LENGTH_INDEFINITE);
+
+        if (getSectionIdToFix() > -1) {
+            snackbar.setAction(R.string.fix, view -> findViewById(getSectionIdToFix()).performClick());
+            snackbar.setActionTextColor(getResources().getColor(R.color.alert_red, null));
+        }
+
+        TextView snackbarTextView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        snackbarTextView.setTextColor(getResources().getColor(R.color.white, null));
+        return snackbar;
+    }
+
+    /**
+     * Get the id of the section that has failed validation and needs to be fixed.
+     * @return An id of a section to click on.
+     */
+    private int getSectionIdToFix() {
+        switch (this.draftAlarm.getErrors().get(0)) {
+            case Constants.CUSTOM_REPEAT_TYPE:
+                return R.id.alarmSettings_repeat;
+            case Constants.ROUTE:
+                return R.id.alarmSettings_route;
+            case Constants.DIRECTION_ID:
+                return R.id.alarmSettings_direction;
+            case Constants.STOP_ID:
+                return R.id.alarmSettings_stop;
+            case Constants.ENDPOINTS:
+                return R.id.alarmSettings_endpoints;
+        }
+        return -1;
+    }
+
+    /**
+     * Get the error message shown for the section that has failed validation.
+     * @return An error message based on an invalid alarm property.
+     */
+    private int getValidationErrorMessage() {
+        switch (this.draftAlarm.getErrors().get(0)) {
+            case Constants.CUSTOM_REPEAT_TYPE:
+                return R.string.repeat_custom_invalid;
+            case Constants.ROUTE:
+                return R.string.route_invalid;
+            case Constants.DIRECTION_ID:
+                return R.string.direction_invalid;
+            case Constants.STOP_ID:
+                return R.string.stop_invalid;
+            case Constants.ENDPOINTS:
+                return R.string.endpoints_invalid;
+        }
+        return -1;
     }
 
     @Override

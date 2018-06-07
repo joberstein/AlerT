@@ -17,7 +17,9 @@ import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.AlarmUtils;
+import com.jesseoberstein.alert.utils.Constants;
 import com.jesseoberstein.alert.utils.DateTimeUtils;
+import com.jesseoberstein.alert.validation.Validatable;
 
 import java.io.Serializable;
 import java.text.DateFormatSymbols;
@@ -29,12 +31,13 @@ import java.util.Optional;
 
 import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MINUTE;
+import static java.util.Objects.isNull;
 
 @Entity(
     tableName = "user_alarms",
     indices = {@Index("route_id"), @Index("stop_id"), @Index("repeat_type_id")}
 )
-public class UserAlarm extends BaseObservable implements Serializable {
+public class UserAlarm extends BaseObservable implements Serializable, Validatable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -85,6 +88,9 @@ public class UserAlarm extends BaseObservable implements Serializable {
     @Ignore
     private List<Endpoint> endpoints;
 
+    @Ignore
+    private List<String> errors = new ArrayList<>();
+
     @Deprecated
     private String station;
 
@@ -103,19 +109,16 @@ public class UserAlarm extends BaseObservable implements Serializable {
     public UserAlarm(UserAlarm alarm) {
         setId(alarm.getId());
         setRoute(alarm.getRoute());
-        setRouteId(alarm.getRouteId());
         setStop(alarm.getStop());
-        setStopId(alarm.getStopId());
         setNickname(alarm.getNickname());
         setDirection(alarm.getDirection());
         setEndpoints(alarm.getEndpoints());
-        setStation(alarm.getStation());
         setTime(alarm.getHour(), alarm.getMinutes());
-        setSelectedDays(alarm.getSelectedDays());
         setDuration(alarm.getDuration());
         setRepeatType(alarm.getRepeatType());
-        setRepeatTypeId(alarm.getRepeatTypeId());
+        setSelectedDays(alarm.getSelectedDays());
         setActive(alarm.isActive());
+        setStation(alarm.getStation());
     }
 
     @Bindable
@@ -417,6 +420,34 @@ public class UserAlarm extends BaseObservable implements Serializable {
                 ", endpoints=" + endpoints +
                 ", station='" + station + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean isValid() {
+        this.errors.clear();
+
+        if (RepeatType.CUSTOM.getId() == this.repeatTypeId && !this.getSelectedDays().isAnyDaySelected()) {
+            this.errors.add(Constants.CUSTOM_REPEAT_TYPE);
+        }
+        if (isNull(this.routeId) || this.routeId.isEmpty()) {
+            this.errors.add(Constants.ROUTE);
+        }
+        if (isNull(this.directionId) || this.directionId < 0) {
+            this.errors.add(Constants.DIRECTION_ID);
+        }
+        if (isNull(this.stopId) || this.stopId.isEmpty()) {
+            this.errors.add(Constants.STOP_ID);
+        }
+        if (isNull(this.endpoints) || this.endpoints.isEmpty()) {
+            this.errors.add(Constants.ENDPOINTS);
+        }
+
+        return this.errors.isEmpty();
+    }
+
+    @Override
+    public List<String> getErrors() {
+        return this.errors;
     }
 
     @Deprecated

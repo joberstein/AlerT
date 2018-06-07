@@ -46,10 +46,6 @@ public class AutoComplete<T> {
         return itemClickListener;
     }
 
-    public void setItemClickListener(OnItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
-
     public void attachAdapter(Context context) {
         setAdapter(new ArrayAdapter<T>(context, this.layout, this.items));
     }

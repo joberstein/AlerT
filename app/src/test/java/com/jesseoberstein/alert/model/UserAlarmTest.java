@@ -2,17 +2,21 @@ package com.jesseoberstein.alert.model;
 
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.mbta.Direction;
+import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
-import com.jesseoberstein.alert.models.mbta.RouteType;
 import com.jesseoberstein.alert.models.mbta.Stop;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 public class UserAlarmTest {
@@ -20,7 +24,31 @@ public class UserAlarmTest {
 
     @Before
     public void setup() {
+        Route testRoute = new Route();
+        testRoute.setId("Orange");
+        testRoute.setLongName("Orange Line");
+
+        Stop testStop = new Stop();
+        testStop.setId("Haymarket");
+        testStop.setRouteId("Orange");
+
         testAlarm = new UserAlarm();
+        testAlarm.setNickname("Test nickname");
+        testAlarm.setRoute(testRoute);
+        testAlarm.setStop(testStop);
+        testAlarm.setDirection(new Direction(0, "Northbound", "Orange"));
+        testAlarm.setEndpoints(Collections.singletonList(new Endpoint("Forest Hills", 1, "Orange")));
+    }
+
+    @Test
+    public void testSingleArgConstructor() {
+        testAlarm.setTime(10, 30);
+        testAlarm.setDuration(30);
+        testAlarm.setRepeatType(RepeatType.CUSTOM);
+        testAlarm.setSelectedDays(new int[]{1,0,1,0,1,0,1});
+        testAlarm.setActive(true);
+
+        assertEquals(testAlarm, new UserAlarm(testAlarm));
     }
 
     @Test
@@ -105,6 +133,57 @@ public class UserAlarmTest {
 
         testAlarm.setTime(23, 4);
         assertEquals("11:04 pm", testAlarm.getTime());
+    }
+
+    @Test
+    public void testValidAlarm() {
+        assertTrue(testAlarm.isValid());
+    }
+
+    @Test
+    public void testValidAlarmCustomRepeat() {
+        // Once the repeat type is custom, days must be selected for the alarm to be valid.
+        testAlarm.setRepeatType(RepeatType.CUSTOM);
+        assertFalse(testAlarm.isValid());
+
+        testAlarm.setSelectedDays(new int[]{0, 0, 0, 0, 0, 0, 1});
+        assertTrue(testAlarm.isValid());
+    }
+
+    @Test
+    public void testValidAlarmRoute() {
+        testAlarm.setRoute(null);
+        assertFalse(testAlarm.isValid());
+
+        testAlarm.setRoute(new Route());
+        assertFalse(testAlarm.isValid());
+    }
+
+    @Test
+    public void testValidAlarmStop() {
+        testAlarm.setStop(null);
+        assertFalse(testAlarm.isValid());
+
+        testAlarm.setStop(new Stop());
+        assertFalse(testAlarm.isValid());
+    }
+
+    @Test
+    public void testValidAlarmDirection() {
+        testAlarm.setDirection(null);
+        assertFalse(testAlarm.isValid());
+
+        testAlarm.setDirection(new Direction(-1, "", ""));
+        assertFalse(testAlarm.isValid());
+    }
+
+    @Test
+    public void testValidAlarmEndpoints() {
+        testAlarm.setEndpoints(null);
+        assertFalse(testAlarm.isValid());
+
+        testAlarm.setEndpoints(Collections.emptyList());
+        assertFalse(testAlarm.isValid());
     }
 
     private void verifyAlarmWeekdays(int[] expected) {

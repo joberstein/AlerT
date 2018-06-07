@@ -2,6 +2,7 @@ package com.jesseoberstein.alert.activity.editAlarm;
 
 import com.jesseoberstein.alert.R;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -12,47 +13,52 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.jesseoberstein.alert.activity.editAlarm.AlarmEndpointsTest.*;
 import static org.hamcrest.CoreMatchers.not;
 
-public class AlarmDirectionTest extends BaseEditAlarmTest {
+public class AlarmDirectionTest extends BaseEditAlarmSectionTest {
     private static final String SELECTED_ROUTE = "Green Line B";
     private static final String SELECTED_DIRECTION = "Eastbound";
     private static final String[] ALL_ENDPOINTS = {"Park Street", "Lechmere"};
     private static final String[] SELECTED_ENDPOINTS = {"Park Street"};
     private static final String SELECTED_ENDPOINT_STRING = "Park Street";
 
-    @Test
-    public void selectingSameDirectionDoesNotResetEndpoints() throws InterruptedException {
-        prepareForDirectionTest();
-
-        AlarmEndpointsTest.openEndpointDialog();
-        AlarmEndpointsTest.selectEndpoints(SELECTED_ENDPOINTS, ALL_ENDPOINTS);
-
-        openDirectionDialog();
-        selectDirection(SELECTED_DIRECTION);
-        AlarmEndpointsTest.confirmEndpointsSelected(SELECTED_ENDPOINTS, ALL_ENDPOINTS, SELECTED_ENDPOINT_STRING);
-    }
-
-    private void prepareForDirectionTest() throws InterruptedException {
+    @Before
+    public void prepare() throws InterruptedException {
         moveToMbtaSettingsTab();
         onView(withId(R.id.alarmSettings_endpoints)).check(matches(not(isDisplayed())));
-        AlarmRouteTest.openRouteDialog();
         AlarmRouteTest.selectRoute(SELECTED_ROUTE);
         relaunchActivity();
-
         confirmDirectionLabelAndDefaultValue();
-        openDirectionDialog();
+    }
+
+    @Test
+    public void selectingSameDirectionDoesNotResetEndpoints() throws InterruptedException {
         selectDirection(SELECTED_DIRECTION);
         confirmDirectionSelected(SELECTED_DIRECTION);
 
-        onView(withId(R.id.alarmSettings_endpoints)).check(matches(isDisplayed()));
+        selectEndpoints(SELECTED_ENDPOINTS, ALL_ENDPOINTS);
+        selectDirection(SELECTED_DIRECTION);
+        confirmEndpointsSelected(SELECTED_ENDPOINTS, ALL_ENDPOINTS, SELECTED_ENDPOINT_STRING);
     }
 
-    static void openDirectionDialog() {
-        openSectionDialog(R.id.alarmSettings_direction);
+    @Test
+    public void invalidDirectionShowsValidationError() throws InterruptedException {
+        verifyErrorMessageShowsOnSave(R.string.direction_invalid);
+        selectDirectionFromList(SELECTED_DIRECTION);
+        verifyErrorMessageNotShownOnSave(R.string.direction_invalid);
     }
 
     static void selectDirection(String directionName) throws InterruptedException {
+        openDirectionDialog();
+        selectDirectionFromList(directionName);
+    }
+
+    private static void openDirectionDialog() {
+        openSectionDialog(R.id.alarmSettings_direction);
+    }
+
+    private static void selectDirectionFromList(String directionName) throws InterruptedException {
         selectItem(directionName);
     }
 
@@ -63,7 +69,7 @@ public class AlarmDirectionTest extends BaseEditAlarmTest {
 
         // Check that the direction selection persists in the dialog.
         onView(withText(directionName)).check(matches(isChecked()));
-        selectDirection(directionName);
+        selectDirectionFromList(directionName);
     }
 
     private void confirmDirectionLabelAndDefaultValue() {

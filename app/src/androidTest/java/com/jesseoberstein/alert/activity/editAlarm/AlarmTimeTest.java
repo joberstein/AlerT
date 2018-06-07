@@ -3,6 +3,7 @@ package com.jesseoberstein.alert.activity.editAlarm;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.utils.DateTimeUtils;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -14,14 +15,18 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.jesseoberstein.alert.test.TestUtils.*;
 
-public class AlarmTimeTest extends BaseEditAlarmTest {
+public class AlarmTimeTest extends BaseEditAlarmSectionTest {
     private static final int SELECTED_HOUR = 14;
     private static final int SELECTED_MINUTE = 7;
 
-    @Test
-    public void timeSectionLabelAndValue() {
+    @Before
+    public void prepare() {
         moveToTimeSettingsTab();
         confirmTimeLabelAndDefaultValue();
+    }
+
+    @Test
+    public void timeSectionLabelAndValue() {
         showTimePicker();
         updateTime(SELECTED_HOUR, SELECTED_MINUTE);
         saveSelectedTime();

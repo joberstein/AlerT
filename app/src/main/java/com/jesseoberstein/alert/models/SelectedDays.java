@@ -163,6 +163,10 @@ public class SelectedDays implements Serializable {
         return convertedDays;
     }
 
+    public boolean isAnyDaySelected() {
+        return Arrays.stream(this.selectedDays).anyMatch(i -> i == 1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

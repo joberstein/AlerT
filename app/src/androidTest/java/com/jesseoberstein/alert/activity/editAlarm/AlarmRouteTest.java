@@ -2,36 +2,27 @@ package com.jesseoberstein.alert.activity.editAlarm;
 
 import com.jesseoberstein.alert.R;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest.*;
 import static org.hamcrest.CoreMatchers.not;
 
-public class AlarmRouteTest extends BaseEditAlarmTest {
+public class AlarmRouteTest extends BaseEditAlarmSectionTest {
     private String selectedRoute = "Orange Line";
 
-    @Test
-    public void mbtaInfoResetsWhenRouteIsChanged() throws InterruptedException {
-        prepareForRouteTest();
-
-        AlarmDirectionTest.openDirectionDialog();
-        AlarmDirectionTest.selectDirection("Northbound");
-
-        openRouteDialog();
-        selectRoute("Red Line");
-        relaunchActivity();
-
-        onView(withId(R.id.alarmSettings_section_value_direction)).check(matches(withHint(R.string.direction_default)));
-        onView(withId(R.id.alarmSettings_stop)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.alarmSettings_endpoints)).check(matches(not(isDisplayed())));
-    }
-
-    private void prepareForRouteTest() throws InterruptedException {
+    @Before
+    public void prepare() throws InterruptedException {
         moveToMbtaSettingsTab();
         confirmRouteLabelAndDefaultValue();
 
@@ -39,21 +30,45 @@ public class AlarmRouteTest extends BaseEditAlarmTest {
         onView(withId(R.id.alarmSettings_stop)).check(matches(not(isDisplayed())));
         onView(withId(R.id.alarmSettings_direction)).check(matches(not(isDisplayed())));
         onView(withId(R.id.alarmSettings_endpoints)).check(matches(not(isDisplayed())));
-
-        openRouteDialog();
-        selectRoute(selectedRoute);
-        relaunchActivity();
-
-        // Check that the direction section shows now that a route is selected.
-        onView(withId(R.id.alarmSettings_direction)).check(matches(isDisplayed()));
-        confirmRouteSelected("Orange Line");
     }
 
-    static void openRouteDialog() {
+    @Test
+    public void mbtaInfoResetsWhenRouteIsChanged() throws InterruptedException {
+        selectAndConfirmRoute();
+        selectDirection("Northbound");
+
+        selectedRoute = "Red Line";
+        selectAndConfirmRoute();
+
+        onView(withId(R.id.alarmSettings_section_value_direction)).check(matches(withHint(R.string.direction_default)));
+        onView(withId(R.id.alarmSettings_stop)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.alarmSettings_endpoints)).check(matches(not(isDisplayed())));
+    }
+
+    @Test
+    public void invalidRouteShowsValidationError() throws InterruptedException {
+        verifyErrorMessageShowsOnSave(R.string.route_invalid);
+        selectRouteFromAutosuggest(selectedRoute);
+        relaunchActivity();
+        verifyErrorMessageNotShownOnSave(R.string.route_invalid);
+    }
+
+    static void selectRoute(String routeName)  throws InterruptedException {
+        openRouteDialog();
+        selectRouteFromAutosuggest(routeName);
+    }
+
+    private void selectAndConfirmRoute() throws InterruptedException {
+        selectRoute(selectedRoute);
+        relaunchActivity();
+        confirmRouteSelected(selectedRoute);
+    }
+
+    private static void openRouteDialog() {
         openSectionDialog(R.id.alarmSettings_route);
     }
 
-    static void selectRoute(String routeName) throws InterruptedException {
+    private static void selectRouteFromAutosuggest(String routeName) throws InterruptedException {
         selectAutosuggestItem(R.id.alarm_route, routeName);
     }
 
@@ -64,7 +79,7 @@ public class AlarmRouteTest extends BaseEditAlarmTest {
 
         // Check that the selected stop persists in the dialog.
         onView(withId(R.id.alarm_route)).check(matches(withText(routeName)));
-        selectRoute(routeName);
+        selectRouteFromAutosuggest(routeName);
     }
 
     private void confirmRouteLabelAndDefaultValue() {

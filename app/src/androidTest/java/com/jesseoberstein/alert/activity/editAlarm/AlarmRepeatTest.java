@@ -1,7 +1,9 @@
 package com.jesseoberstein.alert.activity.editAlarm;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.models.RepeatType;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -13,29 +15,44 @@ import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class AlarmRepeatTest extends BaseEditAlarmTest {
+public class AlarmRepeatTest extends BaseEditAlarmSectionTest {
     private static final String DEFAULT_REPEAT = "Never";
-    private static final String SELECTED_REPEAT = "Custom";
+    private static final String SELECTED_REPEAT = RepeatType.CUSTOM.toString();
     private static final String[] SELECTED_DAYS = {"Monday", "Wednesday", "Saturday"};
+
+    @Before
+    public void prepare() {
+        moveToTimeSettingsTab();
+        confirmRepeatLabelAndDefaultValue();
+    }
 
     @Test
     public void repeatSectionLabelAndValue() throws InterruptedException {
-        moveToTimeSettingsTab();
-        confirmRepeatLabelAndDefaultValue();
-
         openRepeatDialog();
-        selectRepeat(SELECTED_REPEAT);
+        selectRepeatFromList(SELECTED_REPEAT);
         selectDays(SELECTED_DAYS);
 
         confirmRepeatSelected(SELECTED_REPEAT);
         confirmDaysSelected(SELECTED_DAYS);
     }
 
+    @Test
+    public void invalidCustomRepeatShowsValidationError() throws InterruptedException {
+        openRepeatDialog();
+        selectRepeatFromList(SELECTED_REPEAT);
+        selectDays();
+
+        verifyErrorMessageShowsOnSave(R.string.repeat_custom_invalid);
+        selectRepeatFromList(SELECTED_REPEAT);
+        selectDays(SELECTED_DAYS);
+        verifyErrorMessageNotShownOnSave(R.string.repeat_custom_invalid);
+    }
+
     private void openRepeatDialog() {
         openSectionDialog(R.id.alarmSettings_repeat);
     }
 
-    private void selectRepeat(String repeat) throws InterruptedException {
+    private void selectRepeatFromList(String repeat) throws InterruptedException {
         selectItem(repeat);
     }
 
@@ -50,7 +67,7 @@ public class AlarmRepeatTest extends BaseEditAlarmTest {
 
         // Check that the repeat selection persists in the dialog.
         onView(withText(repeat)).check(matches(isChecked()));
-        selectRepeat(repeat);
+        selectRepeatFromList(repeat);
     }
 
     private void confirmDaysSelected(String... days) {

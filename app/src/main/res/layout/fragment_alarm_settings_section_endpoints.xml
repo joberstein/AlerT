@@ -32,6 +32,7 @@
                 android:id="@+id/alarmSettings_section_value_endpoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:hint="@string/endpoints_default"
                 android:text="@{alarm.endpoints}"
                 android:textSize="20sp"
                 android:textColor="@color/gray"

@@ -28,6 +28,7 @@
     <string name="repeat">Repeat</string>
     <string name="repeat_dialog_title">Set Repeat Type</string>
     <string name="repeat_custom_dialog_title">Select Custom Repeat</string>
+    <string name="repeat_custom_invalid">At least one day must be selected for custom repeat.</string>
 
     <string name="duration">Duration</string>
     <string name="duration_dialog_title">Receive notifications for:</string>
@@ -38,18 +39,23 @@
     <string name="route_default">Select a route…</string>
     <string name="route_dialog_title">Route Selection</string>
     <string name="route_dialog_default">Type a route…</string>
+    <string name="route_invalid">A route selection is required.</string>
+
+    <string name="direction">Direction</string>
+    <string name="direction_default">Select a direction…</string>
+    <string name="direction_dialog_title">Choose Direction</string>
+    <string name="direction_invalid">A direction selection is required.</string>
 
     <string name="stop">Stop</string>
     <string name="stop_default">Select a stop…</string>
     <string name="stop_dialog_title">Stop Selection</string>
     <string name="stop_dialog_default">Type a stop…</string>
-
-    <string name="direction">Direction</string>
-    <string name="direction_default">Select a direction…</string>
-    <string name="direction_dialog_title">Choose Direction</string>
+    <string name="stop_invalid">A stop selection is required.</string>
 
     <string name="endpoints">Endpoints</string>
+    <string name="endpoints_default">Select endpoints…</string>
     <string name="endpoints_dialog_title">Select Endpoints</string>
+    <string name="endpoints_invalid">At least one endpoint must be selected.</string>
 
     <string name="station">Station</string>
     <string name="directions">Directions</string>
@@ -77,5 +83,6 @@
     <string name="update">Update</string>
     <string name="remove">Remove</string>
     <string name="cancel">Cancel</string>
+    <string name="fix">FIX</string>
 
 </resources>

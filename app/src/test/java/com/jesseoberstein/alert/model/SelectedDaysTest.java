@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class SelectedDaysTest {
@@ -121,5 +122,15 @@ public class SelectedDaysTest {
         testSelectedDays.setSaturday(1);
         boolean[] expected = new boolean[]{false, true, false, true, false, false, true};
         assertTrue(Arrays.equals(expected, testSelectedDays.toBooleanArray()));
+    }
+
+    @Test
+    public void testIsAnyDaySelected() {
+        // No days selected initially.
+        assertFalse(testSelectedDays.isAnyDaySelected());
+
+        // Re-check after setting a day.
+        testSelectedDays.setFriday(1);
+        assertTrue(testSelectedDays.isAnyDaySelected());
     }
 }

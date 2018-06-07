@@ -2,25 +2,28 @@ package com.jesseoberstein.alert.activity.editAlarm;
 
 import com.jesseoberstein.alert.R;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
-public class AlarmDurationTest extends BaseEditAlarmTest {
+public class AlarmDurationTest extends BaseEditAlarmSectionTest {
     private static final String DEFAULT_DURATION = "30 minutes";
     private static final String SELECTED_DURATION = "1 hour";
 
-    @Test
-    public void durationSectionLabelAndValue() throws InterruptedException {
+    @Before
+    public void prepare() {
         moveToTimeSettingsTab();
         confirmDurationLabelAndDefaultValue();
+    }
+
+    @Test
+    public void durationSectionLabelAndValue() throws InterruptedException {
         openDurationDialog();
         selectDuration(SELECTED_DURATION);
         confirmDurationSelected(SELECTED_DURATION);

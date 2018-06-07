@@ -2,6 +2,7 @@ package com.jesseoberstein.alert.activity.editAlarm;
 
 import com.jesseoberstein.alert.R;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -11,13 +12,17 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class AlarmNameTest extends BaseEditAlarmTest {
+public class AlarmNameTest extends BaseEditAlarmSectionTest {
     private static final String TEST_NICKNAME = "Test Name";
+
+    @Before
+    public void prepare() {
+        moveToTimeSettingsTab();
+        confirmNameLabelAndDefaultValue();
+    }
 
     @Test
     public void nameSectionLabelAndValue() {
-        moveToTimeSettingsTab();
-        confirmNameLabelAndDefaultValue();
         openNicknameDialog();
         setNickname(TEST_NICKNAME);
         confirmNicknameSet(TEST_NICKNAME);
