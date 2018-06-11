@@ -5,9 +5,10 @@ import android.util.Log;
 
 import com.jesseoberstein.alert.data.dao.BaseDao;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class InsertTask<T> extends AsyncTask<T, Void, Long> {
+public class InsertTask<T> extends AsyncTask<T, Void, List<Long>> {
     private BaseDao<T> dao;
     private String className;
 
@@ -17,16 +18,14 @@ public class InsertTask<T> extends AsyncTask<T, Void, Long> {
     }
 
     @Override
-    protected Long doInBackground(T[] elements) {
+    protected List<Long> doInBackground(T[] elements) {
         this.className = elements.getClass().getName();
-        long numRecordsBeforeInsert = this.dao.count();
-        this.dao.insert(elements);
-        long numRecordsAfterInsert = this.dao.count();
-        return numRecordsAfterInsert - numRecordsBeforeInsert;
+        return this.dao.insert(elements);
     }
 
     @Override
-    protected void onPostExecute(Long insertCount) {
-        Log.i(this.className, "Created " + insertCount + " records.");
+    protected void onPostExecute(List<Long> insertedIds) {
+        String idString = insertedIds.stream().map(Object::toString).collect(Collectors.joining(","));
+        Log.i(this.className, "Inserted ids: " + idString);
     }
 }

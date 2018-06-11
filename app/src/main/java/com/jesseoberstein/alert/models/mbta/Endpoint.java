@@ -19,20 +19,20 @@ public class Endpoint implements Serializable {
             "JFK/Umass", "Quincy Center", "North Quincy", "Quincy Center");
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     @JsonProperty("name")
     private String name;
 
     @ForeignKey(entity = Direction.class, parentColumns = "id", childColumns = "direction_id")
     @ColumnInfo(name = "direction_id")
-    private int directionId;
+    private long directionId;
 
     @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
     @ColumnInfo(name = "route_id")
     private String routeId;
 
-    public Endpoint(String name, int directionId, String routeId) {
+    public Endpoint(String name, long directionId, String routeId) {
         this.name = name;
         this.directionId = directionId;
         this.routeId = routeId;
@@ -46,19 +46,19 @@ public class Endpoint implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getDirectionId() {
+    public long getDirectionId() {
         return directionId;
     }
 
-    public void setDirectionId(int directionId) {
+    public void setDirectionId(long directionId) {
         this.directionId = directionId;
     }
 
@@ -85,9 +85,9 @@ public class Endpoint implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + directionId;
+        result = 31 * result + (int) (directionId ^ (directionId >>> 32));
         result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
         return result;
     }

@@ -19,7 +19,7 @@ public interface RouteDao extends BaseDao<Route> {
 
     @Override
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Route[] routes);
+    List<Long> insert(Route[] routes);
 
     @Override
     @Delete

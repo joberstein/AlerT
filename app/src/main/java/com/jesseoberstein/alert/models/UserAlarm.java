@@ -40,7 +40,7 @@ import static java.util.Objects.isNull;
 public class UserAlarm extends BaseObservable implements Serializable, Validatable {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     @ColumnInfo(name = "route_id")
     @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
@@ -48,7 +48,7 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
 
     @ColumnInfo(name = "direction_id")
     @ForeignKey(entity = Direction.class, parentColumns = "id", childColumns = "direction_id")
-    private int directionId;
+    private long directionId;
 
     @ColumnInfo(name = "stop_id")
     @ForeignKey(entity = Stop.class, parentColumns = "id", childColumns = "stop_id")
@@ -56,7 +56,7 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
 
     @ColumnInfo(name = "repeat_type_id")
     @ForeignKey(entity = RepeatType.class, parentColumns = "id", childColumns = "repeat_type_id")
-    private int repeatTypeId;
+    private long repeatTypeId;
 
     @Embedded
     private SelectedDays selectedDays;
@@ -122,11 +122,11 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
     }
 
     @Bindable
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
         notifyPropertyChanged(BR.id);
     }
@@ -181,11 +181,11 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         notifyPropertyChanged(BR.duration);
     }
 
-    public int getRepeatTypeId() {
+    public long getRepeatTypeId() {
         return repeatTypeId;
     }
 
-    public void setRepeatTypeId(int repeatTypeId) {
+    public void setRepeatTypeId(long repeatTypeId) {
         this.repeatTypeId = repeatTypeId;
     }
 
@@ -265,11 +265,11 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         this.stopId = stopId;
     }
 
-    public int getDirectionId() {
+    public long getDirectionId() {
         return directionId;
     }
 
-    public void setDirectionId(int directionId) {
+    public void setDirectionId(long directionId) {
         this.directionId = directionId;
     }
 
@@ -292,7 +292,7 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-        int directionId = Optional.ofNullable(direction).map(Direction::getId).orElse(-1);
+        long directionId = Optional.ofNullable(direction).map(Direction::getId).orElse(-1L);
         setDirectionId(directionId);
         notifyPropertyChanged(BR.direction);
     }
@@ -359,15 +359,6 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
             return false;
         if (nickname != null ? !nickname.equals(userAlarm.nickname) : userAlarm.nickname != null)
             return false;
-        if (time != null ? !time.equals(userAlarm.time) : userAlarm.time != null) return false;
-        if (repeatType != null ? !repeatType.equals(userAlarm.repeatType) : userAlarm.repeatType != null)
-            return false;
-        if (nextFiringDayString != null ? !nextFiringDayString.equals(userAlarm.nextFiringDayString) : userAlarm.nextFiringDayString != null)
-            return false;
-        if (route != null ? !route.equals(userAlarm.route) : userAlarm.route != null) return false;
-        if (stop != null ? !stop.equals(userAlarm.stop) : userAlarm.stop != null) return false;
-        if (direction != null ? !direction.equals(userAlarm.direction) : userAlarm.direction != null)
-            return false;
         if (endpoints != null ? !endpoints.equals(userAlarm.endpoints) : userAlarm.endpoints != null)
             return false;
         return station != null ? station.equals(userAlarm.station) : userAlarm.station == null;
@@ -375,24 +366,19 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
-        result = 31 * result + directionId;
+        result = 31 * result + (int) (directionId ^ (directionId >>> 32));
         result = 31 * result + (stopId != null ? stopId.hashCode() : 0);
-        result = 31 * result + repeatTypeId;
+        result = 31 * result + (int) (repeatTypeId ^ (repeatTypeId >>> 32));
         result = 31 * result + (selectedDays != null ? selectedDays.hashCode() : 0);
         result = 31 * result + (hour != null ? hour.hashCode() : 0);
         result = 31 * result + (minutes != null ? minutes.hashCode() : 0);
         result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
         result = 31 * result + (int) (duration ^ (duration >>> 32));
         result = 31 * result + (active ? 1 : 0);
-        result = 31 * result + (time != null ? time.hashCode() : 0);
-        result = 31 * result + (repeatType != null ? repeatType.hashCode() : 0);
-        result = 31 * result + (nextFiringDayString != null ? nextFiringDayString.hashCode() : 0);
-        result = 31 * result + (route != null ? route.hashCode() : 0);
-        result = 31 * result + (stop != null ? stop.hashCode() : 0);
-        result = 31 * result + (direction != null ? direction.hashCode() : 0);
         result = 31 * result + (endpoints != null ? endpoints.hashCode() : 0);
+        result = 31 * result + (errors != null ? errors.hashCode() : 0);
         result = 31 * result + (station != null ? station.hashCode() : 0);
         return result;
     }

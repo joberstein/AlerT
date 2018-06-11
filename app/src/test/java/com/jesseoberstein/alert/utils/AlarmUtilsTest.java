@@ -1,7 +1,9 @@
 package com.jesseoberstein.alert.utils;
 
+import com.jesseoberstein.alert.models.AlarmEndpoint;
 import com.jesseoberstein.alert.models.SelectedDays;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.mbta.Endpoint;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +13,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -108,6 +111,28 @@ public class AlarmUtilsTest {
         // Set the alarm time one minute in the past.
         setAlarmTimeInNumMinutesFromNow(-1);
         assertEquals(calendarTomorrow, AlarmUtils.getNextFiringDay(testAlarm));
+    }
+
+    @Test
+    public void createsAlarmEndpoints() {
+        long alarmId = 1;
+        long e1Id = 2;
+        long e2Id = 3;
+        Endpoint e1 = new Endpoint("Oak Grove", 0, "Orange");
+        Endpoint e2 = new Endpoint("Forest Hills", 1, "Orange");
+
+        e1.setId(e1Id);
+        e2.setId(e2Id);
+
+        when(testAlarm.getId()).thenReturn(alarmId);
+        when(testAlarm.getEndpoints()).thenReturn(Arrays.asList(e1, e2));
+
+        AlarmEndpoint[] expected = new AlarmEndpoint[]{
+            new AlarmEndpoint(alarmId, e1Id),
+            new AlarmEndpoint(alarmId, e2Id)
+        };
+
+        assertTrue(Arrays.equals(expected, AlarmUtils.createAlarmEndpoints(testAlarm)));
     }
 
     private void selectDays(int... days) {

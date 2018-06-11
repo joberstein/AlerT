@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
+import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetDaysDialog;
 import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
 import com.jesseoberstein.alert.interfaces.AlarmDirectionSetter;
@@ -25,20 +26,25 @@ import com.jesseoberstein.alert.interfaces.AlarmRouteSetter;
 import com.jesseoberstein.alert.interfaces.AlarmStopSetter;
 import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
+import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
 import com.jesseoberstein.alert.interfaces.data.DirectionsReceiver;
 import com.jesseoberstein.alert.interfaces.data.EndpointsReceiver;
 import com.jesseoberstein.alert.interfaces.data.RoutesReceiver;
 import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
+import com.jesseoberstein.alert.models.AlarmEndpoint;
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
+import com.jesseoberstein.alert.tasks.InsertAlarmTask;
+import com.jesseoberstein.alert.tasks.InsertTask;
 import com.jesseoberstein.alert.tasks.QueryDirectionsTask;
 import com.jesseoberstein.alert.tasks.QueryEndpointsTask;
 import com.jesseoberstein.alert.tasks.QueryRoutesTask;
 import com.jesseoberstein.alert.tasks.QueryStopsTask;
+import com.jesseoberstein.alert.utils.AlarmUtils;
 import com.jesseoberstein.alert.utils.AlertUtils;
 import com.jesseoberstein.alert.utils.Constants;
 
@@ -59,7 +65,7 @@ import static java.util.stream.Collectors.toList;
 public class EditAlarm extends AppCompatActivity implements OnDialogClick,
         AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter, AlarmDurationSetter,
         AlarmRouteSetter, AlarmStopSetter, AlarmDirectionSetter, AlarmEndpointSetter,
-        RoutesReceiver, StopsReceiver, DirectionsReceiver, EndpointsReceiver {
+        RoutesReceiver, StopsReceiver, DirectionsReceiver, EndpointsReceiver, AlarmReceiver {
 
     public static final int REQUEST_CODE = 3;
     private ViewPager pager;
@@ -71,10 +77,12 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
     private List<Direction> directionList;
     private List<Endpoint> endpointList;
     private Snackbar validationSnackbar;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.db = AppDatabase.getInstance(this);
 
         // If the activity has been restarted (e.g. to apply a new theme), restore the current
         // instance of the draft alarm if it exists.  Otherwise, clone the existing alarm.
@@ -189,6 +197,7 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
      */
     private boolean saveAlarm(MenuItem item) {
         if (this.draftAlarm.isValid()) {
+            new InsertAlarmTask(this).execute(this.draftAlarm);
             finish();
         } else {
             this.validationSnackbar = createValidationSnackbar();
@@ -312,7 +321,7 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
 
         // Once the direction is set, query for endpoints.
         String routeId = this.draftAlarm.getRouteId();
-        String directionId = Integer.toString(direction.getId());
+        String directionId = Long.toString(direction.getId());
         new QueryEndpointsTask(this).execute(routeId, directionId);
     }
 
@@ -364,5 +373,12 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
         if (!this.stopList.contains(this.draftAlarm.getStop())) {
             this.draftAlarm.setStop(null);
         }
+    }
+
+    @Override
+    public void onInsertAlarm(long insertedAlarmId) {
+        this.draftAlarm.setId(insertedAlarmId);
+        AlarmEndpoint[] alarmEndpoints = AlarmUtils.createAlarmEndpoints(this.draftAlarm);
+        new InsertTask<>(this.db.alarmEndpointDao()).execute(alarmEndpoints);
     }
 }

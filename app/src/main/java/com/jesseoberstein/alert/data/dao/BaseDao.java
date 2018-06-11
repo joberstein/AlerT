@@ -7,7 +7,7 @@ public interface BaseDao<T> {
 
     List<T> getAll();
 
-    void insert(T[] elements);
+    List<Long> insert(T[] elements);
 
     void delete(T[] elements);
 

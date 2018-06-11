@@ -22,7 +22,7 @@ public interface StopDao extends BaseDao<Stop> {
 
     @Override
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Stop[] stops);
+    List<Long> insert(Stop[] stops);
 
     @Override
     @Delete

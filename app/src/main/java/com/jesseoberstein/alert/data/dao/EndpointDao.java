@@ -14,7 +14,7 @@ import java.util.List;
 public interface EndpointDao extends BaseDao<Endpoint> {
 
     @Query("SELECT * FROM endpoints WHERE route_id = :routeId AND direction_id = :directionId ORDER BY name")
-    List<Endpoint> get(String routeId, int directionId);
+    List<Endpoint> get(String routeId, long directionId);
 
     @Override
     @Query("SELECT * FROM endpoints")
@@ -22,7 +22,7 @@ public interface EndpointDao extends BaseDao<Endpoint> {
 
     @Override
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Endpoint[] endpoints);
+    List<Long> insert(Endpoint[] endpoints);
 
     @Override
     @Delete

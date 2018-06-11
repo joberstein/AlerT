@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import static android.widget.AdapterView.OnItemClickListener;
 import static android.widget.AutoCompleteTextView.Validator;
@@ -20,7 +21,7 @@ public class AutoComplete<T> {
     private OnItemClickListener itemClickListener;
     
     public AutoComplete(List<T> items, OnItemClickListener itemClickListener) {
-        this.items = Collections.unmodifiableList(items);
+        this.items = Optional.ofNullable(items).map(Collections::unmodifiableList).orElse(Collections.emptyList());
         this.layout = android.R.layout.simple_dropdown_item_1line;
         this.validator = this.createValidator();
         this.itemClickListener = itemClickListener;

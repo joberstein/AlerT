@@ -41,7 +41,7 @@ public class SetDirectionDialog extends AlarmModifierDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         this.directions = this.directionsReceiver.getDirectionList();
-        int currentDirection = getDraftAlarm().getDirectionId();
+        int currentDirection = Long.valueOf(getDraftAlarm().getDirectionId()).intValue();
         String[] directionNames = this.directions.stream().map(Direction::toString).toArray(String[]::new);
 
         return new AlertDialog.Builder(getActivity())

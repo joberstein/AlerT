@@ -23,7 +23,7 @@ public interface DirectionDao extends BaseDao<Direction> {
 
     @Override
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Direction[] directions);
+    List<Long> insert(Direction[] directions);
 
     @Override
     @Delete

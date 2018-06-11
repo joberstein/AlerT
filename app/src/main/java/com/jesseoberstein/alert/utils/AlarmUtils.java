@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.jesseoberstein.alert.models.AlarmEndpoint;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.receivers.OnAlarmStart;
 import com.jesseoberstein.alert.receivers.OnAlarmStop;
@@ -73,7 +74,7 @@ public class AlarmUtils {
 
     public static PendingIntent getAlarmStartIntent(UserAlarm alarm, List<String> endpoints, Context context, String stopId) {
         Intent intent = new Intent(Intent.ACTION_INSERT, buildAlarmUri(alarm.getId()), context, OnAlarmStart.class);
-        intent.putExtra(ROUTE, alarm.getRouteId().toString());
+        intent.putExtra(ROUTE, alarm.getRouteId());
         intent.putExtra(ALARM_ID, alarm.getId());
         intent.putExtra(NICKNAME, alarm.getNickname());
         intent.putExtra(DAYS, alarm.getSelectedDays().toIntArray());
@@ -104,7 +105,7 @@ public class AlarmUtils {
 //        calendar.add(durationType, alarm.getDuration());
     }
 
-    private static Uri buildAlarmUri(int alarmId) {
+    private static Uri buildAlarmUri(long alarmId) {
         return new Uri.Builder()
                 .scheme("content")
                 .path("alarms/" + alarmId)
@@ -143,5 +144,17 @@ public class AlarmUtils {
         int tomorrow = (today == SATURDAY) ? SUNDAY : today + 1;
         boolean isTodaySelected = selectedDays[today - 1] == 1;
         return isPastAlarmFiringTime && !isTodaySelected ? tomorrow : today;
+    }
+
+
+    /**
+     * Map an alarm's id and endpoints to a list of {@link AlarmEndpoint}.
+     * @param alarm containing an id and endpoints
+     * @return a list of alarm endpoint
+     */
+    public static AlarmEndpoint[] createAlarmEndpoints(UserAlarm alarm) {
+        return alarm.getEndpoints().stream()
+                .map(endpoint -> new AlarmEndpoint(alarm.getId(), endpoint.getId()))
+                .toArray(AlarmEndpoint[]::new);
     }
 }

@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Entity(tableName = "directions", indices = {@Index("route_id")}, primaryKeys = {"id", "route_id"})
 public class Direction implements Serializable {
-    private int id;
+    private long id;
     private String name;
 
     @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
@@ -18,17 +18,17 @@ public class Direction implements Serializable {
     @NonNull
     private String routeId;
 
-    public Direction(int id, String name, @NonNull String routeId) {
+    public Direction(long id, String name, @NonNull String routeId) {
         this.id = id;
         this.name = name;
         this.routeId = routeId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -63,7 +63,7 @@ public class Direction implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + routeId.hashCode();
         return result;
