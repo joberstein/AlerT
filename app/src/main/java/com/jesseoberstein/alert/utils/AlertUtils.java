@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.RouteType;
 
@@ -160,5 +161,21 @@ public class AlertUtils {
         } else {
             return defaultTheme;
         }
+    }
+
+    /**
+     * Get the text color for when the background color is white; i.e. if the text color is already
+     * white, use the route color.
+     * @param alarm containing the route color and text color.
+     * @return The text color to use for a white background.
+     */
+    public static String getTextColorForWhiteBackground(UserAlarm alarm) {
+        String routeColor = alarm.getRoute().getColor();
+        String routeTextColor = alarm.getRoute().getTextColor();
+        return "FFFFFF".equals(routeTextColor) ? routeColor : routeTextColor;
+    }
+
+    public static String getHexColor(String color) {
+        return Optional.ofNullable(color).map(c -> "#" + c).orElse("");
     }
 }

@@ -1,54 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/triple_line_list_tile_height">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/custom_item_icon"
-        android:layout_width="@dimen/triple_line_list_avatar_size"
-        android:layout_height="@dimen/triple_line_list_avatar_size"
-        android:layout_marginStart="@dimen/list_avatar_padding_start"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"/>
+    <data class="ViewAlarmsBinding">
+        <import type="android.graphics.Color"/>
+        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="activeStatusTextColor" type="Integer"/>
+        <variable name="routeColor" type="Integer"/>
+        <variable name="routeTextColor" type="Integer"/>
+    </data>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/custom_item_icon"
-        android:paddingStart="@dimen/list_text_padding_start"
-        android:paddingEnd="@dimen/list_text_padding_end"
-        android:layout_centerVertical="true">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/grid_item_size"
+        android:background="@drawable/border_gray"
+        android:descendantFocusability="blocksDescendants"
+        android:paddingTop="@dimen/grid_item_padding_small"
+        android:layout_margin="@dimen/grid_item_padding_small">
 
-        <TextView
-            android:id="@+id/custom_item_primary_text"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="@dimen/triple_line_list_font_size_primary"/>
+            android:paddingStart="@dimen/grid_item_padding_small">
 
-        <TextView
-            android:id="@+id/custom_item_secondary_text"
+                <TextView
+                    android:id="@+id/alarm_time"
+                    android:text="@{alarm.time}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/grid_item_primary_font_size"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/alarm_days"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/alarm_time"
+                    android:paddingStart="@dimen/grid_item_padding_tiny"/>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/custom_item_primary_text"
-            android:textSize="@dimen/triple_line_list_font_size_secondary"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:paddingTop="@dimen/grid_item_padding_tiny"
+            android:paddingEnd="@dimen/grid_item_padding_medium">
 
-        <TextView
-            android:id="@+id/custom_item_tertiary_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/custom_item_secondary_text"
-            android:textSize="@dimen/triple_line_list_font_size_secondary"/>
+            <TextView
+                android:id="@+id/alarm_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{alarm.active ? @string/on : @string/off}'
+                android:textSize="@dimen/grid_item_secondary_action_size"
+                android:textStyle="bold"
+                android:textColor="@{activeStatusTextColor}" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/alarm_name"
+                android:text="@{alarm.nickname}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/alarm_bottom_bar"
+                android:padding="@dimen/grid_item_padding_small"
+                android:textSize="@dimen/grid_item_secondary_font_size"/>
+
+            <LinearLayout
+                android:id="@+id/alarm_bottom_bar"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@{routeColor}"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/grid_item_padding_small">
+
+                <TextView
+                    android:id="@+id/alarm_stop"
+                    android:text="@{alarm.stop.toString()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@{routeTextColor}"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/double_line_list_font_size_primary"/>
+
+                <TextView
+                    android:id="@+id/alarm_direction"
+                    android:text="@{alarm.direction.toString()}"
+                    android:textColor="@{routeTextColor}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/double_line_list_font_size_secondary"/>
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/custom_item_chevron"
-        android:layout_width="@dimen/list_icon_right_size"
-        android:layout_height="@dimen/list_icon_right_size"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/list_icon_right_padding_end"
-        android:gravity="center_vertical"/>
-
-</RelativeLayout>
+</layout>

@@ -1,6 +1,7 @@
 package com.jesseoberstein.alert.activities.alarm;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.activities.base.DatabaseActivity;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetDaysDialog;
@@ -57,17 +59,17 @@ import java.util.stream.IntStream;
 import static com.jesseoberstein.alert.models.mbta.Endpoint.PSUEDO_ENDPOINT_NAMES;
 import static com.jesseoberstein.alert.utils.ActivityUtils.setIconColor;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
+import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
 import static com.jesseoberstein.alert.utils.Constants.CURRENT_TAB;
 import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
 
-public class EditAlarm extends AppCompatActivity implements OnDialogClick,
+public class EditAlarm extends DatabaseActivity implements OnDialogClick,
         AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter, AlarmDurationSetter,
         AlarmRouteSetter, AlarmStopSetter, AlarmDirectionSetter, AlarmEndpointSetter,
         RoutesReceiver, StopsReceiver, DirectionsReceiver, EndpointsReceiver, AlarmReceiver {
 
-    public static final int REQUEST_CODE = 3;
     private ViewPager pager;
     private AlarmPagerAdapter alarmPagerAdapter;
     private UserAlarm alarm = new UserAlarm(); // TODO for testing only
@@ -77,15 +79,15 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
     private List<Direction> directionList;
     private List<Endpoint> endpointList;
     private Snackbar validationSnackbar;
-    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.db = AppDatabase.getInstance(this);
 
         // If the activity has been restarted (e.g. to apply a new theme), restore the current
         // instance of the draft alarm if it exists.  Otherwise, clone the existing alarm.
+        long existingAlarmId = this.getIntent().getLongExtra(ALARM_ID, -1);
+
         UserAlarm currentDraftAlarm = (UserAlarm) getIntent().getSerializableExtra(DRAFT_ALARM);
         this.draftAlarm = Optional.ofNullable(currentDraftAlarm).orElse(new UserAlarm(alarm));
 
@@ -105,11 +107,11 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
 
         // Set the theme, content view, and action bar.
         setTheme(AlertUtils.getTheme(this.draftAlarm.getRoute()));
-        setContentView(R.layout.activities_edit_alarm_new);
+        setContentView(R.layout.activities_edit_alarm);
 
         Optional<ActionBar> supportActionBarOptional = Optional.ofNullable(getSupportActionBar());
         supportActionBarOptional.ifPresent(bar -> {
-            bar.setTitle("Edit Alarm");
+            bar.setTitle(existingAlarmId > -1 ? R.string.edit_alarm_page : R.string.new_alarm_page);
             bar.setDisplayHomeAsUpEnabled(true);
         });
 
@@ -197,7 +199,7 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
      */
     private boolean saveAlarm(MenuItem item) {
         if (this.draftAlarm.isValid()) {
-            new InsertAlarmTask(this).execute(this.draftAlarm);
+            new InsertAlarmTask(this, getDatabase(this)).execute(this.draftAlarm);
             finish();
         } else {
             this.validationSnackbar = createValidationSnackbar();
@@ -379,6 +381,13 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick,
     public void onInsertAlarm(long insertedAlarmId) {
         this.draftAlarm.setId(insertedAlarmId);
         AlarmEndpoint[] alarmEndpoints = AlarmUtils.createAlarmEndpoints(this.draftAlarm);
-        new InsertTask<>(this.db.alarmEndpointDao()).execute(alarmEndpoints);
+        new InsertTask<>(getDatabase(this).alarmEndpointDao()).execute(alarmEndpoints);
+    }
+
+    @Override
+    public void onReceiveAlarms(List<UserAlarm> alarms) {}
+
+    public AppDatabase getDatabase(Context context) {
+        return AppDatabase.getInstance(context);
     }
 }

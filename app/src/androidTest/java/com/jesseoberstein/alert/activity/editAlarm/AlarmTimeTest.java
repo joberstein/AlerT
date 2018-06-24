@@ -13,7 +13,8 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.jesseoberstein.alert.test.TestUtils.*;
+import static com.jesseoberstein.alert.test.TestUtils.setTime;
+import static com.jesseoberstein.alert.test.TestUtils.withTime;
 
 public class AlarmTimeTest extends BaseEditAlarmSectionTest {
     private static final int SELECTED_HOUR = 14;

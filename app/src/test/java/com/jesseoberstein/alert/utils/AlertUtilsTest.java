@@ -1,27 +1,25 @@
 package com.jesseoberstein.alert.utils;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.RouteType;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AlertUtilsTest {
-    private Route testRoute;
-
-    @Before
-    public void setup() {
-        testRoute = new Route();
-        testRoute.setId("id");
-        testRoute.setLongName("test route");
-        testRoute.setShortName("test");
-    }
+    @Mock private UserAlarm testAlarm;
+    @Mock private Route testRoute;
 
     @Test
     public void getThemeByRouteId() {
@@ -35,7 +33,7 @@ public class AlertUtilsTest {
 
         themes.forEach((key, value) -> {
             System.out.println("Get theme for route id: " + key);
-            testRoute.setId(key);
+            when(testRoute.getId()).thenReturn(key);
             assertEquals(value.intValue(), AlertUtils.getTheme(testRoute));
         });
     }
@@ -49,8 +47,24 @@ public class AlertUtilsTest {
 
         themes.forEach((key, value) -> {
             System.out.println("Get theme for route type: " + key);
-            testRoute.setRouteTypeId(key.getId());
+            when(testRoute.getRouteTypeId()).thenReturn(key.getId());
             assertEquals(value.intValue(), AlertUtils.getTheme(testRoute));
         });
+    }
+
+    @Test
+    public void getsTextColorForWhiteBackground_textColorIsWhite() {
+        when(testAlarm.getRoute()).thenReturn(testRoute);
+        when(testRoute.getColor()).thenReturn("000000");
+        when(testRoute.getTextColor()).thenReturn("FFFFFF");
+        assertEquals("000000", AlertUtils.getTextColorForWhiteBackground(testAlarm));
+    }
+
+    @Test
+    public void getsTextColorForWhiteBackground_textColorIsNotWhite() {
+        when(testAlarm.getRoute()).thenReturn(testRoute);
+        when(testRoute.getColor()).thenReturn("FFFFFF");
+        when(testRoute.getTextColor()).thenReturn("000000");
+        assertEquals("000000", AlertUtils.getTextColorForWhiteBackground(testAlarm));
     }
 }

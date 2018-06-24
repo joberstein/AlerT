@@ -4,6 +4,7 @@ package com.jesseoberstein.alert.fragments;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -18,7 +19,6 @@ import com.jesseoberstein.alert.fragments.dialog.alarm.SetDirectionDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetEndpointsDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetRouteDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetStopDialog;
-import com.jesseoberstein.alert.interfaces.OnAlarmSubmit;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 
@@ -26,7 +26,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.joining;
 
-public class MbtaSettingsFragment extends AlarmSettingsFragment implements OnAlarmSubmit {
+public class MbtaSettingsFragment extends AlarmSettingsFragment {
     private FragmentManager fragmentManager;
 
     public static MbtaSettingsFragment newInstance(int page) {
@@ -34,7 +34,7 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment implements OnAla
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         UserAlarm newAlarm = ((EditAlarm) getActivity()).getDraftAlarm();
         this.fragmentManager = getActivity().getSupportFragmentManager();
 
@@ -49,9 +49,6 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment implements OnAla
 
         return view;
     }
-
-    @Override
-    public void onAlarmSubmit() {}
 
     private void showRouteDialog(View view) {
         this.showDialogFragment(new SetRouteDialog(), "setRoute");

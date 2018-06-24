@@ -6,16 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest.*;
+import static com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest.selectDirection;
 import static org.hamcrest.CoreMatchers.not;
 
 public class AlarmRouteTest extends BaseEditAlarmSectionTest {
@@ -53,7 +49,7 @@ public class AlarmRouteTest extends BaseEditAlarmSectionTest {
         verifyErrorMessageNotShownOnSave(R.string.route_invalid);
     }
 
-    static void selectRoute(String routeName)  throws InterruptedException {
+    public static void selectRoute(String routeName)  throws InterruptedException {
         openRouteDialog();
         selectRouteFromAutosuggest(routeName);
     }

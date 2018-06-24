@@ -3,6 +3,7 @@ package com.jesseoberstein.alert.fragments;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +16,16 @@ import com.jesseoberstein.alert.fragments.dialog.alarm.SetDurationDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetNicknameDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetRepeatTypeDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetTimeDialog;
-import com.jesseoberstein.alert.interfaces.OnAlarmSubmit;
 import com.jesseoberstein.alert.models.UserAlarm;
 
-public class TimeSettingsFragment extends AlarmSettingsFragment implements OnAlarmSubmit {
+public class TimeSettingsFragment extends AlarmSettingsFragment {
 
     public static TimeSettingsFragment newInstance(int page) {
         return (TimeSettingsFragment) AlarmSettingsFragment.newInstance(page, new TimeSettingsFragment());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         UserAlarm newAlarm = ((EditAlarm) getActivity()).getDraftAlarm();
 
         TimeSettingsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_settings_tab_time, container, false);
@@ -39,9 +39,6 @@ public class TimeSettingsFragment extends AlarmSettingsFragment implements OnAla
 
         return view;
     }
-
-    @Override
-    public void onAlarmSubmit() {}
 
     private void showTimePickerDialog(View view) {
         this.showDialogFragment(new SetTimeDialog(), "setTime");

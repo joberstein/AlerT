@@ -14,8 +14,8 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest.*;
-import static com.jesseoberstein.alert.activity.editAlarm.AlarmRouteTest.*;
+import static com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest.selectDirection;
+import static com.jesseoberstein.alert.activity.editAlarm.AlarmRouteTest.selectRoute;
 import static junit.framework.Assert.assertTrue;
 
 public class AlarmStopTest extends BaseEditAlarmSectionTest {
@@ -83,7 +83,7 @@ public class AlarmStopTest extends BaseEditAlarmSectionTest {
         assertTrue(activityRule.getActivity().isFinishing());
     }
 
-    static void selectStop(String stopName) throws InterruptedException {
+    public static void selectStop(String stopName) throws InterruptedException {
         openStopDialog();
         selectStopFromAutosuggest(stopName);
     }

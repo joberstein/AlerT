@@ -10,16 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest.*;
-import static com.jesseoberstein.alert.activity.editAlarm.AlarmRouteTest.*;
-import static com.jesseoberstein.alert.activity.editAlarm.AlarmStopTest.*;
+import static com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest.selectDirection;
+import static com.jesseoberstein.alert.activity.editAlarm.AlarmRouteTest.selectRoute;
+import static com.jesseoberstein.alert.activity.editAlarm.AlarmStopTest.selectStop;
 import static java.util.stream.Collectors.partitioningBy;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.containsString;
@@ -63,7 +62,7 @@ public class AlarmEndpointsTest extends BaseEditAlarmSectionTest {
         assertTrue(activityRule.getActivity().isFinishing());
     }
 
-    static void selectEndpoints(String[] selected, String[] fullList) throws InterruptedException {
+    public static void selectEndpoints(String[] selected, String[] fullList) throws InterruptedException {
         openEndpointDialog();
         checkEndpointsSelected(fullList);
         selectEndpointsFromList(selected, fullList);

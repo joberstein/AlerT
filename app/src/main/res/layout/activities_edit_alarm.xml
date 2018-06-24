@@ -1,53 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.jesseoberstein.alert.activities.alarm.EditAlarm">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/alarm_settings_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/alarm_settings_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_nav_height"
+            android:background="@color/white"
+            android:elevation="3dp"
+            app:tabBackground="?attr/tabsBackgroundColor"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
+            app:tabIndicatorHeight="3dp"
+            app:tabIndicatorColor="?attr/tabSelectedIndicatorColor"/>
+
     </android.support.v4.view.ViewPager>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/stepper_dots"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_nav_height"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"
-        app:tabPaddingStart="@dimen/bottom_nav_margin_between"
-        app:tabPaddingEnd="@dimen/bottom_nav_margin_between">
-    </android.support.design.widget.TabLayout>
-
-    <TextView
-        android:id="@+id/previous_step"
-        android:text="@string/back"
-        android:layout_alignParentStart="true"
-        android:drawableStart="@drawable/ic_chevron_left"
-        android:drawableTint="@color/white"
-        android:visibility="invisible"
-        style="@style/AlarmPagerBottomNavigation"/>
-
-    <TextView
-        android:id="@+id/next_step"
-        android:text="@string/next"
-        android:layout_alignParentEnd="true"
-        android:drawableEnd="@drawable/ic_chevron_right"
-        android:drawableTint="@color/white"
-        style="@style/AlarmPagerBottomNavigation"/>
-
-    <TextView
-        android:id="@+id/submit_alarm"
-        android:text="@string/done"
-        android:layout_alignParentEnd="true"
-        android:paddingStart="@dimen/default_icon_size"
-        android:paddingEnd="@dimen/default_icon_size"
-        android:visibility="invisible"
-        style="@style/AlarmPagerBottomNavigation"/>
-
-</RelativeLayout>
+</LinearLayout>

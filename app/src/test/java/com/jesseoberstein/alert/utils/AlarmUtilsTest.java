@@ -7,7 +7,10 @@ import com.jesseoberstein.alert.models.mbta.Endpoint;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -15,12 +18,13 @@ import java.util.Calendar;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AlarmUtilsTest {
-    private Calendar mockCalendar;
-    private UserAlarm testAlarm;
+    @Mock private Calendar mockCalendar;
+    @Mock private UserAlarm testAlarm;
+
     private int calendarToday;
     private int calendarTomorrow;
     private int today;
@@ -28,8 +32,6 @@ public class AlarmUtilsTest {
 
     @Before
     public void setup() {
-        mockCalendar = mock(Calendar.class);
-        testAlarm = mock(UserAlarm.class);
         calendarToday = DateTimeUtils.getCurrentDay();
         calendarTomorrow = getFutureDayOnCalendar(calendarToday, 1);
         today = calendarToday - 1;

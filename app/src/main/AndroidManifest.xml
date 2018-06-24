@@ -14,37 +14,6 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.routes.ViewRoutes"
-            android:launchMode="singleTop">
-
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".activities.RoutesSearchActivity" />
-        </activity>
-
-        <activity
-            android:name=".activities.routes.SearchRoutes"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateVisible"
-            android:parentActivityName="com.jesseoberstein.alert.activities.routes.ViewRoutes">
-
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jesseoberstein.alert.activities.routes.ViewRoutes"/>
-        </activity>
-
-        <activity
-            android:name=".activities.InitializeMbtaData"
-            android:launchMode="singleTop">
-        </activity>
-
-        <activity
             android:name=".activities.alarms.ViewAlarms"
             android:launchMode="singleTop">
 
@@ -52,22 +21,6 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jesseoberstein.alert.activities.routes.ViewRoutes"/>
-        </activity>
-
-        <activity
-            android:name=".activities.alarm.CreateAlarm"
-            android:parentActivityName="com.jesseoberstein.alert.activities.alarms.ViewAlarms">
-
-            <intent-filter>
-                <action android:name="android.intent.action.INSERT"/>
-            </intent-filter>
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jesseoberstein.alert.activities.alarms.ViewAlarms"/>
         </activity>
 
         <activity
@@ -76,11 +29,9 @@
             android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
+                <action android:name="android.intent.action.INSERT"/>
                 <action android:name="android.intent.action.EDIT"/>
             </intent-filter>
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jesseoberstein.alert.activities.alarms.ViewAlarms"/>
         </activity>
 
         <receiver android:name=".receivers.OnAlarmStart"  android:exported="true">

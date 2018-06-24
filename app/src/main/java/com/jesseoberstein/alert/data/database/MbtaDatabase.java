@@ -16,8 +16,9 @@ import com.jesseoberstein.alert.models.mbta.Stop;
 
 @Database(entities = {Route.class, Stop.class, Direction.class, Endpoint.class}, version = 1, exportSchema = false)
 public abstract class MbtaDatabase extends RoomDatabase {
-    private static final String MBTA_DATABASE_NAME = "mbta";
-    static final String MBTA_DATABASE_FILENAME = MBTA_DATABASE_NAME + ".db";
+
+    public static final String MBTA_DATABASE_NAME = "mbta";
+    public static final String MBTA_DATABASE_FILENAME = MBTA_DATABASE_NAME + ".db";
     private static MbtaDatabase instance;
 
     public abstract RouteDao routeDao();

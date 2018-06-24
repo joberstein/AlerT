@@ -6,14 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.jesseoberstein.alert.activity.editAlarm.AlarmEndpointsTest.*;
+import static com.jesseoberstein.alert.activity.editAlarm.AlarmEndpointsTest.confirmEndpointsSelected;
+import static com.jesseoberstein.alert.activity.editAlarm.AlarmEndpointsTest.selectEndpoints;
 import static org.hamcrest.CoreMatchers.not;
 
 public class AlarmDirectionTest extends BaseEditAlarmSectionTest {
@@ -49,7 +48,7 @@ public class AlarmDirectionTest extends BaseEditAlarmSectionTest {
         verifyErrorMessageNotShownOnSave(R.string.direction_invalid);
     }
 
-    static void selectDirection(String directionName) throws InterruptedException {
+    public static void selectDirection(String directionName) throws InterruptedException {
         openDirectionDialog();
         selectDirectionFromList(directionName);
     }

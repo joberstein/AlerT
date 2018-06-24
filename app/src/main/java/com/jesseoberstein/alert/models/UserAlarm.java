@@ -91,9 +91,6 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
     @Ignore
     private List<String> errors = new ArrayList<>();
 
-    @Deprecated
-    private String station;
-
     public UserAlarm() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -104,6 +101,7 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         setSelectedDays(new SelectedDays());
         setDuration(30);
         setEndpoints(new ArrayList<>());
+        setActive(true);
     }
 
     public UserAlarm(UserAlarm alarm) {
@@ -118,7 +116,6 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         setRepeatType(alarm.getRepeatType());
         setSelectedDays(alarm.getSelectedDays());
         setActive(alarm.isActive());
-        setStation(alarm.getStation());
     }
 
     @Bindable
@@ -157,12 +154,14 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         this.minutes = minutes;
     }
 
+    @Bindable
     public SelectedDays getSelectedDays() {
         return selectedDays;
     }
 
     public void setSelectedDays(SelectedDays selectedDays) {
         this.selectedDays = selectedDays;
+        notifyPropertyChanged(BR.selectedDays);
         setNextFiringDayString();
     }
 
@@ -189,12 +188,14 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         this.repeatTypeId = repeatTypeId;
     }
 
+    @Bindable
     public boolean isActive() {
         return active;
     }
 
     public void setActive(boolean active) {
         this.active = active;
+        notifyPropertyChanged(BR.active);
     }
 
     @Bindable
@@ -228,7 +229,9 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
             return null;
         }
 
-        return time;
+        setTime(this.hour, this.minutes);
+        return this.time;
+
     }
 
     public void setTime(Integer newHour, Integer newMinutes) {
@@ -236,16 +239,16 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
             return;
         }
 
-        // If the time is the same as it was before, no need to update the time.
-        if (newHour.equals(this.hour) && newMinutes.equals(this.minutes)) {
-            return;
+        if (!newHour.equals(this.hour)) {
+            setHour(newHour);
         }
 
-        setHour(newHour);
-        setMinutes(newMinutes);
+        if (!newMinutes.equals(this.minutes)) {
+            setMinutes(newMinutes);
+        }
+
         this.time = DateTimeUtils.getFormattedTime(this.hour, this.minutes);
         notifyPropertyChanged(BR.time);
-
         setNextFiringDayString();
     }
 
@@ -359,9 +362,7 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
             return false;
         if (nickname != null ? !nickname.equals(userAlarm.nickname) : userAlarm.nickname != null)
             return false;
-        if (endpoints != null ? !endpoints.equals(userAlarm.endpoints) : userAlarm.endpoints != null)
-            return false;
-        return station != null ? station.equals(userAlarm.station) : userAlarm.station == null;
+        return endpoints != null ? endpoints.equals(userAlarm.endpoints) : userAlarm.endpoints == null;
     }
 
     @Override
@@ -379,7 +380,6 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (endpoints != null ? endpoints.hashCode() : 0);
         result = 31 * result + (errors != null ? errors.hashCode() : 0);
-        result = 31 * result + (station != null ? station.hashCode() : 0);
         return result;
     }
 
@@ -403,8 +403,7 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
                 ", route=" + route +
                 ", stop=" + stop +
                 ", direction=" + direction +
-                ", endpoints=" + endpoints +
-                ", station='" + station + '\'' +
+                ", endpoints=" + endpoints + '\'' +
                 '}';
     }
 
@@ -434,15 +433,5 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
     @Override
     public List<String> getErrors() {
         return this.errors;
-    }
-
-    @Deprecated
-    public String getStation() {
-        return station;
-    }
-
-    @Deprecated
-    public void setStation(String station) {
-        this.station = station;
     }
 }

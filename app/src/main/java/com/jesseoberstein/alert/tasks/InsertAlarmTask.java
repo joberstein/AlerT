@@ -12,8 +12,8 @@ import java.util.List;
 public class InsertAlarmTask extends InsertTask<UserAlarm> {
     private final AlarmReceiver onAlarmInserted;
 
-    public InsertAlarmTask(Context context) {
-        super(AppDatabase.getInstance(context).userAlarmDao());
+    public InsertAlarmTask(Context context, AppDatabase db) {
+        super(db.userAlarmDao());
         this.onAlarmInserted = (AlarmReceiver) context;
     }
 

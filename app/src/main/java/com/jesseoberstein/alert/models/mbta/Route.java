@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Type;
 
 import java.util.List;
+import java.util.Optional;
 
 @Entity(tableName = "routes", indices = {@Index("type_id")}, primaryKeys = {"id"})
 @Type("route")
@@ -34,6 +35,13 @@ public class Route extends BaseResource {
     @JsonProperty("description")
     private String description;
 
+    @JsonProperty("color")
+    private String color;
+
+    @ColumnInfo(name = "text_color")
+    @JsonProperty("text_color")
+    private String textColor;
+
     @Ignore
     @JsonProperty("sort_order")
     private int sortOrder;
@@ -41,14 +49,6 @@ public class Route extends BaseResource {
     @Ignore
     @JsonProperty("direction_names")
     private List<String> directionNames;
-
-    @Ignore
-    @JsonProperty("color")
-    private String color;
-
-    @Ignore
-    @JsonProperty("text_color")
-    private String textColor;
 
     @Ignore
     @JsonIgnore
@@ -108,7 +108,7 @@ public class Route extends BaseResource {
     }
 
     public String getColor() {
-        return color;
+        return this.color;
     }
 
     public void setColor(String color) {
@@ -116,7 +116,7 @@ public class Route extends BaseResource {
     }
 
     public String getTextColor() {
-        return textColor;
+        return this.textColor;
     }
 
     public void setTextColor(String textColor) {

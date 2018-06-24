@@ -7,6 +7,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
 import com.jesseoberstein.alert.data.dao.AlarmEndpointDao;
 import com.jesseoberstein.alert.data.dao.DirectionDao;
@@ -27,6 +28,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Database(
@@ -46,34 +48,38 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract AlarmEndpointDao alarmEndpointDao();
 
     public static AppDatabase getInstance(Context context) {
-        if (instance == null) {
+        return Optional.ofNullable(instance).orElseGet(() -> {
             instance = Room.databaseBuilder(context, AppDatabase.class, ALERT_DATABASE_NAME)
                     .fallbackToDestructiveMigration()
-                    .addCallback(buildCallback(context))
+                    .addCallback(buildCreateDbCallback(context))
                     .build();
-        }
-        return instance;
+            return instance;
+        });
     }
 
-    @VisibleForTesting
-    static Callback buildCallback(Context context) {
+    /**
+     * Read in a SQL file that will pre-populate the tables from the MBTA database.
+     * @param context The app context.
+     * @return The callback that Room should execute when the database is created.
+     */
+    protected static Callback buildCreateDbCallback(Context context) {
         return new Callback() {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
-                readMbtaDbFile(context).forEach(db::execSQL);
+                readFile(context, MbtaDatabase.MBTA_DATABASE_FILENAME).forEach(db::execSQL);
             }
         };
     }
 
     /**
-     * Read the SQL dump in {@link MbtaDatabase#MBTA_DATABASE_FILENAME} asset file.
-     * Contains a sequence of 'create' and 'insert' statements.
-     * @return A list of SQL statements to execute that will create & populate the mbta data tables.
+     * Read in the the given asset file.
+     * @param filename the name of the asset file, including extenstion.
+     * @return A list of the lines in the file.
      */
-    private static List<String> readMbtaDbFile(Context context) {
+    private static List<String> readFile(Context context, String filename) {
         try {
-            InputStream inputStream = context.getAssets().open(MbtaDatabase.MBTA_DATABASE_FILENAME);
+            InputStream inputStream = context.getAssets().open(filename);
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader reader = new BufferedReader(inputStreamReader);
             List<String> content = reader.lines().collect(Collectors.toList());
@@ -81,6 +87,7 @@ public abstract class AppDatabase extends RoomDatabase {
             return content;
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("File not found", e.getMessage());
         }
 
         return Collections.emptyList();

@@ -2,6 +2,7 @@ package com.jesseoberstein.alert.data.dao;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Stop;
 
 import org.junit.After;
@@ -12,6 +13,9 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class StopDaoTest extends BaseDaoTest {
@@ -41,27 +45,38 @@ public class StopDaoTest extends BaseDaoTest {
     }
 
     @Test
-    public void testGetStopByRouteId_noIds() {
+    public void testGetByRouteId_noIds() {
         List<Stop> stops = stopDao.get(new String[]{});
         assertDaoResults(stops, Collections.emptyList());
     }
 
     @Test
-    public void testGetStopByRouteId_invalidId() {
+    public void testGetByRouteId_invalidId() {
         List<Stop> stops = stopDao.get(new String[]{"Purple"});
         assertDaoResults(stops, Collections.emptyList());
     }
 
     @Test
-    public void testGetStopByRouteId_singleId() {
+    public void testGetByRouteId_singleId() {
         List<Stop> stops = stopDao.get(new String[]{"Green-B"});
         assertDaoResults(stops, Collections.singletonList(1));
     }
 
     @Test
-    public void testGetStopByRouteId_multipleIds() {
+    public void testGetByRouteId_multipleIds() {
         List<Stop> stops = stopDao.get(new String[]{"Red", "Green-B"});
         assertDaoResults(stops, Arrays.asList(1, 2));
+    }
+
+    @Test
+    public void testGetByStopId() {
+        Stop stop = stopDao.get("place-boscl");
+        assertEquals(stop, getTestStops()[1]);
+    }
+
+    @Test
+    public void testGetByStopId_invalid() {
+        assertNull(stopDao.get("Fake"));
     }
 
     private Stop[] getTestStops() {

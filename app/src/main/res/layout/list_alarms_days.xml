@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data class="ViewAlarmsDaysBinding">
+        <import type="android.graphics.Typeface"/>
+        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="dayLetter" type="String"/>
+        <variable name="dayTextColor" type="Integer"/>
+        <variable name="dayTypeface" type="Typeface"/>
+    </data>
+
+    <TextView
+        android:id="@+id/alarm_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/grid_item_quaternary_font_size"
+        android:paddingEnd="@dimen/grid_item_padding_small"
+        android:text="@{dayLetter}"
+        android:textColor="@{dayTextColor}"
+        android:typeface="@{dayTypeface}"/>
+
+</layout>

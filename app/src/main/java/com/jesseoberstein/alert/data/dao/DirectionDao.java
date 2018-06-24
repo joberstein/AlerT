@@ -7,7 +7,6 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.jesseoberstein.alert.models.mbta.Direction;
-import com.jesseoberstein.alert.models.mbta.Endpoint;
 
 import java.util.List;
 
@@ -16,6 +15,9 @@ public interface DirectionDao extends BaseDao<Direction> {
 
     @Query("SELECT * FROM directions WHERE route_id IN (:routeIds) ORDER BY id")
     List<Direction> get(String[] routeIds);
+
+    @Query("SELECT * FROM directions WHERE id = :directionId AND route_id = :routeId")
+    Direction get(long directionId, String routeId);
 
     @Override
     @Query("SELECT * FROM directions")

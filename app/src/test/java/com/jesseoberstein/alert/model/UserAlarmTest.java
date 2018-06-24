@@ -1,6 +1,7 @@
 package com.jesseoberstein.alert.model;
 
 import com.jesseoberstein.alert.models.RepeatType;
+import com.jesseoberstein.alert.models.SelectedDays;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
@@ -10,13 +11,18 @@ import com.jesseoberstein.alert.models.mbta.Stop;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Calendar.HOUR_OF_DAY;
+import static java.util.Calendar.MINUTE;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
 public class UserAlarmTest {
@@ -41,12 +47,31 @@ public class UserAlarmTest {
     }
 
     @Test
+    public void testNoArgConstructor() {
+        testAlarm = new UserAlarm();
+        int defaultHour = (LocalDateTime.now().getHour() + 1) % 24;
+
+        assertEquals(0, testAlarm.getId());
+        assertEquals(defaultHour, testAlarm.getHour().intValue());
+        assertEquals(LocalDateTime.now().getMinute(), testAlarm.getMinutes().intValue());
+        assertEquals(RepeatType.NEVER, testAlarm.getRepeatType());
+        assertEquals(new SelectedDays(), testAlarm.getSelectedDays());
+        assertEquals(30, testAlarm.getDuration());
+        assertEquals(Collections.emptyList(), testAlarm.getEndpoints());
+        assertEquals(true, testAlarm.isActive());
+        assertNull(testAlarm.getNickname());
+        assertNull(testAlarm.getRoute());
+        assertNull(testAlarm.getDirection());
+        assertNull(testAlarm.getStop());
+    }
+
+    @Test
     public void testSingleArgConstructor() {
         testAlarm.setTime(10, 30);
         testAlarm.setDuration(30);
         testAlarm.setRepeatType(RepeatType.CUSTOM);
         testAlarm.setSelectedDays(new int[]{1,0,1,0,1,0,1});
-        testAlarm.setActive(true);
+        testAlarm.setActive(false);
 
         assertEquals(testAlarm, new UserAlarm(testAlarm));
     }

@@ -1,23 +1,12 @@
 <resources>
     <string name="app_name">AlerT</string>
-    <string name="routes_page">My Routes</string>
-    <string name="routes_search_page">Search Routes</string>
-    <string name="create_alarm_page">New Alarm</string>
+    <string name="view_alarms_page">My Alarms</string>
+    <string name="new_alarm_page">New Alarm</string>
+    <string name="edit_alarm_page">Edit Alarm</string>
 
-    <string name="route_list_empty">No routes to display yet</string>
     <string name="alarm_list_empty">No alarms saved yet</string>
 
     <string name="save_alarm_menu">Save Alarm Menu</string>
-
-    <string-array name="weekdays">
-        <item>Sunday</item>
-        <item>Monday</item>
-        <item>Tuesday</item>
-        <item>Wednesday</item>
-        <item>Thursday</item>
-        <item>Friday</item>
-        <item>Saturday</item>
-    </string-array>
 
     <string name="time">Time</string>
 
@@ -57,23 +46,6 @@
     <string name="endpoints_dialog_title">Select Endpoints</string>
     <string name="endpoints_invalid">At least one endpoint must be selected.</string>
 
-    <string name="station">Station</string>
-    <string name="directions">Directions</string>
-    <string name="lines">Lines</string>
-    <string name="create">Create</string>
-
-    <string name="step_1">1) Choose Start Time</string>
-    <string name="step_2">2) Select Days</string>
-    <string name="step_3">3) Modify Settings</string>
-    <string name="back">Back</string>
-    <string name="next">Next</string>
-    <string name="done">Done</string>
-
-    <string name="status">Status</string>
-
-    <string name="add_route_dialog">Add the "%1$s" to your routes?</string>
-    <string name="remove_route_dialog">Remove the "%1$s" from your routes?</string>
-
     <string name="add_alarm_dialog">Add "%1$s" to your alarms?</string>
     <string name="update_alarm_dialog">Update this alarm?</string>
     <string name="remove_alarm_dialog">Remove "%1$s" from your alarms?</string>
@@ -84,5 +56,7 @@
     <string name="remove">Remove</string>
     <string name="cancel">Cancel</string>
     <string name="fix">FIX</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
 
 </resources>

@@ -1,15 +1,13 @@
 package com.jesseoberstein.alert.adapters;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.databinding.DataBindingUtil;
+import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.databinding.ViewAlarmsDaysBinding;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Calendar.FRIDAY;
 import static java.util.Calendar.MONDAY;
@@ -20,23 +18,29 @@ import static java.util.Calendar.TUESDAY;
 import static java.util.Calendar.WEDNESDAY;
 
 public class DaysAdapter extends BaseRecyclerAdapter<Integer> {
+    private ViewAlarmsDaysBinding binding;
+    private int selectedColor;
+    private int unselectedColor;
 
-    DaysAdapter(int layout, List<Integer> days) {
-        super(layout, days);
+    DaysAdapter(int layout, List<Integer> dayList, int selectedColor, int unselectedColor) {
+        super(layout, dayList);
+        this.selectedColor = selectedColor;
+        this.unselectedColor = unselectedColor;
     }
 
+    @NonNull
     @Override
-    public DayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DayViewHolder(this.getInflatedView(parent));
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        this.binding = DataBindingUtil.bind(this.getInflatedView(parent));
+        return new BaseViewHolder(this.binding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        DayViewHolder dayHolder = (DayViewHolder) holder;
-        Integer day = getItems().get(position);
-        TextView dayView = day == 1 ? dayHolder.selectedDay : dayHolder.unselectedDay;
-        dayView.setText(getDayText(position + 1));
-        dayView.setVisibility(View.VISIBLE);
+        boolean isDaySelected = this.getItems().get(position) == 1;
+        this.binding.setDayLetter(getDayText(position + 1));
+        this.binding.setDayTextColor(isDaySelected ? this.selectedColor : this.unselectedColor);
+        this.binding.setDayTypeface(isDaySelected ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
     }
 
     private String getDayText(int dayIndex) {
@@ -49,17 +53,6 @@ public class DaysAdapter extends BaseRecyclerAdapter<Integer> {
             case FRIDAY:    return "F";
             case SATURDAY:  return "S";
             default:        return "?";
-        }
-    }
-
-    static class DayViewHolder extends BaseViewHolder {
-        private TextView selectedDay;
-        private TextView unselectedDay;
-
-        DayViewHolder(View dayView) {
-            super(dayView);
-            selectedDay = (TextView) dayView.findViewById(R.id.alarm_day_selected);
-            unselectedDay = (TextView) dayView.findViewById(R.id.alarm_day_unselected);
         }
     }
 }

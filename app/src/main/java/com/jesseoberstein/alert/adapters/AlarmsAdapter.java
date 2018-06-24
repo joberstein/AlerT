@@ -1,73 +1,96 @@
 package com.jesseoberstein.alert.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.activities.alarm.EditAlarm;
+import com.jesseoberstein.alert.databinding.ViewAlarmsBinding;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.jesseoberstein.alert.utils.AlertUtils.*;
+import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
+
 public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarm> {
+    private ViewAlarmsBinding binding;
 
     public AlarmsAdapter(int layout, List<UserAlarm> alarms) {
         super(layout, alarms);
     }
 
+    @Override
+    public long getItemId(int position) {
+        return this.getItems().get(position).getId();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return Long.valueOf(this.getItems().get(position).getId()).intValue();
+    }
+
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parentView, int viewType) {
-        return new AlarmViewHolder(this.getInflatedView(parentView));
+        this.binding = DataBindingUtil.bind(this.getInflatedView(parentView));
+        return new AlarmViewHolder(this.binding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        AlarmViewHolder alarmHolder = (AlarmViewHolder) holder;
+        AlarmViewHolder alarmViewHolder = (AlarmViewHolder) holder;
+        View view = alarmViewHolder.itemView;
         UserAlarm alarm = getItems().get(position);
-        alarmHolder.time.setText(alarm.getTime());
-        alarmHolder.name.setText(alarm.getNickname());
-        alarmHolder.stop.setText(alarm.getStation());
-        alarmHolder.direction.setText(alarm.getDirection().getName());
 
-        int alarmStatusId = alarm.isActive() ? R.drawable.circle_light_green : R.drawable.circle_light_gray;
-        alarmHolder.status.setImageResource(alarmStatusId);
+        List<Integer> daysList = Arrays.stream(alarm.getSelectedDays().toIntArray()).boxed().collect(Collectors.toList());
+        int activeColor = Color.parseColor(getHexColor(getTextColorForWhiteBackground(alarm)));
+        int inactiveColor = view.getContext().getResources().getColor(R.color.alarm_off, null);
+        DaysAdapter daysAdapter = new DaysAdapter(R.layout.list_alarms_days, daysList, activeColor, inactiveColor);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayout.HORIZONTAL, false);
 
-        List<Integer> days = Arrays.stream(alarm.getSelectedDays().toIntArray()).boxed().collect(Collectors.toList());
-        alarmHolder.days.setAdapter(new DaysAdapter(R.layout.alarm_day, days));
-        alarmHolder.days.setLayoutManager(new LinearLayoutManager(alarmHolder.context, LinearLayout.HORIZONTAL, false));
+        alarmViewHolder.days.setAdapter(daysAdapter);
+        alarmViewHolder.days.setLayoutManager(layoutManager);
 
-        alarmHolder.view.setOnClickListener(view -> removeItem(position));
+        this.binding.setAlarm(alarm);
+        this.binding.setActiveStatusTextColor(alarm.isActive() ? activeColor : inactiveColor);
+        this.binding.setRouteColor(Color.parseColor(getHexColor(alarm.getRoute().getColor())));
+        this.binding.setRouteTextColor(Color.parseColor(getHexColor(alarm.getRoute().getTextColor())));
+
+        view.setOnClickListener(v -> onAlarmClick(alarmViewHolder.context, alarm));
     }
 
     static class AlarmViewHolder extends BaseViewHolder {
         private Context context;
-        private View view;
-        private TextView time;
-        private TextView name;
-        private TextView stop;
-        private TextView direction;
-        private ImageView status;
         private RecyclerView days;
 
         AlarmViewHolder(View alarmView) {
             super(alarmView);
             context = alarmView.getContext();
-            view = alarmView;
-            time = (TextView) alarmView.findViewById(R.id.alarm_time);
-            name = (TextView) alarmView.findViewById(R.id.alarm_name);
-            stop = (TextView) alarmView.findViewById(R.id.alarm_stop);
-            direction = (TextView) alarmView.findViewById(R.id.alarm_direction);
-            status = (ImageView) alarmView.findViewById(R.id.alarm_status);
-            days = (RecyclerView) alarmView.findViewById(R.id.alarm_days);
+            days = alarmView.findViewById(R.id.alarm_days);
         }
+    }
+
+    /**
+     * Start the 'EditAlarm' activity when an alarm view is clicked, passing along the alarm id.
+     * @param context The view context.
+     * @param alarm The clicked alarm.
+     */
+    private void onAlarmClick(Context context, UserAlarm alarm) {
+        Intent intent = new Intent(context, EditAlarm.class);
+        intent.setAction(Intent.ACTION_EDIT);
+        intent.putExtra(ALARM_ID, alarm.getId());
+        context.startActivity(intent);
     }
 }

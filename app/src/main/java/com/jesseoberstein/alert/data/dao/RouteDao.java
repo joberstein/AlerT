@@ -13,6 +13,9 @@ import java.util.List;
 @Dao
 public interface RouteDao extends BaseDao<Route> {
 
+    @Query("SELECT * FROM routes WHERE id = :routeId")
+    Route get(String routeId);
+
     @Override
     @Query("SELECT * FROM routes")
     List<Route> getAll();

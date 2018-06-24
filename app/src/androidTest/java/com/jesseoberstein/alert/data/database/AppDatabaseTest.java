@@ -21,7 +21,7 @@ public class AppDatabaseTest {
     public void createDb() throws IOException {
         Context context = InstrumentationRegistry.getContext();
         testDb = Room.inMemoryDatabaseBuilder(context, AppDatabase.class)
-                .addCallback(AppDatabase.buildCallback(context))
+                .addCallback(AppDatabase.buildCreateDbCallback(context))
                 .build();
     }
 

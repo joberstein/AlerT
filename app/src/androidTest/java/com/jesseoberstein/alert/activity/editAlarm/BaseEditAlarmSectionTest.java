@@ -6,11 +6,11 @@ import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.activities.alarm.EditAlarm;
+import com.jesseoberstein.alert.activities.alarm.EditAlarmMock;
+import com.jesseoberstein.alert.data.AppDatabaseTest;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 
 import java.util.Arrays;
@@ -33,34 +33,25 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 public class BaseEditAlarmSectionTest {
-    private Intent intent;
 
     @Rule
-    public ActivityTestRule<EditAlarm> activityRule;
-
-    @Before
-    public void setup() {
-        activityRule = new ActivityTestRule<>(EditAlarm.class, true, false);
-        intent = new Intent();
-    }
+    public ActivityTestRule<EditAlarmMock> activityRule = new ActivityTestRule<>(EditAlarmMock.class);
 
     @After
     public void cleanup() {
-        activityRule.finishActivity();
+        AppDatabaseTest.clear();
     }
 
     void relaunchActivity() {
-        intent = activityRule.getActivity().getIntent();
+        Intent intent = activityRule.getActivity().getIntent();
         activityRule.launchActivity(intent);
     }
 
-    void moveToTimeSettingsTab() {
-        activityRule.launchActivity(intent);
+    public static void moveToTimeSettingsTab() {
         moveToSettingsTab(R.drawable.ic_alarm);
     }
 
-    void moveToMbtaSettingsTab() {
-        activityRule.launchActivity(intent);
+    public static void moveToMbtaSettingsTab() {
         moveToSettingsTab(R.drawable.ic_train);
     }
 
@@ -83,11 +74,11 @@ public class BaseEditAlarmSectionTest {
         onView(withText(errorMessage)).check(doesNotExist());
     }
 
-    void saveAlarm() {
+    public static void saveAlarm() {
         onView(withContentDescription("Save Alarm")).perform(click());
     }
 
-    private void moveToSettingsTab(int tabIcon) {
+    private static void moveToSettingsTab(int tabIcon) {
         String tabDescription = "tab " + Integer.toString(tabIcon);
         Matcher<View> tabView = allOf(
             isDescendantOfA(withId(R.id.alarm_settings_tabs)),

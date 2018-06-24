@@ -39,7 +39,7 @@ public class SetTimeDialog extends AlarmModifierDialog {
         binding.setAlarm(getDraftAlarm());
 
         View timePickerDialog = binding.getRoot();
-        TimePicker timePicker = (TimePicker) timePickerDialog.findViewById(R.id.alarm_time_picker);
+        TimePicker timePicker = timePickerDialog.findViewById(R.id.alarm_time_picker);
 
         return new AlertDialog.Builder(getActivity())
                 .setView(timePickerDialog)
