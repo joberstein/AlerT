@@ -1,9 +1,6 @@
 package com.jesseoberstein.alert.data.dao;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.jesseoberstein.alert.models.mbta.Endpoint;
@@ -19,14 +16,6 @@ public interface EndpointDao extends BaseDao<Endpoint> {
     @Override
     @Query("SELECT * FROM endpoints")
     List<Endpoint> getAll();
-
-    @Override
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insert(Endpoint[] endpoints);
-
-    @Override
-    @Delete
-    void delete(Endpoint[] endpoints);
 
     @Override
     @Query("SELECT COUNT(*) FROM endpoints")

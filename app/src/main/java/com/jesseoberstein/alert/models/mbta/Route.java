@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Type;
 
 import java.util.List;
-import java.util.Optional;
 
 @Entity(tableName = "routes", indices = {@Index("type_id")}, primaryKeys = {"id"})
 @Type("route")

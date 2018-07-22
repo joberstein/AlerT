@@ -21,14 +21,6 @@ public interface RouteDao extends BaseDao<Route> {
     List<Route> getAll();
 
     @Override
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insert(Route[] routes);
-
-    @Override
-    @Delete
-    void delete(Route[] routes);
-
-    @Override
     @Query("SELECT COUNT(*) FROM routes")
     long count();
 }

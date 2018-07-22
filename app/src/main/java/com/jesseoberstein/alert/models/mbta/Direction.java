@@ -4,22 +4,29 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
-@Entity(tableName = "directions", indices = {@Index("route_id")}, primaryKeys = {"id", "route_id"})
+@Entity(tableName = "directions", indices = {@Index("route_id")})
 public class Direction implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
     private long id;
+
     private String name;
+
+    @ColumnInfo(name = "direction_id")
+    private int directionId;
 
     @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
     @ColumnInfo(name = "route_id")
     @NonNull
     private String routeId;
 
-    public Direction(long id, String name, @NonNull String routeId) {
-        this.id = id;
+    public Direction(int directionId, String name, @NonNull String routeId) {
+        this.directionId = directionId;
         this.name = name;
         this.routeId = routeId;
     }
@@ -40,6 +47,14 @@ public class Direction implements Serializable {
         this.name = name;
     }
 
+    public int getDirectionId() {
+        return directionId;
+    }
+
+    public void setDirectionId(int directionId) {
+        this.directionId = directionId;
+    }
+
     @NonNull
     public String getRouteId() {
         return routeId;
@@ -57,6 +72,7 @@ public class Direction implements Serializable {
         Direction direction = (Direction) o;
 
         if (id != direction.id) return false;
+        if (directionId != direction.directionId) return false;
         if (name != null ? !name.equals(direction.name) : direction.name != null) return false;
         return routeId.equals(direction.routeId);
     }
@@ -65,6 +81,7 @@ public class Direction implements Serializable {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + directionId;
         result = 31 * result + routeId.hashCode();
         return result;
     }

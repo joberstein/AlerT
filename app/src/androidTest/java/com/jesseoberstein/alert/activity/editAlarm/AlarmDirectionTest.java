@@ -18,7 +18,7 @@ import static org.hamcrest.CoreMatchers.not;
 public class AlarmDirectionTest extends BaseEditAlarmSectionTest {
     private static final String SELECTED_ROUTE = "Green Line B";
     private static final String SELECTED_DIRECTION = "Eastbound";
-    private static final String[] ALL_ENDPOINTS = {"Park Street", "Lechmere"};
+    private static final String[] ALL_ENDPOINTS = {"Park Street", "Lechmere", "Washington Street (Shuttle)"};
     private static final String[] SELECTED_ENDPOINTS = {"Park Street"};
     private static final String SELECTED_ENDPOINT_STRING = "Park Street";
 

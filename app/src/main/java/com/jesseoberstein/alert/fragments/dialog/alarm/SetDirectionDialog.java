@@ -13,6 +13,7 @@ import com.jesseoberstein.alert.interfaces.data.DirectionsReceiver;
 import com.jesseoberstein.alert.models.mbta.Direction;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
@@ -41,18 +42,19 @@ public class SetDirectionDialog extends AlarmModifierDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         this.directions = this.directionsReceiver.getDirectionList();
-        int currentDirection = Long.valueOf(getDraftAlarm().getDirectionId()).intValue();
+        Direction selectedDirection = this.getDraftAlarmWithRelations().getDirection();
+        int selectedId = Optional.ofNullable(selectedDirection).map(Direction::getDirectionId).orElse(-1);
         String[] directionNames = this.directions.stream().map(Direction::toString).toArray(String[]::new);
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.direction_dialog_title)
-                .setSingleChoiceItems(directionNames, currentDirection, this::onItemSelected)
+                .setSingleChoiceItems(directionNames, selectedId, this::onItemSelected)
                 .create();
     }
 
     private void onItemSelected(DialogInterface dialogInterface, int selectedIndex) {
         Direction selectedDirection = this.directions.get(selectedIndex);
-        if (!selectedDirection.equals(getDraftAlarm().getDirection())) {
+        if (!selectedDirection.equals(getDraftAlarmWithRelations().getDirection())) {
             this.alarmDirectionSetter.onAlarmDirectionSet(selectedDirection);
         }
         new android.os.Handler().postDelayed(dialogInterface::dismiss, DELAY_DIALOG_DISMISS);

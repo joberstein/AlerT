@@ -30,20 +30,11 @@ public class UserAlarmTest {
 
     @Before
     public void setup() {
-        Route testRoute = new Route();
-        testRoute.setId("Orange");
-        testRoute.setLongName("Orange Line");
-
-        Stop testStop = new Stop();
-        testStop.setId("Haymarket");
-        testStop.setRouteId("Orange");
-
         testAlarm = new UserAlarm();
         testAlarm.setNickname("Test nickname");
-        testAlarm.setRoute(testRoute);
-        testAlarm.setStop(testStop);
-        testAlarm.setDirection(new Direction(0, "Northbound", "Orange"));
-        testAlarm.setEndpoints(Collections.singletonList(new Endpoint("Forest Hills", 1, "Orange")));
+        testAlarm.setRouteId("routeId");
+        testAlarm.setStopId("stopId");
+        testAlarm.setDirectionId(2);
     }
 
     @Test
@@ -57,12 +48,11 @@ public class UserAlarmTest {
         assertEquals(RepeatType.NEVER, testAlarm.getRepeatType());
         assertEquals(new SelectedDays(), testAlarm.getSelectedDays());
         assertEquals(30, testAlarm.getDuration());
-        assertEquals(Collections.emptyList(), testAlarm.getEndpoints());
         assertEquals(true, testAlarm.isActive());
         assertNull(testAlarm.getNickname());
-        assertNull(testAlarm.getRoute());
-        assertNull(testAlarm.getDirection());
-        assertNull(testAlarm.getStop());
+        assertNull(testAlarm.getRouteId());
+        assertNull(testAlarm.getStopId());
+        assertEquals(-1, testAlarm.getDirectionId());
     }
 
     @Test
@@ -176,38 +166,26 @@ public class UserAlarmTest {
     }
 
     @Test
-    public void testValidAlarmRoute() {
-        testAlarm.setRoute(null);
+    public void testValidAlarmRouteId() {
+        testAlarm.setRouteId(null);
         assertFalse(testAlarm.isValid());
 
-        testAlarm.setRoute(new Route());
-        assertFalse(testAlarm.isValid());
-    }
-
-    @Test
-    public void testValidAlarmStop() {
-        testAlarm.setStop(null);
-        assertFalse(testAlarm.isValid());
-
-        testAlarm.setStop(new Stop());
+        testAlarm.setRouteId("");
         assertFalse(testAlarm.isValid());
     }
 
     @Test
-    public void testValidAlarmDirection() {
-        testAlarm.setDirection(null);
+    public void testValidAlarmStopId() {
+        testAlarm.setStopId(null);
         assertFalse(testAlarm.isValid());
 
-        testAlarm.setDirection(new Direction(-1, "", ""));
+        testAlarm.setStopId("");
         assertFalse(testAlarm.isValid());
     }
 
     @Test
-    public void testValidAlarmEndpoints() {
-        testAlarm.setEndpoints(null);
-        assertFalse(testAlarm.isValid());
-
-        testAlarm.setEndpoints(Collections.emptyList());
+    public void testValidAlarmDirectionId() {
+        testAlarm.setDirectionId(-1);
         assertFalse(testAlarm.isValid());
     }
 

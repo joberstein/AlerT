@@ -9,10 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -70,7 +70,7 @@ public class DirectionDaoTest extends BaseDaoTest {
 
     @Test
     public void testGetByRouteIdAndDirectionId() {
-        Direction direction = directionDao.get(0, "Green-B");
+        Direction direction = directionDao.get(3, "Green-B");
         assertEquals(direction, getTestDirections()[2]);
     }
 
@@ -81,11 +81,15 @@ public class DirectionDaoTest extends BaseDaoTest {
     }
 
     private Direction[] getTestDirections() {
-        return new Direction[]{
+        Direction[] directions = new Direction[]{
             new Direction(0, "Northbound", "Orange"),
             new Direction(1, "Southbound", "Orange"),
             new Direction(0, "Eastbound", "Green-B"),
             new Direction(1, "Northbound", "Red")
         };
+
+        IntStream.range(0, directions.length).forEach(i -> directions[i].setId(i + 1));
+        return directions;
+
     }
 }

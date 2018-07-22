@@ -8,11 +8,13 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 
+import java.io.Serializable;
+
 @Entity(
     tableName = "alarm_endpoints",
     indices = {@Index("alarm_id"), @Index("endpoint_id")}
 )
-public class AlarmEndpoint {
+public class AlarmEndpoint implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private long id;

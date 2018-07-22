@@ -16,23 +16,31 @@ import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
+import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
 public class ViewAlarmsTest {
+    private final String SELECTED_ROUTE = "Providence/Stoughton Line";
+    private final String SELECTED_DIRECTION = "Outbound";
+    private final String SELECTED_STOP = "Hyde Park";
+    private final String[] SELECTED_ENDPOINTS = {"Attleboro", "Stoughton"};
+    private final String SELECTED_ENDPOINTS_STRING = "Attleboro,  Stoughton";
+    private final String[] ALL_ENDPOINTS = {"Attleboro", "Providence", "Stoughton", "Wickford Junction"};
 
     @Rule
     public IntentsTestRule<ViewAlarmsMock> intentsTestRule = new IntentsTestRule<>(ViewAlarmsMock.class);
@@ -53,15 +61,20 @@ public class ViewAlarmsTest {
         clickCreateAlarmButton();
         verifyCreateAlarmIntent();
         insertAlarm();
-        onView(withText("Haymarket")).check(matches(isDisplayed()));
+        onView(withText(SELECTED_STOP)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testEditAlarm() throws InterruptedException {
+    public void testUpdateAlarm() throws InterruptedException {
         clickCreateAlarmButton();
         insertAlarm();
-        onView(withText("Haymarket")).perform(click());
+        onView(withText(SELECTED_STOP)).perform(click());
         verifyUpdateAlarmIntent();
+        BaseEditAlarmSectionTest.moveToMbtaSettingsTab();
+        onView(withId(R.id.alarmSettings_section_value_route)).check(matches(withText(SELECTED_ROUTE)));
+        onView(withId(R.id.alarmSettings_section_value_direction)).check(matches(withText(SELECTED_DIRECTION)));
+        onView(withId(R.id.alarmSettings_section_value_stop)).check(matches(withText(SELECTED_STOP)));
+        onView(withId(R.id.alarmSettings_section_value_endpoints)).check(matches(withText(SELECTED_ENDPOINTS_STRING)));
     }
 
     private void clickCreateAlarmButton() {
@@ -70,10 +83,10 @@ public class ViewAlarmsTest {
 
     private void insertAlarm() throws InterruptedException {
         BaseEditAlarmSectionTest.moveToMbtaSettingsTab();
-        AlarmRouteTest.selectRoute("Orange Line");
-        AlarmDirectionTest.selectDirection("Northbound");
-        AlarmStopTest.selectStop("Haymarket");
-        AlarmEndpointsTest.selectEndpoints(new String[]{"Oak Grove"}, new String[]{"Oak Grove"});
+        AlarmRouteTest.selectRoute(SELECTED_ROUTE);
+        AlarmDirectionTest.selectDirection(SELECTED_DIRECTION);
+        AlarmStopTest.selectStop(SELECTED_STOP);
+        AlarmEndpointsTest.selectEndpoints(SELECTED_ENDPOINTS, ALL_ENDPOINTS);
         BaseEditAlarmSectionTest.saveAlarm();
     }
 
@@ -81,7 +94,7 @@ public class ViewAlarmsTest {
         intended(allOf(
             hasComponent("com.jesseoberstein.alert.activities.alarm.EditAlarmMock"),
             hasAction(is(Intent.ACTION_INSERT)),
-            not(hasExtraWithKey(ALARM_ID))
+            not(hasExtraWithKey(ALARM))
         ));
     }
 
@@ -89,7 +102,7 @@ public class ViewAlarmsTest {
         intended(allOf(
             hasComponent("com.jesseoberstein.alert.activities.alarm.EditAlarm"),
             hasAction(is(Intent.ACTION_EDIT)),
-            hasExtra(ALARM_ID, 1L)
+            hasExtraWithKey(ALARM)
         ));
     }
 }

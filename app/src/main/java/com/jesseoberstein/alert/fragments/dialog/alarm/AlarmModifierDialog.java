@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.interfaces.AlarmModifier;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 
 import java.util.Optional;
 
@@ -34,6 +35,10 @@ public abstract class AlarmModifierDialog extends DialogFragment {
 
     UserAlarm getDraftAlarm() {
         return this.alarmModifier.getDraftAlarm();
+    }
+
+    UserAlarmWithRelations getDraftAlarmWithRelations() {
+        return this.alarmModifier.getDraftAlarmWithRelations();
     }
 
     Snackbar getValidationSnackbar() {

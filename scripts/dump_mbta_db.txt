@@ -1,4 +1,4 @@
-run-as com.jesseoberstein.alert
+run-as com.jesseoberstein.alert.debug
 cd databases
 sqlite3 mbta
 .output mbta.db

@@ -2,7 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data class="EndpointSectionBinding">
-        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarmWithRelations"/>
+        <variable name="endpoints" type="java.util.List&lt;com.jesseoberstein.alert.models.mbta.Endpoint&gt;"/>
     </data>
 
     <LinearLayout

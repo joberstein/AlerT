@@ -2,7 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data class="RouteSectionBinding">
-        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarmWithRelations"/>
+        <variable name="route" type="com.jesseoberstein.alert.models.mbta.Route"/>
     </data>
 
     <LinearLayout

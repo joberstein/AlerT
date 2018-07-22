@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.databinding.TimeSettingsBinding;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetDurationDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetNicknameDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetRepeatTypeDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetTimeDialog;
+import com.jesseoberstein.alert.interfaces.AlarmModifier;
 import com.jesseoberstein.alert.models.UserAlarm;
 
 public class TimeSettingsFragment extends AlarmSettingsFragment {
@@ -26,7 +26,7 @@ public class TimeSettingsFragment extends AlarmSettingsFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        UserAlarm newAlarm = ((EditAlarm) getActivity()).getDraftAlarm();
+        UserAlarm newAlarm = ((AlarmModifier) getActivity()).getDraftAlarm();
 
         TimeSettingsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_settings_tab_time, container, false);
         binding.setAlarm(newAlarm);

@@ -20,14 +20,14 @@ INSERT INTO stops VALUES('Kendall/MIT',1,-71.086176530000004802,42.3624907900000
 INSERT INTO stops VALUES('Charles/MGH',1,-71.070627999999995694,42.361165999999998987,'Red','place-chmnl');
 INSERT INTO stops VALUES('Park Street',1,-71.062424199999991714,42.356394569999995525,'Red','place-pktrm');
 INSERT INTO stops VALUES('Downtown Crossing',1,-71.060224999999999084,42.355518000000005329,'Red','place-dwnxg')
-INSERT INTO directions VALUES(1,'Northbound','Orange');
-INSERT INTO directions VALUES(0,'Southbound','Orange');
-INSERT INTO directions VALUES(1,'Northbound','Red');
-INSERT INTO directions VALUES(0,'Southbound','Red');
-INSERT INTO directions VALUES(1,'Eastbound','Green-C');
-INSERT INTO directions VALUES(0,'Westbound','Green-C');
-INSERT INTO directions VALUES(0,'Westbound','Blue');
-INSERT INTO directions VALUES(1,'Eastbound','Blue');
+INSERT INTO directions VALUES(1, 1,'Northbound','Orange');
+INSERT INTO directions VALUES(2, 0,'Southbound','Orange');
+INSERT INTO directions VALUES(3, 1,'Northbound','Red');
+INSERT INTO directions VALUES(4, 0,'Southbound','Red');
+INSERT INTO directions VALUES(5, 1,'Eastbound','Green-C');
+INSERT INTO directions VALUES(6, 0,'Westbound','Green-C');
+INSERT INTO directions VALUES(7, 0,'Westbound','Blue');
+INSERT INTO directions VALUES(8, 1,'Eastbound','Blue');
 INSERT INTO endpoints VALUES(1,'Oak Grove',1,'Orange');
 INSERT INTO endpoints VALUES(2,'Forest Hills',0,'Orange');
 INSERT INTO endpoints VALUES(3,'Alewife',1,'Red');

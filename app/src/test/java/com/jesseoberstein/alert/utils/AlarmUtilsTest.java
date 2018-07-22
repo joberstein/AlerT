@@ -3,6 +3,7 @@ package com.jesseoberstein.alert.utils;
 import com.jesseoberstein.alert.models.AlarmEndpoint;
 import com.jesseoberstein.alert.models.SelectedDays;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 
 import org.junit.Before;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.when;
 public class AlarmUtilsTest {
     @Mock private Calendar mockCalendar;
     @Mock private UserAlarm testAlarm;
+    @Mock private UserAlarmWithRelations testAlarmWithRelations;
 
     private int calendarToday;
     private int calendarTomorrow;
@@ -127,14 +129,15 @@ public class AlarmUtilsTest {
         e2.setId(e2Id);
 
         when(testAlarm.getId()).thenReturn(alarmId);
-        when(testAlarm.getEndpoints()).thenReturn(Arrays.asList(e1, e2));
+        when(testAlarmWithRelations.getAlarm()).thenReturn(testAlarm);
+        when(testAlarmWithRelations.getEndpoints()).thenReturn(Arrays.asList(e1, e2));
 
         AlarmEndpoint[] expected = new AlarmEndpoint[]{
             new AlarmEndpoint(alarmId, e1Id),
             new AlarmEndpoint(alarmId, e2Id)
         };
 
-        assertTrue(Arrays.equals(expected, AlarmUtils.createAlarmEndpoints(testAlarm)));
+        assertTrue(Arrays.equals(expected, AlarmUtils.createAlarmEndpoints(testAlarmWithRelations)));
     }
 
     private void selectDays(int... days) {

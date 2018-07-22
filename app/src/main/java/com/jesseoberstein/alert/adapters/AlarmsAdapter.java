@@ -15,47 +15,56 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.databinding.ViewAlarmsBinding;
 import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.utils.AlertUtils;
+import com.jesseoberstein.alert.models.UserAlarmWithRelations;
+import com.jesseoberstein.alert.models.mbta.Route;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.jesseoberstein.alert.utils.AlertUtils.*;
-import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
+import static com.jesseoberstein.alert.utils.AlertUtils.getHexColor;
+import static com.jesseoberstein.alert.utils.AlertUtils.getTextColorForWhiteBackground;
+import static com.jesseoberstein.alert.utils.Constants.ALARM;
 
-public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarm> {
-    private ViewAlarmsBinding binding;
+public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarmWithRelations> {
 
-    public AlarmsAdapter(int layout, List<UserAlarm> alarms) {
+    public AlarmsAdapter(int layout, List<UserAlarmWithRelations> alarms) {
         super(layout, alarms);
+    }
+
+    public List<UserAlarmWithRelations> getAlarms() {
+        return this.getItems();
     }
 
     @Override
     public long getItemId(int position) {
-        return this.getItems().get(position).getId();
+        UserAlarm alarm = this.getItems().get(position).getAlarm();
+        return alarm.getId();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return Long.valueOf(this.getItems().get(position).getId()).intValue();
+        UserAlarm alarm = this.getItems().get(position).getAlarm();
+        return Long.valueOf(alarm.getId()).intValue();
     }
 
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parentView, int viewType) {
-        this.binding = DataBindingUtil.bind(this.getInflatedView(parentView));
-        return new AlarmViewHolder(this.binding.getRoot());
+        ViewAlarmsBinding binding = DataBindingUtil.bind(this.getInflatedView(parentView));
+        return new AlarmViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         AlarmViewHolder alarmViewHolder = (AlarmViewHolder) holder;
         View view = alarmViewHolder.itemView;
-        UserAlarm alarm = getItems().get(position);
+        UserAlarmWithRelations alarmWithRelations = getAlarms().get(position);
+        UserAlarm alarm = alarmWithRelations.getAlarm();
+        Route alarmRoute = alarmWithRelations.getRoute();
 
         List<Integer> daysList = Arrays.stream(alarm.getSelectedDays().toIntArray()).boxed().collect(Collectors.toList());
-        int activeColor = Color.parseColor(getHexColor(getTextColorForWhiteBackground(alarm)));
+        int activeColor = Color.parseColor(getHexColor(getTextColorForWhiteBackground(alarmRoute)));
         int inactiveColor = view.getContext().getResources().getColor(R.color.alarm_off, null);
         DaysAdapter daysAdapter = new DaysAdapter(R.layout.list_alarms_days, daysList, activeColor, inactiveColor);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayout.HORIZONTAL, false);
@@ -63,22 +72,27 @@ public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarm> {
         alarmViewHolder.days.setAdapter(daysAdapter);
         alarmViewHolder.days.setLayoutManager(layoutManager);
 
-        this.binding.setAlarm(alarm);
-        this.binding.setActiveStatusTextColor(alarm.isActive() ? activeColor : inactiveColor);
-        this.binding.setRouteColor(Color.parseColor(getHexColor(alarm.getRoute().getColor())));
-        this.binding.setRouteTextColor(Color.parseColor(getHexColor(alarm.getRoute().getTextColor())));
+        alarmViewHolder.binding.setAlarm(alarm);
+        alarmViewHolder.binding.setStop(alarmWithRelations.getStop());
+        alarmViewHolder.binding.setDirection(alarmWithRelations.getDirection());
+        alarmViewHolder.binding.setActiveStatusTextColor(alarm.isActive() ? activeColor : inactiveColor);
+        alarmViewHolder.binding.setRouteColor(Color.parseColor(getHexColor(alarmRoute.getColor())));
+        alarmViewHolder.binding.setRouteTextColor(Color.parseColor(getHexColor(alarmRoute.getTextColor())));
 
-        view.setOnClickListener(v -> onAlarmClick(alarmViewHolder.context, alarm));
+        view.setOnClickListener(v -> onAlarmClick(alarmViewHolder.context, alarmWithRelations));
     }
 
     static class AlarmViewHolder extends BaseViewHolder {
         private Context context;
+        private ViewAlarmsBinding binding;
         private RecyclerView days;
 
-        AlarmViewHolder(View alarmView) {
-            super(alarmView);
-            context = alarmView.getContext();
-            days = alarmView.findViewById(R.id.alarm_days);
+        AlarmViewHolder(ViewAlarmsBinding binding) {
+            super(binding.getRoot());
+            View view = binding.getRoot();
+            this.context = view.getContext();
+            this.days = view.findViewById(R.id.alarm_days);
+            this.binding = binding;
         }
     }
 
@@ -87,10 +101,10 @@ public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarm> {
      * @param context The view context.
      * @param alarm The clicked alarm.
      */
-    private void onAlarmClick(Context context, UserAlarm alarm) {
+    private void onAlarmClick(Context context, UserAlarmWithRelations alarm) {
         Intent intent = new Intent(context, EditAlarm.class);
         intent.setAction(Intent.ACTION_EDIT);
-        intent.putExtra(ALARM_ID, alarm.getId());
+        intent.putExtra(ALARM, alarm);
         context.startActivity(intent);
     }
 }

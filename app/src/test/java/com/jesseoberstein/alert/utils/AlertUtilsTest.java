@@ -2,6 +2,7 @@ package com.jesseoberstein.alert.utils;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.RouteType;
 
@@ -18,7 +19,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AlertUtilsTest {
-    @Mock private UserAlarm testAlarm;
     @Mock private Route testRoute;
 
     @Test
@@ -54,17 +54,15 @@ public class AlertUtilsTest {
 
     @Test
     public void getsTextColorForWhiteBackground_textColorIsWhite() {
-        when(testAlarm.getRoute()).thenReturn(testRoute);
         when(testRoute.getColor()).thenReturn("000000");
         when(testRoute.getTextColor()).thenReturn("FFFFFF");
-        assertEquals("000000", AlertUtils.getTextColorForWhiteBackground(testAlarm));
+        assertEquals("000000", AlertUtils.getTextColorForWhiteBackground(testRoute));
     }
 
     @Test
     public void getsTextColorForWhiteBackground_textColorIsNotWhite() {
-        when(testAlarm.getRoute()).thenReturn(testRoute);
         when(testRoute.getColor()).thenReturn("FFFFFF");
         when(testRoute.getTextColor()).thenReturn("000000");
-        assertEquals("000000", AlertUtils.getTextColorForWhiteBackground(testAlarm));
+        assertEquals("000000", AlertUtils.getTextColorForWhiteBackground(testRoute));
     }
 }

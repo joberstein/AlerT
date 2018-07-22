@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="AlarmStopBinding">
-        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarmWithRelations"/>
+        <variable name="stop" type="com.jesseoberstein.alert.models.mbta.Stop"/>
         <variable name="autocomplete" type="com.jesseoberstein.alert.models.AutoComplete"/>
     </data>
 
@@ -20,7 +21,7 @@
             android:inputType="textNoSuggestions|textCapWords"
             android:completionThreshold="1"
             android:imeOptions="actionDone"
-            android:hint="@string/route_dialog_default"
+            android:hint="@string/stop_dialog_default"
             android:text="@{alarm.stop.toString()}"
             app:adapter="@{autocomplete.adapter}"
             app:validator="@{autocomplete.validator}"

@@ -56,7 +56,7 @@ public class SetRouteDialog extends AlarmModifierDialog {
         autoComplete.attachAdapter(getActivity());
 
         AlarmRouteBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_route, null, false);
-        binding.setAlarm(getDraftAlarm());
+        binding.setAlarm(getDraftAlarmWithRelations());
         binding.setAutocomplete(autoComplete);
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
@@ -71,7 +71,7 @@ public class SetRouteDialog extends AlarmModifierDialog {
 
     void onAutoCompleteItemSelected(AdapterView adapterView, View view, int i, long l) {
         Route selectedRoute = (Route) adapterView.getItemAtPosition(i);
-        if (!selectedRoute.equals(getDraftAlarm().getRoute())) {
+        if (!selectedRoute.equals(getDraftAlarmWithRelations().getRoute())) {
             this.alarmRouteSetter.onAlarmRouteSet(selectedRoute);
         }
         new android.os.Handler().postDelayed(this::dismiss, DELAY_DIALOG_DISMISS);

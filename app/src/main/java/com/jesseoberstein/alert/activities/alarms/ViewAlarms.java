@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -17,23 +16,22 @@ import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.activities.base.DatabaseActivity;
 import com.jesseoberstein.alert.adapters.AlarmsAdapter;
 import com.jesseoberstein.alert.adapters.EmptyRecyclerViewObserver;
-import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
-import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.tasks.QueryAlarmsTask;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ViewAlarms extends DatabaseActivity implements OnDialogClick, AlarmReceiver {
     private AlarmsAdapter alarmsAdapter;
     private AlarmManager alarmManager;
-    private List<UserAlarm> alarms = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,28 +80,36 @@ public class ViewAlarms extends DatabaseActivity implements OnDialogClick, Alarm
     public void onCancelSelected(Bundle selected) { }
 
     @Override
-    public void onReceiveAlarms(List<UserAlarm> alarms) {
-        List<UserAlarm> alarmsToAdd = alarms.stream()
-                .filter(alarm -> !this.alarms.contains(alarm))
-                .collect(Collectors.toList());
-
-        this.alarms.addAll(alarmsToAdd);
+    public void onReceiveAlarms(List<UserAlarmWithRelations> alarms) {
         if (this.alarmsAdapter == null) {
             RecyclerView alarmsView = findViewById(R.id.alarm_list);
-            this.alarmsAdapter = new AlarmsAdapter(R.layout.list_alarms, new ArrayList<>(this.alarms));
+            this.alarmsAdapter = new AlarmsAdapter(R.layout.list_alarms, new ArrayList<>());
             this.alarmsAdapter.setHasStableIds(true);
             alarmsView.setAdapter(this.alarmsAdapter);
             alarmsView.setLayoutManager(new GridLayoutManager(this, 1));
 
             // For some reason, the adapter needs to be set first.
             this.alarmsAdapter.registerAdapterDataObserver(new EmptyRecyclerViewObserver(alarmsView, findViewById(R.id.alarm_list_empty)));
-        } else {
-            alarmsToAdd.forEach(this.alarmsAdapter::addItem);
         }
+
+        // Create a list of existing and new alarms based on the queried alarms.
+        Map<Boolean, List<UserAlarmWithRelations>> alarmMap = alarms.stream()
+                .collect(Collectors.groupingBy(this.alarmsAdapter.getAlarms()::contains));
+
+        // If the alarms are already in the adapter, update them.
+        Optional.ofNullable(alarmMap.get(true))
+                .ifPresent(existingAlarms -> existingAlarms.forEach(this.alarmsAdapter::updateItem));
+
+        // If the alarms are not already in the adapter, add them.
+        Optional.ofNullable(alarmMap.get(false))
+                .ifPresent(newAlarms -> newAlarms.forEach(this.alarmsAdapter::addItem));
     }
 
     @Override
     public void onInsertAlarm(long insertedAlarmId) {}
+
+    @Override
+    public void onUpdateAlarm(boolean isUpdated) {}
 
     @VisibleForTesting
     public View.OnClickListener getOnCreateAlarmClick() {

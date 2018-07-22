@@ -8,6 +8,7 @@ import android.net.Uri;
 
 import com.jesseoberstein.alert.models.AlarmEndpoint;
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.receivers.OnAlarmStart;
 import com.jesseoberstein.alert.receivers.OnAlarmStop;
 import com.jesseoberstein.alert.services.MbtaRealtimeUpdatesService;
@@ -149,12 +150,12 @@ public class AlarmUtils {
 
     /**
      * Map an alarm's id and endpoints to a list of {@link AlarmEndpoint}.
-     * @param alarm containing an id and endpoints
-     * @return a list of alarm endpoint
+     * @param alarmWithRelations containing an id and endpoints
+     * @return a list of alarm endpoints
      */
-    public static AlarmEndpoint[] createAlarmEndpoints(UserAlarm alarm) {
-        return alarm.getEndpoints().stream()
-                .map(endpoint -> new AlarmEndpoint(alarm.getId(), endpoint.getId()))
+    public static AlarmEndpoint[] createAlarmEndpoints(UserAlarmWithRelations alarmWithRelations) {
+        return alarmWithRelations.getEndpoints().stream()
+                .map(endpoint -> new AlarmEndpoint(alarmWithRelations.getAlarm().getId(), endpoint.getId()))
                 .toArray(AlarmEndpoint[]::new);
     }
 }

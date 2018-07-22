@@ -2,19 +2,17 @@ package com.jesseoberstein.alert.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.VisibleForTesting;
 
-import com.jesseoberstein.alert.data.dao.DirectionDao;
-import com.jesseoberstein.alert.data.dao.RouteDao;
-import com.jesseoberstein.alert.data.dao.StopDao;
+import com.jesseoberstein.alert.data.dao.AlarmEndpointDao;
 import com.jesseoberstein.alert.data.dao.UserAlarmDao;
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
-import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class QueryAlarmsTask extends AsyncTask<Void, Void, List<UserAlarm>> {
+public class QueryAlarmsTask extends AsyncTask<Long, Void, List<UserAlarmWithRelations>> {
     private final AppDatabase db;
     private final AlarmReceiver alarmReceiver;
 
@@ -24,18 +22,25 @@ public class QueryAlarmsTask extends AsyncTask<Void, Void, List<UserAlarm>> {
     }
 
     @Override
-    protected List<UserAlarm> doInBackground(Void[] dummyParam) {
-        List<UserAlarm> userAlarms = this.db.userAlarmDao().getAll();
-        userAlarms.forEach(alarm -> {
-            alarm.setRoute(this.db.routeDao().get(alarm.getRouteId()));
-            alarm.setStop(this.db.stopDao().get(alarm.getStopId()));
-            alarm.setDirection(this.db.directionDao().get(alarm.getDirectionId(), alarm.getRouteId()));
+    protected List<UserAlarmWithRelations> doInBackground(Long[] alarmIds) {
+        UserAlarmDao alarmDao = this.db.userAlarmDao();
+        AlarmEndpointDao alarmEndpointDao = this.db.alarmEndpointDao();
+        boolean shouldQueryAll = Arrays.asList(alarmIds).isEmpty();
+
+        List<UserAlarmWithRelations> alarms = shouldQueryAll ?
+                alarmDao.getAllWithRelations() :
+                alarmDao.getWithRelations(alarmIds);
+
+        alarms.forEach(alarm -> {
+            long alarmId = alarm.getAlarm().getId();
+            alarm.setEndpoints(alarmEndpointDao.getEndpointsByAlarm(alarmId));
         });
-        return userAlarms;
+
+        return alarms;
     }
 
     @Override
-    protected void onPostExecute(List<UserAlarm> alarms) {
+    protected void onPostExecute(List<UserAlarmWithRelations> alarms) {
         this.alarmReceiver.onReceiveAlarms(alarms);
     }
 }

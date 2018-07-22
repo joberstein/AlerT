@@ -4,6 +4,8 @@
     <data class="ViewAlarmsBinding">
         <import type="android.graphics.Color"/>
         <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="direction" type="com.jesseoberstein.alert.models.mbta.Direction"/>
+        <variable name="stop" type="com.jesseoberstein.alert.models.mbta.Stop"/>
         <variable name="activeStatusTextColor" type="Integer"/>
         <variable name="routeColor" type="Integer"/>
         <variable name="routeTextColor" type="Integer"/>
@@ -80,7 +82,7 @@
 
                 <TextView
                     android:id="@+id/alarm_stop"
-                    android:text="@{alarm.stop.toString()}"
+                    android:text="@{stop.toString()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@{routeTextColor}"
@@ -89,7 +91,7 @@
 
                 <TextView
                     android:id="@+id/alarm_direction"
-                    android:text="@{alarm.direction.toString()}"
+                    android:text="@{direction.toString()}"
                     android:textColor="@{routeTextColor}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

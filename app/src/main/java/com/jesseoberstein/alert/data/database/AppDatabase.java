@@ -6,7 +6,6 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import com.jesseoberstein.alert.data.dao.AlarmEndpointDao;
@@ -33,8 +32,7 @@ import java.util.stream.Collectors;
 
 @Database(
     entities = {Route.class, Stop.class, Direction.class, Endpoint.class, UserAlarm.class, AlarmEndpoint.class},
-    version = 1,
-    exportSchema = false
+    version = 1
 )
 public abstract class AppDatabase extends RoomDatabase {
     private static final String ALERT_DATABASE_NAME = "alert";

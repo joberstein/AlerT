@@ -44,7 +44,8 @@ public class SetEndpointsDialog extends AlarmModifierDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         this.endpoints = this.endpointsReceiver.getEndpointList();
-        this.selectedEndpoints.addAll(getDraftAlarm().getEndpoints());
+        List<Endpoint> currentEndpoints = this.getDraftAlarmWithRelations().getEndpoints();
+        this.selectedEndpoints.addAll(currentEndpoints);
 
         String[] endpointNames = EndpointsUtils.toStringArray(this.endpoints);
         boolean[] convertedEndpoints = EndpointsUtils.toBooleanArray(this.endpoints, this.selectedEndpoints);

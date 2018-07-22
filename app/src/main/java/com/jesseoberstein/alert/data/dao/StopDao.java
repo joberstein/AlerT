@@ -1,9 +1,6 @@
 package com.jesseoberstein.alert.data.dao;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.jesseoberstein.alert.models.mbta.Stop;
@@ -22,14 +19,6 @@ public interface StopDao extends BaseDao<Stop> {
     @Override
     @Query("SELECT * FROM stops")
     List<Stop> getAll();
-
-    @Override
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insert(Stop[] stops);
-
-    @Override
-    @Delete
-    void delete(Stop[] stops);
 
     @Override
     @Query("SELECT COUNT(*) FROM stops")

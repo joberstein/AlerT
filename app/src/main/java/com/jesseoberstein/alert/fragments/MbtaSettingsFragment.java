@@ -13,13 +13,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.databinding.MbtaSettingsBinding;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetDirectionDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetEndpointsDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetRouteDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetStopDialog;
-import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.interfaces.AlarmModifier;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 
 import java.util.List;
@@ -28,6 +27,7 @@ import static java.util.stream.Collectors.joining;
 
 public class MbtaSettingsFragment extends AlarmSettingsFragment {
     private FragmentManager fragmentManager;
+    private static final String SELECTED_ENDPOINTS_DELIMITER = ",  ";
 
     public static MbtaSettingsFragment newInstance(int page) {
         return (MbtaSettingsFragment) AlarmSettingsFragment.newInstance(page, new MbtaSettingsFragment());
@@ -35,11 +35,11 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        UserAlarm newAlarm = ((EditAlarm) getActivity()).getDraftAlarm();
+        AlarmModifier alarmModifier = ((AlarmModifier) getActivity());
         this.fragmentManager = getActivity().getSupportFragmentManager();
 
         MbtaSettingsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_settings_tab_mbta, container, false);
-        binding.setAlarm(newAlarm);
+        binding.setAlarm(alarmModifier.getDraftAlarmWithRelations());
 
         View view = binding.getRoot();
         view.findViewById(R.id.alarmSettings_route).setOnClickListener(this::showRouteDialog);
@@ -72,7 +72,7 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
 
     @BindingAdapter("android:text")
     public static void convertEndpointsToString(TextView textView, List<Endpoint> endpoints) {
-        String endpointString = endpoints.stream().map(Endpoint::toString).collect(joining(",  "));
+        String endpointString = endpoints.stream().map(Endpoint::toString).collect(joining(SELECTED_ENDPOINTS_DELIMITER));
         textView.setText(endpointString);
     }
 }

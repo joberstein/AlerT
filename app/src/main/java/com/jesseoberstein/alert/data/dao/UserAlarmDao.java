@@ -1,12 +1,11 @@
 package com.jesseoberstein.alert.data.dao;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 
 import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 
 import java.util.List;
 
@@ -16,17 +15,16 @@ public interface UserAlarmDao extends BaseDao<UserAlarm> {
     @Query("SELECT * FROM user_alarms WHERE id == :id")
     UserAlarm get(long id);
 
-    @Override
+    @Transaction
+    @Query("SELECT * FROM user_alarms WHERE id IN (:ids)")
+    List<UserAlarmWithRelations> getWithRelations(Long[] ids);
+
     @Query("SELECT * FROM user_alarms")
     List<UserAlarm> getAll();
 
-    @Override
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insert(UserAlarm[] alarm);
-
-    @Override
-    @Delete
-    void delete(UserAlarm[] alarm);
+    @Transaction
+    @Query("SELECT * FROM user_alarms")
+    List<UserAlarmWithRelations> getAllWithRelations();
 
     @Override
     @Query("SELECT COUNT(*) FROM user_alarms")

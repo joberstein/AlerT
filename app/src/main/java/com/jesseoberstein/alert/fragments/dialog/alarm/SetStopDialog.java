@@ -52,7 +52,7 @@ public class SetStopDialog extends AlarmModifierDialog {
         autoComplete.attachAdapter(getActivity());
 
         AlarmStopBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_stop, null, false);
-        binding.setAlarm(getDraftAlarm());
+        binding.setAlarm(getDraftAlarmWithRelations());
         binding.setAutocomplete(autoComplete);
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())

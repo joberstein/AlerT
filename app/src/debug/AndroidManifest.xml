@@ -9,6 +9,11 @@
         android:theme="@style/AppTheme">
 
         <activity
+            android:name=".activities.InitializeMbtaData"
+            android:launchMode="singleTop">
+        </activity>
+
+        <activity
             android:name=".activities.alarms.ViewAlarmsMock"
             android:launchMode="singleTop">
 

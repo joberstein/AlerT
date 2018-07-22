@@ -18,7 +18,6 @@ import static java.util.Calendar.TUESDAY;
 import static java.util.Calendar.WEDNESDAY;
 
 public class DaysAdapter extends BaseRecyclerAdapter<Integer> {
-    private ViewAlarmsDaysBinding binding;
     private int selectedColor;
     private int unselectedColor;
 
@@ -30,17 +29,27 @@ public class DaysAdapter extends BaseRecyclerAdapter<Integer> {
 
     @NonNull
     @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        this.binding = DataBindingUtil.bind(this.getInflatedView(parent));
-        return new BaseViewHolder(this.binding.getRoot());
+    public DaysViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ViewAlarmsDaysBinding binding = DataBindingUtil.bind(this.getInflatedView(parent));
+        return new DaysViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
+        DaysViewHolder daysHolder = (DaysViewHolder) holder;
         boolean isDaySelected = this.getItems().get(position) == 1;
-        this.binding.setDayLetter(getDayText(position + 1));
-        this.binding.setDayTextColor(isDaySelected ? this.selectedColor : this.unselectedColor);
-        this.binding.setDayTypeface(isDaySelected ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+        daysHolder.binding.setDayLetter(getDayText(position + 1));
+        daysHolder.binding.setDayTextColor(isDaySelected ? this.selectedColor : this.unselectedColor);
+        daysHolder.binding.setDayTypeface(isDaySelected ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+    }
+
+    static class DaysViewHolder extends BaseViewHolder {
+        private ViewAlarmsDaysBinding binding;
+
+        DaysViewHolder(ViewAlarmsDaysBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
     }
 
     private String getDayText(int dayIndex) {
