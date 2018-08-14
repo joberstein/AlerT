@@ -274,6 +274,10 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         notifyPropertyChanged(BR.repeatType);
     }
 
+    public boolean shouldAlarmFireToday() {
+        return this.selectedDays.isTodaySelected();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

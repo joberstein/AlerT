@@ -1,30 +1,33 @@
 package com.jesseoberstein.alert.receivers;
 
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 
-import com.jesseoberstein.alert.utils.AlarmUtils;
+import com.jesseoberstein.alert.models.UserAlarmWithRelations;
+import com.jesseoberstein.alert.services.AlarmService;
 
-import java.util.Calendar;
+import java.util.Optional;
 
-import static com.jesseoberstein.alert.utils.Constants.DAYS;
+import static android.app.AlarmManager.ELAPSED_REALTIME;
+import static com.jesseoberstein.alert.utils.Constants.ALARM;
 
 public class OnAlarmStart extends BroadcastReceiver {
-    private AlarmManager alarmManager;
+    private AlarmService alarmService;
+    private final int SECOND = 1000;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        if (alarmManager == null) {
-            alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        }
+    public void onReceive(Context context, Intent alarmStartIntent) {
+        alarmService = Optional.ofNullable(alarmService).orElseGet(() -> new AlarmService(context));
+        UserAlarmWithRelations alarm = (UserAlarmWithRelations) alarmStartIntent.getSerializableExtra(ALARM);
 
-        if (AlarmUtils.shouldAlarmFireToday(intent.getIntArrayExtra(DAYS), Calendar.getInstance())) {
-            PendingIntent pendingIntent = AlarmUtils.getAlarmUpdateIntent(context, intent);
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 10*1000, 60*1000, pendingIntent);
+        if (alarm.getAlarm().shouldAlarmFireToday()) {
+            PendingIntent serviceStartIntent = alarmService.getServiceStartIntent(alarmStartIntent);
+            long triggerTime = SystemClock.elapsedRealtime() + 10 * SECOND;
+            long interval = 60 * SECOND;
+            this.alarmService.getManager().setRepeating(ELAPSED_REALTIME, triggerTime, interval, serviceStartIntent);
         }
     }
 }

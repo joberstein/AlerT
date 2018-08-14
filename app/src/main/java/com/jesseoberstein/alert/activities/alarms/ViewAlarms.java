@@ -1,7 +1,5 @@
 package com.jesseoberstein.alert.activities.alarms;
 
-import android.app.AlarmManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
@@ -20,6 +18,7 @@ import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
+import com.jesseoberstein.alert.services.AlarmService;
 import com.jesseoberstein.alert.tasks.QueryAlarmsTask;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 
 public class ViewAlarms extends DatabaseActivity implements OnDialogClick, AlarmReceiver {
     private AlarmsAdapter alarmsAdapter;
-    private AlarmManager alarmManager;
+    private AlarmService alarmService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +45,7 @@ public class ViewAlarms extends DatabaseActivity implements OnDialogClick, Alarm
 
         // Start 'EditAlarm' when the floating action button is clicked.
         findViewById(R.id.add_alarm).setOnClickListener(this.getOnCreateAlarmClick());
-
-        alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        alarmService = new AlarmService(getApplicationContext());
     }
 
     @Override

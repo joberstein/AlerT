@@ -49,18 +49,18 @@ public class AlarmUtilsTest {
         when(testAlarm.getSelectedDays()).thenReturn(new SelectedDays(days));
     }
 
-    @Test
-    public void shouldAlarmFireToday() throws Exception {
-        int[] smwfn = new int[]{-1,1,1,0,1,0,1,1};
-        Mockito.doNothing().when(mockCalendar).setTimeInMillis(anyLong());
-        assertIfAlarmShouldFireOnDay(smwfn, Calendar.SUNDAY, true);
-        assertIfAlarmShouldFireOnDay(smwfn, Calendar.MONDAY, true);
-        assertIfAlarmShouldFireOnDay(smwfn, Calendar.TUESDAY, false);
-        assertIfAlarmShouldFireOnDay(smwfn, Calendar.WEDNESDAY, true);
-        assertIfAlarmShouldFireOnDay(smwfn, Calendar.THURSDAY, false);
-        assertIfAlarmShouldFireOnDay(smwfn, Calendar.FRIDAY, true);
-        assertIfAlarmShouldFireOnDay(smwfn, Calendar.SATURDAY, true);;
-    }
+//    @Test
+//    public void shouldAlarmFireToday() throws Exception {
+//        int[] smwfn = new int[]{-1,1,1,0,1,0,1,1};
+//        Mockito.doNothing().when(mockCalendar).setTimeInMillis(anyLong());
+//        assertIfAlarmShouldFireOnDay(smwfn, Calendar.SUNDAY, true);
+//        assertIfAlarmShouldFireOnDay(smwfn, Calendar.MONDAY, true);
+//        assertIfAlarmShouldFireOnDay(smwfn, Calendar.TUESDAY, false);
+//        assertIfAlarmShouldFireOnDay(smwfn, Calendar.WEDNESDAY, true);
+//        assertIfAlarmShouldFireOnDay(smwfn, Calendar.THURSDAY, false);
+//        assertIfAlarmShouldFireOnDay(smwfn, Calendar.FRIDAY, true);
+//        assertIfAlarmShouldFireOnDay(smwfn, Calendar.SATURDAY, true);;
+//    }
 
     @Test
     public void nextFiringDayWhenNoDaysSelected() {
@@ -166,8 +166,8 @@ public class AlarmUtilsTest {
         mockAlarmTime(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
     }
 
-    private void assertIfAlarmShouldFireOnDay(int[] days, int day, boolean result) {
-        when(mockCalendar.get(Calendar.DAY_OF_WEEK)).thenReturn(day);
-        assertEquals(result, AlarmUtils.shouldAlarmFireToday(days, mockCalendar));
-    }
+//    private void assertIfAlarmShouldFireOnDay(int[] days, int day, boolean result) {
+//        when(mockCalendar.get(Calendar.DAY_OF_WEEK)).thenReturn(day);
+//        assertEquals(result, AlarmUtils.shouldAlarmFireToday(days, mockCalendar));
+//    }
 }

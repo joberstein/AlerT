@@ -39,6 +39,7 @@ import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
+import com.jesseoberstein.alert.services.AlarmService;
 import com.jesseoberstein.alert.tasks.DeleteTask;
 import com.jesseoberstein.alert.tasks.InsertAlarmTask;
 import com.jesseoberstein.alert.tasks.InsertTask;
@@ -69,6 +70,7 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
         AlarmRouteSetter, AlarmStopSetter, AlarmDirectionSetter, AlarmEndpointSetter,
         RoutesReceiver, StopsReceiver, DirectionsReceiver, EndpointsReceiver, AlarmReceiver {
 
+    private AlarmService alarmService;
     private ViewPager pager;
     private UserAlarmWithRelations alarm;
     private UserAlarmWithRelations draftAlarm;
@@ -82,6 +84,7 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        alarmService = new AlarmService(getApplicationContext());
 
         this.alarm = (UserAlarmWithRelations) getIntent().getSerializableExtra(ALARM);
         this.draftAlarm = (UserAlarmWithRelations) getIntent().getSerializableExtra(DRAFT_ALARM);
@@ -393,6 +396,7 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
         this.draftAlarm.getAlarm().setId(insertedAlarmId);
         AlarmEndpoint[] alarmEndpoints = AlarmUtils.createAlarmEndpoints(this.draftAlarm);
         new InsertTask<>(getDatabase(this).alarmEndpointDao()).execute(alarmEndpoints);
+        this.alarmService.scheduleMbtaAlarm(this.draftAlarm);
         finish();
     }
 
@@ -407,6 +411,13 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
             // Insert new endpoints for the updated alarm.
             AlarmEndpoint[] newAlarmEndpoints = AlarmUtils.createAlarmEndpoints(this.draftAlarm);
             new InsertTask<>(getDatabase(this).alarmEndpointDao()).execute(newAlarmEndpoints);
+        }
+
+        // Schedule the alarm.
+        if (this.draftAlarm.getAlarm().isActive()) {
+            this.alarmService.scheduleMbtaAlarm(this.draftAlarm);
+        } else {
+            this.alarmService.cancelMbtaAlarm(this.draftAlarm);
         }
 
         finish();

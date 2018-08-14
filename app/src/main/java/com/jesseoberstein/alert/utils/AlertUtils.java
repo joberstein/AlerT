@@ -1,10 +1,8 @@
 package com.jesseoberstein.alert.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -101,12 +99,6 @@ public class AlertUtils {
                 bundle.putByteArray(columnName, cursor.getBlob(columnIndex));
                 break;
         }
-    }
-
-    public static Optional<Object> getObjectFromIntent(@Nullable Intent intent, String key) {
-        return Optional.ofNullable(intent)
-                .map(i -> Optional.ofNullable(i.getExtras().get(key)))
-                .orElse(Optional.empty());
     }
 
     /**

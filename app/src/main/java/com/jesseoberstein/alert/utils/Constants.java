@@ -17,6 +17,6 @@ public class Constants {
     public static final String CUSTOM_REPEAT_TYPE = "repeatType";
 
     public static final int ALARM_START_REQUEST_CODE = 4;
-    public static final int ALARM_UPDATE_REQUEST_CODE = 5;
-    public static final int ALARM_STOP_REQUEST_CODE = 6;
+    public static final int ALARM_STOP_REQUEST_CODE = 5;
+    public static final int SERVICE_START_REQUEST_CODE = 6;
 }

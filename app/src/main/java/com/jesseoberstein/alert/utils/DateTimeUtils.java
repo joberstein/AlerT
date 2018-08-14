@@ -103,6 +103,13 @@ public class DateTimeUtils {
         return calendar.get(Calendar.DAY_OF_WEEK);
     }
 
+    public static int getTomorrow() {
+        Calendar calendar = getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DAY_OF_WEEK, 1);
+        return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
     /**
      * Gets the current time in milliseconds.
      * @return The current time in milliseconds.

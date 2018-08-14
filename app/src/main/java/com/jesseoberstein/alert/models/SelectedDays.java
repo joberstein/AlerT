@@ -3,6 +3,8 @@ package com.jesseoberstein.alert.models;
 import android.arch.persistence.room.Ignore;
 import android.support.annotation.VisibleForTesting;
 
+import com.jesseoberstein.alert.utils.DateTimeUtils;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -165,6 +167,10 @@ public class SelectedDays implements Serializable {
 
     public boolean isAnyDaySelected() {
         return Arrays.stream(this.selectedDays).anyMatch(i -> i == 1);
+    }
+
+    public boolean isTodaySelected() {
+        return this.selectedDays[DateTimeUtils.getCurrentDay() - 1] == 1;
     }
 
     @Override
