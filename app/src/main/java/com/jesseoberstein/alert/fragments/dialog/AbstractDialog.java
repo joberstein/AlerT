@@ -6,14 +6,12 @@ import android.os.Bundle;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
-import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 
 import java.util.Optional;
 
 import static android.app.AlertDialog.Builder;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
-import static com.jesseoberstein.alert.utils.Constants.NICKNAME;
-import static com.jesseoberstein.alert.utils.Constants.ROUTE;
 
 public abstract class AbstractDialog extends DialogFragment {
     private OnDialogClick clickListener;
@@ -34,16 +32,13 @@ public abstract class AbstractDialog extends DialogFragment {
                         clickListener.onCancelSelected(getArguments()));
     }
 
-    protected String getRouteName() {
-        return getArguments().getString(ROUTE);
+    public UserAlarmWithRelations getAlarmWithRelations() {
+        return (UserAlarmWithRelations) getArguments().getSerializable(ALARM);
     }
 
-    protected UserAlarm getAlarm() {
-        return (UserAlarm) getArguments().getSerializable(ALARM);
-    }
-
-    protected String getExistingAlarmName() {
-        return getArguments().getString(NICKNAME);
+    public String getAlarmNickname() {
+        return Optional.ofNullable(getAlarmWithRelations().getAlarm().getNickname())
+                .orElse("this alarm");
     }
 
     protected OnDialogClick getClickListener() {

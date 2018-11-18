@@ -20,6 +20,7 @@ import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
+import com.jesseoberstein.alert.tasks.DeleteAlarmTask;
 import com.jesseoberstein.alert.tasks.QueryAlarmsTask;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 import com.jesseoberstein.alert.utils.UserAlarmScheduler;
@@ -32,7 +33,10 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import static com.jesseoberstein.alert.utils.Constants.ALARM;
+
 public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmReceiver {
+
     @Inject
     ActionBar actionBar;
 
@@ -74,12 +78,9 @@ public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmRece
     }
 
     @Override
-    public void onRemoveSelected(Bundle selected) {
-//        try {
-//            deleteAlarm(selected.getInt(ALARM_ID));
-//        } catch (SQLException e) {
-//            Toast.makeText(this, "Could not delete the selected alarm.", Toast.LENGTH_SHORT).show();
-//        }
+    public void onRemoveSelected(Bundle bundle) {
+        UserAlarmWithRelations alarm = (UserAlarmWithRelations) bundle.getSerializable(ALARM);
+        new DeleteAlarmTask(this, database).execute(alarm);
     }
 
     @Override
@@ -112,6 +113,11 @@ public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmRece
         // If the alarms are not already in the adapter, add them.
         Optional.ofNullable(alarmMap.get(false))
                 .ifPresent(newAlarms -> newAlarms.forEach(this.alarmsAdapter::addItem));
+    }
+
+    @Override
+    public void onDeleteAlarm(UserAlarmWithRelations alarm) {
+        alarmsAdapter.removeItem(alarm);
     }
 
     @Override

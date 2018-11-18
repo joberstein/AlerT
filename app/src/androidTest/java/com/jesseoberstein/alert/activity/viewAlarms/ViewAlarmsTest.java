@@ -1,5 +1,6 @@
 package com.jesseoberstein.alert.activity.viewAlarms;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
@@ -20,6 +21,7 @@ import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
@@ -70,11 +72,46 @@ public class ViewAlarmsTest {
         insertAlarm();
         onView(withText(SELECTED_STOP)).perform(click());
         verifyUpdateAlarmIntent();
+
         BaseEditAlarmSectionTest.moveToMbtaSettingsTab();
         onView(withId(R.id.alarmSettings_section_value_route)).check(matches(withText(SELECTED_ROUTE)));
         onView(withId(R.id.alarmSettings_section_value_direction)).check(matches(withText(SELECTED_DIRECTION)));
         onView(withId(R.id.alarmSettings_section_value_stop)).check(matches(withText(SELECTED_STOP)));
         onView(withId(R.id.alarmSettings_section_value_endpoints)).check(matches(withText(SELECTED_ENDPOINTS_STRING)));
+
+        String updatedStop = "Route 128";
+        AlarmStopTest.selectStop(updatedStop);
+        BaseEditAlarmSectionTest.saveAlarm();
+
+        onView(withText(updatedStop)).perform(click());
+        BaseEditAlarmSectionTest.moveToMbtaSettingsTab();
+        onView(withId(R.id.alarmSettings_section_value_stop)).check(matches(withText(updatedStop)));
+    }
+
+    @Test
+    public void testRemoveAlarmConfirm() throws InterruptedException {
+        clickCreateAlarmButton();
+        insertAlarm();
+        onView(withText(SELECTED_STOP)).perform(longClick());
+        verifyRemoveAlarmDialogDisplayed();
+        onView(withText(R.string.remove)).perform(click());
+        onView(withText(SELECTED_STOP)).check(matches(not(isDisplayed())));
+    }
+
+    @Test
+    public void testRemoveAlarmCancel() throws InterruptedException {
+        clickCreateAlarmButton();
+        insertAlarm();
+        onView(withText(SELECTED_STOP)).perform(longClick());
+        verifyRemoveAlarmDialogDisplayed();
+        onView(withText(R.string.cancel)).perform(click());
+        onView(withText(SELECTED_STOP)).check(matches(isDisplayed()));
+    }
+
+    private void verifyRemoveAlarmDialogDisplayed() {
+        Context context = InstrumentationRegistry.getTargetContext();
+        String dialogText = context.getResources().getString(R.string.remove_alarm_dialog, "this alarm");
+        onView(withText(dialogText)).check(matches(isDisplayed()));
     }
 
     private void clickCreateAlarmButton() {

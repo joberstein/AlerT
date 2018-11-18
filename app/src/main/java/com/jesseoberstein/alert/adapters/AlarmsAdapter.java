@@ -1,9 +1,11 @@
 package com.jesseoberstein.alert.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.widget.LinearLayout;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
 import com.jesseoberstein.alert.databinding.ViewAlarmsBinding;
+import com.jesseoberstein.alert.fragments.dialog.alarms.RemoveAlarmDialog;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.models.mbta.Route;
@@ -82,6 +85,7 @@ public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarmWithRelations> {
         alarmViewHolder.binding.setRouteTextColor(Color.parseColor(getHexColor(alarmRoute.getTextColor())));
 
         view.setOnClickListener(v -> onAlarmClick(alarmViewHolder.context, alarmWithRelations));
+        view.setOnLongClickListener(v -> onAlarmLongClick(alarmViewHolder.context, alarmWithRelations));
     }
 
     static class AlarmViewHolder extends BaseViewHolder {
@@ -109,5 +113,20 @@ public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarmWithRelations> {
         intent.putExtra(ALARM, alarm);
         intent.putExtra(COLOR, AlertUtils.getTheme(alarm.getRoute()));
         context.startActivity(intent);
+    }
+
+    /**
+     * On long click, confirm if the user would like to delete the alarm.
+     * @param context The view context.
+     * @param alarmWithRelations The long-clicked alarm.
+     */
+    private boolean onAlarmLongClick(Context context, UserAlarmWithRelations alarmWithRelations) {
+        RemoveAlarmDialog dialog = new RemoveAlarmDialog();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ALARM, alarmWithRelations);
+
+        dialog.setArguments(bundle);
+        dialog.show(((Activity) context).getFragmentManager(), "RemoveAlarmDialog");
+        return true;
     }
 }

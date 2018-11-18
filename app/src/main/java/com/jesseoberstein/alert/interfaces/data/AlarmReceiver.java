@@ -11,4 +11,6 @@ public interface AlarmReceiver {
     void onUpdateAlarm(boolean isUpdated);
 
     void onReceiveAlarms(List<UserAlarmWithRelations> alarms);
+
+    void onDeleteAlarm(UserAlarmWithRelations alarm);
 }

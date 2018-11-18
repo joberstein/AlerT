@@ -17,7 +17,8 @@
         android:background="@drawable/border_gray"
         android:descendantFocusability="blocksDescendants"
         android:paddingTop="@dimen/grid_item_padding_small"
-        android:layout_margin="@dimen/grid_item_padding_small">
+        android:layout_margin="@dimen/grid_item_padding_small"
+        android:longClickable="true">
 
         <RelativeLayout
             android:layout_width="wrap_content"

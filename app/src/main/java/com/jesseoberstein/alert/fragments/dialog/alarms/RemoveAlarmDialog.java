@@ -11,7 +11,7 @@ public class RemoveAlarmDialog extends AbstractDialog {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return this.createRouteDialogBuilder(savedInstanceState)
-                .setMessage(getResources().getString(R.string.remove_alarm_dialog, getExistingAlarmName()))
+                .setMessage(getResources().getString(R.string.remove_alarm_dialog, getAlarmNickname()))
                 .setPositiveButton(R.string.remove, (dialog, id) -> getClickListener().onRemoveSelected(getArguments()))
                 .create();
     }
