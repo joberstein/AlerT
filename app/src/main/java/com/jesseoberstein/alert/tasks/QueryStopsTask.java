@@ -10,12 +10,15 @@ import com.jesseoberstein.alert.models.mbta.Stop;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class QueryStopsTask extends AsyncTask<String, Void, List<Stop>> {
     private final StopDao stopDao;
     private final StopsReceiver stopsReceiver;
 
-    public QueryStopsTask(Context context) {
-        this.stopDao = AppDatabase.getInstance(context).stopDao();
+    @Inject
+    public QueryStopsTask(Context context, AppDatabase database) {
+        this.stopDao = database.stopDao();
         this.stopsReceiver = (StopsReceiver) context;
     }
 

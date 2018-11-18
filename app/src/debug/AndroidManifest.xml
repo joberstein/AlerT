@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.jesseoberstein.alert">
+    package="com.jesseoberstein.alert">
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -11,31 +11,7 @@
         <activity
             android:name=".activities.InitializeMbtaData"
             android:launchMode="singleTop">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
-
-        <activity
-            android:name=".activities.alarms.ViewAlarmsMock"
-            android:launchMode="singleTop">
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".activities.alarm.EditAlarmMock">
-
-            <intent-filter>
-                <action android:name="android.intent.action.INSERT"/>
-                <action android:name="android.intent.action.EDIT"/>
-            </intent-filter>
-        </activity>
-
     </application>
 
 </manifest>

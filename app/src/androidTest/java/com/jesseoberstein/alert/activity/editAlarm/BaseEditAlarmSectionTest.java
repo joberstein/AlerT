@@ -1,13 +1,15 @@
 package com.jesseoberstein.alert.activity.editAlarm;
 
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.matcher.RootMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.activities.alarm.EditAlarmMock;
-import com.jesseoberstein.alert.data.AppDatabaseTest;
+import com.jesseoberstein.alert.TestApplication;
+import com.jesseoberstein.alert.activities.alarm.EditAlarm;
+import com.jesseoberstein.alert.config.DaggerTestApplicationComponent;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -35,11 +37,12 @@ import static org.hamcrest.Matchers.is;
 public class BaseEditAlarmSectionTest {
 
     @Rule
-    public ActivityTestRule<EditAlarmMock> activityRule = new ActivityTestRule<>(EditAlarmMock.class);
+    public ActivityTestRule<EditAlarm> activityRule = new ActivityTestRule<>(EditAlarm.class);
 
     @After
     public void cleanup() {
-        AppDatabaseTest.clear();
+        TestApplication app = (TestApplication) InstrumentationRegistry.getTargetContext().getApplicationContext();
+        DaggerTestApplicationComponent.builder().create(app).inject(app);
     }
 
     void relaunchActivity() {

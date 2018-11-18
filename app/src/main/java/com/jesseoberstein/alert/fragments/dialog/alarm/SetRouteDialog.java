@@ -2,12 +2,12 @@ package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +21,11 @@ import com.jesseoberstein.alert.interfaces.AlarmRouteSetter;
 import com.jesseoberstein.alert.interfaces.data.RoutesReceiver;
 import com.jesseoberstein.alert.models.AutoComplete;
 import com.jesseoberstein.alert.models.mbta.Route;
-import com.jesseoberstein.alert.utils.AlertUtils;
+import com.jesseoberstein.alert.utils.ActivityUtils;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import static android.widget.AdapterView.OnItemClickListener;
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
@@ -32,20 +34,12 @@ import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
  * A dialog fragment that shows a dialog for selecting the alarm route.
  */
 public class SetRouteDialog extends AlarmModifierDialog {
-    private AlarmRouteSetter alarmRouteSetter;
-    private RoutesReceiver routesReceiver;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.alarmRouteSetter = (AlarmRouteSetter) getAlarmModifier();
-            this.routesReceiver = (RoutesReceiver) context;
-        } catch (ClassCastException e) {
-            String msg = context + " must implement both AlarmRouteSetter and RoutesReceiver";
-            throw new ClassCastException(msg);
-        }
-    }
+    @Inject
+    AlarmRouteSetter alarmRouteSetter;
+
+    @Inject
+    RoutesReceiver routesReceiver;
 
     @Override
     @NonNull
@@ -65,7 +59,7 @@ public class SetRouteDialog extends AlarmModifierDialog {
                 .setOnKeyListener(this::onKeyPressed)
                 .create();
 
-        AlertUtils.showKeyboard(dialog.getWindow());
+        ActivityUtils.showKeyboard(dialog.getWindow());
         return dialog;
     }
 

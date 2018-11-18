@@ -23,10 +23,15 @@ import com.jesseoberstein.alert.models.mbta.Endpoint;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import static java.util.stream.Collectors.joining;
 
 public class MbtaSettingsFragment extends AlarmSettingsFragment {
-    private FragmentManager fragmentManager;
+
+    @Inject
+    FragmentManager fragmentManager;
+
     private static final String SELECTED_ENDPOINTS_DELIMITER = ",  ";
 
     public static MbtaSettingsFragment newInstance(int page) {
@@ -36,7 +41,6 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         AlarmModifier alarmModifier = ((AlarmModifier) getActivity());
-        this.fragmentManager = getActivity().getSupportFragmentManager();
 
         MbtaSettingsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_settings_tab_mbta, container, false);
         binding.setAlarm(alarmModifier.getDraftAlarmWithRelations());

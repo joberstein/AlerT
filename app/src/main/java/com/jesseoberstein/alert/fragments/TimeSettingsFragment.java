@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,12 @@ import com.jesseoberstein.alert.fragments.dialog.alarm.SetTimeDialog;
 import com.jesseoberstein.alert.interfaces.AlarmModifier;
 import com.jesseoberstein.alert.models.UserAlarm;
 
+import javax.inject.Inject;
+
 public class TimeSettingsFragment extends AlarmSettingsFragment {
+
+    @Inject
+    FragmentManager fragmentManager;
 
     public static TimeSettingsFragment newInstance(int page) {
         return (TimeSettingsFragment) AlarmSettingsFragment.newInstance(page, new TimeSettingsFragment());
@@ -57,6 +63,6 @@ public class TimeSettingsFragment extends AlarmSettingsFragment {
     }
 
     private void showDialogFragment(DialogFragment dialog, String tagName) {
-        dialog.show(getActivity().getSupportFragmentManager(), tagName);
+        dialog.show(this.fragmentManager, tagName);
     }
 }

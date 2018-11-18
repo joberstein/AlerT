@@ -61,7 +61,8 @@ public class UserAlarmDaoTest extends BaseDaoTest {
         testAlarm.setDuration(15);
         testAlarm.setId(5);
         testAlarm.setActive(true);
-        testAlarm.setTime(3, 46);
+        testAlarm.setHour(3);
+        testAlarm.setMinutes(46);
         return new UserAlarm[]{testAlarm};
     }
 }

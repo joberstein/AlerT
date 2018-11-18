@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "fc8e7d1a00e4221aaa8525af878d7784",
+    "identityHash": "b7b5e24e8582358b3350179151c4b767",
     "entities": [
       {
         "tableName": "routes",
@@ -424,7 +424,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"fc8e7d1a00e4221aaa8525af878d7784\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b7b5e24e8582358b3350179151c4b767\")"
     ]
   }
 }

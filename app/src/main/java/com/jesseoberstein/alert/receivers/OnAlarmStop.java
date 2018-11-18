@@ -1,22 +1,27 @@
 package com.jesseoberstein.alert.receivers;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.jesseoberstein.alert.services.AlarmService;
+import com.jesseoberstein.alert.utils.IntentBuilder;
 
-import java.util.Optional;
+import javax.inject.Inject;
 
 public class OnAlarmStop extends BroadcastReceiver {
-    private AlarmService alarmService;
+
+    @Inject
+    IntentBuilder intentBuilder;
+
+    @Inject
+    AlarmManager alarmManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        alarmService = Optional.ofNullable(alarmService).orElseGet(() -> new AlarmService(context));
-        PendingIntent pendingIntent = alarmService.getServiceStartIntent(intent);
-        alarmService.getManager().cancel(pendingIntent);
+        PendingIntent pendingIntent = intentBuilder.getNotificationsStartIntent(intent);
+        alarmManager.cancel(pendingIntent);
         pendingIntent.cancel();
     }
 }

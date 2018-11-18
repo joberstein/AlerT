@@ -1,7 +1,7 @@
 package com.jesseoberstein.alert.activity.editAlarm;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.utils.DateTimeUtils;
+import com.jesseoberstein.alert.utils.DateTimeHelper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +19,11 @@ import static com.jesseoberstein.alert.test.TestUtils.withTime;
 public class AlarmTimeTest extends BaseEditAlarmSectionTest {
     private static final int SELECTED_HOUR = 14;
     private static final int SELECTED_MINUTE = 7;
+    private DateTimeHelper dateTimeHelper;
 
     @Before
     public void prepare() {
+        dateTimeHelper = new DateTimeHelper(Calendar.getInstance());
         moveToTimeSettingsTab();
         confirmTimeLabelAndDefaultValue();
     }
@@ -66,8 +68,7 @@ public class AlarmTimeTest extends BaseEditAlarmSectionTest {
 
     private String getCurrentTime() {
         Calendar calendar = Calendar.getInstance();
-        int defaultHour = calendar.get(Calendar.HOUR_OF_DAY) + 1;
-        int defaultMinute = calendar.get(Calendar.MINUTE);
-        return DateTimeUtils.getFormattedTime(defaultHour, defaultMinute);
+        calendar.add(Calendar.HOUR_OF_DAY, + 1);
+        return dateTimeHelper.getFormattedTime(calendar.getTimeInMillis());
     }
 }

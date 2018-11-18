@@ -11,12 +11,15 @@ public class Constants {
     public static final String ALARM_ID = "alarmId";
     public static final String NICKNAME = "nickname";
     public static final String ENDPOINTS = "endpoints";
-    public static final String DAYS = "days";
     public static final String STOP_ID = "stopId";
     public static final String DIRECTION_ID = "directionId";
     public static final String CUSTOM_REPEAT_TYPE = "repeatType";
+    public static final String HOUR = "hour";
+    public static final String MINUTE = "minute";
 
     public static final int ALARM_START_REQUEST_CODE = 4;
     public static final int ALARM_STOP_REQUEST_CODE = 5;
     public static final int SERVICE_START_REQUEST_CODE = 6;
+
+    public static final int SECOND = 1000;
 }

@@ -1,105 +1,16 @@
 package com.jesseoberstein.alert.utils;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.RouteType;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.jesseoberstein.alert.models.mbta.RouteType.BOAT;
 import static com.jesseoberstein.alert.models.mbta.RouteType.BUS;
 import static com.jesseoberstein.alert.models.mbta.RouteType.COMMUTER_RAIL;
 
 public class AlertUtils {
-
-    /**
-     * Create a map with two given lists.  The two lists should be equal in size.
-     * @param keys A list of keys for the resulting map.
-     * @param values A list of values for the resulting map.
-     * @param <K> The type of the map keys.
-     * @param <V> The type of the map values.
-     * @return A map of K keys to V values.
-     */
-    public static <K, V> Map<K, V> listsToMap(List<K> keys, List<V> values) {
-        return IntStream.range(0, keys.size()).boxed()
-                .collect(Collectors.toMap(keys::get, values::get));
-    }
-
-    /**
-     * Is the given number even?
-     * @param i The number to check.
-     * @return True if even, false otherwise.
-     */
-    public static boolean isEven(int i) {
-        return i % 2 == 0;
-    }
-
-    /**
-     * Show the keyboard for the given view.
-     * @param window The window to show the keyboard for.
-     */
-    public static void showKeyboard(Window window) {
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-    }
-
-    /**
-     * Hide the keyboard if the given next focus is a dummy focus holder (0 width).
-     * @param input The potential last input.
-     * @param nextFocus The next view to focus on.
-     */
-    public static void hideKeyboardForLastInput(View input, View nextFocus) {
-        input.clearFocus();
-        if (nextFocus.getWidth() == 0) {
-            AlertUtils.hideKeyboard(nextFocus);
-        }
-    }
-
-    /**
-     * Hide the keyboard for the given view.
-     * @param view The view to hide the keyboard for.
-     */
-    private static void hideKeyboard(View view) {
-        view.requestFocus();
-        InputMethodManager imm = (InputMethodManager) view.getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    /**
-     * Add an extra to an existing bundle, agnostic of a given cursor item's type.
-     * @param bundle An existing bundle
-     * @param columnIndex The index of the column to get the name and type of.
-     * @param cursor The cursor, should be positioned at an element.
-     */
-    public static void putExtraByField(Bundle bundle, Cursor cursor, int columnIndex) {
-        String columnName = cursor.getColumnName(columnIndex);
-        switch (cursor.getType(columnIndex)) {
-            case 1:
-                bundle.putInt(columnName, cursor.getInt(columnIndex));
-                break;
-            case 2:
-                bundle.putFloat(columnName, cursor.getFloat(columnIndex));
-                break;
-            case 3:
-                bundle.putString(columnName, cursor.getString(columnIndex));
-                break;
-            case 4:
-                bundle.putByteArray(columnName, cursor.getBlob(columnIndex));
-                break;
-        }
-    }
 
     /**
      * Given a route, get it's theme based on the route type and then route id if necessary.

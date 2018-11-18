@@ -2,7 +2,6 @@ package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,27 +14,22 @@ import com.jesseoberstein.alert.models.mbta.Direction;
 import java.util.List;
 import java.util.Optional;
 
+import javax.inject.Inject;
+
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
 /**
  * A dialog fragment that shows a dialog for selecting the alarm direction.
  */
 public class SetDirectionDialog extends AlarmModifierDialog {
-    private AlarmDirectionSetter alarmDirectionSetter;
-    private DirectionsReceiver directionsReceiver;
-    private List<Direction> directions;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.alarmDirectionSetter = (AlarmDirectionSetter) getAlarmModifier();
-            this.directionsReceiver = (DirectionsReceiver) context;
-        } catch (ClassCastException e) {
-            String msg = context + " must implement both AlarmDirectionSetter and DirectionsReceiver.";
-            throw new ClassCastException(msg);
-        }
-    }
+    @Inject
+    AlarmDirectionSetter alarmDirectionSetter;
+
+    @Inject
+    DirectionsReceiver directionsReceiver;
+
+    private List<Direction> directions;
 
     @Override
     @NonNull

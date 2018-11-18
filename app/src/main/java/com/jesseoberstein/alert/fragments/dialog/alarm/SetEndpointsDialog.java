@@ -3,7 +3,6 @@ package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,27 +16,21 @@ import com.jesseoberstein.alert.utils.EndpointsUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * A dialog fragment that shows a dialog for setting custom days that the alarm should repeat.
  */
 public class SetEndpointsDialog extends AlarmModifierDialog {
-    private AlarmEndpointSetter alarmEndpointSetter;
-    private EndpointsReceiver endpointsReceiver;
-    private List<Endpoint> endpoints;
-    private List<Endpoint> selectedEndpoints;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.alarmEndpointSetter = (AlarmEndpointSetter) getAlarmModifier();
-            this.endpointsReceiver = (EndpointsReceiver) context;
-            this.selectedEndpoints = new ArrayList<>();
-        } catch (ClassCastException e) {
-            String msg = context + " must implement both AlarmEndpointSetter and EndpointsReceiver";
-            throw new ClassCastException(msg);
-        }
-    }
+    @Inject
+    AlarmEndpointSetter alarmEndpointSetter;
+
+    @Inject
+    EndpointsReceiver endpointsReceiver;
+
+    private List<Endpoint> selectedEndpoints = new ArrayList<>();
+    private List<Endpoint> endpoints;
 
     @Override
     @NonNull

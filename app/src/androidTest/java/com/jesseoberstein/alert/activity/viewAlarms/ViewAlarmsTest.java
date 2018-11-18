@@ -1,23 +1,22 @@
 package com.jesseoberstein.alert.activity.viewAlarms;
 
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.activities.alarms.ViewAlarmsMock;
+import com.jesseoberstein.alert.TestApplication;
+import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmEndpointsTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmRouteTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmStopTest;
 import com.jesseoberstein.alert.activity.editAlarm.BaseEditAlarmSectionTest;
-import com.jesseoberstein.alert.data.AppDatabaseTest;
+import com.jesseoberstein.alert.config.DaggerTestApplicationComponent;
 
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -43,11 +42,12 @@ public class ViewAlarmsTest {
     private final String[] ALL_ENDPOINTS = {"Attleboro", "Providence", "Stoughton", "Wickford Junction"};
 
     @Rule
-    public IntentsTestRule<ViewAlarmsMock> intentsTestRule = new IntentsTestRule<>(ViewAlarmsMock.class);
+    public IntentsTestRule<ViewAlarms> intentsTestRule = new IntentsTestRule<>(ViewAlarms.class);
 
     @After
     public void cleanup() {
-        AppDatabaseTest.clear();
+        TestApplication app = (TestApplication) InstrumentationRegistry.getTargetContext().getApplicationContext();
+        DaggerTestApplicationComponent.builder().create(app).inject(app);
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ViewAlarmsTest {
 
     private void verifyCreateAlarmIntent() {
         intended(allOf(
-            hasComponent("com.jesseoberstein.alert.activities.alarm.EditAlarmMock"),
+            hasComponent("com.jesseoberstein.alert.activities.alarm.EditAlarm"),
             hasAction(is(Intent.ACTION_INSERT)),
             not(hasExtraWithKey(ALARM))
         ));

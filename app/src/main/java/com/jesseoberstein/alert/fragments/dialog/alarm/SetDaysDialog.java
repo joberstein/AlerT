@@ -3,7 +3,6 @@ package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +12,8 @@ import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
 import com.jesseoberstein.alert.models.SelectedDays;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
+
+import javax.inject.Inject;
 
 import static android.icu.text.DateFormatSymbols.getInstance;
 import static java.util.Calendar.SATURDAY;
@@ -23,18 +23,11 @@ import static java.util.Calendar.SUNDAY;
  * A dialog fragment that shows a dialog for setting custom days that the alarm should repeat.
  */
 public class SetDaysDialog extends AlarmModifierDialog {
-    private AlarmDaySetter alarmDaySetter;
-    private SelectedDays selectedDays;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.alarmDaySetter = (AlarmDaySetter) getAlarmModifier();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement AlarmDaySetter");
-        }
-    }
+    @Inject
+    AlarmDaySetter alarmDaySetter;
+
+    private SelectedDays selectedDays;
 
     @Override
     @NonNull

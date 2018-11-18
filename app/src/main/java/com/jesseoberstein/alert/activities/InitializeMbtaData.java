@@ -20,7 +20,7 @@ import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.models.mbta.Trip;
 import com.jesseoberstein.alert.network.TaggedRequest;
 import com.jesseoberstein.alert.sensitive.SensitiveData;
-import com.jesseoberstein.alert.tasks.InsertTask;
+import com.jesseoberstein.alert.tasks.base.InsertTask;
 import com.jesseoberstein.alert.utils.ResponseParser;
 
 import java.io.ByteArrayInputStream;

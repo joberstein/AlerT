@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
-import android.view.View;
-import android.widget.TextView;
-
-import com.jesseoberstein.alert.R;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class ActivityUtils {
 
@@ -27,9 +25,17 @@ public class ActivityUtils {
      * @param attr A reference to the attribute.
      * @return The value of the given attribute.
      */
-    public static int getAttrValue(Context context, int attr) {
+    private static int getAttrValue(Context context, int attr) {
         TypedValue outValue = new TypedValue();
         context.getTheme().resolveAttribute(attr, outValue, true);
         return outValue.data;
+    }
+
+    /**
+     * Show the keyboard for the given view.
+     * @param window The window to show the keyboard for.
+     */
+    public static void showKeyboard(Window window) {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 }

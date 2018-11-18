@@ -1,9 +1,10 @@
 package com.jesseoberstein.alert.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
-public abstract class AlarmSettingsFragment extends Fragment {
+import com.jesseoberstein.alert.activities.base.BaseFragment;
+
+public abstract class AlarmSettingsFragment extends BaseFragment {
 
     public static AlarmSettingsFragment newInstance(int page, AlarmSettingsFragment fragment) {
         Bundle args = new Bundle();

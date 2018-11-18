@@ -3,23 +3,12 @@ package com.jesseoberstein.alert.model;
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.SelectedDays;
 import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.models.mbta.Direction;
-import com.jesseoberstein.alert.models.mbta.Endpoint;
-import com.jesseoberstein.alert.models.mbta.Route;
-import com.jesseoberstein.alert.models.mbta.Stop;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import static java.util.Calendar.HOUR_OF_DAY;
-import static java.util.Calendar.MINUTE;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
@@ -40,11 +29,8 @@ public class UserAlarmTest {
     @Test
     public void testNoArgConstructor() {
         testAlarm = new UserAlarm();
-        int defaultHour = (LocalDateTime.now().getHour() + 1) % 24;
 
         assertEquals(0, testAlarm.getId());
-        assertEquals(defaultHour, testAlarm.getHour().intValue());
-        assertEquals(LocalDateTime.now().getMinute(), testAlarm.getMinutes().intValue());
         assertEquals(RepeatType.NEVER, testAlarm.getRepeatType());
         assertEquals(new SelectedDays(), testAlarm.getSelectedDays());
         assertEquals(30, testAlarm.getDuration());
@@ -57,7 +43,7 @@ public class UserAlarmTest {
 
     @Test
     public void testSingleArgConstructor() {
-        testAlarm.setTime(10, 30);
+        testAlarm.setTime("10:30 am");
         testAlarm.setDuration(30);
         testAlarm.setRepeatType(RepeatType.CUSTOM);
         testAlarm.setSelectedDays(new int[]{1,0,1,0,1,0,1});
@@ -134,19 +120,10 @@ public class UserAlarmTest {
 
     @Test
     public void verifyGetAndSetTime() {
-        testAlarm.setTime(0, 0);
+        testAlarm.setTime("12:00 am");
         assertEquals("12:00 am", testAlarm.getTime());
 
-        testAlarm.setTime(5, 17);
-        assertEquals("5:17 am", testAlarm.getTime());
-
-        testAlarm.setTime(12, 30);
-        assertEquals("12:30 pm", testAlarm.getTime());
-
-        testAlarm.setTime(18, 51);
-        assertEquals("6:51 pm", testAlarm.getTime());
-
-        testAlarm.setTime(23, 4);
+        testAlarm.setTime("11:04 pm");
         assertEquals("11:04 pm", testAlarm.getTime());
     }
 

@@ -1,21 +1,21 @@
 package com.jesseoberstein.alert.activities.alarm;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.activities.base.DatabaseActivity;
+import com.jesseoberstein.alert.activities.base.BaseActivity;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
-import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetDaysDialog;
 import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
 import com.jesseoberstein.alert.interfaces.AlarmDirectionSetter;
@@ -39,18 +39,19 @@ import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
-import com.jesseoberstein.alert.services.AlarmService;
-import com.jesseoberstein.alert.tasks.DeleteTask;
+import com.jesseoberstein.alert.tasks.DeleteAlarmEndpointsTask;
+import com.jesseoberstein.alert.tasks.InsertAlarmEndpointsTask;
 import com.jesseoberstein.alert.tasks.InsertAlarmTask;
-import com.jesseoberstein.alert.tasks.InsertTask;
 import com.jesseoberstein.alert.tasks.QueryDirectionsTask;
 import com.jesseoberstein.alert.tasks.QueryEndpointsTask;
 import com.jesseoberstein.alert.tasks.QueryRoutesTask;
 import com.jesseoberstein.alert.tasks.QueryStopsTask;
 import com.jesseoberstein.alert.tasks.UpdateAlarmTask;
+import com.jesseoberstein.alert.utils.AlarmManagerHelper;
 import com.jesseoberstein.alert.utils.AlarmUtils;
 import com.jesseoberstein.alert.utils.AlertUtils;
 import com.jesseoberstein.alert.utils.Constants;
+import com.jesseoberstein.alert.utils.UserAlarmScheduler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,19 +59,57 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import javax.inject.Inject;
+
 import static com.jesseoberstein.alert.models.mbta.Endpoint.PSUEDO_ENDPOINT_NAMES;
 import static com.jesseoberstein.alert.utils.ActivityUtils.setIconColor;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
+import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.CURRENT_TAB;
 import static com.jesseoberstein.alert.utils.Constants.DRAFT_ALARM;
 import static java.util.stream.Collectors.toList;
 
-public class EditAlarm extends DatabaseActivity implements OnDialogClick,
+public class EditAlarm extends BaseActivity implements OnDialogClick,
         AlarmTimeSetter, AlarmRepeatSetter, AlarmDaySetter, AlarmDurationSetter,
         AlarmRouteSetter, AlarmStopSetter, AlarmDirectionSetter, AlarmEndpointSetter,
         RoutesReceiver, StopsReceiver, DirectionsReceiver, EndpointsReceiver, AlarmReceiver {
 
-    private AlarmService alarmService;
+    @Inject
+    ActionBar actionBar;
+
+    @Inject
+    FragmentManager fragmentManager;
+
+    @Inject
+    UserAlarmScheduler userAlarmScheduler;
+
+    @Inject
+    AlarmManagerHelper alarmManagerHelper;
+
+    @Inject
+    QueryRoutesTask queryRoutesTask;
+
+    @Inject
+    QueryDirectionsTask queryDirectionsTask;
+
+    @Inject
+    QueryStopsTask queryStopsTask;
+
+    @Inject
+    QueryEndpointsTask queryEndpointsTask;
+
+    @Inject
+    InsertAlarmTask insertAlarmTask;
+
+    @Inject
+    InsertAlarmEndpointsTask insertAlarmEndpointsTask;
+
+    @Inject
+    UpdateAlarmTask updateAlarmTask;
+
+    @Inject
+    DeleteAlarmEndpointsTask deleteAlarmEndpointsTask;
+
     private ViewPager pager;
     private UserAlarmWithRelations alarm;
     private UserAlarmWithRelations draftAlarm;
@@ -83,8 +122,8 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(getIntent().getIntExtra(COLOR, R.style.AlarmSettingsDark_Default));
         super.onCreate(savedInstanceState);
-        alarmService = new AlarmService(getApplicationContext());
 
         this.alarm = (UserAlarmWithRelations) getIntent().getSerializableExtra(ALARM);
         this.draftAlarm = (UserAlarmWithRelations) getIntent().getSerializableExtra(DRAFT_ALARM);
@@ -103,31 +142,32 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
             this.onAlarmEndpointsSet(this.alarm.getEndpoints());
         } else if (this.draftAlarm == null) {
             this.draftAlarm = new UserAlarmWithRelations();
+            userAlarmScheduler.setDefaultAlarmTime(this.draftAlarm.getAlarm());
         }
 
-        this.setUpView();
+        setUpView();
+        userAlarmScheduler.setNextFiringDayString(this.draftAlarm.getAlarm());
 
         // Query for routes.
-        new QueryRoutesTask(this).execute();
+        queryRoutesTask.execute();
 
         // Query for directions if the activity was restarted with a route change.
         Optional.ofNullable(this.draftAlarm)
             .map(UserAlarmWithRelations::getAlarm)
             .map(UserAlarm::getRouteId)
-            .ifPresent(routeId -> new QueryDirectionsTask(this).execute(routeId));
+            .ifPresent(routeId -> queryDirectionsTask.execute(routeId));
     }
 
     private void setUpView() {
-        setTheme(AlertUtils.getTheme(this.draftAlarm.getRoute()));
         setContentView(R.layout.activities_edit_alarm);
 
-        Optional.ofNullable(getSupportActionBar()).ifPresent(bar -> {
+        Optional.ofNullable(this.actionBar).ifPresent(bar -> {
             bar.setTitle(this.isAlarmUpdate ? R.string.edit_alarm_page : R.string.new_alarm_page);
             bar.setDisplayHomeAsUpEnabled(true);
         });
 
         // Set up the tab layout view pager.
-        AlarmPagerAdapter alarmPagerAdapter = new AlarmPagerAdapter(getSupportFragmentManager());
+        AlarmPagerAdapter alarmPagerAdapter = new AlarmPagerAdapter(this.fragmentManager);
         pager = findViewById(R.id.alarm_settings_pager);
         pager.setAdapter(alarmPagerAdapter);
         pager.setCurrentItem(getIntent().getIntExtra(CURRENT_TAB, 0));
@@ -207,9 +247,9 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
         if (this.draftAlarm.isValid()) {
             UserAlarm alarm = this.draftAlarm.getAlarm();
             if (this.isAlarmUpdate) {
-                new UpdateAlarmTask(this, getDatabase(this)).execute(alarm);
+                updateAlarmTask.execute(alarm);
             } else {
-                new InsertAlarmTask(this, getDatabase(this)).execute(alarm);
+                insertAlarmTask.execute(alarm);
             }
         } else {
             this.validationSnackbar = createValidationSnackbar();
@@ -290,21 +330,23 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
     public void onCancelSelected(Bundle alarm) {}
 
     public void onAlarmTimeSet(int hour, int minute) {
-        this.draftAlarm.getAlarm().setTime(hour, minute);
+        userAlarmScheduler.setAlarmTime(this.draftAlarm.getAlarm(), hour, minute);
     }
 
     @Override
     public void onAlarmRepeatSet(RepeatType repeatType) {
         this.draftAlarm.getAlarm().setRepeatType(repeatType);
+        userAlarmScheduler.setNextFiringDayString(this.draftAlarm.getAlarm());
 
         if (RepeatType.CUSTOM.equals(repeatType)) {
-            new SetDaysDialog().show(getSupportFragmentManager(), "setDays");
+            new SetDaysDialog().show(this.fragmentManager, "setDays");
         }
     }
 
     @Override
     public void onAlarmDaysSet(int[] days) {
         this.draftAlarm.getAlarm().setSelectedDays(days);
+        userAlarmScheduler.setNextFiringDayString(this.draftAlarm.getAlarm());
     }
 
     @Override
@@ -323,6 +365,7 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
         Intent intent = getIntent();
         intent.putExtra(DRAFT_ALARM, this.draftAlarm);
         intent.putExtra(CURRENT_TAB, pager.getCurrentItem());
+        intent.putExtra(COLOR, AlertUtils.getTheme(route));
         startActivity(intent);
         finish();
     }
@@ -335,7 +378,7 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
         // Once the direction is set, query for endpoints.
         String routeId = this.draftAlarm.getAlarm().getRouteId();
         String directionId = Long.toString(direction.getDirectionId());
-        new QueryEndpointsTask(this).execute(routeId, directionId);
+        queryEndpointsTask.execute(routeId, directionId);
     }
 
     @Override
@@ -371,7 +414,7 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
 
         // Once endpoints are received, query for stops.
         String routeId = this.draftAlarm.getAlarm().getRouteId();
-        new QueryStopsTask(this).execute(routeId);
+        queryStopsTask.execute(routeId);
     }
 
     @Override
@@ -395,8 +438,8 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
         // TODO can do this in the InsertAlarmTask
         this.draftAlarm.getAlarm().setId(insertedAlarmId);
         AlarmEndpoint[] alarmEndpoints = AlarmUtils.createAlarmEndpoints(this.draftAlarm);
-        new InsertTask<>(getDatabase(this).alarmEndpointDao()).execute(alarmEndpoints);
-        this.alarmService.scheduleMbtaAlarm(this.draftAlarm);
+        insertAlarmEndpointsTask.execute(alarmEndpoints);
+        this.alarmManagerHelper.scheduleUserAlarm(this.draftAlarm);
         finish();
     }
 
@@ -406,18 +449,18 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
         if (!this.alarm.getEndpoints().equals(this.draftAlarm.getEndpoints())) {
             // Delete the endpoints for the existing alarm.
             AlarmEndpoint[] oldAlarmEndpoints = this.alarm.getAlarmEndpoints().toArray(new AlarmEndpoint[]{});
-            new DeleteTask<>(getDatabase(this).alarmEndpointDao()).execute(oldAlarmEndpoints);
+            deleteAlarmEndpointsTask.execute(oldAlarmEndpoints);
 
             // Insert new endpoints for the updated alarm.
             AlarmEndpoint[] newAlarmEndpoints = AlarmUtils.createAlarmEndpoints(this.draftAlarm);
-            new InsertTask<>(getDatabase(this).alarmEndpointDao()).execute(newAlarmEndpoints);
+            insertAlarmEndpointsTask.execute(newAlarmEndpoints);
         }
 
         // Schedule the alarm.
         if (this.draftAlarm.getAlarm().isActive()) {
-            this.alarmService.scheduleMbtaAlarm(this.draftAlarm);
+            this.alarmManagerHelper.scheduleUserAlarm(this.draftAlarm);
         } else {
-            this.alarmService.cancelMbtaAlarm(this.draftAlarm);
+            this.alarmManagerHelper.cancelUserAlarm(this.draftAlarm);
         }
 
         finish();
@@ -425,8 +468,4 @@ public class EditAlarm extends DatabaseActivity implements OnDialogClick,
 
     @Override
     public void onReceiveAlarms(List<UserAlarmWithRelations> alarms) {}
-
-    public AppDatabase getDatabase(Context context) {
-        return AppDatabase.getInstance(context);
-    }
 }

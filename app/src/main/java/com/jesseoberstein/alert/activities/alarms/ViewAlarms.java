@@ -3,6 +3,7 @@ package com.jesseoberstein.alert.activities.alarms;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -11,16 +12,17 @@ import android.view.View;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
-import com.jesseoberstein.alert.activities.base.DatabaseActivity;
+import com.jesseoberstein.alert.activities.base.BaseActivity;
 import com.jesseoberstein.alert.adapters.AlarmsAdapter;
 import com.jesseoberstein.alert.adapters.EmptyRecyclerViewObserver;
+import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
-import com.jesseoberstein.alert.services.AlarmService;
 import com.jesseoberstein.alert.tasks.QueryAlarmsTask;
 import com.jesseoberstein.alert.utils.ActivityUtils;
+import com.jesseoberstein.alert.utils.UserAlarmScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,24 +30,33 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ViewAlarms extends DatabaseActivity implements OnDialogClick, AlarmReceiver {
+import javax.inject.Inject;
+
+public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmReceiver {
+    @Inject
+    ActionBar actionBar;
+
+    @Inject
+    AppDatabase database;
+
+    @Inject
+    UserAlarmScheduler userAlarmScheduler;
+
     private AlarmsAdapter alarmsAdapter;
-    private AlarmService alarmService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activities_view_alarms);
-        new QueryAlarmsTask(this, getDatabase(this)).execute();
+        createQueryAlarmsTask().execute();
 
-        Optional.ofNullable(getSupportActionBar()).ifPresent(bar -> {
+        Optional.ofNullable(this.actionBar).ifPresent(bar -> {
             bar.setTitle(R.string.view_alarms_page);
             bar.setDisplayHomeAsUpEnabled(false);
         });
 
         // Start 'EditAlarm' when the floating action button is clicked.
         findViewById(R.id.add_alarm).setOnClickListener(this.getOnCreateAlarmClick());
-        alarmService = new AlarmService(getApplicationContext());
     }
 
     @Override
@@ -59,7 +70,7 @@ public class ViewAlarms extends DatabaseActivity implements OnDialogClick, Alarm
     @Override
     protected void onResume() {
         super.onResume();
-        new QueryAlarmsTask(this, getDatabase(this)).execute();
+        createQueryAlarmsTask().execute();
     }
 
     @Override
@@ -113,5 +124,9 @@ public class ViewAlarms extends DatabaseActivity implements OnDialogClick, Alarm
     public View.OnClickListener getOnCreateAlarmClick() {
         return new StartActivityOnClick(this, EditAlarm.class)
                 .withAction(Intent.ACTION_INSERT);
+    }
+
+    private QueryAlarmsTask createQueryAlarmsTask() {
+        return new QueryAlarmsTask(this, database, userAlarmScheduler);
     }
 }

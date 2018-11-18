@@ -3,7 +3,6 @@ package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -16,21 +15,15 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmTimeBinding;
 import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
 
+import javax.inject.Inject;
+
 /**
  * A dialog fragment that shows a time picker.
  */
 public class SetTimeDialog extends AlarmModifierDialog {
-    private AlarmTimeSetter alarmTimeSetter;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.alarmTimeSetter = (AlarmTimeSetter) getAlarmModifier();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement AlarmTimeSetter");
-        }
-    }
+    @Inject
+    AlarmTimeSetter alarmTimeSetter;
 
     @Override
     @NonNull

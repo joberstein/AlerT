@@ -14,20 +14,13 @@ import com.jesseoberstein.alert.BR;
 import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
-import com.jesseoberstein.alert.utils.AlarmUtils;
 import com.jesseoberstein.alert.utils.Constants;
-import com.jesseoberstein.alert.utils.DateTimeUtils;
 import com.jesseoberstein.alert.validation.Validatable;
 
 import java.io.Serializable;
-import java.text.DateFormatSymbols;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import static java.util.Calendar.HOUR_OF_DAY;
-import static java.util.Calendar.MINUTE;
 import static java.util.Objects.isNull;
 
 @Entity(
@@ -77,11 +70,6 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
     private List<String> errors = new ArrayList<>();
 
     public UserAlarm() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.HOUR, 1);
-
-        setTime(calendar.get(HOUR_OF_DAY), calendar.get(MINUTE));
         setRepeatType(RepeatType.NEVER);
         setSelectedDays(new SelectedDays());
         setDuration(30);
@@ -92,9 +80,11 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
     public UserAlarm(UserAlarm alarm) {
         setId(alarm.getId());
         setNickname(alarm.getNickname());
-        setTime(alarm.getHour(), alarm.getMinutes());
+        setHour(alarm.getHour());
+        setMinutes(alarm.getMinutes());
+        setTime(alarm.getTime());
         setDuration(alarm.getDuration());
-        setRepeatType(alarm.getRepeatType());
+        setRepeatType(RepeatType.valueOf(Long.valueOf(alarm.getRepeatTypeId()).intValue()));
         setSelectedDays(alarm.getSelectedDays());
         setActive(alarm.isActive());
     }
@@ -143,12 +133,10 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
     public void setSelectedDays(SelectedDays selectedDays) {
         this.selectedDays = selectedDays;
         notifyPropertyChanged(BR.selectedDays);
-        setNextFiringDayString();
     }
 
     public void setSelectedDays(int[] selectedDays) {
         this.selectedDays = new SelectedDays(selectedDays);
-        setNextFiringDayString();
     }
 
     @Bindable
@@ -184,53 +172,19 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         return this.nextFiringDayString;
     }
 
-    public void setNextFiringDayString() {
-        if (this.getSelectedDays() == null) {
-            return;
-        }
-
-        String[] weekdayList = DateFormatSymbols.getInstance().getWeekdays();
-
-        long now = DateTimeUtils.getCurrentTimeInMillis();
-        long alarmFiringTime = DateTimeUtils.getTimeInMillis(this.hour, this.minutes);
-        boolean isPastAlarmFiringTime = alarmFiringTime <= now;
-
-        int nextFiringDay = AlarmUtils.getNextFiringDay(this);
-        String nextFiringDayString = weekdayList[nextFiringDay];
-        String firingDayTodayString = isPastAlarmFiringTime ? "Next " + nextFiringDayString : "Today";
-        boolean isNextFiringDayToday = DateTimeUtils.getCurrentDay() == nextFiringDay;
-
-        this.nextFiringDayString = isNextFiringDayToday ? firingDayTodayString : nextFiringDayString;
+    public void setNextFiringDayString(String nextFiringDayString) {
+        this.nextFiringDayString = nextFiringDayString;
         notifyPropertyChanged(BR.nextFiringDayString);
     }
 
     @Bindable
     public String getTime() {
-        if (this.hour == null || this.minutes == null) {
-            return null;
-        }
-
-        setTime(this.hour, this.minutes);
         return this.time;
-
     }
 
-    public void setTime(Integer newHour, Integer newMinutes) {
-        if (newHour == null || newMinutes == null) {
-            return;
-        }
-
-        if (!newHour.equals(this.hour)) {
-            setHour(newHour);
-        }
-
-        if (!newMinutes.equals(this.minutes)) {
-            setMinutes(newMinutes);
-        }
-
-        this.time = DateTimeUtils.getFormattedTime(this.hour, this.minutes);
+    public void setTime(String formattedTime) {
+        this.time = formattedTime;
         notifyPropertyChanged(BR.time);
-        setNextFiringDayString();
     }
 
     public String getRouteId() {
@@ -272,10 +226,6 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         setSelectedDays(repeatType.getSelectedDays());
 
         notifyPropertyChanged(BR.repeatType);
-    }
-
-    public boolean shouldAlarmFireToday() {
-        return this.selectedDays.isTodaySelected();
     }
 
     @Override

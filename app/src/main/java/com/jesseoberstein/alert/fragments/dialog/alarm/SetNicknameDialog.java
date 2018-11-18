@@ -14,7 +14,7 @@ import android.widget.EditText;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmNicknameBinding;
-import com.jesseoberstein.alert.utils.AlertUtils;
+import com.jesseoberstein.alert.utils.ActivityUtils;
 
 /**
  * A dialog fragment that shows a dialog for editing the alarm nickname.
@@ -34,7 +34,7 @@ public class SetNicknameDialog extends AlarmModifierDialog {
                 .setOnKeyListener(this::onKeyPressed)
                 .create();
 
-        AlertUtils.showKeyboard(dialog.getWindow());
+        ActivityUtils.showKeyboard(dialog.getWindow());
         return dialog;
     }
 

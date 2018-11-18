@@ -17,6 +17,7 @@ import com.jesseoberstein.alert.databinding.ViewAlarmsBinding;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.models.mbta.Route;
+import com.jesseoberstein.alert.utils.AlertUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 import static com.jesseoberstein.alert.utils.AlertUtils.getHexColor;
 import static com.jesseoberstein.alert.utils.AlertUtils.getTextColorForWhiteBackground;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
+import static com.jesseoberstein.alert.utils.Constants.COLOR;
 
 public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarmWithRelations> {
 
@@ -105,6 +107,7 @@ public class AlarmsAdapter extends BaseRecyclerAdapter<UserAlarmWithRelations> {
         Intent intent = new Intent(context, EditAlarm.class);
         intent.setAction(Intent.ACTION_EDIT);
         intent.putExtra(ALARM, alarm);
+        intent.putExtra(COLOR, AlertUtils.getTheme(alarm.getRoute()));
         context.startActivity(intent);
     }
 }

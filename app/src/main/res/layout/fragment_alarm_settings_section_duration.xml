@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data class="DurationSectionBinding">
-        <import type="com.jesseoberstein.alert.utils.DateTimeUtils"/>
+        <import type="com.jesseoberstein.alert.utils.DateTimeHelper"/>
         <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
     </data>
 
@@ -33,7 +33,7 @@
                 android:id="@+id/alarmSettings_section_value_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{DateTimeUtils.getFormattedDuration(alarm.duration)}"
+                android:text="@{DateTimeHelper.getFormattedDuration(alarm.duration)}"
                 android:textSize="20sp"
                 android:textColor="@color/gray"
                 android:layout_below="@id/alarmSettings_section_label_duration"

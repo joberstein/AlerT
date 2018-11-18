@@ -2,7 +2,6 @@ package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -18,9 +17,11 @@ import com.jesseoberstein.alert.interfaces.AlarmStopSetter;
 import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
 import com.jesseoberstein.alert.models.AutoComplete;
 import com.jesseoberstein.alert.models.mbta.Stop;
-import com.jesseoberstein.alert.utils.AlertUtils;
+import com.jesseoberstein.alert.utils.ActivityUtils;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
@@ -28,20 +29,12 @@ import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
  * A dialog fragment that shows a dialog for selecting the alarm stop.
  */
 public class SetStopDialog extends AlarmModifierDialog {
-    private AlarmStopSetter alarmStopSetter;
-    private StopsReceiver stopsReceiver;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.alarmStopSetter = (AlarmStopSetter) getAlarmModifier();
-            this.stopsReceiver = (StopsReceiver) context;
-        } catch (ClassCastException e) {
-            String msg = context + " must implement both AlarmStopSetter and StopsReceiver";
-            throw new ClassCastException(msg);
-        }
-    }
+    @Inject
+    AlarmStopSetter alarmStopSetter;
+
+    @Inject
+    StopsReceiver stopsReceiver;
 
     @Override
     @NonNull
@@ -61,7 +54,7 @@ public class SetStopDialog extends AlarmModifierDialog {
                 .setOnKeyListener(this::onKeyPressed)
                 .create();
 
-        AlertUtils.showKeyboard(dialog.getWindow());
+        ActivityUtils.showKeyboard(dialog.getWindow());
         return dialog;
     }
 
