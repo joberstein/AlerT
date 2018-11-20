@@ -10,13 +10,10 @@ import com.jesseoberstein.alert.models.mbta.Direction;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class QueryDirectionsTask extends AsyncTask<String, Void, List<Direction>> {
     private final DirectionDao directionDao;
     private final DirectionsReceiver directionsReceiver;
 
-    @Inject
     public QueryDirectionsTask(Context context, AppDatabase database) {
         this.directionDao = database.directionDao();
         this.directionsReceiver = (DirectionsReceiver) context;

@@ -11,13 +11,10 @@ import com.jesseoberstein.alert.models.mbta.Endpoint;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class QueryEndpointsTask extends AsyncTask<String, Void, List<Endpoint>> {
     private final EndpointDao endpointDao;
     private final EndpointsReceiver endpointsReceiver;
 
-    @Inject
     public QueryEndpointsTask(Context context, AppDatabase appDatabase) {
         this.endpointDao = appDatabase.endpointDao();
         this.endpointsReceiver = (EndpointsReceiver) context;

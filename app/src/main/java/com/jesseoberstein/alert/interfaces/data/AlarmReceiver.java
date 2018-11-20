@@ -8,7 +8,7 @@ public interface AlarmReceiver {
 
     void onInsertAlarm(long insertedAlarmId);
 
-    void onUpdateAlarm(boolean isUpdated);
+    void onUpdateAlarm(UserAlarmWithRelations alarm);
 
     void onReceiveAlarms(List<UserAlarmWithRelations> alarms);
 

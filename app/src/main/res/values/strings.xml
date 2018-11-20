@@ -50,6 +50,8 @@
     <string name="update_alarm_dialog">Update this alarm?</string>
     <string name="remove_alarm_dialog">Remove "%1$s" from your alarms?</string>
 
+    <string name="alarm_status">Alarm Status</string>
+
     <string name="ok">OK</string>
     <string name="add">Add</string>
     <string name="update">Update</string>

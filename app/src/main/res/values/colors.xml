@@ -16,7 +16,6 @@
 
     <color name="alert_red">#ff0000</color>
 
-    <color name="alarm_on">#82fb82</color>
     <color name="alarm_off">#c6c6c6</color>
 
     <color name="default_route">#333</color>

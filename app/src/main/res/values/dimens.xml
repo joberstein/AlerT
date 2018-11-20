@@ -44,7 +44,7 @@
     <dimen name="grid_item_padding_small">5dp</dimen>
     <dimen name="grid_item_padding_medium">8dp</dimen>
     <dimen name="grid_item_padding">10dp</dimen>
-    <dimen name="grid_item_secondary_action_size">15dp</dimen>
+    <dimen name="grid_item_secondary_action_size">25dp</dimen>
     <dimen name="grid_item_primary_font_size">22sp</dimen>
     <dimen name="grid_item_secondary_font_size">16sp</dimen>
     <dimen name="grid_item_tertiary_font_size">12sp</dimen>

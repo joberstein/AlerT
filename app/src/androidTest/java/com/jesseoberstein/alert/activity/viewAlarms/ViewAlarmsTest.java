@@ -2,6 +2,7 @@ package com.jesseoberstein.alert.activity.viewAlarms;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 
@@ -14,6 +15,7 @@ import com.jesseoberstein.alert.activity.editAlarm.AlarmRouteTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmStopTest;
 import com.jesseoberstein.alert.activity.editAlarm.BaseEditAlarmSectionTest;
 import com.jesseoberstein.alert.config.DaggerTestApplicationComponent;
+import com.jesseoberstein.alert.test.TestUtils;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -28,14 +30,19 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAct
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.jesseoberstein.alert.test.TestUtils.*;
+import static com.jesseoberstein.alert.utils.AlertUtils.getHexColor;
+import static com.jesseoberstein.alert.utils.AlertUtils.getTextColorForWhiteBackground;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
 public class ViewAlarmsTest {
+    private final int SELECTED_COLOR = R.color.commuter;
     private final String SELECTED_ROUTE = "Providence/Stoughton Line";
     private final String SELECTED_DIRECTION = "Outbound";
     private final String SELECTED_STOP = "Hyde Park";
@@ -61,7 +68,6 @@ public class ViewAlarmsTest {
     @Test
     public void testCreateAlarm() throws InterruptedException {
         clickCreateAlarmButton();
-        verifyCreateAlarmIntent();
         insertAlarm();
         onView(withText(SELECTED_STOP)).check(matches(isDisplayed()));
     }
@@ -106,6 +112,18 @@ public class ViewAlarmsTest {
         verifyRemoveAlarmDialogDisplayed();
         onView(withText(R.string.cancel)).perform(click());
         onView(withText(SELECTED_STOP)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testAlarmStatusToggle() throws InterruptedException {
+        clickCreateAlarmButton();
+        insertAlarm();
+        onView(withContentDescription(R.string.alarm_status))
+                .check(matches(hasDrawableColor(SELECTED_COLOR)))
+                .perform(click())
+                .check(matches(hasDrawableColor(R.color.alarm_off)))
+                .perform(click())
+                .check(matches(hasDrawableColor(SELECTED_COLOR)));
     }
 
     private void verifyRemoveAlarmDialogDisplayed() {

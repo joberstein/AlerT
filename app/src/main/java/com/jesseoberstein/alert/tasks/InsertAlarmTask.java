@@ -9,12 +9,9 @@ import com.jesseoberstein.alert.tasks.base.InsertTask;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class InsertAlarmTask extends InsertTask<UserAlarm> {
     private final AlarmReceiver onAlarmInserted;
 
-    @Inject
     public InsertAlarmTask(Context context, AppDatabase db) {
         super(db.userAlarmDao());
         this.onAlarmInserted = (AlarmReceiver) context;

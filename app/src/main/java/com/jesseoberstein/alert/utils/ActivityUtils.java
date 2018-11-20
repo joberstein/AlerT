@@ -10,13 +10,13 @@ import android.view.WindowManager;
 public class ActivityUtils {
 
     /**
-     * Set the given icon's color with the given color.
+     * Set the given menu icon's color with the given color.
      * @param context The activity's context.
      * @param icon The icon to recolor.
-     * @param color The color to restyle the icon with.
+     * @param attrColor The color to restyle the icon with, specified as an attribute (likely from a theme).
      */
-    public static void setIconColor(Context context, Drawable icon, int color) {
-        icon.setColorFilter(getAttrValue(context, color), PorterDuff.Mode.SRC_IN);
+    public static void setDrawableColor(Context context, Drawable icon, int attrColor) {
+        icon.setColorFilter(getAttrValue(context, attrColor), PorterDuff.Mode.SRC_IN);
     }
 
     /**

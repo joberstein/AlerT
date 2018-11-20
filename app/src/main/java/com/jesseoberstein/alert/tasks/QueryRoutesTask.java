@@ -10,13 +10,10 @@ import com.jesseoberstein.alert.models.mbta.Route;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class QueryRoutesTask extends AsyncTask<Void, Void, List<Route>> {
     private final RouteDao routeDao;
     private final RoutesReceiver routesReceiver;
 
-    @Inject
     public QueryRoutesTask(Context context, AppDatabase database) {
         this.routeDao = database.routeDao();
         this.routesReceiver = (RoutesReceiver) context;

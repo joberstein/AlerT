@@ -63,7 +63,7 @@ import java.util.stream.IntStream;
 import javax.inject.Inject;
 
 import static com.jesseoberstein.alert.models.mbta.Endpoint.PSUEDO_ENDPOINT_NAMES;
-import static com.jesseoberstein.alert.utils.ActivityUtils.setIconColor;
+import static com.jesseoberstein.alert.utils.ActivityUtils.setDrawableColor;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.CURRENT_TAB;
@@ -164,7 +164,7 @@ public class EditAlarm extends BaseActivity implements OnDialogClick,
 
         MenuItem save = menu.getItem(0);
         save.setContentDescription("Save Alarm");
-        setIconColor(this, save.getIcon(), R.attr.menuItemIconColor);
+        setDrawableColor(this, save.getIcon(), R.attr.menuItemIconColor);
         save.setOnMenuItemClickListener(this::saveAlarm);
 
         return true;
@@ -225,11 +225,10 @@ public class EditAlarm extends BaseActivity implements OnDialogClick,
      */
     private boolean saveAlarm(MenuItem item) {
         if (this.draftAlarm.isValid()) {
-            UserAlarm alarm = this.draftAlarm.getAlarm();
             if (this.isAlarmUpdate) {
-                new UpdateAlarmTask(this, database).execute(alarm);
+                new UpdateAlarmTask(this, database).execute(this.draftAlarm);
             } else {
-                new InsertAlarmTask(this, database).execute(alarm);
+                new InsertAlarmTask(this, database).execute(this.draftAlarm.getAlarm());
             }
         } else {
             this.validationSnackbar = createValidationSnackbar();
@@ -424,23 +423,23 @@ public class EditAlarm extends BaseActivity implements OnDialogClick,
     }
 
     @Override
-    public void onUpdateAlarm(boolean isUpdated) {
+    public void onUpdateAlarm(UserAlarmWithRelations alarmWithRelations) {
         // TODO can do this in the UpdateAlarmTask
-        if (!this.alarm.getEndpoints().equals(this.draftAlarm.getEndpoints())) {
+        if (!this.alarm.getEndpoints().equals(alarmWithRelations.getEndpoints())) {
             // Delete the endpoints for the existing alarm.
             AlarmEndpoint[] oldAlarmEndpoints = this.alarm.getAlarmEndpoints().toArray(new AlarmEndpoint[]{});
             new DeleteAlarmEndpointsTask(database).execute(oldAlarmEndpoints);
 
             // Insert new endpoints for the updated alarm.
-            AlarmEndpoint[] newAlarmEndpoints = AlarmUtils.createAlarmEndpoints(this.draftAlarm);
+            AlarmEndpoint[] newAlarmEndpoints = AlarmUtils.createAlarmEndpoints(alarmWithRelations);
             new InsertAlarmEndpointsTask(database).execute(newAlarmEndpoints);
         }
 
         // Schedule the alarm.
-        if (this.draftAlarm.getAlarm().isActive()) {
-            this.alarmManagerHelper.scheduleUserAlarm(this.draftAlarm);
+        if (alarmWithRelations.getAlarm().isActive()) {
+            this.alarmManagerHelper.scheduleUserAlarm(alarmWithRelations);
         } else {
-            this.alarmManagerHelper.cancelUserAlarm(this.draftAlarm);
+            this.alarmManagerHelper.cancelUserAlarm(alarmWithRelations);
         }
 
         finish();

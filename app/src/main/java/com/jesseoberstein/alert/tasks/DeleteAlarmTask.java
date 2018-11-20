@@ -11,15 +11,9 @@ import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
 import com.jesseoberstein.alert.models.AlarmEndpoint;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
-import com.jesseoberstein.alert.tasks.base.DeleteTask;
-import com.jesseoberstein.alert.tasks.base.InsertTask;
-import com.jesseoberstein.alert.utils.IntentBuilder;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.inject.Inject;
 
 public class DeleteAlarmTask extends AsyncTask<UserAlarmWithRelations, Void, Integer> {
     private final UserAlarmDao userAlarmDao;
@@ -27,7 +21,6 @@ public class DeleteAlarmTask extends AsyncTask<UserAlarmWithRelations, Void, Int
     private final AlarmReceiver onAlarmDeleted;
     private UserAlarmWithRelations[] alarms;
 
-    @Inject
     public DeleteAlarmTask(Context context, AppDatabase db) {
         userAlarmDao = db.userAlarmDao();
         alarmEndpointDao = db.alarmEndpointDao();

@@ -16,13 +16,16 @@ import com.jesseoberstein.alert.activities.base.BaseActivity;
 import com.jesseoberstein.alert.adapters.AlarmsAdapter;
 import com.jesseoberstein.alert.adapters.EmptyRecyclerViewObserver;
 import com.jesseoberstein.alert.data.database.AppDatabase;
+import com.jesseoberstein.alert.interfaces.AlarmAdapterInteractor;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.tasks.DeleteAlarmTask;
 import com.jesseoberstein.alert.tasks.QueryAlarmsTask;
+import com.jesseoberstein.alert.tasks.UpdateAlarmTask;
 import com.jesseoberstein.alert.utils.ActivityUtils;
+import com.jesseoberstein.alert.utils.AlarmManagerHelper;
 import com.jesseoberstein.alert.utils.UserAlarmScheduler;
 
 import java.util.ArrayList;
@@ -35,7 +38,7 @@ import javax.inject.Inject;
 
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 
-public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmReceiver {
+public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmReceiver, AlarmAdapterInteractor {
 
     @Inject
     ActionBar actionBar;
@@ -45,6 +48,9 @@ public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmRece
 
     @Inject
     UserAlarmScheduler userAlarmScheduler;
+
+    @Inject
+    AlarmManagerHelper alarmManagerHelper;
 
     private AlarmsAdapter alarmsAdapter;
 
@@ -60,14 +66,14 @@ public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmRece
         });
 
         // Start 'EditAlarm' when the floating action button is clicked.
-        findViewById(R.id.add_alarm).setOnClickListener(this.getOnCreateAlarmClick());
+        findViewById(R.id.add_alarm).setOnClickListener(this.onCreateAlarmClick());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.alarms_options, menu);
-        ActivityUtils.setIconColor(this, menu.getItem(0).getIcon(), R.attr.menuItemIconColor);
+        ActivityUtils.setDrawableColor(this, menu.getItem(0).getIcon(), R.attr.menuItemIconColor);
         return true;
     }
 
@@ -118,21 +124,35 @@ public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmRece
     @Override
     public void onDeleteAlarm(UserAlarmWithRelations alarm) {
         alarmsAdapter.removeItem(alarm);
+        alarmManagerHelper.cancelUserAlarm(alarm);
+    }
+
+    @Override
+    public void onUpdateAlarm(UserAlarmWithRelations alarm) {
+        alarmsAdapter.updateItem(alarm);
+
+        if (alarm.getAlarm().isActive()) {
+            alarmManagerHelper.scheduleUserAlarm(alarm);
+        } else {
+            alarmManagerHelper.cancelUserAlarm(alarm);
+        }
     }
 
     @Override
     public void onInsertAlarm(long insertedAlarmId) {}
 
-    @Override
-    public void onUpdateAlarm(boolean isUpdated) {}
-
     @VisibleForTesting
-    public View.OnClickListener getOnCreateAlarmClick() {
+    public View.OnClickListener onCreateAlarmClick() {
         return new StartActivityOnClick(this, EditAlarm.class)
                 .withAction(Intent.ACTION_INSERT);
     }
 
     private QueryAlarmsTask createQueryAlarmsTask() {
         return new QueryAlarmsTask(this, database, userAlarmScheduler);
+    }
+
+    @Override
+    public void onAlarmStatusToggle(UserAlarmWithRelations alarmWithRelations) {
+        new UpdateAlarmTask(this, database).execute(alarmWithRelations);
     }
 }
