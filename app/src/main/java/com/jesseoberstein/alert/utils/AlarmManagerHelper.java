@@ -42,8 +42,8 @@ public class AlarmManagerHelper {
         long endTime = userAlarmScheduler.getAlarmEndTime(alarm);
         boolean isRepeating = !RepeatType.NEVER.equals(alarmWithRelations.getAlarm().getRepeatType());
 
-        PendingIntent startIntent = intentBuilder.getAlarmStartIntent(alarmWithRelations);
-        PendingIntent stopIntent = intentBuilder.getAlarmStopIntent(alarmWithRelations);
+        PendingIntent startIntent = intentBuilder.getAlarmStartIntent(alarm.getId());
+        PendingIntent stopIntent = intentBuilder.getAlarmStopIntent(alarm.getId());
 
         if (isRepeating) {
             alarmManager.setRepeating(RTC_WAKEUP, startTime, INTERVAL_DAY, startIntent);
@@ -55,9 +55,10 @@ public class AlarmManagerHelper {
     }
 
     private void cancelAlarm(UserAlarmWithRelations alarmWithRelations) {
+        long alarmId = alarmWithRelations.getAlarm().getId();
         Arrays.asList(
-            intentBuilder.getAlarmStartIntent(alarmWithRelations),
-            intentBuilder.getAlarmStopIntent(alarmWithRelations)
+            intentBuilder.getAlarmStartIntent(alarmId),
+            intentBuilder.getAlarmStopIntent(alarmId)
         ).forEach(alarmManager::cancel);
     }
 }

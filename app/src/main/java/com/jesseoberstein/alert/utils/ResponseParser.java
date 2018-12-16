@@ -1,8 +1,7 @@
 package com.jesseoberstein.alert.utils;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.jasminb.jsonapi.ResourceConverter;
 import com.jesseoberstein.alert.models.mbta.Prediction;
 import com.jesseoberstein.alert.models.mbta.Route;
@@ -10,11 +9,12 @@ import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.models.mbta.Trip;
 
 import java.io.InputStream;
-import java.text.DateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
+import static com.fasterxml.jackson.databind.DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE;
+import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
+import static com.github.jasminb.jsonapi.SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES;
 
 /**
  * A utility class for parsing content to a Java object.
@@ -26,8 +26,9 @@ public class ResponseParser {
     private static ObjectMapper getObjectMapper() {
         if (mapper == null) {
             mapper = new ObjectMapper()
-                    .enable(SerializationFeature.INDENT_OUTPUT)
-                    .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);  // fixes coercing zone to UTC
+                    .enable(JsonGenerator.Feature.IGNORE_UNKNOWN)
+                    .enable(INDENT_OUTPUT)
+                    .disable(ADJUST_DATES_TO_CONTEXT_TIME_ZONE);  // fixes coercing zone to UTC
         }
 
         return mapper;
@@ -37,6 +38,7 @@ public class ResponseParser {
         if (converter == null) {
             converter = new ResourceConverter(getObjectMapper(),
                     Route.class, Stop.class, Trip.class, Prediction.class);
+            converter.enableSerializationOption(INCLUDE_RELATIONSHIP_ATTRIBUTES);
         }
 
         return converter;
@@ -56,15 +58,5 @@ public class ResponseParser {
             e.printStackTrace();
             return Collections.emptyList();
         }
-    }
-
-    /**
-     * Format the given date time.
-     * @param zonedDateTime The date time to format.
-     * @return The short version string of the date time.
-     */
-    public static String formatZonedTime(Date zonedDateTime) {
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ENGLISH);
-        return (zonedDateTime != null) ? dateFormat.format(zonedDateTime) : "";
     }
 }

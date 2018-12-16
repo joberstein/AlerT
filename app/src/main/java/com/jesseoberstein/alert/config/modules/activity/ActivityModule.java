@@ -15,11 +15,10 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(includes = {
-    DateTimeModule.class,
     MbtaDataReceiverModule.class,
     UserAlarmModule.class
 })
-abstract class ActivityModule {
+public abstract class ActivityModule {
 
     @ActivityScope
     @Binds

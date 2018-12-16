@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.jesseoberstein.alert">
 
+    <!-- Allows applications to set the system time -->
+    <permission android:name="android.permission.SET_TIME"
+        android:protectionLevel="signature|normal"/>
+
     <application
         tools:replace="android:name"
         android:name=".TestApplication"
@@ -13,6 +17,11 @@
 
         <activity
             android:name=".activities.InitializeMbtaData"
+            android:launchMode="singleTop">
+        </activity>
+
+        <activity
+            android:name=".activity.ViewAlarmsWithPermissions"
             android:launchMode="singleTop">
         </activity>
     </application>

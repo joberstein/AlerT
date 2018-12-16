@@ -6,8 +6,6 @@ import com.github.jasminb.jsonapi.annotations.Type;
 
 import java.util.Date;
 
-import static com.jesseoberstein.alert.utils.ResponseParser.formatZonedTime;
-
 @Type("prediction")
 public class Prediction extends BaseResource {
 
@@ -109,8 +107,8 @@ public class Prediction extends BaseResource {
                 ", status='" + status + '\'' +
                 ", scheduleRelationship='" + scheduleRelationship + '\'' +
                 ", directionId=" + directionId +
-                ", departureTime=" + formatZonedTime(departureTime) +
-                ", arrivalTime=" + formatZonedTime(arrivalTime) +
+                ", departureTime=" + departureTime +
+                ", arrivalTime=" + arrivalTime +
                 ", trip=" + trip +
                 '}';
     }

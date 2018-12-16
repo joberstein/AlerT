@@ -5,9 +5,12 @@ import android.support.annotation.VisibleForTesting;
 import org.threeten.bp.Duration;
 
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,6 +66,20 @@ public class DateTimeHelper {
         Date date = new Date();
         date.setTime(time);
         return new SimpleDateFormat("h:mm a", Locale.ENGLISH).format(date).toLowerCase();
+    }
+
+    /**
+     * Format the given date time.
+     * @param zonedDateTime The date time to format.
+     * @return The string of the date time formatted as 'h:m a'. Returns an empty string if no date
+     * is present.
+     */
+    public String getFormattedZonedTime(Date zonedDateTime) {
+        return Optional.ofNullable(zonedDateTime)
+                .map(date -> date.toInstant().atZone(ZoneId.systemDefault()).toLocalTime())
+                .map(time -> time.format(DateTimeFormatter.ofPattern("h:mm a", Locale.ENGLISH)))
+                .map(String::toLowerCase)
+                .orElse("");
     }
 
     /**

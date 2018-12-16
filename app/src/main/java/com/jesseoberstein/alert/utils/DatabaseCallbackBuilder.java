@@ -2,10 +2,11 @@ package com.jesseoberstein.alert.utils;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.RoomDatabase;
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.jesseoberstein.alert.data.database.MbtaDatabase;
+
+import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -26,7 +27,11 @@ public class DatabaseCallbackBuilder {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
-                fileHelper.readFile(MbtaDatabase.MBTA_DATABASE_FILENAME).forEach(db::execSQL);
+                try {
+                    fileHelper.readFile(MbtaDatabase.MBTA_DATABASE_FILENAME).forEach(db::execSQL);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         };
     }

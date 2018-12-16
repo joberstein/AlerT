@@ -68,6 +68,7 @@ public class ViewAlarmsTest {
     @Test
     public void testCreateAlarm() throws InterruptedException {
         clickCreateAlarmButton();
+        verifyCreateAlarmIntent();
         insertAlarm();
         onView(withText(SELECTED_STOP)).check(matches(isDisplayed()));
     }

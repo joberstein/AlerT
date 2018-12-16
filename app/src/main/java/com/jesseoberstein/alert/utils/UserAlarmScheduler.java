@@ -5,6 +5,7 @@ import android.support.annotation.VisibleForTesting;
 import com.jesseoberstein.alert.models.UserAlarm;
 
 import java.text.DateFormatSymbols;
+import java.time.Duration;
 import java.util.Calendar;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -65,18 +66,20 @@ public class UserAlarmScheduler {
         }
 
         String[] weekdayList = DateFormatSymbols.getInstance().getWeekdays();
-
-        long now = dateTimeHelper.getCurrentTime();
-        long alarmFiringTime = dateTimeHelper.getTimeInMillis(alarm.getHour(), alarm.getMinutes());
-        boolean isPastAlarmFiringTime = alarmFiringTime <= now;
-
         int nextFiringDay = getNextFiringDay(alarm);
         String nextFiringDayString = weekdayList[nextFiringDay];
-        String firingDayTodayString = isPastAlarmFiringTime ? "Next " + nextFiringDayString : "Today";
+        String firingDayTodayString = isPastFiringTime(alarm) ? "Next " + nextFiringDayString : "Today";
         boolean isNextFiringDayToday = dateTimeHelper.getCurrentDay() == nextFiringDay;
 
         String temporalNextFiringDay = isNextFiringDayToday ? firingDayTodayString : nextFiringDayString;
         alarm.setNextFiringDayString(temporalNextFiringDay);
+    }
+
+    public boolean isPastFiringTime(UserAlarm alarm) {
+        long now = dateTimeHelper.getCurrentTime();
+        long alarmStartTime = dateTimeHelper.getTimeInMillis(alarm.getHour(), alarm.getMinutes());
+        long alarmEndTime = alarmStartTime + Duration.ofMinutes(alarm.getDuration()).toMillis();
+        return now > alarmEndTime;
     }
 
     long getAlarmStartTime(UserAlarm alarm) {

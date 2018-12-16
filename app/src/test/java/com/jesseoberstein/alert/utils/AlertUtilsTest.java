@@ -1,8 +1,6 @@
 package com.jesseoberstein.alert.utils;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.RouteType;
 
@@ -19,7 +17,9 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AlertUtilsTest {
-    @Mock private Route testRoute;
+
+    @Mock
+    private Route testRoute;
 
     @Test
     public void getThemeByRouteId() {

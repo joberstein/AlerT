@@ -43,6 +43,7 @@ public class BaseEditAlarmSectionTest {
     public void cleanup() {
         TestApplication app = (TestApplication) InstrumentationRegistry.getTargetContext().getApplicationContext();
         DaggerTestApplicationComponent.builder().create(app).inject(app);
+        activityRule.finishActivity();
     }
 
     void relaunchActivity() {

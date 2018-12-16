@@ -1,0 +1,145 @@
+{
+    "data": [
+        {
+            "attributes": {
+                "arrival_time": "2018-11-26T13:04:06-05:00",
+                "departure_time": null,
+                "direction_id": 1,
+                "schedule_relationship": null,
+                "status": null,
+                "stop_sequence": 630,
+                "track": null
+            },
+            "id": "prediction-38092171-E-70205-630",
+            "relationships": {
+                "route": {
+                    "data": {
+                        "id": "Green-C",
+                        "type": "route"
+                    }
+                },
+                "stop": {
+                    "data": {
+                        "id": "70205",
+                        "type": "stop"
+                    }
+                },
+                "trip": {
+                    "data": {
+                        "id": "38092171-E",
+                        "type": "trip"
+                    }
+                }
+            },
+            "type": "prediction"
+        },
+        {
+            "attributes": {
+                "arrival_time": "2018-11-26T13:22:29-05:00",
+                "departure_time": null,
+                "direction_id": 1,
+                "schedule_relationship": null,
+                "status": null,
+                "stop_sequence": 630,
+                "track": null
+            },
+            "id": "prediction-38092173-E-70205-630",
+            "relationships": {
+                "route": {
+                    "data": {
+                        "id": "Green-C",
+                        "type": "route"
+                    }
+                },
+                "stop": {
+                    "data": {
+                        "id": "70205",
+                        "type": "stop"
+                    }
+                },
+                "trip": {
+                    "data": {
+                        "id": "38092173-E",
+                        "type": "trip"
+                    }
+                }
+            },
+            "type": "prediction"
+        }
+    ],
+    "included": [
+        {
+            "attributes": {
+                "bikes_allowed": 0,
+                "block_id": "B831_-65",
+                "direction_id": 1,
+                "headsign": "North Station",
+                "name": "",
+                "wheelchair_accessible": 1
+            },
+            "id": "38092171-E",
+            "links": {
+                "self": "/trips/38092171-E"
+            },
+            "relationships": {
+                "route": {
+                    "data": {
+                        "id": "Green-C",
+                        "type": "route"
+                    }
+                },
+                "service": {
+                    "data": {
+                        "id": "LRV42018-hlb48011-Weekday-01-E",
+                        "type": "service"
+                    }
+                },
+                "shape": {
+                    "data": {
+                        "id": "831_0009",
+                        "type": "shape"
+                    }
+                }
+            },
+            "type": "trip"
+        },
+        {
+            "attributes": {
+                "bikes_allowed": 0,
+                "block_id": "B831_-69",
+                "direction_id": 1,
+                "headsign": "North Station",
+                "name": "",
+                "wheelchair_accessible": 1
+            },
+            "id": "38092173-E",
+            "links": {
+                "self": "/trips/38092173-E"
+            },
+            "relationships": {
+                "route": {
+                    "data": {
+                        "id": "Green-C",
+                        "type": "route"
+                    }
+                },
+                "service": {
+                    "data": {
+                        "id": "LRV42018-hlb48011-Weekday-01-E",
+                        "type": "service"
+                    }
+                },
+                "shape": {
+                    "data": {
+                        "id": "831_0009",
+                        "type": "shape"
+                    }
+                }
+            },
+            "type": "trip"
+        }
+    ],
+    "jsonapi": {
+        "version": "1.0"
+    }
+}

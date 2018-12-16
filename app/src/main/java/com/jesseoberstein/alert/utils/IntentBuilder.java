@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.VisibleForTesting;
 
-import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.receivers.OnAlarmStart;
 import com.jesseoberstein.alert.receivers.OnAlarmStop;
 import com.jesseoberstein.alert.services.MbtaRealtimeUpdatesService;
@@ -18,7 +17,7 @@ import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.app.PendingIntent.getBroadcast;
 import static android.app.PendingIntent.getService;
 import static com.jesseoberstein.alert.utils.AlarmUtils.buildAlarmUri;
-import static com.jesseoberstein.alert.utils.Constants.ALARM;
+import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_START_REQUEST_CODE;
 import static com.jesseoberstein.alert.utils.Constants.ALARM_STOP_REQUEST_CODE;
 import static com.jesseoberstein.alert.utils.Constants.SERVICE_START_REQUEST_CODE;
@@ -31,12 +30,12 @@ public class IntentBuilder {
         this.context = context;
     }
 
-    PendingIntent getAlarmStartIntent(UserAlarmWithRelations alarm) {
-        return buildBroadcastPendingIntent(ALARM_START_REQUEST_CODE, buildAlarmStartIntent(alarm));
+    PendingIntent getAlarmStartIntent(long alarmId) {
+        return buildBroadcastPendingIntent(ALARM_START_REQUEST_CODE, buildAlarmStartIntent(alarmId));
     }
 
-    PendingIntent getAlarmStopIntent(UserAlarmWithRelations alarm) {
-        return buildBroadcastPendingIntent(ALARM_STOP_REQUEST_CODE, buildAlarmStopIntent(alarm));
+    PendingIntent getAlarmStopIntent(long alarmId) {
+        return buildBroadcastPendingIntent(ALARM_STOP_REQUEST_CODE, buildAlarmStopIntent(alarmId));
     }
 
     public PendingIntent getNotificationsStartIntent(Intent intent) {
@@ -44,21 +43,21 @@ public class IntentBuilder {
     }
 
     @VisibleForTesting
-    public Intent buildAlarmStartIntent(UserAlarmWithRelations alarm) {
-        Intent intent = new Intent(Intent.ACTION_INSERT, buildAlarmUri(alarm.getAlarm().getId()), context, OnAlarmStart.class);
-        intent.putExtra(ALARM, alarm);
+    Intent buildAlarmStartIntent(long alarmId) {
+        Intent intent = new Intent(Intent.ACTION_INSERT, buildAlarmUri(alarmId), context, OnAlarmStart.class);
+        intent.putExtra(ALARM_ID, alarmId);
         return intent;
     }
 
     @VisibleForTesting
-    public Intent buildAlarmStopIntent(UserAlarmWithRelations alarm) {
-        Intent intent = new Intent(Intent.ACTION_DELETE, buildAlarmUri(alarm.getAlarm().getId()), context, OnAlarmStop.class);
-        intent.putExtra(ALARM, alarm);
+    Intent buildAlarmStopIntent(long alarmId) {
+        Intent intent = new Intent(Intent.ACTION_DELETE, buildAlarmUri(alarmId), context, OnAlarmStop.class);
+        intent.putExtra(ALARM_ID, alarmId);
         return intent;
     }
 
     @VisibleForTesting
-    public Intent buildNotificationsStartIntent(Intent intent) {
+    Intent buildNotificationsStartIntent(Intent intent) {
         Intent serviceIntent = new Intent(Intent.ACTION_RUN, intent.getData(), context, MbtaRealtimeUpdatesService.class);
         Optional.ofNullable(intent.getExtras()).ifPresent(serviceIntent::putExtras);
         return serviceIntent;

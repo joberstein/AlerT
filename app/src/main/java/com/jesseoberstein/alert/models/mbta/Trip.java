@@ -13,6 +13,9 @@ public class Trip extends BaseResource {
     @JsonProperty("wheelchair_accessible")
     private int wheelchairAccessible;
 
+    @JsonProperty("bikes_allowed")
+    private int bikesAllowed;
+
     @JsonProperty("headsign")
     private String headsign;
 
@@ -39,6 +42,14 @@ public class Trip extends BaseResource {
 
     public void setWheelchairAccessible(int wheelchairAccessible) {
         this.wheelchairAccessible = wheelchairAccessible;
+    }
+
+    public int getBikesAllowed() {
+        return bikesAllowed;
+    }
+
+    public void setBikesAllowed(int bikesAllowed) {
+        this.bikesAllowed = bikesAllowed;
     }
 
     public String getHeadsign() {
@@ -80,6 +91,7 @@ public class Trip extends BaseResource {
                 super.toString() +
                 "name='" + name + '\'' +
                 ", wheelchairAccessible=" + wheelchairAccessible +
+                ", bikesAllowed=" + bikesAllowed +
                 ", headsign='" + headsign + '\'' +
                 ", directionId=" + directionId +
                 ", blockId='" + blockId + '\'' +

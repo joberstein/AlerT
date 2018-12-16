@@ -24,7 +24,7 @@ public class DatabaseModule {
 
     @Reusable
     @Provides
-    DatabaseCallbackBuilder databaseCallbackBuilder (FileHelper fileHelper) {
+    DatabaseCallbackBuilder databaseCallbackBuilder(FileHelper fileHelper) {
         return new DatabaseCallbackBuilder(fileHelper);
     }
 

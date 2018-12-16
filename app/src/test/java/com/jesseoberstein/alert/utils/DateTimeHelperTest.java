@@ -17,7 +17,9 @@ import static junit.framework.Assert.assertEquals;
 
 public class DateTimeHelperTest {
 
-    @Mock private Calendar mockCalendar;
+    @Mock
+    private Calendar mockCalendar;
+
     private DateTimeHelper dateTimeHelper;
 
     private static final Map<Long, String> formattedDurationMap = new HashMap<>();

@@ -17,7 +17,7 @@ public class AlarmManagerModule {
 
     @Reusable
     @Provides
-    AlarmManager alarmManagerEdit(Application application) {
+    AlarmManager alarmManager(Application application) {
         return (AlarmManager) application.getSystemService(Context.ALARM_SERVICE);
     }
 

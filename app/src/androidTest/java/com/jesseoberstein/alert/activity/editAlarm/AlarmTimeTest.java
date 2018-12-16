@@ -36,15 +36,21 @@ public class AlarmTimeTest extends BaseEditAlarmSectionTest {
         confirmTimeSet("2:07 pm", SELECTED_HOUR, SELECTED_MINUTE);
     }
 
-    private void showTimePicker() {
+    public static void selectTime(int hour, int minute) {
+        showTimePicker();
+        updateTime(hour, minute);
+        saveSelectedTime();
+    }
+
+    private static void showTimePicker() {
         openSectionDialog(R.id.alarmSettings_time);
     }
 
-    private void saveSelectedTime() {
+    private static void saveSelectedTime() {
         onView(withText(R.string.ok)).perform(click());
     }
 
-    private void updateTime(int hour, int minute) {
+    private static void updateTime(int hour, int minute) {
         onView(withId(R.id.alarm_time_picker)).perform(setTime(hour, minute));
     }
 

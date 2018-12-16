@@ -1,0 +1,281 @@
+{
+  "data": [
+    {
+      "attributes": {
+        "arrival_time": "2018-11-22T00:16:27-05:00",
+        "departure_time": "2018-11-22T00:17:17-05:00",
+        "direction_id": 0,
+        "schedule_relationship": null,
+        "status": null,
+        "stop_sequence": 150,
+        "track": null
+      },
+      "id": "prediction-37940180-70008-150",
+      "relationships": {
+        "route": {
+          "data": {
+            "id": "Orange",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "70008",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "37940180",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "prediction"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2018-11-22T00:32:58-05:00",
+        "departure_time": "2018-11-22T00:33:48-05:00",
+        "direction_id": 0,
+        "schedule_relationship": null,
+        "status": null,
+        "stop_sequence": 150,
+        "track": null
+      },
+      "id": "prediction-37940108-70008-150",
+      "relationships": {
+        "route": {
+          "data": {
+            "id": "Orange",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "70008",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "37940108",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "prediction"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2018-11-22T00:43:43-05:00",
+        "departure_time": "2018-11-22T00:44:33-05:00",
+        "direction_id": 0,
+        "schedule_relationship": null,
+        "status": "Stopped 15 stops away",
+        "stop_sequence": 150,
+        "track": null
+      },
+      "id": "prediction-37940087-70008-150",
+      "relationships": {
+        "route": {
+          "data": {
+            "id": "Orange",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "70008",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "37940087",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "prediction"
+    },
+    {
+      "attributes": {
+        "arrival_time": "2018-11-22T00:57:03-05:00",
+        "departure_time": "2018-11-22T00:57:53-05:00",
+        "direction_id": 0,
+        "schedule_relationship": null,
+        "status": null,
+        "stop_sequence": 150,
+        "track": null
+      },
+      "id": "prediction-37940114-70008-150",
+      "relationships": {
+        "route": {
+          "data": {
+            "id": "Orange",
+            "type": "route"
+          }
+        },
+        "stop": {
+          "data": {
+            "id": "70008",
+            "type": "stop"
+          }
+        },
+        "trip": {
+          "data": {
+            "id": "37940114",
+            "type": "trip"
+          }
+        }
+      },
+      "type": "prediction"
+    }
+  ],
+  "included": [
+    {
+      "attributes": {
+        "bikes_allowed": 0,
+        "block_id": "O903_-15",
+        "direction_id": 0,
+        "headsign": "Forest Hills",
+        "name": "",
+        "wheelchair_accessible": 1
+      },
+      "id": "37940087",
+      "links": {
+        "self": "/trips/37940087"
+      },
+      "relationships": {
+        "route": {
+          "data": {
+            "id": "Orange",
+            "type": "route"
+          }
+        },
+        "service": {
+          "data": {
+            "id": "RTL42018-hmo48011-Weekday-01",
+            "type": "service"
+          }
+        },
+        "shape": {
+          "data": {
+            "id": "903_0018",
+            "type": "shape"
+          }
+        }
+      },
+      "type": "trip"
+    },
+    {
+      "attributes": {
+        "bikes_allowed": 0,
+        "block_id": "O903_-17",
+        "direction_id": 0,
+        "headsign": "Forest Hills",
+        "name": "",
+        "wheelchair_accessible": 1
+      },
+      "id": "37940108",
+      "links": {
+        "self": "/trips/37940108"
+      },
+      "relationships": {
+        "route": {
+          "data": {
+            "id": "Orange",
+            "type": "route"
+          }
+        },
+        "service": {
+          "data": {
+            "id": "RTL42018-hmo48011-Weekday-01",
+            "type": "service"
+          }
+        },
+        "shape": {
+          "data": {
+            "id": "903_0018",
+            "type": "shape"
+          }
+        }
+      },
+      "type": "trip"
+    },
+    {
+      "attributes": {
+        "bikes_allowed": 0,
+        "block_id": "O903_-6",
+        "direction_id": 0,
+        "headsign": "Forest Hills",
+        "name": "",
+        "wheelchair_accessible": 1
+      },
+      "id": "37940114",
+      "links": {
+        "self": "/trips/37940114"
+      },
+      "relationships": {
+        "route": {
+          "data": {
+            "id": "Orange",
+            "type": "route"
+          }
+        },
+        "service": {
+          "data": {
+            "id": "RTL42018-hmo48011-Weekday-01",
+            "type": "service"
+          }
+        },
+        "shape": {
+          "data": {
+            "id": "903_0018",
+            "type": "shape"
+          }
+        }
+      },
+      "type": "trip"
+    },
+    {
+      "attributes": {
+        "bikes_allowed": 0,
+        "block_id": "O903_-12",
+        "direction_id": 0,
+        "headsign": "Forest Hills",
+        "name": "",
+        "wheelchair_accessible": 1
+      },
+      "id": "37940180",
+      "links": {
+        "self": "/trips/37940180"
+      },
+      "relationships": {
+        "route": {
+          "data": {
+            "id": "Orange",
+            "type": "route"
+          }
+        },
+        "service": {
+          "data": {
+            "id": "RTL42018-hmo48011-Weekday-01",
+            "type": "service"
+          }
+        },
+        "shape": {
+          "data": {
+            "id": "903_0018",
+            "type": "shape"
+          }
+        }
+      },
+      "type": "trip"
+    }
+  ],
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

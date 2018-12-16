@@ -75,7 +75,7 @@ public class InitializeMbtaData extends Activity {
     private void fetchStops(List<Route> routes) {
         routes.forEach(route -> {
             String url = getUrl("stops", "filter[route]=" + route.getId());
-            TaggedRequest request = new TaggedRequest(url, this::onReceiveStops, e -> this.onReceiveError(e, "stops"));
+            TaggedRequest request = new TaggedRequest(url, this::onReceiveStops, (tag, e) -> this.onReceiveError(e, "stops"));
             this.setRequestOptions(request, route);
             this.requestQueue.add(request);
         });
@@ -96,7 +96,7 @@ public class InitializeMbtaData extends Activity {
     private void fetchTrips(List<Route> routes) {
         routes.forEach(route -> {
             String url = getUrl("trips", "filter[route]=" + route.getId());
-            TaggedRequest request = new TaggedRequest(url, this::onReceiveTrips, e -> this.onReceiveError(e, "trips"));
+            TaggedRequest request = new TaggedRequest(url, this::onReceiveTrips, (tag, e) -> this.onReceiveError(e, "trips"));
             this.setRequestOptions(request, route);
             this.requestQueue.add(request);
         });
