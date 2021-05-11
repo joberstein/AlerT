@@ -1,7 +1,8 @@
 package com.jesseoberstein.alert.services;
 
 import android.content.Intent;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;

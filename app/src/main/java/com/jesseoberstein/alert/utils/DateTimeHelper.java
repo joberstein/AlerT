@@ -1,10 +1,9 @@
 package com.jesseoberstein.alert.utils;
 
-import android.support.annotation.VisibleForTesting;
-
-import org.threeten.bp.Duration;
+import androidx.annotation.VisibleForTesting;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;

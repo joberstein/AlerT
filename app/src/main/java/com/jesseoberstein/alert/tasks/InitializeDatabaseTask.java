@@ -1,7 +1,8 @@
 package com.jesseoberstein.alert.tasks;
 
-import android.arch.persistence.room.RoomDatabase;
 import android.os.AsyncTask;
+
+import androidx.room.RoomDatabase;
 
 import java.util.Arrays;
 

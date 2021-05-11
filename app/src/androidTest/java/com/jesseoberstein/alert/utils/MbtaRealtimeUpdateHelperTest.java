@@ -2,8 +2,9 @@ package com.jesseoberstein.alert.utils;
 
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.test.InstrumentationRegistry;
 import android.test.mock.MockContext;
+
+import androidx.test.InstrumentationRegistry;
 
 import com.android.volley.Header;
 import com.android.volley.NetworkResponse;

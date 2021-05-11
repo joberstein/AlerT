@@ -1,7 +1,7 @@
 package com.jesseoberstein.alert.data.dao;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Query;
+import androidx.room.Dao;
+import androidx.room.Query;
 
 import com.jesseoberstein.alert.models.mbta.Stop;
 

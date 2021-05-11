@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/alarm_settings_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/alarm_settings_tabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_nav_height"
@@ -22,6 +22,6 @@
             app:tabIndicatorHeight="3dp"
             app:tabIndicatorColor="?attr/tabSelectedIndicatorColor"/>
 
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>

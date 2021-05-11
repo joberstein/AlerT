@@ -3,7 +3,8 @@ package com.jesseoberstein.alert.utils;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.jesseoberstein.alert.receivers.OnAlarmStart;
 import com.jesseoberstein.alert.receivers.OnAlarmStop;

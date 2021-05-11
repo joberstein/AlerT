@@ -1,6 +1,6 @@
 package com.jesseoberstein.alert.data.dao;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.jesseoberstein.alert.models.mbta.Endpoint;
 

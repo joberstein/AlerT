@@ -2,19 +2,15 @@ package com.jesseoberstein.alert.activity;
 
 import android.Manifest;
 import android.app.AlarmManager;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+
+import androidx.annotation.NonNull;
 
 import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 
 import javax.inject.Inject;
 
 import static android.content.pm.PackageManager.*;
-import static android.support.v4.app.ActivityCompat.requestPermissions;
-import static android.support.v4.app.ActivityCompat.shouldShowRequestPermissionRationale;
 
 public class ViewAlarmsWithPermissions extends ViewAlarms {
     private static final int REQUEST_PERMISSION_SET_TIME = 1;

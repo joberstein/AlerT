@@ -1,7 +1,8 @@
 package com.jesseoberstein.alert.utils;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.test.InstrumentationRegistry;
 
 import com.jesseoberstein.alert.data.dao.UserAlarmDao;
 import com.jesseoberstein.alert.data.database.AppDatabase;

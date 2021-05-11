@@ -3,16 +3,17 @@ package com.jesseoberstein.alert.activities.alarm;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.base.BaseActivity;
 import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
@@ -249,7 +250,7 @@ public class EditAlarm extends BaseActivity implements OnDialogClick,
             snackbar.setActionTextColor(getResources().getColor(R.color.alert_red, null));
         }
 
-        TextView snackbarTextView = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        TextView snackbarTextView = snackbar.getView().findViewById(R.id.snackbar_text);
         snackbarTextView.setTextColor(getResources().getColor(R.color.white, null));
         return snackbar;
     }

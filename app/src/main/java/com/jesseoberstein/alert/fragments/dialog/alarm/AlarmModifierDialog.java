@@ -2,9 +2,9 @@ package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 
 import android.content.Context;
-import android.support.design.widget.BaseTransientBottomBar;
-import android.support.design.widget.Snackbar;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.jesseoberstein.alert.activities.base.BaseDialogFragment;
 import com.jesseoberstein.alert.interfaces.AlarmModifier;
 import com.jesseoberstein.alert.models.UserAlarm;

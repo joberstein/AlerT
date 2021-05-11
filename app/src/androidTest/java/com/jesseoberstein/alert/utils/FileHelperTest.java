@@ -1,6 +1,6 @@
 package com.jesseoberstein.alert.utils;
 
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 
 import org.junit.Before;
 import org.junit.Test;

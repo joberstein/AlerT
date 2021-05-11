@@ -1,8 +1,7 @@
 package com.jesseoberstein.alert.models.mbta;
 
-
-import android.arch.persistence.room.Ignore;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+import androidx.room.Ignore;
 
 import com.github.jasminb.jsonapi.Links;
 import com.github.jasminb.jsonapi.annotations.Id;

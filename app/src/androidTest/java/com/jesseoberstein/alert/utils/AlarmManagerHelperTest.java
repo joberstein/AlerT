@@ -2,7 +2,8 @@ package com.jesseoberstein.alert.utils;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.test.InstrumentationRegistry;
 
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;

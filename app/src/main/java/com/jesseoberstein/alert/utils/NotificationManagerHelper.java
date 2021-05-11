@@ -3,7 +3,8 @@ package com.jesseoberstein.alert.utils;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.support.v4.app.NotificationCompat;
+
+import androidx.core.app.NotificationCompat;
 
 import com.jesseoberstein.alert.R;
 

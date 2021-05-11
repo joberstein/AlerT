@@ -5,7 +5,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.interfaces.AlarmDurationSetter;

@@ -1,7 +1,7 @@
 package com.jesseoberstein.alert.data.database;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
 import com.jesseoberstein.alert.data.dao.AlarmEndpointDao;
 import com.jesseoberstein.alert.data.dao.DirectionDao;

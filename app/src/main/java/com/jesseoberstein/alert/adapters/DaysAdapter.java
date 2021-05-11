@@ -1,9 +1,10 @@
 package com.jesseoberstein.alert.adapters;
 
-import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 
 import com.jesseoberstein.alert.databinding.ViewAlarmsDaysBinding;
 

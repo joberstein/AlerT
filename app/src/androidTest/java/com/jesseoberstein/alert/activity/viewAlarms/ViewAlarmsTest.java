@@ -2,9 +2,9 @@ package com.jesseoberstein.alert.activity.viewAlarms;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
+
+import androidx.test.InstrumentationRegistry;
+import androidx.test.espresso.intent.rule.IntentsTestRule;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.TestApplication;
@@ -15,32 +15,31 @@ import com.jesseoberstein.alert.activity.editAlarm.AlarmRouteTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmStopTest;
 import com.jesseoberstein.alert.activity.editAlarm.BaseEditAlarmSectionTest;
 import com.jesseoberstein.alert.config.DaggerTestApplicationComponent;
-import com.jesseoberstein.alert.test.TestUtils;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.longClick;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.longClick;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.jesseoberstein.alert.test.TestUtils.*;
-import static com.jesseoberstein.alert.utils.AlertUtils.getHexColor;
-import static com.jesseoberstein.alert.utils.AlertUtils.getTextColorForWhiteBackground;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
+//@Ignore("Timing bug with dialog fragments")
 public class ViewAlarmsTest {
     private final int SELECTED_COLOR = R.color.commuter;
     private final String SELECTED_ROUTE = "Providence/Stoughton Line";

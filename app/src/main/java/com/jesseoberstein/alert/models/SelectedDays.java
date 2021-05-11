@@ -1,6 +1,6 @@
 package com.jesseoberstein.alert.models;
 
-import android.arch.persistence.room.Ignore;
+import androidx.room.Ignore;
 
 import java.io.Serializable;
 import java.util.Arrays;

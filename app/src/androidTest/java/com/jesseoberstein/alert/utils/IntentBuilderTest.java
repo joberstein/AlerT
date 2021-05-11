@@ -2,7 +2,8 @@ package com.jesseoberstein.alert.utils;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.test.InstrumentationRegistry;
 
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.receivers.OnAlarmStart;

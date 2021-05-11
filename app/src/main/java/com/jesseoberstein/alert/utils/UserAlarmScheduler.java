@@ -1,6 +1,6 @@
 package com.jesseoberstein.alert.utils;
 
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import com.jesseoberstein.alert.models.UserAlarm;
 

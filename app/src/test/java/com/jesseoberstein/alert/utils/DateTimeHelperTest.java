@@ -3,8 +3,8 @@ package com.jesseoberstein.alert.utils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.threeten.bp.Duration;
 
+import java.time.Duration;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;

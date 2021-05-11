@@ -1,11 +1,10 @@
 package com.jesseoberstein.alert.utils;
 
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.SmallTest;
+
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.SmallTest;
 
 import com.jesseoberstein.alert.models.AlarmEndpoint;
 import com.jesseoberstein.alert.models.UserAlarm;
@@ -22,11 +21,10 @@ import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 @SmallTest
+@RunWith(MockitoJUnitRunner.class)
 public class AlarmUtilsTest {
 
     @Mock

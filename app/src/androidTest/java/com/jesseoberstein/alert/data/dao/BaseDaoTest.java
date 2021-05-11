@@ -1,8 +1,9 @@
 package com.jesseoberstein.alert.data.dao;
 
-import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.room.Room;
+import androidx.test.InstrumentationRegistry;
 
 import com.jesseoberstein.alert.data.database.AppDatabase;
 
@@ -15,10 +16,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
 
 public abstract class BaseDaoTest<T> {
     private AppDatabase testDb;

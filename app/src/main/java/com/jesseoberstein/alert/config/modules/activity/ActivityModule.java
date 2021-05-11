@@ -1,11 +1,11 @@
 package com.jesseoberstein.alert.config.modules.activity;
 
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.FragmentManager;
 
 import com.jesseoberstein.alert.activities.base.BaseActivity;
-import com.jesseoberstein.alert.config.modules.DateTimeModule;
 import com.jesseoberstein.alert.config.modules.MbtaDataReceiverModule;
 import com.jesseoberstein.alert.config.modules.UserAlarmModule;
 import com.jesseoberstein.alert.config.scopes.ActivityScope;

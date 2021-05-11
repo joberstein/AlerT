@@ -1,7 +1,8 @@
 package com.jesseoberstein.alert.adapters;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Borrowed from https://gist.github.com/sheharyarn/5602930ad84fa64c30a29ab18eb69c6e

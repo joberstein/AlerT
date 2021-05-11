@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.jesseoberstein.alert.activities.alarms.ViewAlarms">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarm_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         android:textAlignment="center"
         android:textSize="@dimen/list_empty_text_size"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

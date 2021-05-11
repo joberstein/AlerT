@@ -5,7 +5,7 @@ import com.jesseoberstein.alert.R;
 import org.junit.Before;
 import org.junit.Test;
 
-import static android.support.test.espresso.Espresso.pressBackUnconditionally;
+import static androidx.test.espresso.Espresso.pressBackUnconditionally;
 import static com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest.selectDirection;
 import static com.jesseoberstein.alert.activity.editAlarm.AlarmRouteTest.selectRoute;
 import static com.jesseoberstein.alert.activity.editAlarm.AlarmStopTest.selectStop;

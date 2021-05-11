@@ -1,7 +1,8 @@
 package com.jesseoberstein.alert.config.modules.fragment;
 
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.jesseoberstein.alert.activities.base.BaseFragment;
 import com.jesseoberstein.alert.config.scopes.FragmentScope;

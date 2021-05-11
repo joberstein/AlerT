@@ -3,13 +3,14 @@ package com.jesseoberstein.alert.fragments.dialog.alarm;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmStopBinding;

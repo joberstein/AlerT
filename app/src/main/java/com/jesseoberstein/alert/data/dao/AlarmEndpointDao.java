@@ -1,8 +1,8 @@
 package com.jesseoberstein.alert.data.dao;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Transaction;
+import androidx.room.Dao;
+import androidx.room.Query;
+import androidx.room.Transaction;
 
 import com.jesseoberstein.alert.models.AlarmEndpoint;
 import com.jesseoberstein.alert.models.mbta.Endpoint;

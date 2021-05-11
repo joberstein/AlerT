@@ -1,6 +1,6 @@
 package com.jesseoberstein.alert.config.modules;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 
 import com.jesseoberstein.alert.MainApplication;
 import com.jesseoberstein.alert.data.database.AppDatabase;

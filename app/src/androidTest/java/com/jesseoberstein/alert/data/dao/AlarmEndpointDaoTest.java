@@ -1,6 +1,6 @@
 package com.jesseoberstein.alert.data.dao;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.jesseoberstein.alert.models.AlarmEndpoint;
 
@@ -12,11 +12,7 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class AlarmEndpointDaoTest extends BaseDaoTest {

@@ -1,10 +1,10 @@
 package com.jesseoberstein.alert.models;
 
-import android.arch.persistence.room.Embedded;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Relation;
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+import androidx.room.Embedded;
+import androidx.room.Ignore;
+import androidx.room.Relation;
 
 import com.jesseoberstein.alert.BR;
 import com.jesseoberstein.alert.models.mbta.BaseResource;
