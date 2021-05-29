@@ -1,4 +1,7 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
 
 android {
     compileSdkVersion 30
@@ -91,6 +94,7 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.1.1"
     implementation "android.arch.lifecycle:common-java8:1.1.1"
     implementation "android.arch.paging:runtime:1.0.1"
+    implementation "android.arch.persistence.room:rxjava2:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 
     // Dagger

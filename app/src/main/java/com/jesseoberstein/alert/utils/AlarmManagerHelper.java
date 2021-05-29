@@ -3,7 +3,6 @@ package com.jesseoberstein.alert.utils;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 
-import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 
@@ -11,8 +10,6 @@ import java.util.Arrays;
 
 import javax.inject.Inject;
 
-import static android.app.AlarmManager.INTERVAL_DAY;
-import static android.app.AlarmManager.RTC;
 import static android.app.AlarmManager.RTC_WAKEUP;
 
 public class AlarmManagerHelper {
@@ -39,19 +36,9 @@ public class AlarmManagerHelper {
     private void scheduleAlarm(UserAlarmWithRelations alarmWithRelations) {
         UserAlarm alarm = alarmWithRelations.getAlarm();
         long startTime = userAlarmScheduler.getAlarmStartTime(alarm);
-        long endTime = userAlarmScheduler.getAlarmEndTime(alarm);
-        boolean isRepeating = !RepeatType.NEVER.equals(alarmWithRelations.getAlarm().getRepeatType());
 
         PendingIntent startIntent = intentBuilder.getAlarmStartIntent(alarm.getId());
-        PendingIntent stopIntent = intentBuilder.getAlarmStopIntent(alarm.getId());
-
-        if (isRepeating) {
-            alarmManager.setRepeating(RTC_WAKEUP, startTime, INTERVAL_DAY, startIntent);
-            alarmManager.setInexactRepeating(RTC, endTime, INTERVAL_DAY, stopIntent);
-        } else {
-            alarmManager.setExact(RTC_WAKEUP, startTime, startIntent);
-            alarmManager.set(RTC, endTime, stopIntent);
-        }
+        alarmManager.setExactAndAllowWhileIdle(RTC_WAKEUP, startTime, startIntent);
     }
 
     private void cancelAlarm(UserAlarmWithRelations alarmWithRelations) {
