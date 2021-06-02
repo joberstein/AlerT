@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -69,8 +71,9 @@ public class StopDaoTest extends BaseDaoTest {
 
     @Test
     public void testGetByStopId() {
-        Stop stop = stopDao.get("place-boscl");
-        assertEquals(stop, getTestStops()[1]);
+        stopDao.get("place-boscl")
+                .subscribeOn(Schedulers.computation())
+                .subscribe(stop -> assertEquals(stop, getTestStops()[1]));
     }
 
     @Test

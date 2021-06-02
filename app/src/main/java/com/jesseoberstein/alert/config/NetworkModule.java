@@ -1,4 +1,4 @@
-package com.jesseoberstein.alert.config.modules;
+package com.jesseoberstein.alert.config;
 
 import android.app.Application;
 
@@ -6,20 +6,24 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.jesseoberstein.alert.network.UrlBuilder;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
-import dagger.Reusable;
+import dagger.hilt.InstallIn;
+import dagger.hilt.components.SingletonComponent;
 
 @Module
-public class NetworkModule {
+@InstallIn(SingletonComponent.class)
+public final class NetworkModule {
 
-    @Reusable
+    @Singleton
     @Provides
     RequestQueue volleyRequestQueue(Application application) {
         return Volley.newRequestQueue(application);
     }
 
-    @Reusable
+    @Singleton
     @Provides
     UrlBuilder urlBuilder() {
         return new UrlBuilder();

@@ -62,7 +62,7 @@ public class AlarmManagerHelperTest {
 
     @Test
     public void testScheduleRepeatingUserAlarm() {
-        alarmManagerHelper.scheduleUserAlarm(alarmWithRelations);
+        alarmManagerHelper.scheduleUserAlarm(alarmWithRelations.getAlarm());
         verify(alarmManager).setRepeating(RTC_WAKEUP, startTime, INTERVAL_DAY, alarmStartIntent);
         verify(alarmManager).setInexactRepeating(RTC, endTime, INTERVAL_DAY, alarmStopIntent);
     }
@@ -70,14 +70,14 @@ public class AlarmManagerHelperTest {
     @Test
     public void testScheduleSingleUseUserAlarm() {
         alarm.setRepeatType(RepeatType.NEVER);
-        alarmManagerHelper.scheduleUserAlarm(alarmWithRelations);
+        alarmManagerHelper.scheduleUserAlarm(alarmWithRelations.getAlarm());
         verify(alarmManager).setExact(RTC_WAKEUP, startTime, alarmStartIntent);
         verify(alarmManager).set(RTC, endTime, alarmStopIntent);
     }
 
     @Test
     public void testCancelUserAlarm() {
-        alarmManagerHelper.cancelUserAlarm(alarmWithRelations);
+        alarmManagerHelper.cancelUserAlarm(alarmWithRelations.getAlarm());
         verify(alarmManager).cancel(alarmStartIntent);
         verify(alarmManager).cancel(alarmStopIntent);
     }

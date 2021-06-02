@@ -1,30 +1,29 @@
-package com.jesseoberstein.alert.config.modules.service;
+package com.jesseoberstein.alert.config;
+
+import android.app.Service;
 
 import com.android.volley.RequestQueue;
-import com.jesseoberstein.alert.config.scopes.ServiceScope;
 import com.jesseoberstein.alert.network.UrlBuilder;
-import com.jesseoberstein.alert.services.AbstractService;
 import com.jesseoberstein.alert.services.MbtaRealtimeUpdatesService;
 import com.jesseoberstein.alert.utils.DateTimeHelper;
 import com.jesseoberstein.alert.utils.MbtaRealtimeUpdatesHelper;
 import com.jesseoberstein.alert.utils.NotificationManagerHelper;
 import com.jesseoberstein.alert.utils.UserAlarmScheduler;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import dagger.hilt.InstallIn;
+import dagger.hilt.android.components.ServiceComponent;
+import dagger.hilt.android.scopes.ServiceScoped;
 
-@Module(includes = ServiceModule.class)
-abstract class MbtaRealtimeUpdatesServiceModule {
+@Module
+@InstallIn(ServiceComponent.class)
+public final class MbtaRealtimeUpdatesServiceModule {
 
-    @ServiceScope
-    @Binds
-    abstract AbstractService mbtaRealtimeUpdatesService(MbtaRealtimeUpdatesService service);
-
-    @ServiceScope
+    @ServiceScoped
     @Provides
     static MbtaRealtimeUpdatesHelper mbtaRealtimeUpdatesHelper(
-            MbtaRealtimeUpdatesService service,
+            Service service,
             NotificationManagerHelper notificationManagerHelper,
             UserAlarmScheduler userAlarmScheduler,
             DateTimeHelper dateTimeHelper,

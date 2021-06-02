@@ -27,7 +27,7 @@ public class AlarmRouteTest extends BaseEditAlarmSectionTest {
         // Check that the other mbta fields aren't visible without a route.
         onView(withId(R.id.alarmSettings_stop)).check(matches(not(isDisplayed())));
         onView(withId(R.id.alarmSettings_direction)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.alarmSettings_endpoints)).check(matches(not(isDisplayed())));
+//        onView(withId(R.id.alarmSettings_endpoints)).check(matches(not(isDisplayed())));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class AlarmRouteTest extends BaseEditAlarmSectionTest {
 
         onView(withId(R.id.alarmSettings_section_value_direction)).check(matches(withHint(R.string.direction_default)));
         onView(withId(R.id.alarmSettings_stop)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.alarmSettings_endpoints)).check(matches(not(isDisplayed())));
+//        onView(withId(R.id.alarmSettings_endpoints)).check(matches(not(isDisplayed())));
     }
 
     @Test

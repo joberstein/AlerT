@@ -7,19 +7,19 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.TestApplication;
 import com.jesseoberstein.alert.activities.alarms.ViewAlarms;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmDirectionTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmEndpointsTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmRouteTest;
 import com.jesseoberstein.alert.activity.editAlarm.AlarmStopTest;
 import com.jesseoberstein.alert.activity.editAlarm.BaseEditAlarmSectionTest;
-import com.jesseoberstein.alert.config.DaggerTestApplicationComponent;
 
-import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
+
+import dagger.hilt.android.testing.HiltAndroidRule;
+import dagger.hilt.android.testing.HiltAndroidTest;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -33,13 +33,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.jesseoberstein.alert.test.TestUtils.*;
+import static com.jesseoberstein.alert.test.TestUtils.hasDrawableColor;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
 //@Ignore("Timing bug with dialog fragments")
+@HiltAndroidTest
 public class ViewAlarmsTest {
     private final int SELECTED_COLOR = R.color.commuter;
     private final String SELECTED_ROUTE = "Providence/Stoughton Line";
@@ -50,13 +51,9 @@ public class ViewAlarmsTest {
     private final String[] ALL_ENDPOINTS = {"Attleboro", "Providence", "Stoughton", "Wickford Junction"};
 
     @Rule
-    public IntentsTestRule<ViewAlarms> intentsTestRule = new IntentsTestRule<>(ViewAlarms.class);
-
-    @After
-    public void cleanup() {
-        TestApplication app = (TestApplication) InstrumentationRegistry.getTargetContext().getApplicationContext();
-        DaggerTestApplicationComponent.builder().create(app).inject(app);
-    }
+    public RuleChain rule = RuleChain
+            .outerRule(new HiltAndroidRule(this))
+            .around(new IntentsTestRule<>(ViewAlarms.class));
 
     @Test
     public void testNoAlarmsMessage() {
@@ -83,7 +80,6 @@ public class ViewAlarmsTest {
         onView(withId(R.id.alarmSettings_section_value_route)).check(matches(withText(SELECTED_ROUTE)));
         onView(withId(R.id.alarmSettings_section_value_direction)).check(matches(withText(SELECTED_DIRECTION)));
         onView(withId(R.id.alarmSettings_section_value_stop)).check(matches(withText(SELECTED_STOP)));
-        onView(withId(R.id.alarmSettings_section_value_endpoints)).check(matches(withText(SELECTED_ENDPOINTS_STRING)));
 
         String updatedStop = "Route 128";
         AlarmStopTest.selectStop(updatedStop);

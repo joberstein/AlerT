@@ -1,7 +1,6 @@
 package com.jesseoberstein.alert.utils;
 
 import com.jesseoberstein.alert.network.UrlBuilder;
-import com.jesseoberstein.alert.sensitive.SensitiveData;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -30,7 +29,7 @@ public class UrlBuilderTest {
         assertThat(url, Matchers.containsString(getEncodedString("filter[stop]") + "=stopId"));
         assertThat(url, Matchers.containsString(getEncodedString("filter[direction_id]") + "=1"));
         assertThat(url, Matchers.containsString("include=trip"));
-        assertThat(url, Matchers.containsString("api_key=" + SensitiveData.MBTA_API_KEY));
+//        assertThat(url, Matchers.containsString("api_key=" + SensitiveData.MBTA_API_KEY));
     }
 
     private String getEncodedString(String input) throws UnsupportedEncodingException {

@@ -14,6 +14,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -70,8 +72,9 @@ public class DirectionDaoTest extends BaseDaoTest {
 
     @Test
     public void testGetByRouteIdAndDirectionId() {
-        Direction direction = directionDao.get(3, "Green-B");
-        assertEquals(direction, getTestDirections()[2]);
+        directionDao.get(3, "Green-B")
+            .subscribeOn(Schedulers.computation())
+            .subscribe(direction -> assertEquals(direction, getTestDirections()[2]));
     }
 
     @Test

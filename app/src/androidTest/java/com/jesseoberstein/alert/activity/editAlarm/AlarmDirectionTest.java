@@ -27,7 +27,7 @@ public class AlarmDirectionTest extends BaseEditAlarmSectionTest {
     @Before
     public void prepare() throws InterruptedException {
         moveToMbtaSettingsTab();
-        onView(withId(R.id.alarmSettings_endpoints)).check(matches(not(isDisplayed())));
+//        onView(withId(R.id.alarmSettings_endpoints)).check(matches(not(isDisplayed())));
         AlarmRouteTest.selectRoute(SELECTED_ROUTE);
         relaunchActivity();
         confirmDirectionLabelAndDefaultValue();

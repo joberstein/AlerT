@@ -9,20 +9,27 @@ import com.jesseoberstein.alert.network.FakeUrlBuilder;
 import com.jesseoberstein.alert.network.UrlBuilder;
 import com.jesseoberstein.alert.utils.FileHelper;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
-import dagger.Reusable;
+import dagger.hilt.components.SingletonComponent;
+import dagger.hilt.testing.TestInstallIn;
 
 @Module
-class TestNetworkModule {
+@TestInstallIn(
+        components = SingletonComponent.class,
+        replaces = NetworkModule.class
+)
+public class TestNetworkModule {
 
-    @Reusable
+    @Singleton
     @Provides
     RequestQueue volleyRequestQueue(Application application, FileHelper fileHelper) {
         return Volley.newRequestQueue(application, new FakeHttpStack(fileHelper));
     }
 
-    @Reusable
+    @Singleton
     @Provides
     UrlBuilder urlBuilder() {
         return new FakeUrlBuilder();

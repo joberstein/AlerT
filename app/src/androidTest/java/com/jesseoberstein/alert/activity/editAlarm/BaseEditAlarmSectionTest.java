@@ -3,14 +3,11 @@ package com.jesseoberstein.alert.activity.editAlarm;
 import android.content.Intent;
 import android.view.View;
 
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.rule.ActivityTestRule;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.TestApplication;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
-import com.jesseoberstein.alert.config.DaggerTestApplicationComponent;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -24,16 +21,12 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withChild;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
 
 public class BaseEditAlarmSectionTest {
 
@@ -42,8 +35,6 @@ public class BaseEditAlarmSectionTest {
 
     @After
     public void cleanup() {
-        TestApplication app = (TestApplication) InstrumentationRegistry.getTargetContext().getApplicationContext();
-        DaggerTestApplicationComponent.builder().create(app).inject(app);
         activityRule.finishActivity();
     }
 

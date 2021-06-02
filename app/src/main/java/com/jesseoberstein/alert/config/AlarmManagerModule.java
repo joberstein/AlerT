@@ -1,4 +1,4 @@
-package com.jesseoberstein.alert.config.modules;
+package com.jesseoberstein.alert.config;
 
 import android.app.AlarmManager;
 import android.app.Application;
@@ -8,30 +8,36 @@ import com.jesseoberstein.alert.utils.AlarmManagerHelper;
 import com.jesseoberstein.alert.utils.IntentBuilder;
 import com.jesseoberstein.alert.utils.UserAlarmScheduler;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
-import dagger.Reusable;
+import dagger.hilt.InstallIn;
+import dagger.hilt.components.SingletonComponent;
 
 @Module
-public class AlarmManagerModule {
+@InstallIn(SingletonComponent.class)
+public final class AlarmManagerModule {
 
-    @Reusable
+    @Singleton
     @Provides
     AlarmManager alarmManager(Application application) {
         return (AlarmManager) application.getSystemService(Context.ALARM_SERVICE);
     }
 
-    @Reusable
+    @Singleton
     @Provides
-    IntentBuilder intentBuilder(Context context) {
-        return new IntentBuilder(context);
+    IntentBuilder intentBuilder(Application application) {
+        return new IntentBuilder(application.getApplicationContext());
     }
 
-    @Reusable
+    @Singleton
     @Provides
-    AlarmManagerHelper alarmManagerHelper(IntentBuilder intentBuilder,
-                                          AlarmManager alarmManager,
-                                          UserAlarmScheduler userAlarmScheduler) {
+    AlarmManagerHelper alarmManagerHelper(
+            IntentBuilder intentBuilder,
+            AlarmManager alarmManager,
+            UserAlarmScheduler userAlarmScheduler
+    ) {
         return new AlarmManagerHelper(intentBuilder, alarmManager, userAlarmScheduler);
     }
 }
