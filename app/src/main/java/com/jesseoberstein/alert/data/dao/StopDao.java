@@ -13,10 +13,10 @@ import io.reactivex.rxjava3.core.Single;
 public interface StopDao extends BaseDao<Stop> {
 
     @Query("SELECT * FROM stops WHERE route_id IN (:routeIds)")
-    List<Stop> get(String[] routeIds);
+    Single<List<Stop>> get(String[] routeIds);
 
-    @Query("SELECT * FROM stops WHERE id = :stopId")
-    Single<Stop> get(String stopId);
+    @Query("SELECT * FROM stops WHERE id = :stopId AND route_id = :routeId AND direction_id = :directionId")
+    Single<Stop> get(String stopId, String routeId, int directionId);
 
     @Override
     @Query("SELECT * FROM stops")

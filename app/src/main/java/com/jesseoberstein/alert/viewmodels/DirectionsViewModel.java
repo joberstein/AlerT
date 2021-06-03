@@ -36,6 +36,10 @@ public class DirectionsViewModel extends ViewModel {
     MutableLiveData<List<Direction>> directions = new MutableLiveData<>();
 
     public void loadDirections(String routeId) {
+        if (routeId == null) {
+            return;
+        }
+
         boolean isSameRoute = routeId.equals(this.routeId.getValue());
 
         if (isSameRoute && this.directions.getValue() != null) {

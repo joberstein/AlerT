@@ -43,8 +43,8 @@ public class DraftAlarmViewModel extends ViewModel {
                 .subscribe(this.route::postValue);
     }
 
-    public void loadStop(String stopId) {
-        this.database.stopDao().get(stopId)
+    public void loadStop(String stopId, String routeId, int directionId) {
+        this.database.stopDao().get(stopId, routeId, directionId)
                 .subscribeOn(Schedulers.io())
                 .subscribe(this.stop::postValue);
     }

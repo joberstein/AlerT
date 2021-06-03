@@ -10,9 +10,21 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Type;
 
-@Entity(tableName = "stops", indices = {@Index("route_id")}, primaryKeys = {"id", "route_id"}, foreignKeys = {
-        @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
-})
+import org.jetbrains.annotations.NotNull;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode
+@Entity(
+        tableName = "stops",
+        indices = {@Index("route_id")},
+        primaryKeys = {"id", "route_id", "direction_id"},
+        foreignKeys = {
+            @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
+        }
+)
 @Type("stop")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Stop extends BaseResource {
@@ -35,75 +47,13 @@ public class Stop extends BaseResource {
     @NonNull
     private String routeId;
 
-    public String getName() {
-        return name;
-    }
+    @ColumnInfo(name = "direction_id")
+    @JsonProperty("route_id")
+    private int directionId;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getWheelchairBoarding() {
-        return wheelchairBoarding;
-    }
-
-    public void setWheelchairBoarding(int wheelchairBoarding) {
-        this.wheelchairBoarding = wheelchairBoarding;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    @NonNull
-    public String getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(@NonNull String routeId) {
-        this.routeId = routeId;
-    }
-
+    @NotNull
     @Override
     public String toString() {
         return this.name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Stop stop = (Stop) o;
-
-        if (wheelchairBoarding != stop.wheelchairBoarding) return false;
-        if (Double.compare(stop.longitude, longitude) != 0) return false;
-        if (Double.compare(stop.latitude, latitude) != 0) return false;
-        return name != null ? name.equals(stop.name) : stop.name == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = name != null ? name.hashCode() : 0;
-        result = 31 * result + wheelchairBoarding;
-        temp = Double.doubleToLongBits(longitude);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(latitude);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
     }
 }

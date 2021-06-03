@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "054940ddbd827f540d0e6602174c049c",
+    "identityHash": "c2505688406de9783d6173ba0bca090f",
     "entities": [
       {
         "tableName": "routes",
@@ -71,7 +71,7 @@
       },
       {
         "tableName": "stops",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `wheelchair_boarding` INTEGER NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `route_id` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`, `route_id`), FOREIGN KEY(`route_id`) REFERENCES `routes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `wheelchair_boarding` INTEGER NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `route_id` TEXT NOT NULL, `direction_id` INTEGER NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`, `route_id`, `direction_id`), FOREIGN KEY(`route_id`) REFERENCES `routes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "name",
@@ -104,6 +104,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "directionId",
+            "columnName": "direction_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "TEXT",
@@ -113,7 +119,8 @@
         "primaryKey": {
           "columnNames": [
             "id",
-            "route_id"
+            "route_id",
+            "direction_id"
           ],
           "autoGenerate": false
         },
@@ -280,7 +287,7 @@
       },
       {
         "tableName": "user_alarms",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `route_id` TEXT, `direction_id` INTEGER, `stop_id` TEXT, `repeat_type_id` INTEGER NOT NULL, `hour` INTEGER, `minutes` INTEGER, `nickname` TEXT, `duration` INTEGER NOT NULL, `active` INTEGER NOT NULL, `monday` INTEGER, `tuesday` INTEGER, `wednesday` INTEGER, `thursday` INTEGER, `friday` INTEGER, `saturday` INTEGER, `sunday` INTEGER, FOREIGN KEY(`route_id`) REFERENCES `routes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`direction_id`) REFERENCES `directions`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`stop_id`, `route_id`) REFERENCES `stops`(`id`, `route_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `route_id` TEXT, `direction_id` INTEGER, `stop_id` TEXT, `repeat_type_id` INTEGER NOT NULL, `hour` INTEGER, `minutes` INTEGER, `nickname` TEXT, `duration` INTEGER NOT NULL, `active` INTEGER NOT NULL, `monday` INTEGER, `tuesday` INTEGER, `wednesday` INTEGER, `thursday` INTEGER, `friday` INTEGER, `saturday` INTEGER, `sunday` INTEGER, FOREIGN KEY(`route_id`) REFERENCES `routes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`direction_id`) REFERENCES `directions`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`stop_id`, `route_id`, `direction_id`) REFERENCES `stops`(`id`, `route_id`, `direction_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -454,11 +461,13 @@
             "onUpdate": "NO ACTION",
             "columns": [
               "stop_id",
-              "route_id"
+              "route_id",
+              "direction_id"
             ],
             "referencedColumns": [
               "id",
-              "route_id"
+              "route_id",
+              "direction_id"
             ]
           }
         ]
@@ -539,7 +548,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '054940ddbd827f540d0e6602174c049c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c2505688406de9783d6173ba0bca090f')"
     ]
   }
 }

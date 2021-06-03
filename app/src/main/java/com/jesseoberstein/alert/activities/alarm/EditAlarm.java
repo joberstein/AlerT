@@ -21,12 +21,9 @@ import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
-import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
-import com.jesseoberstein.alert.models.mbta.Direction;
-import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.tasks.InsertAlarmTask;
 import com.jesseoberstein.alert.tasks.UpdateAlarmTask;
 import com.jesseoberstein.alert.utils.AlarmManagerHelper;
@@ -34,8 +31,6 @@ import com.jesseoberstein.alert.utils.LiveDataUtils;
 import com.jesseoberstein.alert.utils.UserAlarmScheduler;
 import com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -44,7 +39,6 @@ import java.util.stream.IntStream;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import lombok.Getter;
 
 import static com.jesseoberstein.alert.utils.ActivityUtils.setDrawableColor;
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
@@ -52,7 +46,7 @@ import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.CURRENT_TAB;
 
 @AndroidEntryPoint
-public class EditAlarm extends AppCompatActivity implements OnDialogClick, StopsReceiver, AlarmReceiver {
+public class EditAlarm extends AppCompatActivity implements OnDialogClick, AlarmReceiver {
 
     @Inject
     ActionBar actionBar;
@@ -70,15 +64,8 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick, Stops
     AppDatabase database;
 
     DraftAlarmViewModel viewModel;
-
     private ViewPager pager;
     private boolean isAlarmUpdate;
-
-    @Getter
-    private List<Stop> stopList;
-
-    @Getter
-    private List<Direction> directionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,16 +238,6 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick, Stops
 
     @Override
     public void onCancelSelected(Bundle alarm) {}
-
-    @Override
-    public void onReceiveStops(List<Stop> stops) {
-        this.stopList = Collections.unmodifiableList(new ArrayList<>(stops));
-
-        // If the stop list doesn't contain the selected stop, null out the alarm's stop.
-//        if (!this.stopList.contains(this.draftAlarm.getStop())) {
-//            this.draftAlarm.setStop(null);
-//        }
-    }
 
     @Override
     public void onInsertAlarm(long insertedAlarmId) {

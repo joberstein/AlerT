@@ -18,6 +18,9 @@ import com.jesseoberstein.alert.utils.LiveDataUtils;
 import com.jesseoberstein.alert.viewmodels.DirectionsViewModel;
 import com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel;
 import com.jesseoberstein.alert.viewmodels.RoutesViewModel;
+import com.jesseoberstein.alert.viewmodels.StopsViewModel;
+
+import java.util.Optional;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -27,6 +30,7 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
     private DraftAlarmViewModel viewModel;
     private RoutesViewModel routesViewModel;
     private DirectionsViewModel directionsViewModel;
+    private StopsViewModel stopsViewModel;
 
     public static com.jesseoberstein.alert.fragments.MbtaSettingsFragment newInstance(int page) {
         return (com.jesseoberstein.alert.fragments.MbtaSettingsFragment) AlarmSettingsFragment.newInstance(page, new com.jesseoberstein.alert.fragments.MbtaSettingsFragment());
@@ -38,11 +42,26 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
         this.viewModel = new ViewModelProvider(requireActivity()).get(DraftAlarmViewModel.class);
         this.routesViewModel = new ViewModelProvider(requireActivity()).get(RoutesViewModel.class);
         this.directionsViewModel = new ViewModelProvider(requireActivity()).get(DirectionsViewModel.class);
+        this.stopsViewModel = new ViewModelProvider(requireActivity()).get(StopsViewModel.class);
 
         this.routesViewModel.loadRoutes();
 
         this.viewModel.getRoute().observe(requireActivity(), route -> {
-            this.directionsViewModel.loadDirections(route.getId());
+            this.viewModel.getDirection().setValue(null);
+            this.viewModel.getStop().setValue(null);
+
+            Optional.ofNullable(route).ifPresent(r -> {
+                this.directionsViewModel.loadDirections(r.getId());
+                this.stopsViewModel.loadStops(r.getId());
+            });
+        });
+
+        this.viewModel.getDirection().observe(requireActivity(), direction -> {
+            this.viewModel.getStop().setValue(null);
+
+            Optional.ofNullable(direction).ifPresent(d -> {
+                this.stopsViewModel.loadStops(d.getDirectionId());
+            });
         });
     }
 
@@ -80,6 +99,8 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
     }
 
     private void showStopDialog(View view) {
-        this.showDialogFragment(new SetStopDialog(), "setStop");
+        LiveDataUtils.observeOnce(requireActivity(), this.stopsViewModel.getStops(), stops -> {
+            this.showDialogFragment(new SetStopDialog(stops), "setStop");
+        });
     }
 }

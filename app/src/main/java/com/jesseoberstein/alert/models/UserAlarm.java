@@ -43,7 +43,7 @@ import static java.util.Objects.isNull;
     foreignKeys = {
         @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id"),
         @ForeignKey(entity = Direction.class, parentColumns = "id", childColumns = "direction_id"),
-        @ForeignKey(entity = Stop.class, parentColumns = {"id", "route_id"}, childColumns = {"stop_id", "route_id"})
+        @ForeignKey(entity = Stop.class, parentColumns = {"id", "route_id", "direction_id"}, childColumns = {"stop_id", "route_id", "direction_id"})
     }
 )
 public class UserAlarm implements Serializable, Validatable {

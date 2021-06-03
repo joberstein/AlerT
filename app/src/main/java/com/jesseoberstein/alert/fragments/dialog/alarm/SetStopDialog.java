@@ -14,31 +14,29 @@ import androidx.databinding.DataBindingUtil;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmStopBinding;
-import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
 import com.jesseoberstein.alert.models.AutoComplete;
-import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import lombok.AllArgsConstructor;
 
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
 /**
  * A dialog fragment that shows a dialog for selecting the alarm stop.
  */
+@AllArgsConstructor
 public class SetStopDialog extends AlarmModifierDialog {
 
-    @Inject
-    StopsReceiver stopsReceiver;
+    private final List<Stop> stops;
 
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        List<Stop> stops = this.stopsReceiver.getStopList();
+
         AutoComplete<Stop> autoComplete = new AutoComplete<>(stops, this::onAutoCompleteItemSelected);
         autoComplete.attachAdapter(getActivity());
 
@@ -58,12 +56,7 @@ public class SetStopDialog extends AlarmModifierDialog {
 
     void onAutoCompleteItemSelected(AdapterView adapterView, View view, int i, long l) {
         Stop selectedStop = (Stop) adapterView.getItemAtPosition(i);
-
-        UserAlarm newAlarm = this.userAlarm.toBuilder()
-                .stopId(selectedStop.getId())
-                .build();
-
-        this.viewModel.getDraftAlarm().setValue(newAlarm);
+        this.viewModel.getStop().setValue(selectedStop);
 
         new android.os.Handler().postDelayed(this::dismiss, DELAY_DIALOG_DISMISS);
     }
