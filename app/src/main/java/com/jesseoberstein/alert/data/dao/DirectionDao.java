@@ -12,8 +12,8 @@ import io.reactivex.rxjava3.core.Single;
 @Dao
 public interface DirectionDao extends BaseDao<Direction> {
 
-    @Query("SELECT * FROM directions WHERE route_id IN (:routeIds) ORDER BY direction_id")
-    List<Direction> get(String[] routeIds);
+    @Query("SELECT * FROM directions WHERE route_id = :routeId ORDER BY direction_id")
+    Single<List<Direction>> get(String routeId);
 
     @Query("SELECT * FROM directions WHERE id = :directionId AND route_id = :routeId")
     Single<Direction> get(long directionId, String routeId);

@@ -4,7 +4,6 @@ import android.app.Application;
 
 import androidx.room.Room;
 
-import com.jesseoberstein.alert.MainApplication;
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.utils.DatabaseCallbackBuilder;
 import com.jesseoberstein.alert.utils.FileHelper;
@@ -38,7 +37,7 @@ public final class DatabaseModule {
     @Provides
     AppDatabase database(Application application, DatabaseCallbackBuilder databaseCallbackBuilder) {
         return Room.databaseBuilder(application, AppDatabase.class, ALERT_DATABASE_NAME)
-                .fallbackToDestructiveMigration()
+                .fallbackToDestructiveMigrationFrom(1)
                 .addCallback(databaseCallbackBuilder.buildCreateDbCallback())
                 .build();
     }

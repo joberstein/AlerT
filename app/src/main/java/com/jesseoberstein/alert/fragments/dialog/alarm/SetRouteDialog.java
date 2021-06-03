@@ -18,7 +18,6 @@ import androidx.databinding.DataBindingUtil;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmRouteBinding;
 import com.jesseoberstein.alert.models.AutoComplete;
-import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 import com.jesseoberstein.alert.utils.LiveDataUtils;
@@ -70,8 +69,6 @@ public class SetRouteDialog extends AlarmModifierDialog {
 
     void onAutoCompleteItemSelected(AdapterView adapterView, View view, int i, long l) {
         Route selectedRoute = (Route) adapterView.getItemAtPosition(i);
-        UserAlarm newAlarm = this.userAlarm.withRouteId(selectedRoute.getId());
-        this.viewModel.getDraftAlarm().setValue(newAlarm);
         this.viewModel.getRoute().setValue(selectedRoute);
 
         new android.os.Handler().postDelayed(this::dismiss, DELAY_DIALOG_DISMISS);

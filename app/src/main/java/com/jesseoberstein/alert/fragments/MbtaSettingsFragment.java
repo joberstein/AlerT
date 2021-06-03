@@ -15,6 +15,7 @@ import com.jesseoberstein.alert.fragments.dialog.alarm.SetDirectionDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetRouteDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetStopDialog;
 import com.jesseoberstein.alert.utils.LiveDataUtils;
+import com.jesseoberstein.alert.viewmodels.DirectionsViewModel;
 import com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel;
 import com.jesseoberstein.alert.viewmodels.RoutesViewModel;
 
@@ -25,6 +26,7 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
 
     private DraftAlarmViewModel viewModel;
     private RoutesViewModel routesViewModel;
+    private DirectionsViewModel directionsViewModel;
 
     public static com.jesseoberstein.alert.fragments.MbtaSettingsFragment newInstance(int page) {
         return (com.jesseoberstein.alert.fragments.MbtaSettingsFragment) AlarmSettingsFragment.newInstance(page, new com.jesseoberstein.alert.fragments.MbtaSettingsFragment());
@@ -35,6 +37,13 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
         super.onCreate(savedInstanceState);
         this.viewModel = new ViewModelProvider(requireActivity()).get(DraftAlarmViewModel.class);
         this.routesViewModel = new ViewModelProvider(requireActivity()).get(RoutesViewModel.class);
+        this.directionsViewModel = new ViewModelProvider(requireActivity()).get(DirectionsViewModel.class);
+
+        this.routesViewModel.loadRoutes();
+
+        this.viewModel.getRoute().observe(requireActivity(), route -> {
+            this.directionsViewModel.loadDirections(route.getId());
+        });
     }
 
     @Override
@@ -59,15 +68,15 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
     }
 
     private void showRouteDialog(View view) {
-        this.routesViewModel.loadRoutes();
-
         LiveDataUtils.observeOnce(requireActivity(), this.routesViewModel.getRoutes(), routes -> {
             this.showDialogFragment(new SetRouteDialog(routes), "setRoute");
         });
     }
 
     private void showDirectionDialog(View view) {
-        this.showDialogFragment(new SetDirectionDialog(), "setDirection");
+        LiveDataUtils.observeOnce(requireActivity(), this.directionsViewModel.getDirections(), directions -> {
+            this.showDialogFragment(new SetDirectionDialog(directions), "setDirection");
+        });
     }
 
     private void showStopDialog(View view) {

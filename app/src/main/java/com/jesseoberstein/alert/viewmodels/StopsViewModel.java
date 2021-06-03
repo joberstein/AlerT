@@ -35,10 +35,6 @@ public class RoutesViewModel extends ViewModel {
     MutableLiveData<List<Route>> routes = new MutableLiveData<>();
 
     public void loadRoutes() {
-        if (this.routes.getValue() != null) {
-            return;
-        }
-
         database.routeDao().getAll()
                 .subscribeOn(Schedulers.computation())
                 .doOnError(e -> Log.e("RoutesViewModel.loadRoutes", e.getMessage()))

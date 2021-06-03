@@ -21,17 +21,15 @@ import com.jesseoberstein.alert.adapters.AlarmPagerAdapter;
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
-import com.jesseoberstein.alert.interfaces.data.DirectionsReceiver;
 import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
+import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.tasks.InsertAlarmTask;
-import com.jesseoberstein.alert.tasks.QueryDirectionsTask;
 import com.jesseoberstein.alert.tasks.UpdateAlarmTask;
 import com.jesseoberstein.alert.utils.AlarmManagerHelper;
-import com.jesseoberstein.alert.utils.Constants;
 import com.jesseoberstein.alert.utils.LiveDataUtils;
 import com.jesseoberstein.alert.utils.UserAlarmScheduler;
 import com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel;
@@ -54,7 +52,7 @@ import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.CURRENT_TAB;
 
 @AndroidEntryPoint
-public class EditAlarm extends AppCompatActivity implements OnDialogClick, StopsReceiver, DirectionsReceiver, AlarmReceiver {
+public class EditAlarm extends AppCompatActivity implements OnDialogClick, StopsReceiver, AlarmReceiver {
 
     @Inject
     ActionBar actionBar;
@@ -114,17 +112,13 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick, Stops
         Optional.ofNullable(alarm.getRouteId())
                 .ifPresent(viewModel::loadRoute);
 
-        Optional.ofNullable(alarm.getStopId())
-                .ifPresent(viewModel::loadStop);
-
         Optional.ofNullable(alarm.getDirectionId())
                 .ifPresent(directionId -> viewModel.loadDirection(directionId, alarm.getRouteId()));
 
-        setUpView();
+        Optional.ofNullable(alarm.getStopId())
+                .ifPresent(stopId -> viewModel.loadStop(stopId, alarm.getRouteId(), alarm.getDirectionId().intValue()));
 
-        // Query for directions if the activity was restarted with a route change.
-        Optional.ofNullable(alarm.getRouteId())
-            .ifPresent(routeId -> new QueryDirectionsTask(this, database).execute(routeId));
+        setUpView();
 
         viewModel.getDraftAlarm().observe(this, userAlarm -> {
             userAlarmScheduler.setAlarmTime(userAlarm);
@@ -190,79 +184,58 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick, Stops
      */
     private boolean saveAlarm(MenuItem item) {
         LiveDataUtils.observeOnce(this, viewModel.getDraftAlarm(), alarm -> {
-            if (alarm.isValid()) {
-                if (this.isAlarmUpdate) {
-                    new UpdateAlarmTask(this, database).execute(alarm);
-                } else {
-                    new InsertAlarmTask(this, database).execute(alarm);
-                }
+            Snackbar errorSnackbar = getErrorSnackbar(alarm);
+
+            if (errorSnackbar != null) {
+                errorSnackbar.show();
+                return;
+            }
+
+            if (this.isAlarmUpdate) {
+                new UpdateAlarmTask(this, database).execute(alarm);
             } else {
-                createValidationSnackbar(alarm).show();
+                new InsertAlarmTask(this, database).execute(alarm);
             }
         });
 
         return false;
     }
 
-    /**
-     * Create a snackbar to show for an alarm validation error.
-     * @return A snackbar containing the validation error and an action button for fixing it.
-     */
-    private Snackbar createValidationSnackbar(UserAlarm alarm) {
-        Snackbar snackbar = Snackbar.make(pager, getValidationErrorMessage(alarm), Snackbar.LENGTH_INDEFINITE);
-        int sectionIdToFix = getSectionIdToFix(alarm);
-
-        if (sectionIdToFix > -1) {
-            snackbar.setAction(R.string.fix, view -> {
-                findViewById(sectionIdToFix).performClick();
-                snackbar.dismiss();
-            });
-            snackbar.setActionTextColor(getResources().getColor(R.color.alert_red, null));
+    private Snackbar getErrorSnackbar(UserAlarm alarm) {
+        if (this.viewModel.getRoute().getValue() == null) {
+            return buildErrorSnackbar(R.string.route_invalid, R.id.alarmSettings_route);
         }
+
+        if (this.viewModel.getDirection().getValue() == null) {
+            return buildErrorSnackbar(R.string.direction_invalid, R.id.alarmSettings_direction);
+        }
+
+        if (this.viewModel.getStop().getValue() == null) {
+            return buildErrorSnackbar(R.string.stop_invalid, R.id.alarmSettings_stop);
+        }
+
+        if (RepeatType.CUSTOM.equals(alarm.getRepeatType()) && !alarm.getSelectedDays().isAnyDaySelected()) {
+            return buildErrorSnackbar(R.string.repeat_custom_invalid, R.id.alarmSettings_repeat);
+        }
+
+        return null;
+    }
+
+    /**
+     * Build a snackbar with the given error message and link to a view to fix the error.
+     */
+    private Snackbar buildErrorSnackbar(int errorMessageId, int viewId) {
+        Snackbar snackbar = Snackbar.make(pager, errorMessageId, Snackbar.LENGTH_INDEFINITE);
+
+        snackbar.setAction(R.string.fix, view -> {
+            findViewById(viewId).performClick();
+            snackbar.dismiss();
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.alert_red, null));
 
         TextView snackbarTextView = snackbar.getView().findViewById(R.id.snackbar_text);
         snackbarTextView.setTextColor(getResources().getColor(R.color.white, null));
         return snackbar;
-    }
-
-    /**
-     * Get the id of the section that has failed validation and needs to be fixed.
-     * @return An id of a section to click on.
-     */
-    private int getSectionIdToFix(UserAlarm alarm) {
-        switch (alarm.getErrors().get(0)) {
-            case Constants.CUSTOM_REPEAT_TYPE:
-                return R.id.alarmSettings_repeat;
-            case Constants.ROUTE:
-                return R.id.alarmSettings_route;
-            case Constants.DIRECTION_ID:
-                return R.id.alarmSettings_direction;
-            case Constants.STOP_ID:
-                return R.id.alarmSettings_stop;
-//            case Constants.ENDPOINTS:
-//                return R.id.alarmSettings_endpoints;
-        }
-        return -1;
-    }
-
-    /**
-     * Get the error message shown for the section that has failed validation.
-     * @return An error message based on an invalid alarm property.
-     */
-    private int getValidationErrorMessage(UserAlarm alarm) {
-        switch (alarm.getErrors().get(0)) {
-            case Constants.CUSTOM_REPEAT_TYPE:
-                return R.string.repeat_custom_invalid;
-            case Constants.ROUTE:
-                return R.string.route_invalid;
-            case Constants.DIRECTION_ID:
-                return R.string.direction_invalid;
-            case Constants.STOP_ID:
-                return R.string.stop_invalid;
-            case Constants.ENDPOINTS:
-                return R.string.endpoints_invalid;
-        }
-        return -1;
     }
 
     @Override
@@ -278,11 +251,6 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick, Stops
 
     @Override
     public void onCancelSelected(Bundle alarm) {}
-
-    @Override
-    public void onReceiveDirections(List<Direction> directions) {
-        this.directionList = Collections.unmodifiableList(new ArrayList<>(directions));
-    }
 
     @Override
     public void onReceiveStops(List<Stop> stops) {

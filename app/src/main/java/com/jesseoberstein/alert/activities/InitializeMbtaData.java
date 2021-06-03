@@ -138,7 +138,7 @@ public class InitializeMbtaData extends AppCompatActivity {
     private void insertDirections(List<Trip> trips, Route route) {
         List<Direction> directions = trips.stream()
                 .map(Trip::getDirectionId)
-                .map(dirId -> new Direction(dirId, route.getDirectionName(dirId), route.getId()))
+                .map(dirId -> new Direction(dirId, route.getDirectionNames().get(dirId), route.getId()))
                 .distinct()
                 .collect(Collectors.toList());
 
