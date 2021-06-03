@@ -17,8 +17,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmRouteBinding;
-import com.jesseoberstein.alert.interfaces.data.RoutesReceiver;
-import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
 import com.jesseoberstein.alert.models.AutoComplete;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Route;
@@ -26,8 +24,6 @@ import com.jesseoberstein.alert.utils.ActivityUtils;
 import com.jesseoberstein.alert.utils.LiveDataUtils;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import lombok.AllArgsConstructor;
 
@@ -37,10 +33,10 @@ import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 /**
  * A dialog fragment that shows a dialog for selecting the alarm route.
  */
+@AllArgsConstructor
 public class SetRouteDialog extends AlarmModifierDialog {
 
-    @Inject
-    RoutesReceiver routesReceiver;
+    private final List<Route> routes;
 
     @Override
     @NonNull
@@ -51,7 +47,6 @@ public class SetRouteDialog extends AlarmModifierDialog {
         binding.setLifecycleOwner(requireActivity());
         binding.setViewModel(this.viewModel);
 
-        List<Route> routes = this.routesReceiver.getRouteList();
         AutoComplete<Route> autoComplete = new AutoComplete<>(routes, this::onAutoCompleteItemSelected);
         autoComplete.attachAdapter(requireActivity());
         binding.setAutocomplete(autoComplete);

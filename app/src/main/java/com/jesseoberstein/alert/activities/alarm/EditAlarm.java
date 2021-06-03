@@ -22,12 +22,10 @@ import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
 import com.jesseoberstein.alert.interfaces.data.DirectionsReceiver;
-import com.jesseoberstein.alert.interfaces.data.RoutesReceiver;
 import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.models.mbta.Direction;
-import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.tasks.InsertAlarmTask;
 import com.jesseoberstein.alert.tasks.QueryDirectionsTask;
@@ -56,9 +54,7 @@ import static com.jesseoberstein.alert.utils.Constants.COLOR;
 import static com.jesseoberstein.alert.utils.Constants.CURRENT_TAB;
 
 @AndroidEntryPoint
-public class EditAlarm
-        extends AppCompatActivity
-        implements OnDialogClick, RoutesReceiver, StopsReceiver, DirectionsReceiver, AlarmReceiver {
+public class EditAlarm extends AppCompatActivity implements OnDialogClick, StopsReceiver, DirectionsReceiver, AlarmReceiver {
 
     @Inject
     ActionBar actionBar;
@@ -79,9 +75,6 @@ public class EditAlarm
 
     private ViewPager pager;
     private boolean isAlarmUpdate;
-
-    @Getter
-    private List<Route> routeList;
 
     @Getter
     private List<Stop> stopList;
@@ -285,11 +278,6 @@ public class EditAlarm
 
     @Override
     public void onCancelSelected(Bundle alarm) {}
-
-    @Override
-    public void onReceiveRoutes(List<Route> routes) {
-        this.routeList = Collections.unmodifiableList(new ArrayList<>(routes));
-    }
 
     @Override
     public void onReceiveDirections(List<Direction> directions) {

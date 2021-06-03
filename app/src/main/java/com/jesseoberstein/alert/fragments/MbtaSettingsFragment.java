@@ -14,7 +14,9 @@ import com.jesseoberstein.alert.databinding.MbtaSettingsBinding;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetDirectionDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetRouteDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetStopDialog;
+import com.jesseoberstein.alert.utils.LiveDataUtils;
 import com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel;
+import com.jesseoberstein.alert.viewmodels.RoutesViewModel;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -22,15 +24,17 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class MbtaSettingsFragment extends AlarmSettingsFragment {
 
     private DraftAlarmViewModel viewModel;
+    private RoutesViewModel routesViewModel;
 
-    public static MbtaSettingsFragment newInstance(int page) {
-        return (MbtaSettingsFragment) AlarmSettingsFragment.newInstance(page, new MbtaSettingsFragment());
+    public static com.jesseoberstein.alert.fragments.MbtaSettingsFragment newInstance(int page) {
+        return (com.jesseoberstein.alert.fragments.MbtaSettingsFragment) AlarmSettingsFragment.newInstance(page, new com.jesseoberstein.alert.fragments.MbtaSettingsFragment());
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.viewModel = new ViewModelProvider(requireActivity()).get(DraftAlarmViewModel.class);
+        this.routesViewModel = new ViewModelProvider(requireActivity()).get(RoutesViewModel.class);
     }
 
     @Override
@@ -55,7 +59,11 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
     }
 
     private void showRouteDialog(View view) {
-        this.showDialogFragment(new SetRouteDialog(), "setRoute");
+        this.routesViewModel.loadRoutes();
+
+        LiveDataUtils.observeOnce(requireActivity(), this.routesViewModel.getRoutes(), routes -> {
+            this.showDialogFragment(new SetRouteDialog(routes), "setRoute");
+        });
     }
 
     private void showDirectionDialog(View view) {
