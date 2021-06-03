@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b7b5e24e8582358b3350179151c4b767",
+    "identityHash": "054940ddbd827f540d0e6602174c049c",
     "entities": [
       {
         "tableName": "routes",
@@ -64,14 +64,14 @@
             "columnNames": [
               "type_id"
             ],
-            "createSql": "CREATE  INDEX `index_routes_type_id` ON `${TABLE_NAME}` (`type_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_routes_type_id` ON `${TABLE_NAME}` (`type_id`)"
           }
         ],
         "foreignKeys": []
       },
       {
         "tableName": "stops",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `wheelchair_boarding` INTEGER NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `route_id` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`, `route_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `wheelchair_boarding` INTEGER NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `route_id` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`, `route_id`), FOREIGN KEY(`route_id`) REFERENCES `routes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "name",
@@ -124,14 +124,26 @@
             "columnNames": [
               "route_id"
             ],
-            "createSql": "CREATE  INDEX `index_stops_route_id` ON `${TABLE_NAME}` (`route_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_stops_route_id` ON `${TABLE_NAME}` (`route_id`)"
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "routes",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "route_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "directions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `direction_id` INTEGER NOT NULL, `route_id` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `direction_id` INTEGER NOT NULL, `route_id` TEXT NOT NULL, FOREIGN KEY(`route_id`) REFERENCES `routes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -171,14 +183,26 @@
             "columnNames": [
               "route_id"
             ],
-            "createSql": "CREATE  INDEX `index_directions_route_id` ON `${TABLE_NAME}` (`route_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_directions_route_id` ON `${TABLE_NAME}` (`route_id`)"
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "routes",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "route_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "endpoints",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `direction_id` INTEGER NOT NULL, `route_id` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `direction_id` INTEGER NOT NULL, `route_id` TEXT, FOREIGN KEY(`direction_id`) REFERENCES `directions`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`route_id`) REFERENCES `routes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -218,7 +242,7 @@
             "columnNames": [
               "direction_id"
             ],
-            "createSql": "CREATE  INDEX `index_endpoints_direction_id` ON `${TABLE_NAME}` (`direction_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_endpoints_direction_id` ON `${TABLE_NAME}` (`direction_id`)"
           },
           {
             "name": "index_endpoints_route_id",
@@ -226,14 +250,37 @@
             "columnNames": [
               "route_id"
             ],
-            "createSql": "CREATE  INDEX `index_endpoints_route_id` ON `${TABLE_NAME}` (`route_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_endpoints_route_id` ON `${TABLE_NAME}` (`route_id`)"
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "directions",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "direction_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "routes",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "route_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "user_alarms",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `route_id` TEXT, `direction_id` INTEGER NOT NULL, `stop_id` TEXT, `repeat_type_id` INTEGER NOT NULL, `hour` INTEGER, `minutes` INTEGER, `nickname` TEXT, `duration` INTEGER NOT NULL, `active` INTEGER NOT NULL, `monday` INTEGER, `tuesday` INTEGER, `wednesday` INTEGER, `thursday` INTEGER, `friday` INTEGER, `saturday` INTEGER, `sunday` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `route_id` TEXT, `direction_id` INTEGER, `stop_id` TEXT, `repeat_type_id` INTEGER NOT NULL, `hour` INTEGER, `minutes` INTEGER, `nickname` TEXT, `duration` INTEGER NOT NULL, `active` INTEGER NOT NULL, `monday` INTEGER, `tuesday` INTEGER, `wednesday` INTEGER, `thursday` INTEGER, `friday` INTEGER, `saturday` INTEGER, `sunday` INTEGER, FOREIGN KEY(`route_id`) REFERENCES `routes`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`direction_id`) REFERENCES `directions`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`stop_id`, `route_id`) REFERENCES `stops`(`id`, `route_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -251,7 +298,7 @@
             "fieldPath": "directionId",
             "columnName": "direction_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "stopId",
@@ -351,7 +398,7 @@
             "columnNames": [
               "route_id"
             ],
-            "createSql": "CREATE  INDEX `index_user_alarms_route_id` ON `${TABLE_NAME}` (`route_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_user_alarms_route_id` ON `${TABLE_NAME}` (`route_id`)"
           },
           {
             "name": "index_user_alarms_stop_id",
@@ -359,7 +406,15 @@
             "columnNames": [
               "stop_id"
             ],
-            "createSql": "CREATE  INDEX `index_user_alarms_stop_id` ON `${TABLE_NAME}` (`stop_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_user_alarms_stop_id` ON `${TABLE_NAME}` (`stop_id`)"
+          },
+          {
+            "name": "index_user_alarms_direction_id",
+            "unique": false,
+            "columnNames": [
+              "direction_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_user_alarms_direction_id` ON `${TABLE_NAME}` (`direction_id`)"
           },
           {
             "name": "index_user_alarms_repeat_type_id",
@@ -367,14 +422,50 @@
             "columnNames": [
               "repeat_type_id"
             ],
-            "createSql": "CREATE  INDEX `index_user_alarms_repeat_type_id` ON `${TABLE_NAME}` (`repeat_type_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_user_alarms_repeat_type_id` ON `${TABLE_NAME}` (`repeat_type_id`)"
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "routes",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "route_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "directions",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "direction_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "stops",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "stop_id",
+              "route_id"
+            ],
+            "referencedColumns": [
+              "id",
+              "route_id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "alarm_endpoints",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `alarm_id` INTEGER NOT NULL, `endpoint_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `alarm_id` INTEGER NOT NULL, `endpoint_id` INTEGER NOT NULL, FOREIGN KEY(`alarm_id`) REFERENCES `user_alarms`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`endpoint_id`) REFERENCES `endpoints`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -408,7 +499,7 @@
             "columnNames": [
               "alarm_id"
             ],
-            "createSql": "CREATE  INDEX `index_alarm_endpoints_alarm_id` ON `${TABLE_NAME}` (`alarm_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_alarm_endpoints_alarm_id` ON `${TABLE_NAME}` (`alarm_id`)"
           },
           {
             "name": "index_alarm_endpoints_endpoint_id",
@@ -416,15 +507,39 @@
             "columnNames": [
               "endpoint_id"
             ],
-            "createSql": "CREATE  INDEX `index_alarm_endpoints_endpoint_id` ON `${TABLE_NAME}` (`endpoint_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_alarm_endpoints_endpoint_id` ON `${TABLE_NAME}` (`endpoint_id`)"
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "user_alarms",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "alarm_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "endpoints",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "endpoint_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
+    "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b7b5e24e8582358b3350179151c4b767\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '054940ddbd827f540d0e6602174c049c')"
     ]
   }
 }

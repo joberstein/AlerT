@@ -9,12 +9,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.interfaces.AlarmDaySetter;
+import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.SelectedDays;
+import com.jesseoberstein.alert.models.UserAlarm;
 
 import java.util.Arrays;
-
-import javax.inject.Inject;
 
 import static android.icu.text.DateFormatSymbols.getInstance;
 import static java.util.Calendar.SATURDAY;
@@ -25,16 +24,13 @@ import static java.util.Calendar.SUNDAY;
  */
 public class SetDaysDialog extends AlarmModifierDialog {
 
-    @Inject
-    AlarmDaySetter alarmDaySetter;
-
     private SelectedDays selectedDays;
 
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        this.selectedDays = getDraftAlarm().getSelectedDays();
+        this.selectedDays = this.userAlarm.getSelectedDays();
 
         String[] daysList = Arrays.copyOfRange(getInstance().getWeekdays(), SUNDAY, SATURDAY + 1);
 
@@ -47,11 +43,16 @@ public class SetDaysDialog extends AlarmModifierDialog {
     }
 
     private void onItemToggle(DialogInterface dialogInterface, int toggleIndex, boolean isChecked) {
-        this.selectedDays.setDay(toggleIndex, isChecked);
+        this.selectedDays = this.selectedDays.update(toggleIndex, isChecked);
     }
 
     private void onPositiveButtonClick(DialogInterface dialogInterface, int i) {
-        this.alarmDaySetter.onAlarmDaysSet(this.selectedDays.toIntArray());
+        UserAlarm newAlarm = this.userAlarm.toBuilder()
+                .repeatType(RepeatType.CUSTOM)
+                .selectedDays(this.selectedDays)
+                .build();
+
+        this.viewModel.getDraftAlarm().setValue(newAlarm);
     }
 
     private void onNegativeButtonClick(DialogInterface dialogInterface, int i) {}

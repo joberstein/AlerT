@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Type;
 
-@Entity(tableName = "stops", indices = {@Index("route_id")}, primaryKeys = {"id", "route_id"})
+@Entity(tableName = "stops", indices = {@Index("route_id")}, primaryKeys = {"id", "route_id"}, foreignKeys = {
+        @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
+})
 @Type("stop")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Stop extends BaseResource {
@@ -29,7 +31,6 @@ public class Stop extends BaseResource {
     private double latitude;
 
     @ColumnInfo(name = "route_id")
-    @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
     @JsonProperty("route_id")
     @NonNull
     private String routeId;

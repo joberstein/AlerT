@@ -8,15 +8,13 @@ import com.jesseoberstein.alert.data.dao.UserAlarmDao;
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
 import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
-public class UpdateAlarmTask extends AsyncTask<UserAlarmWithRelations, Void, Integer> {
+public class UpdateAlarmTask extends AsyncTask<UserAlarm, Void, Integer> {
     private final AlarmReceiver onAlarmUpdated;
     private final UserAlarmDao userAlarmDao;
-    private UserAlarmWithRelations[] alarms;
+    private UserAlarm[] alarms;
 
     public UpdateAlarmTask(Context context, AppDatabase db) {
         this.onAlarmUpdated = (AlarmReceiver) context;
@@ -24,13 +22,8 @@ public class UpdateAlarmTask extends AsyncTask<UserAlarmWithRelations, Void, Int
     }
 
     @Override
-    protected Integer doInBackground(UserAlarmWithRelations[] alarmsWithRelations) {
-        alarms = alarmsWithRelations;
-        UserAlarm[] alarms = Arrays.stream(alarmsWithRelations)
-                .map(UserAlarmWithRelations::getAlarm)
-                .collect(Collectors.toList())
-                .toArray(new UserAlarm[]{});
-
+    protected Integer doInBackground(UserAlarm[] alarms) {
+        this.alarms = alarms;
         return userAlarmDao.update(alarms);
     }
 

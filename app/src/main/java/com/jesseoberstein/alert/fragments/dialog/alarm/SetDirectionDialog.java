@@ -8,12 +8,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.interfaces.AlarmDirectionSetter;
 import com.jesseoberstein.alert.interfaces.data.DirectionsReceiver;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Direction;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -25,9 +24,6 @@ import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 public class SetDirectionDialog extends AlarmModifierDialog {
 
     @Inject
-    AlarmDirectionSetter alarmDirectionSetter;
-
-    @Inject
     DirectionsReceiver directionsReceiver;
 
     private List<Direction> directions;
@@ -37,8 +33,9 @@ public class SetDirectionDialog extends AlarmModifierDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         this.directions = this.directionsReceiver.getDirectionList();
-        Direction selectedDirection = this.getDraftAlarmWithRelations().getDirection();
-        int selectedId = Optional.ofNullable(selectedDirection).map(Direction::getDirectionId).orElse(-1);
+
+//        int selectedId = Optional.ofNullable(userAlarm.getDirectionId()).orElse(-1);
+        int selectedId = Long.valueOf(userAlarm.getDirectionId()).intValue();
         String[] directionNames = this.directions.stream().map(Direction::toString).toArray(String[]::new);
 
         return new AlertDialog.Builder(getActivity())
@@ -49,9 +46,13 @@ public class SetDirectionDialog extends AlarmModifierDialog {
 
     private void onItemSelected(DialogInterface dialogInterface, int selectedIndex) {
         Direction selectedDirection = this.directions.get(selectedIndex);
-        if (!selectedDirection.equals(getDraftAlarmWithRelations().getDirection())) {
-            this.alarmDirectionSetter.onAlarmDirectionSet(selectedDirection);
+
+        if (selectedDirection.getId() != this.userAlarm.getDirectionId()) {
+            UserAlarm newAlarm = this.userAlarm.withDirectionId(selectedDirection.getId());
+            this.viewModel.getDraftAlarm().setValue(newAlarm);
+            this.viewModel.getDirection().setValue(selectedDirection);
         }
+
         new android.os.Handler().postDelayed(dialogInterface::dismiss, DELAY_DIALOG_DISMISS);
     }
 }

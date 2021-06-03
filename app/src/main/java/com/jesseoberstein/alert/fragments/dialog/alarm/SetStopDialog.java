@@ -14,9 +14,9 @@ import androidx.databinding.DataBindingUtil;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmStopBinding;
-import com.jesseoberstein.alert.interfaces.AlarmStopSetter;
 import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
 import com.jesseoberstein.alert.models.AutoComplete;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 
@@ -32,9 +32,6 @@ import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 public class SetStopDialog extends AlarmModifierDialog {
 
     @Inject
-    AlarmStopSetter alarmStopSetter;
-
-    @Inject
     StopsReceiver stopsReceiver;
 
     @Override
@@ -46,7 +43,7 @@ public class SetStopDialog extends AlarmModifierDialog {
         autoComplete.attachAdapter(getActivity());
 
         AlarmStopBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_stop, null, false);
-        binding.setAlarm(getDraftAlarmWithRelations());
+        this.viewModel.getStop().observe(requireActivity(), binding::setStop);
         binding.setAutocomplete(autoComplete);
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
@@ -61,7 +58,13 @@ public class SetStopDialog extends AlarmModifierDialog {
 
     void onAutoCompleteItemSelected(AdapterView adapterView, View view, int i, long l) {
         Stop selectedStop = (Stop) adapterView.getItemAtPosition(i);
-        this.alarmStopSetter.onAlarmStopSet(selectedStop);
+
+        UserAlarm newAlarm = this.userAlarm.toBuilder()
+                .stopId(selectedStop.getId())
+                .build();
+
+        this.viewModel.getDraftAlarm().setValue(newAlarm);
+
         new android.os.Handler().postDelayed(this::dismiss, DELAY_DIALOG_DISMISS);
     }
 

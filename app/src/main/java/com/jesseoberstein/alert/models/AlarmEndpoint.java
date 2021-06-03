@@ -12,7 +12,11 @@ import java.io.Serializable;
 
 @Entity(
     tableName = "alarm_endpoints",
-    indices = {@Index("alarm_id"), @Index("endpoint_id")}
+    indices = {@Index("alarm_id"), @Index("endpoint_id")},
+    foreignKeys = {
+        @ForeignKey(entity = UserAlarm.class, parentColumns = "id", childColumns = "alarm_id"),
+        @ForeignKey(entity = Endpoint.class, parentColumns = "id", childColumns = "endpoint_id")
+    }
 )
 public class AlarmEndpoint implements Serializable {
 
@@ -20,11 +24,9 @@ public class AlarmEndpoint implements Serializable {
     private long id;
 
     @ColumnInfo(name = "alarm_id")
-    @ForeignKey(entity = UserAlarm.class, parentColumns = "id", childColumns = "alarm_id")
     private long alarmId;
 
     @ColumnInfo(name = "endpoint_id")
-    @ForeignKey(entity = Endpoint.class, parentColumns = "id", childColumns = "endpoint_id")
     private long endpointId;
 
     public AlarmEndpoint(long alarmId, long endpointId) {

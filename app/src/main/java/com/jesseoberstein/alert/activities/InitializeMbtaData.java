@@ -1,16 +1,16 @@
 package com.jesseoberstein.alert.activities;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.data.database.MbtaDatabase;
 import com.jesseoberstein.alert.models.mbta.Direction;
@@ -19,7 +19,7 @@ import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.models.mbta.Trip;
 import com.jesseoberstein.alert.network.TaggedRequest;
-import com.jesseoberstein.alert.sensitive.SensitiveData;
+import com.jesseoberstein.alert.tasks.InitializeDatabaseTask;
 import com.jesseoberstein.alert.tasks.base.InsertTask;
 import com.jesseoberstein.alert.utils.ResponseParser;
 
@@ -27,6 +27,11 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * An activity responsible for creating an in-memory database from the data it fetches from the
@@ -36,17 +41,21 @@ import java.util.stream.Collectors;
  * This activity is currently not meant to be run in production, and it can only be started by
  * modifying the manifest to set this as the launch activity.
  */
-public class InitializeMbtaData extends Activity {
+@AndroidEntryPoint
+public class InitializeMbtaData extends AppCompatActivity {
     private static final String MBTA_API_SCHEME = "https";
     private static final String MBTA_API_AUTHORITY = "api-v3.mbta.com";
-    private RequestQueue requestQueue;
-    private MbtaDatabase db;
+
+    @Inject
+    RequestQueue requestQueue;
+
+    @Inject
+    AppDatabase db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestQueue = Volley.newRequestQueue(getApplicationContext());
-        this.db = MbtaDatabase.getInstance(getApplicationContext());
+        new InitializeDatabaseTask().execute(this.db);
         this.fetchRoutes();
     }
 
@@ -64,16 +73,23 @@ public class InitializeMbtaData extends Activity {
         InputStream inputStream = new ByteArrayInputStream(response.getBytes());
         List<Route> routes = ResponseParser.parseJSONApi(inputStream, Route.class);
 
-        new InsertTask<>(this.db.routeDao()).execute(routes.toArray(new Route[]{}));
+        db.routeDao().insert(routes.toArray(new Route[]{}))
+                .subscribeOn(Schedulers.computation())
+                .doOnError(e -> Log.e("InitializeMbtaData.Routes", e.getMessage()))
+                .subscribe(insertedIds -> {
+                    String idString = insertedIds.stream().map(Object::toString).collect(Collectors.joining(", "));
+                    Log.i("InitializeMbtaData.Routes", String.format("Inserted %d routes: %s", routes.size(), idString));
+                });
+
         this.fetchStops(routes);
-        this.fetchTrips(routes);
+//        this.fetchTrips(routes);
     }
 
     /***********************************************************************************************
      * STOPS ENDPOINT
      **********************************************************************************************/
     private void fetchStops(List<Route> routes) {
-        routes.forEach(route -> {
+        routes.stream().limit(5).forEach(route -> {
             String url = getUrl("stops", "filter[route]=" + route.getId());
             TaggedRequest request = new TaggedRequest(url, this::onReceiveStops, (tag, e) -> this.onReceiveError(e, "stops"));
             this.setRequestOptions(request, route);
@@ -143,7 +159,7 @@ public class InitializeMbtaData extends Activity {
                 .authority(MBTA_API_AUTHORITY)
                 .appendPath(path)
                 .encodedQuery(query)
-                .appendQueryParameter("api_key", SensitiveData.MBTA_API_KEY)
+//                .appendQueryParameter("api_key", SensitiveData.MBTA_API_KEY)
                 .build()
                 .toString();
     }

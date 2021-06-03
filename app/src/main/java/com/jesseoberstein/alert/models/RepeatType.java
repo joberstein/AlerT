@@ -16,11 +16,6 @@ public class RepeatType implements Serializable {
     private static final int daily = 3;
     private static final int custom = 4;
 
-    private static final int[] default_selection = new int[]{0, 0, 0, 0, 0, 0, 0};
-    private static final int[] weekdays_selection = new int[]{0, 1, 1, 1, 1, 1, 0};
-    private static final int[] weekends_selection = new int[]{1, 0, 0, 0, 0, 0, 1};
-    private static final int[] daily_selection = new int[]{1, 1, 1, 1, 1, 1, 1};
-
     public static final RepeatType NEVER = new RepeatType(never);
     public static final RepeatType WEEKDAYS = new RepeatType(weekdays);
     public static final RepeatType WEEKENDS = new RepeatType(weekends);
@@ -43,16 +38,16 @@ public class RepeatType implements Serializable {
         return this.repeatType;
     }
 
-    int[] getSelectedDays() {
+    SelectedDays getSelectedDays() {
         switch (this.repeatType) {
             case weekdays:
-                return weekdays_selection;
+                return SelectedDays.WEEKDAYS;
             case weekends:
-                return weekends_selection;
+                return SelectedDays.WEEKENDS;
             case daily:
-                return daily_selection;
+                return SelectedDays.DAILY;
             default:
-                return default_selection;
+                return SelectedDays.DEFAULT;
         }
     }
 

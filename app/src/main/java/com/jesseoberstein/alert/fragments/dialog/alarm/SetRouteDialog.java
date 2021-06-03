@@ -17,15 +17,19 @@ import androidx.databinding.DataBindingUtil;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmRouteBinding;
-import com.jesseoberstein.alert.interfaces.AlarmRouteSetter;
 import com.jesseoberstein.alert.interfaces.data.RoutesReceiver;
+import com.jesseoberstein.alert.interfaces.data.StopsReceiver;
 import com.jesseoberstein.alert.models.AutoComplete;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.utils.ActivityUtils;
+import com.jesseoberstein.alert.utils.LiveDataUtils;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import lombok.AllArgsConstructor;
 
 import static android.widget.AdapterView.OnItemClickListener;
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
@@ -36,22 +40,28 @@ import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 public class SetRouteDialog extends AlarmModifierDialog {
 
     @Inject
-    AlarmRouteSetter alarmRouteSetter;
-
-    @Inject
     RoutesReceiver routesReceiver;
 
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        List<Route> routes = this.routesReceiver.getRouteList();
-        AutoComplete<Route> autoComplete = new AutoComplete<>(routes, this::onAutoCompleteItemSelected);
-        autoComplete.attachAdapter(getActivity());
 
         AlarmRouteBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_route, null, false);
-        binding.setAlarm(getDraftAlarmWithRelations());
+        binding.setLifecycleOwner(requireActivity());
+        binding.setViewModel(this.viewModel);
+
+        List<Route> routes = this.routesReceiver.getRouteList();
+        AutoComplete<Route> autoComplete = new AutoComplete<>(routes, this::onAutoCompleteItemSelected);
+        autoComplete.attachAdapter(requireActivity());
         binding.setAutocomplete(autoComplete);
+
+        AutoCompleteTextView editText = binding.getRoot().findViewById(R.id.alarm_route);
+        LiveDataUtils.observeOnce(requireActivity(), this.viewModel.getRoute(), route -> {
+            // Set the text first before setting the cursor - autocompleteview does not propagate the databinding yet
+            editText.setText(route.toString());
+            editText.setSelection(route.toString().length());
+        });
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.route_dialog_title)
@@ -65,9 +75,10 @@ public class SetRouteDialog extends AlarmModifierDialog {
 
     void onAutoCompleteItemSelected(AdapterView adapterView, View view, int i, long l) {
         Route selectedRoute = (Route) adapterView.getItemAtPosition(i);
-        if (!selectedRoute.equals(getDraftAlarmWithRelations().getRoute())) {
-            this.alarmRouteSetter.onAlarmRouteSet(selectedRoute);
-        }
+        UserAlarm newAlarm = this.userAlarm.withRouteId(selectedRoute.getId());
+        this.viewModel.getDraftAlarm().setValue(newAlarm);
+        this.viewModel.getRoute().setValue(selectedRoute);
+
         new android.os.Handler().postDelayed(this::dismiss, DELAY_DIALOG_DISMISS);
     }
 

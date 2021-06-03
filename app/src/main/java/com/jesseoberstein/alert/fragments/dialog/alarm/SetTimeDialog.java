@@ -14,23 +14,20 @@ import androidx.databinding.DataBindingUtil;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmTimeBinding;
-import com.jesseoberstein.alert.interfaces.AlarmTimeSetter;
-
-import javax.inject.Inject;
+import com.jesseoberstein.alert.models.UserAlarm;
 
 /**
  * A dialog fragment that shows a time picker.
  */
 public class SetTimeDialog extends AlarmModifierDialog {
 
-    @Inject
-    AlarmTimeSetter alarmTimeSetter;
-
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        super.onCreateDialog(savedInstanceState);
+
         AlarmTimeBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_time, null, false);
-        binding.setAlarm(getDraftAlarm());
+        this.viewModel.getDraftAlarm().observe(requireActivity(), binding::setAlarm);
 
         View timePickerDialog = binding.getRoot();
         TimePicker timePicker = timePickerDialog.findViewById(R.id.alarm_time_picker);
@@ -43,7 +40,12 @@ public class SetTimeDialog extends AlarmModifierDialog {
     }
 
     public void onPositiveButtonClick(TimePicker timePicker) {
-        this.alarmTimeSetter.onAlarmTimeSet(timePicker.getHour(), timePicker.getMinute());
+        UserAlarm newAlarm = this.userAlarm.toBuilder()
+                .hour(timePicker.getHour())
+                .minutes(timePicker.getMinute())
+                .build();
+
+        this.viewModel.getDraftAlarm().postValue(newAlarm);
     }
 
     @BindingAdapter({"hour", "minutes", "is24HourMode"})

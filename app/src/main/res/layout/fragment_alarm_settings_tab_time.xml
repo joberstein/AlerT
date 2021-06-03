@@ -4,7 +4,7 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data class="TimeSettingsBinding">
-        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="viewModel" type="com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel" />
     </data>
 
     <ScrollView
@@ -19,19 +19,19 @@
 
             <include layout="@layout/fragment_alarm_settings_section_time"
                 android:id="@+id/alarmSettings_time"
-                bind:alarm="@{alarm}"/>
+                bind:alarm="@{viewModel.draftAlarm}"/>
 
             <include layout="@layout/fragment_alarm_settings_section_name"
                 android:id="@+id/alarmSettings_name"
-                bind:alarm="@{alarm}"/>
+                bind:nickname="@{viewModel.nickname}"/>
 
             <include layout="@layout/fragment_alarm_settings_section_repeat"
                 android:id="@+id/alarmSettings_repeat"
-                bind:alarm="@{alarm}"/>
+                bind:alarm="@{viewModel.draftAlarm}"/>
 
             <include layout="@layout/fragment_alarm_settings_section_duration"
                 android:id="@+id/alarmSettings_duration"
-                bind:alarm="@{alarm}"/>
+                bind:alarm="@{viewModel.draftAlarm}"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="10dp"
                 android:gravity="center_horizontal"
-                android:text="@{alarm.nextFiringDayString + ` at ` + alarm.time}"/>
+                android:text="@{viewModel.draftAlarm.nextFiringDayString + ` at ` + viewModel.draftAlarm.time}"/>
 
         </LinearLayout>
 

@@ -40,7 +40,7 @@ public class OnAlarmStopHelper implements AlarmReceiver {
                 alarm.setActive(false);
             }
             alarmWithRelations.setAlarm(alarm);
-            new UpdateAlarmTask(context, database).execute(alarmWithRelations);
+            new UpdateAlarmTask(context, database).execute(alarmWithRelations.getAlarm());
         });
     }
 
@@ -51,5 +51,5 @@ public class OnAlarmStopHelper implements AlarmReceiver {
     public void onInsertAlarm(long insertedAlarmId) {}
 
     @Override
-    public void onUpdateAlarm(UserAlarmWithRelations alarm) {}
+    public void onUpdateAlarm(UserAlarm alarm) {}
 }

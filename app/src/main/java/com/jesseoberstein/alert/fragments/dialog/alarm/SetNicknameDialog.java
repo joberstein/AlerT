@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil;
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmNicknameBinding;
 import com.jesseoberstein.alert.utils.ActivityUtils;
+import com.jesseoberstein.alert.utils.LiveDataUtils;
 
 /**
  * A dialog fragment that shows a dialog for editing the alarm nickname.
@@ -27,7 +28,8 @@ public class SetNicknameDialog extends AlarmModifierDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         AlarmNicknameBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_nickname, null, false);
-        binding.setAlarm(getDraftAlarm());
+        binding.setViewModel(this.viewModel);
+        binding.setLifecycleOwner(requireActivity());
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.nickname_dialog_title)
@@ -35,7 +37,13 @@ public class SetNicknameDialog extends AlarmModifierDialog {
                 .setOnKeyListener(this::onKeyPressed)
                 .create();
 
+        EditText editText = binding.getRoot().findViewById(R.id.alarm_nickname);
+        LiveDataUtils.observeOnce(requireActivity(), this.viewModel.getNickname(), nickname -> {
+            editText.setSelection(nickname.length());
+        });
+
         ActivityUtils.showKeyboard(dialog.getWindow());
+
         return dialog;
     }
 

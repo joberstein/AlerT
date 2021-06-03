@@ -9,12 +9,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.interfaces.AlarmDurationSetter;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.utils.DateTimeHelper;
 
 import java.util.Arrays;
-
-import javax.inject.Inject;
 
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
@@ -23,17 +21,13 @@ import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
  */
 public class SetDurationDialog extends AlarmModifierDialog {
 
-    @Inject
-    AlarmDurationSetter alarmDurationSetter;
-
     final long[] durationList = new long[]{15L, 30L, 45L, 60L};
 
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        long currentDuration = this.getDraftAlarm().getDuration();
-        int selectedIndex = Arrays.binarySearch(this.durationList, currentDuration);
+        int selectedIndex = Arrays.binarySearch(this.durationList, this.userAlarm.getDuration());
 
         String[] formattedDurations = Arrays.stream(this.durationList)
                 .mapToObj(DateTimeHelper::getFormattedDuration)
@@ -46,7 +40,9 @@ public class SetDurationDialog extends AlarmModifierDialog {
     }
 
     private void onItemSelected(DialogInterface dialogInterface, int selectedIndex) {
-        this.alarmDurationSetter.onAlarmDurationSet(this.durationList[selectedIndex]);
+        UserAlarm newAlarm = this.userAlarm.withDuration(this.durationList[selectedIndex]);
+        this.viewModel.getDraftAlarm().setValue(newAlarm);
+
         new android.os.Handler().postDelayed(dialogInterface::dismiss, DELAY_DIALOG_DISMISS);
     }
 }

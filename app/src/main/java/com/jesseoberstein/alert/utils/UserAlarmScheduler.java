@@ -25,7 +25,11 @@ public class UserAlarmScheduler {
     public void setDefaultAlarmTime(UserAlarm alarm) {
         calendar.setTimeInMillis(dateTimeHelper.getCurrentTime());
         calendar.add(Calendar.HOUR_OF_DAY, 1);
-        setAlarmTime(alarm, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+
+        alarm.setHour(calendar.get(Calendar.HOUR_OF_DAY));
+        alarm.setMinutes(calendar.get(Calendar.MINUTE));
+
+        setAlarmTime(alarm);
     }
 
     public void restoreAlarmTime(UserAlarm alarm) {
@@ -37,20 +41,8 @@ public class UserAlarmScheduler {
         alarm.setTime(dateTimeHelper.getFormattedTime(timeInMillis));
     }
 
-    public void setAlarmTime(UserAlarm alarm, Integer newHour, Integer newMinutes) {
-        if (newHour == null || newMinutes == null) {
-            return;
-        }
-
-        if (!newHour.equals(alarm.getHour())) {
-            alarm.setHour(newHour);
-        }
-
-        if (!newMinutes.equals(alarm.getMinutes())) {
-            alarm.setMinutes(newMinutes);
-        }
-
-        long timeInMillis = dateTimeHelper.getTimeInMillis(newHour, newMinutes);
+    public void setAlarmTime(UserAlarm alarm) {
+        long timeInMillis = dateTimeHelper.getTimeInMillis(alarm.getHour(), alarm.getMinutes());
         alarm.setTime(dateTimeHelper.getFormattedTime(timeInMillis));
         setNextFiringDayString(alarm); // TODO is this right?
     }

@@ -30,10 +30,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 import static android.app.Notification.CATEGORY_ALARM;
 import static android.app.Notification.DEFAULT_ALL;
 import static com.jesseoberstein.alert.utils.Constants.CHANNEL_ID;
 
+@AndroidEntryPoint
 public class MessagingService extends FirebaseMessagingService {
 
     private ObjectMapper objectMapper;

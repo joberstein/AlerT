@@ -12,7 +12,10 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-@Entity(tableName = "endpoints", indices = {@Index("direction_id"), @Index("route_id")})
+@Entity(tableName = "endpoints", indices = {@Index("direction_id"), @Index("route_id")}, foreignKeys = {
+        @ForeignKey(entity = Direction.class, parentColumns = "id", childColumns = "direction_id"),
+        @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
+})
 public class Endpoint implements Serializable {
 
     public static final List<String> PSUEDO_ENDPOINT_NAMES = Arrays.asList(
@@ -24,11 +27,9 @@ public class Endpoint implements Serializable {
     @JsonProperty("name")
     private String name;
 
-    @ForeignKey(entity = Direction.class, parentColumns = "id", childColumns = "direction_id")
     @ColumnInfo(name = "direction_id")
     private long directionId;
 
-    @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
     @ColumnInfo(name = "route_id")
     private String routeId;
 

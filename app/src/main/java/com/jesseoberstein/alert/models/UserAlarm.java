@@ -1,7 +1,5 @@
 package com.jesseoberstein.alert.models;
 
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
@@ -10,7 +8,6 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.jesseoberstein.alert.BR;
 import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
@@ -21,31 +18,49 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.With;
+
 import static java.util.Objects.isNull;
 
+@With
+@Data
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @Entity(
     tableName = "user_alarms",
-    indices = {@Index("route_id"), @Index("stop_id"), @Index("repeat_type_id")}
+    indices = {
+        @Index("route_id"),
+        @Index("stop_id"),
+        @Index("direction_id"),
+        @Index("repeat_type_id")},
+    foreignKeys = {
+        @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id"),
+        @ForeignKey(entity = Direction.class, parentColumns = "id", childColumns = "direction_id"),
+        @ForeignKey(entity = Stop.class, parentColumns = {"id", "route_id"}, childColumns = {"stop_id", "route_id"})
+    }
 )
-public class UserAlarm extends BaseObservable implements Serializable, Validatable {
+public class UserAlarm implements Serializable, Validatable {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
 
     @ColumnInfo(name = "route_id")
-    @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
     private String routeId;
 
     @ColumnInfo(name = "direction_id")
-    @ForeignKey(entity = Direction.class, parentColumns = "id", childColumns = "direction_id")
-    private long directionId;
+    private Long directionId;
 
     @ColumnInfo(name = "stop_id")
-    @ForeignKey(entity = Stop.class, parentColumns = "id", childColumns = "stop_id")
     private String stopId;
 
     @ColumnInfo(name = "repeat_type_id")
-    @ForeignKey(entity = RepeatType.class, parentColumns = "id", childColumns = "repeat_type_id")
     private long repeatTypeId;
 
     @Embedded
@@ -67,153 +82,15 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
     private String nextFiringDayString;
 
     @Ignore
+    @Builder.Default
     private List<String> errors = new ArrayList<>();
 
     public UserAlarm() {
-        setRepeatType(RepeatType.NEVER);
-        setSelectedDays(new SelectedDays());
-        setDuration(30);
-        setActive(true);
-        setDirectionId(-1);
-    }
-
-    public UserAlarm(UserAlarm alarm) {
-        setId(alarm.getId());
-        setNickname(alarm.getNickname());
-        setHour(alarm.getHour());
-        setMinutes(alarm.getMinutes());
-        setTime(alarm.getTime());
-        setDuration(alarm.getDuration());
-        setRepeatType(RepeatType.valueOf(Long.valueOf(alarm.getRepeatTypeId()).intValue()));
-        setSelectedDays(alarm.getSelectedDays());
-        setActive(alarm.isActive());
-    }
-
-    @Bindable
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-        notifyPropertyChanged(BR.id);
-    }
-
-    @Bindable
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-        notifyPropertyChanged(BR.nickname);
-    }
-
-    public Integer getHour() {
-        return hour;
-    }
-
-    public void setHour(Integer hour) {
-        this.hour = hour;
-    }
-
-    public Integer getMinutes() {
-        return minutes;
-    }
-
-    public void setMinutes(Integer minutes) {
-        this.minutes = minutes;
-    }
-
-    @Bindable
-    public SelectedDays getSelectedDays() {
-        return selectedDays;
-    }
-
-    public void setSelectedDays(SelectedDays selectedDays) {
-        this.selectedDays = selectedDays;
-        notifyPropertyChanged(BR.selectedDays);
-    }
-
-    public void setSelectedDays(int[] selectedDays) {
-        this.selectedDays = new SelectedDays(selectedDays);
-    }
-
-    @Bindable
-    public long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
-        notifyPropertyChanged(BR.duration);
-    }
-
-    public long getRepeatTypeId() {
-        return repeatTypeId;
-    }
-
-    public void setRepeatTypeId(long repeatTypeId) {
-        this.repeatTypeId = repeatTypeId;
-    }
-
-    @Bindable
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-        notifyPropertyChanged(BR.active);
-    }
-
-    @Bindable
-    public String getNextFiringDayString() {
-        return this.nextFiringDayString;
-    }
-
-    public void setNextFiringDayString(String nextFiringDayString) {
-        this.nextFiringDayString = nextFiringDayString;
-        notifyPropertyChanged(BR.nextFiringDayString);
-    }
-
-    @Bindable
-    public String getTime() {
-        return this.time;
-    }
-
-    public void setTime(String formattedTime) {
-        this.time = formattedTime;
-        notifyPropertyChanged(BR.time);
-    }
-
-    public String getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
-    public String getStopId() {
-        return stopId;
-    }
-
-    public void setStopId(String stopId) {
-        this.stopId = stopId;
-    }
-
-    public long getDirectionId() {
-        return directionId;
-    }
-
-    public void setDirectionId(long directionId) {
-        this.directionId = directionId;
-    }
-
-    @Bindable
-    public RepeatType getRepeatType() {
-        return repeatType;
+        this.repeatType = RepeatType.NEVER;
+        this.selectedDays = new SelectedDays();
+        this.duration = 30;
+        this.active = true;
+        this.errors = new ArrayList<>();
     }
 
     public void setRepeatType(RepeatType repeatType) {
@@ -224,54 +101,19 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         this.repeatType = repeatType;
         setRepeatTypeId(repeatType.getId());
         setSelectedDays(repeatType.getSelectedDays());
-
-        notifyPropertyChanged(BR.repeatType);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return id == ((UserAlarm) o).id;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
-    }
-
-    @Override
-    public String toString() {
-        return "UserAlarm{" +
-                "id=" + id +
-                ", routeId='" + routeId + '\'' +
-                ", directionId=" + directionId +
-                ", stopId='" + stopId + '\'' +
-                ", repeatTypeId=" + repeatTypeId +
-                ", selectedDays=" + selectedDays +
-                ", hour=" + hour +
-                ", minutes=" + minutes +
-                ", nickname='" + nickname + '\'' +
-                ", duration=" + duration +
-                ", active=" + active +
-                ", time='" + time + '\'' +
-                ", repeatType=" + repeatType +
-                ", nextFiringDayString='" + nextFiringDayString + '\'' +
-                '}';
     }
 
     @Override
     public boolean isValid() {
         this.errors.clear();
 
-        if (RepeatType.CUSTOM.getId() == this.repeatTypeId && !this.getSelectedDays().isAnyDaySelected()) {
+        if (RepeatType.CUSTOM.getId() == this.repeatTypeId && !this.selectedDays.isAnyDaySelected()) {
             this.errors.add(Constants.CUSTOM_REPEAT_TYPE);
         }
         if (isNull(this.routeId) || this.routeId.isEmpty()) {
             this.errors.add(Constants.ROUTE);
         }
-        if (this.directionId < 0) {
+        if (isNull(this.directionId) || this.directionId < 0) {
             this.errors.add(Constants.DIRECTION_ID);
         }
         if (isNull(this.stopId) || this.stopId.isEmpty()) {
@@ -279,10 +121,5 @@ public class UserAlarm extends BaseObservable implements Serializable, Validatab
         }
 
         return this.errors.isEmpty();
-    }
-
-    @Override
-    public List<String> getErrors() {
-        return this.errors;
     }
 }

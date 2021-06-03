@@ -7,8 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.TimeSettingsBinding;
@@ -16,34 +15,47 @@ import com.jesseoberstein.alert.fragments.dialog.alarm.SetDurationDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetNicknameDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetRepeatTypeDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetTimeDialog;
-import com.jesseoberstein.alert.interfaces.AlarmModifier;
-import com.jesseoberstein.alert.models.UserAlarm;
+import com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel;
 
-import javax.inject.Inject;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class TimeSettingsFragment extends AlarmSettingsFragment {
 
-    @Inject
-    FragmentManager fragmentManager;
+    private DraftAlarmViewModel viewModel;
 
     public static TimeSettingsFragment newInstance(int page) {
         return (TimeSettingsFragment) AlarmSettingsFragment.newInstance(page, new TimeSettingsFragment());
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.viewModel = new ViewModelProvider(requireActivity()).get(DraftAlarmViewModel.class);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        UserAlarm newAlarm = ((AlarmModifier) getActivity()).getDraftAlarm();
-
         TimeSettingsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_settings_tab_time, container, false);
-        binding.setAlarm(newAlarm);
+        binding.setLifecycleOwner(requireActivity());
+        binding.setViewModel(this.viewModel);
 
-        View view = binding.getRoot();
-        view.findViewById(R.id.alarmSettings_time).setOnClickListener(this::showTimePickerDialog);
-        view.findViewById(R.id.alarmSettings_name).setOnClickListener(this::showNicknameDialog);
-        view.findViewById(R.id.alarmSettings_repeat).setOnClickListener(this::showRepeatDialog);
-        view.findViewById(R.id.alarmSettings_duration).setOnClickListener(this::showDurationDialog);
+        return binding.getRoot();
+    }
 
-        return view;
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        view.findViewById(R.id.alarmSettings_time)
+                .setOnClickListener(this::showTimePickerDialog);
+
+        view.findViewById(R.id.alarmSettings_name)
+                .setOnClickListener(this::showNicknameDialog);
+
+        view.findViewById(R.id.alarmSettings_repeat)
+                .setOnClickListener(this::showRepeatDialog);
+
+        view.findViewById(R.id.alarmSettings_duration)
+                .setOnClickListener(this::showDurationDialog);
     }
 
     private void showTimePickerDialog(View view) {
@@ -60,9 +72,5 @@ public class TimeSettingsFragment extends AlarmSettingsFragment {
 
     private void showDurationDialog(View view) {
         this.showDialogFragment(new SetDurationDialog(), "setDuration");
-    }
-
-    private void showDialogFragment(DialogFragment dialog, String tagName) {
-        dialog.show(this.fragmentManager, tagName);
     }
 }

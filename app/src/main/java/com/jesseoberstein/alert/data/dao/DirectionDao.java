@@ -7,6 +7,8 @@ import com.jesseoberstein.alert.models.mbta.Direction;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface DirectionDao extends BaseDao<Direction> {
 
@@ -14,7 +16,7 @@ public interface DirectionDao extends BaseDao<Direction> {
     List<Direction> get(String[] routeIds);
 
     @Query("SELECT * FROM directions WHERE id = :directionId AND route_id = :routeId")
-    Direction get(long directionId, String routeId);
+    Single<Direction> get(long directionId, String routeId);
 
     @Override
     @Query("SELECT * FROM directions")

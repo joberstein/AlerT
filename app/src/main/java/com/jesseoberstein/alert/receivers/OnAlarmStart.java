@@ -1,6 +1,7 @@
 package com.jesseoberstein.alert.receivers;
 
 import android.app.AlarmManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -31,11 +32,13 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
 
-public class OnAlarmStart extends BaseReceiver {
+@AndroidEntryPoint
+public class OnAlarmStart extends BroadcastReceiver {
 
     @Inject
     protected IntentBuilder intentBuilder;
@@ -51,8 +54,6 @@ public class OnAlarmStart extends BaseReceiver {
 
     @Override
     public void onReceive(Context context, Intent alarmStartIntent) {
-        super.onReceive(context, alarmStartIntent);
-
         Optional.ofNullable(alarmStartIntent)
                 .map(i -> i.getLongExtra(ALARM_ID, -1))
                 .ifPresent(id -> db.userAlarmDao()

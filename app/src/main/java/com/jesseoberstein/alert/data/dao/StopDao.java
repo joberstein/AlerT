@@ -7,6 +7,8 @@ import com.jesseoberstein.alert.models.mbta.Stop;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface StopDao extends BaseDao<Stop> {
 
@@ -14,7 +16,7 @@ public interface StopDao extends BaseDao<Stop> {
     List<Stop> get(String[] routeIds);
 
     @Query("SELECT * FROM stops WHERE id = :stopId")
-    Stop get(String stopId);
+    Single<Stop> get(String stopId);
 
     @Override
     @Query("SELECT * FROM stops")

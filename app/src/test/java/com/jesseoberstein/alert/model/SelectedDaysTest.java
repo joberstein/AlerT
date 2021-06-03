@@ -12,125 +12,101 @@ import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class SelectedDaysTest {
-    private SelectedDays testSelectedDays;
+    private SelectedDays selectedDays;
 
     @Before
     public void setup() {
-        testSelectedDays = new SelectedDays();
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void throwsExceptionIfWeekdayArrayIsWrongLength() {
-        new SelectedDays(new int[]{1});
-    }
-
-    @Test
-    public void testNoArgumentConstructor() {
-        int[] expected = new int[]{0, 0, 0, 0, 0, 0, 0};
-        assertTrue(Arrays.equals(expected, testSelectedDays.toIntArray()));
-    }
-
-    @Test
-    public void testConstructorWithDayArray() {
-        int[] expected = new int[]{0, 1, 1, 0, 1, 1, 1};
-        assertTrue(Arrays.equals(expected, new SelectedDays(expected).toIntArray()));
-    }
-
-    @Test
-    public void testConstructorWithDays() {
-        int[] expected = new int[]{1, 1, 1, 0, 1, 1, 0};
-        SelectedDays testSelectedDays = new SelectedDays(1, 1, 1, 0, 1, 1, 0);
-        assertTrue(Arrays.equals(expected, testSelectedDays.toIntArray()));
+        selectedDays = new SelectedDays();
     }
 
     @Test
     public void testSunday() {
-        assertEquals(0, testSelectedDays.getSunday());
-        testSelectedDays.setSunday(1);
-        assertEquals(1, testSelectedDays.getSunday());
+        assertEquals(0, selectedDays.getSunday());
+        selectedDays.setSunday(1);
+        assertEquals(1, selectedDays.getSunday());
     }
 
     @Test
     public void testMonday() {
-        assertEquals(0, testSelectedDays.getMonday());
-        testSelectedDays.setMonday(1);
-        assertEquals(1, testSelectedDays.getMonday());
+        assertEquals(0, selectedDays.getMonday());
+        selectedDays.setMonday(1);
+        assertEquals(1, selectedDays.getMonday());
     }
 
     @Test
     public void testTuesday() {
-        assertEquals(0, testSelectedDays.getTuesday());
-        testSelectedDays.setTuesday(1);
-        assertEquals(1, testSelectedDays.getTuesday());
+        assertEquals(0, selectedDays.getTuesday());
+        selectedDays.setTuesday(1);
+        assertEquals(1, selectedDays.getTuesday());
     }
 
     @Test
     public void testWednesday() {
-        assertEquals(0, testSelectedDays.getWednesday());
-        testSelectedDays.setWednesday(1);
-        assertEquals(1, testSelectedDays.getWednesday());
+        assertEquals(0, selectedDays.getWednesday());
+        selectedDays.setWednesday(1);
+        assertEquals(1, selectedDays.getWednesday());
     }
 
     @Test
     public void testThursday() {
-        assertEquals(0, testSelectedDays.getThursday());
-        testSelectedDays.setThursday(1);
-        assertEquals(1, testSelectedDays.getThursday());
+        assertEquals(0, selectedDays.getThursday());
+        selectedDays.setThursday(1);
+        assertEquals(1, selectedDays.getThursday());
     }
 
     @Test
     public void testFriday() {
-        assertEquals(0, testSelectedDays.getFriday());
-        testSelectedDays.setFriday(1);
-        assertEquals(1, testSelectedDays.getFriday());
+        assertEquals(0, selectedDays.getFriday());
+        selectedDays.setFriday(1);
+        assertEquals(1, selectedDays.getFriday());
     }
 
     @Test
     public void testSaturday() {
-        assertEquals(0, testSelectedDays.getSaturday());
-        testSelectedDays.setSaturday(1);
-        assertEquals(1, testSelectedDays.getSaturday());
+        assertEquals(0, selectedDays.getSaturday());
+        selectedDays.setSaturday(1);
+        assertEquals(1, selectedDays.getSaturday());
     }
 
     @Test(expected = RuntimeException.class)
     public void testSetDay_invalidDay() {
-        testSelectedDays.setDay(9, true);
+        selectedDays = selectedDays.update(9, true);
     }
 
     @Test
     public void testSetDay() {
-        assertEquals(0, testSelectedDays.getSunday());
-        testSelectedDays.setDay(0, true);
-        assertEquals(1, testSelectedDays.getSunday());
-        testSelectedDays.setDay(0, false);
-        assertEquals(0, testSelectedDays.getSunday());
+        assertEquals(0, selectedDays.getSunday());
+        selectedDays = selectedDays.update(0, true);
+        assertEquals(1, selectedDays.getSunday());
+        selectedDays = selectedDays.update(0, false);
+        assertEquals(0, selectedDays.getSunday());
     }
 
     @Test
     public void testToIntArray() {
-        testSelectedDays.setMonday(1);
-        testSelectedDays.setWednesday(1);
-        testSelectedDays.setSaturday(1);
+        selectedDays.setMonday(1);
+        selectedDays.setWednesday(1);
+        selectedDays.setSaturday(1);
         int[] expected = new int[]{0, 1, 0, 1, 0, 0, 1};
-        assertTrue(Arrays.equals(expected, testSelectedDays.toIntArray()));
+        assertTrue(Arrays.equals(expected, selectedDays.toIntArray()));
     }
 
     @Test
     public void testToBooleanArray() {
-        testSelectedDays.setMonday(1);
-        testSelectedDays.setWednesday(1);
-        testSelectedDays.setSaturday(1);
+        selectedDays.setMonday(1);
+        selectedDays.setWednesday(1);
+        selectedDays.setSaturday(1);
         boolean[] expected = new boolean[]{false, true, false, true, false, false, true};
-        assertTrue(Arrays.equals(expected, testSelectedDays.toBooleanArray()));
+        assertTrue(Arrays.equals(expected, selectedDays.toBooleanArray()));
     }
 
     @Test
     public void testIsAnyDaySelected() {
         // No days selected initially.
-        assertFalse(testSelectedDays.isAnyDaySelected());
+        assertFalse(selectedDays.isAnyDaySelected());
 
         // Re-check after setting a day.
-        testSelectedDays.setFriday(1);
-        assertTrue(testSelectedDays.isAnyDaySelected());
+        selectedDays.setFriday(1);
+        assertTrue(selectedDays.isAnyDaySelected());
     }
 }

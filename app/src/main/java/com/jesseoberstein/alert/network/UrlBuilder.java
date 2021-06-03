@@ -2,7 +2,7 @@ package com.jesseoberstein.alert.network;
 
 import android.net.Uri;
 
-import com.jesseoberstein.alert.sensitive.SensitiveData;
+//import com.jesseoberstein.alert.sensitive.SensitiveData;
 
 public class UrlBuilder {
 
@@ -15,7 +15,7 @@ public class UrlBuilder {
                 .appendQueryParameter("filter[stop]", stopId)
                 .appendQueryParameter("filter[direction_id]", String.valueOf(directionId))
                 .appendQueryParameter("include", "trip")
-                .appendQueryParameter("api_key", SensitiveData.MBTA_API_KEY)
+//                .appendQueryParameter("api_key", SensitiveData.MBTA_API_KEY)
                 .build()
                 .toString();
     }

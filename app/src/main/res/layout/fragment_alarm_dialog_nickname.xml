@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="AlarmNicknameBinding">
-        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="viewModel" type="com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel" />
     </data>
 
     <LinearLayout
@@ -23,17 +23,18 @@
             android:lineSpacingExtra="10dp"
             android:inputType="textNoSuggestions|textCapWords|text"
             android:hint="@string/nickname_default"
-            android:text="@={alarm.nickname}"
-            app:isCursorAtEnd="@{true}" />
+            android:text="@={viewModel.nickname}">
+            <requestFocus/>
+        </EditText>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@{alarm.nickname.length() > 11 ? @android:color/holo_red_light : @android:color/black}"
+            android:textColor="@{viewModel.nickname.length() > 11 ? @android:color/holo_red_light : @android:color/black}"
             android:gravity="end"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="@{alarm.nickname.length() + `/12`, default=`0/12`}" />
+            android:text="@{viewModel.nickname.length() + `/12`, default=`0/12`}" />
 
     </LinearLayout>
 

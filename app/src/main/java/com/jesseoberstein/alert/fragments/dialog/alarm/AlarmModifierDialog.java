@@ -1,39 +1,35 @@
 package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 
-import android.content.Context;
+import android.app.Dialog;
+import android.os.Bundle;
 
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-import com.jesseoberstein.alert.activities.base.BaseDialogFragment;
-import com.jesseoberstein.alert.interfaces.AlarmModifier;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.models.UserAlarmWithRelations;
+import com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel;
 
-import java.util.Optional;
+public abstract class AlarmModifierDialog extends DialogFragment {
 
-import javax.inject.Inject;
-
-public abstract class AlarmModifierDialog extends BaseDialogFragment {
-
-    @Inject
-    AlarmModifier alarmModifier;
+    protected UserAlarm userAlarm;
+    protected DraftAlarmViewModel viewModel;
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Optional.ofNullable(getValidationSnackbar()).ifPresent(BaseTransientBottomBar::dismiss);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        this.viewModel = new ViewModelProvider(requireActivity()).get(DraftAlarmViewModel.class);
     }
 
-    UserAlarm getDraftAlarm() {
-        return this.alarmModifier.getDraftAlarm();
-    }
+    @Override
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        this.viewModel.getDraftAlarm().observe(requireActivity(), userAlarm -> {
+            this.userAlarm = userAlarm;
+        });
 
-    UserAlarmWithRelations getDraftAlarmWithRelations() {
-        return this.alarmModifier.getDraftAlarmWithRelations();
-    }
-
-    Snackbar getValidationSnackbar() {
-        return this.alarmModifier.getValidationSnackbar();
+        return super.onCreateDialog(savedInstanceState);
     }
 }

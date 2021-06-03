@@ -4,54 +4,54 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.MbtaSettingsBinding;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetDirectionDialog;
-import com.jesseoberstein.alert.fragments.dialog.alarm.SetEndpointsDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetRouteDialog;
 import com.jesseoberstein.alert.fragments.dialog.alarm.SetStopDialog;
-import com.jesseoberstein.alert.interfaces.AlarmModifier;
-import com.jesseoberstein.alert.models.mbta.Endpoint;
+import com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel;
 
-import java.util.List;
+import dagger.hilt.android.AndroidEntryPoint;
 
-import javax.inject.Inject;
-
-import static java.util.stream.Collectors.joining;
-
+@AndroidEntryPoint
 public class MbtaSettingsFragment extends AlarmSettingsFragment {
 
-    @Inject
-    FragmentManager fragmentManager;
-
-    private static final String SELECTED_ENDPOINTS_DELIMITER = ",  ";
+    private DraftAlarmViewModel viewModel;
 
     public static MbtaSettingsFragment newInstance(int page) {
         return (MbtaSettingsFragment) AlarmSettingsFragment.newInstance(page, new MbtaSettingsFragment());
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.viewModel = new ViewModelProvider(requireActivity()).get(DraftAlarmViewModel.class);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        AlarmModifier alarmModifier = ((AlarmModifier) getActivity());
-
         MbtaSettingsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_settings_tab_mbta, container, false);
-        binding.setAlarm(alarmModifier.getDraftAlarmWithRelations());
+        binding.setLifecycleOwner(requireActivity());
+        binding.setViewModel(viewModel);
 
-        View view = binding.getRoot();
-        view.findViewById(R.id.alarmSettings_route).setOnClickListener(this::showRouteDialog);
-        view.findViewById(R.id.alarmSettings_direction).setOnClickListener(this::showDirectionDialog);
-        view.findViewById(R.id.alarmSettings_stop).setOnClickListener(this::showStopDialog);
-        view.findViewById(R.id.alarmSettings_endpoints).setOnClickListener(this::showEndpointsDialog);
+        return binding.getRoot();
+    }
 
-        return view;
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        view.findViewById(R.id.alarmSettings_route)
+                .setOnClickListener(this::showRouteDialog);
+
+        view.findViewById(R.id.alarmSettings_direction)
+                .setOnClickListener(this::showDirectionDialog);
+
+        view.findViewById(R.id.alarmSettings_stop)
+                .setOnClickListener(this::showStopDialog);
     }
 
     private void showRouteDialog(View view) {
@@ -64,19 +64,5 @@ public class MbtaSettingsFragment extends AlarmSettingsFragment {
 
     private void showStopDialog(View view) {
         this.showDialogFragment(new SetStopDialog(), "setStop");
-    }
-
-    private void showEndpointsDialog(View view) {
-        this.showDialogFragment(new SetEndpointsDialog(), "setEndpoints");
-    }
-
-    private void showDialogFragment(DialogFragment dialog, String tagName) {
-        dialog.show(this.fragmentManager, tagName);
-    }
-
-    @BindingAdapter("android:text")
-    public static void convertEndpointsToString(TextView textView, List<Endpoint> endpoints) {
-        String endpointString = endpoints.stream().map(Endpoint::toString).collect(joining(SELECTED_ENDPOINTS_DELIMITER));
-        textView.setText(endpointString);
     }
 }

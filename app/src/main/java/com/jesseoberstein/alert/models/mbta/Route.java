@@ -19,7 +19,6 @@ import java.util.List;
 public class Route extends BaseResource {
 
     @ColumnInfo(name = "type_id")
-    @ForeignKey(entity = RouteType.class, parentColumns = "id", childColumns = "type_id")
     @JsonProperty("type")
     private int routeTypeId;
 

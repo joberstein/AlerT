@@ -5,11 +5,7 @@
 
     <data class="MbtaSettingsBinding">
         <import type="android.view.View"/>
-        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarmWithRelations"/>
-        <variable name="route" type="com.jesseoberstein.alert.models.mbta.Route"/>
-        <variable name="direction" type="com.jesseoberstein.alert.models.mbta.Direction"/>
-        <variable name="stop" type="com.jesseoberstein.alert.models.mbta.Stop"/>
-        <variable name="endpoints" type="java.util.List&lt;com.jesseoberstein.alert.models.mbta.Endpoint&gt;"/>
+        <variable name="viewModel" type="com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel" />
     </data>
 
     <ScrollView
@@ -24,26 +20,23 @@
 
             <include layout="@layout/fragment_alarm_settings_section_route"
                 android:id="@+id/alarmSettings_route"
-                bind:alarm="@{alarm}"
-                bind:route="@{route}"/>
+                bind:route="@{viewModel.route}"/>
 
             <include layout="@layout/fragment_alarm_settings_section_direction"
                 android:id="@+id/alarmSettings_direction"
-                android:visibility="@{alarm.route == null ? View.GONE : View.VISIBLE}"
-                bind:alarm="@{alarm}"
-                bind:direction="@{direction}"/>
+                android:visibility="@{viewModel.route == null ? View.GONE : View.VISIBLE}"
+                bind:direction="@{viewModel.direction}"/>
 
             <include layout="@layout/fragment_alarm_settings_section_stop"
                 android:id="@+id/alarmSettings_stop"
-                android:visibility="@{alarm.direction == null ? View.GONE : View.VISIBLE}"
-                bind:alarm="@{alarm}"
-                bind:stop="@{stop}"/>
+                android:visibility="@{viewModel.direction == null ? View.GONE : View.VISIBLE}"
+                bind:stop="@{viewModel.stop}"/>
 
-            <include layout="@layout/fragment_alarm_settings_section_endpoints"
-                android:id="@+id/alarmSettings_endpoints"
-                android:visibility="@{alarm.direction == null ? View.GONE : View.VISIBLE}"
-                bind:alarm="@{alarm}"
-                bind:endpoints="@{endpoints}"/>
+<!--            <include layout="@layout/fragment_alarm_settings_section_endpoints"-->
+<!--                android:id="@+id/alarmSettings_endpoints"-->
+<!--                android:visibility="@{alarm.direction == null ? View.GONE : View.VISIBLE}"-->
+<!--                bind:alarm="@{alarm}"-->
+<!--                bind:endpoints="@{endpoints}"/>-->
 
         </LinearLayout>
 

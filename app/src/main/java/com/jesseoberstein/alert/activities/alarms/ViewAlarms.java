@@ -8,12 +8,12 @@ import android.view.View;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.activities.alarm.EditAlarm;
-import com.jesseoberstein.alert.activities.base.BaseActivity;
 import com.jesseoberstein.alert.adapters.AlarmsAdapter;
 import com.jesseoberstein.alert.adapters.EmptyRecyclerViewObserver;
 import com.jesseoberstein.alert.data.database.AppDatabase;
@@ -21,6 +21,7 @@ import com.jesseoberstein.alert.interfaces.AlarmAdapterInteractor;
 import com.jesseoberstein.alert.interfaces.OnDialogClick;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
 import com.jesseoberstein.alert.listeners.StartActivityOnClick;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.tasks.DeleteAlarmTask;
 import com.jesseoberstein.alert.tasks.QueryAlarmsTask;
@@ -37,9 +38,12 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 import static com.jesseoberstein.alert.utils.Constants.ALARM;
 
-public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmReceiver, AlarmAdapterInteractor {
+@AndroidEntryPoint
+public class ViewAlarms extends AppCompatActivity implements OnDialogClick, AlarmReceiver, AlarmAdapterInteractor {
 
     @Inject
     ActionBar actionBar;
@@ -125,14 +129,14 @@ public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmRece
     @Override
     public void onDeleteAlarm(UserAlarmWithRelations alarm) {
         alarmsAdapter.removeItem(alarm);
-        alarmManagerHelper.cancelUserAlarm(alarm);
+        alarmManagerHelper.cancelUserAlarm(alarm.getAlarm());
     }
 
     @Override
-    public void onUpdateAlarm(UserAlarmWithRelations alarm) {
-        alarmsAdapter.updateItem(alarm);
+    public void onUpdateAlarm(UserAlarm alarm) {
+//        alarmsAdapter.updateItem(alarm);
 
-        if (alarm.getAlarm().isActive()) {
+        if (alarm.isActive()) {
             alarmManagerHelper.scheduleUserAlarm(alarm);
         } else {
             alarmManagerHelper.cancelUserAlarm(alarm);
@@ -154,6 +158,6 @@ public class ViewAlarms extends BaseActivity implements OnDialogClick, AlarmRece
 
     @Override
     public void onAlarmStatusToggle(UserAlarmWithRelations alarmWithRelations) {
-        new UpdateAlarmTask(this, database).execute(alarmWithRelations);
+        new UpdateAlarmTask(this, database).execute(alarmWithRelations.getAlarm());
     }
 }

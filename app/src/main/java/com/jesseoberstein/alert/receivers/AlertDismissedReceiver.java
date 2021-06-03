@@ -13,8 +13,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.firebase.installations.FirebaseInstallations;
 import com.jesseoberstein.alert.models.v2.StreamUnsubscribeRequest;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 import static com.jesseoberstein.alert.utils.Constants.MESSAGING_SERVICE_BASE_URL;
 
+@AndroidEntryPoint
 public class AlertDismissedReceiver extends BroadcastReceiver {
 
     private RequestQueue queue;

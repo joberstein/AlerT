@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 
 import com.jesseoberstein.alert.models.UserAlarm;
-import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 
 import java.util.Arrays;
 
@@ -24,25 +23,24 @@ public class AlarmManagerHelper {
         this.userAlarmScheduler = userAlarmScheduler;
     }
 
-    public void scheduleUserAlarm(UserAlarmWithRelations alarmWithRelations) {
-        cancelAlarm(alarmWithRelations);  // Ensure that this alarm isn't scheduled twice.
-        scheduleAlarm(alarmWithRelations);
+    public void scheduleUserAlarm(UserAlarm alarm) {
+        cancelAlarm(alarm);  // Ensure that this alarm isn't scheduled twice.
+        scheduleAlarm(alarm);
     }
 
-    public void cancelUserAlarm(UserAlarmWithRelations alarmWithRelations) {
-        cancelAlarm(alarmWithRelations);
+    public void cancelUserAlarm(UserAlarm alarm) {
+        cancelAlarm(alarm);
     }
 
-    private void scheduleAlarm(UserAlarmWithRelations alarmWithRelations) {
-        UserAlarm alarm = alarmWithRelations.getAlarm();
+    private void scheduleAlarm(UserAlarm alarm) {
         long startTime = userAlarmScheduler.getAlarmStartTime(alarm);
 
         PendingIntent startIntent = intentBuilder.getAlarmStartIntent(alarm.getId());
         alarmManager.setExactAndAllowWhileIdle(RTC_WAKEUP, startTime, startIntent);
     }
 
-    private void cancelAlarm(UserAlarmWithRelations alarmWithRelations) {
-        long alarmId = alarmWithRelations.getAlarm().getId();
+    private void cancelAlarm(UserAlarm alarm) {
+        long alarmId = alarm.getId();
         Arrays.asList(
             intentBuilder.getAlarmStartIntent(alarmId),
             intentBuilder.getAlarmStopIntent(alarmId)

@@ -2,6 +2,7 @@ package com.jesseoberstein.alert.receivers;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
@@ -10,9 +11,12 @@ import com.jesseoberstein.alert.utils.OnAlarmStopHelper;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
 
-public class OnAlarmStop extends BaseReceiver {
+@AndroidEntryPoint
+public class OnAlarmStop extends BroadcastReceiver {
 
     @Inject
     IntentBuilder intentBuilder;
@@ -25,8 +29,6 @@ public class OnAlarmStop extends BaseReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-
         long alarmId = intent.getLongExtra(ALARM_ID, -1);
         onAlarmStopHelper.deactivateSingleFireAlarm(alarmId);
 

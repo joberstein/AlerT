@@ -9,7 +9,9 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "directions", indices = {@Index("route_id")})
+@Entity(tableName = "directions", indices = {@Index("route_id")}, foreignKeys = {
+        @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
+})
 public class Direction implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
@@ -20,7 +22,6 @@ public class Direction implements Serializable {
     @ColumnInfo(name = "direction_id")
     private int directionId;
 
-    @ForeignKey(entity = Route.class, parentColumns = "id", childColumns = "route_id")
     @ColumnInfo(name = "route_id")
     @NonNull
     private String routeId;

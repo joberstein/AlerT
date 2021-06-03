@@ -19,11 +19,12 @@ public class UserAlarmTest {
 
     @Before
     public void setup() {
-        testAlarm = new UserAlarm();
-        testAlarm.setNickname("Test nickname");
-        testAlarm.setRouteId("routeId");
-        testAlarm.setStopId("stopId");
-        testAlarm.setDirectionId(2);
+        testAlarm = UserAlarm.builder()
+            .nickname("Test nickname")
+            .routeId("routeId")
+            .stopId("stopId")
+            .directionId(2L)
+            .build();
     }
 
     @Test
@@ -32,90 +33,88 @@ public class UserAlarmTest {
 
         assertEquals(0, testAlarm.getId());
         assertEquals(RepeatType.NEVER, testAlarm.getRepeatType());
-        assertEquals(new SelectedDays(), testAlarm.getSelectedDays());
+        assertEquals(SelectedDays.DEFAULT, testAlarm.getSelectedDays());
         assertEquals(30, testAlarm.getDuration());
-        assertEquals(true, testAlarm.isActive());
+        assertTrue(testAlarm.isActive());
+
         assertNull(testAlarm.getNickname());
         assertNull(testAlarm.getRouteId());
         assertNull(testAlarm.getStopId());
-        assertEquals(-1, testAlarm.getDirectionId());
-    }
-
-    @Test
-    public void testSingleArgConstructor() {
-        testAlarm.setTime("10:30 am");
-        testAlarm.setDuration(30);
-        testAlarm.setRepeatType(RepeatType.CUSTOM);
-        testAlarm.setSelectedDays(new int[]{1,0,1,0,1,0,1});
-        testAlarm.setActive(false);
-
-        assertEquals(testAlarm, new UserAlarm(testAlarm));
+        assertNull(testAlarm.getDirectionId());
     }
 
     @Test
     public void verifyGetsAndSetsDays() {
-        int[] expected = {0, 0, 1, 0, 1, 1, 0};
-        testAlarm.setSelectedDays(expected);
-        assertTrue(Arrays.equals(expected, testAlarm.getSelectedDays().toIntArray()));
+        SelectedDays selectedDays = SelectedDays.builder()
+                .tuesday(1)
+                .thursday(1)
+                .friday(1)
+                .build();
+
+        testAlarm.setSelectedDays(selectedDays);
+        assertEquals(testAlarm.getSelectedDays(), selectedDays);
     }
 
     @Test
     public void verifyRepeatNeverSetsCorrectDays() {
         testAlarm.setRepeatType(RepeatType.NEVER);
-        verifyAlarmWeekdays(new int[]{0, 0, 0, 0, 0, 0, 0});
+        assertEquals(SelectedDays.DEFAULT, testAlarm.getSelectedDays());
     }
 
     @Test
     public void verifyRepeatWeekdaysSetsCorrectDays() {
         testAlarm.setRepeatType(RepeatType.WEEKDAYS);
-        verifyAlarmWeekdays(new int[]{0, 1, 1, 1, 1, 1, 0});
+        assertEquals(SelectedDays.WEEKDAYS, testAlarm.getSelectedDays());
     }
 
     @Test
     public void verifyRepeatWeekendsSetsCorrectDays() {
         testAlarm.setRepeatType(RepeatType.WEEKENDS);
-        verifyAlarmWeekdays(new int[]{1, 0, 0, 0, 0, 0, 1});
+        assertEquals(SelectedDays.WEEKENDS, testAlarm.getSelectedDays());
     }
 
     @Test
     public void verifyRepeatDailySetsCorrectDays() {
         testAlarm.setRepeatType(RepeatType.DAILY);
-        verifyAlarmWeekdays(new int[]{1, 1, 1, 1, 1, 1, 1});
+        assertEquals(SelectedDays.DAILY, testAlarm.getSelectedDays());
     }
 
     @Test
     public void verifyRepeatCustomSetsCorrectDays() {
+        SelectedDays selectedDays = SelectedDays.builder()
+                .monday(1)
+                .wednesday(1)
+                .thursday(1)
+                .friday(1)
+                .build();
+
         testAlarm.setRepeatType(RepeatType.CUSTOM);
-        testAlarm.getSelectedDays().setMonday(1);
-        testAlarm.getSelectedDays().setWednesday(1);
-        testAlarm.getSelectedDays().setThursday(1);
-        testAlarm.getSelectedDays().setSaturday(1);
-        verifyAlarmWeekdays(new int[]{0, 1, 0, 1, 1, 0, 1});
+        testAlarm.setSelectedDays(selectedDays);
+        assertEquals(selectedDays, testAlarm.getSelectedDays());
     }
 
     @Test
     public void verifyWeekdaysSetWhenRepeatTypeIsChanged() {
-        int[] expected = new int[7];
-
         testAlarm.setRepeatType(RepeatType.DAILY);
-        Arrays.fill(expected, 1);
-        verifyAlarmWeekdays(expected);
+        assertEquals(SelectedDays.DAILY, testAlarm.getSelectedDays());
 
         testAlarm.setRepeatType(RepeatType.CUSTOM);
-        Arrays.fill(expected, 0);
-        verifyAlarmWeekdays(expected);
+        assertEquals(SelectedDays.DEFAULT, testAlarm.getSelectedDays());
     }
 
     @Test
     public void verifyCustomRepeatNotResetWhenReselected() {
-        testAlarm.setRepeatType(RepeatType.CUSTOM);
-        testAlarm.getSelectedDays().setSunday(1);
-        testAlarm.getSelectedDays().setThursday(1);
-        verifyAlarmWeekdays(new int[]{1, 0, 0, 0, 1, 0, 0});
+        SelectedDays selectedDays = SelectedDays.builder()
+                .sunday(1)
+                .thursday(1)
+                .build();
 
         testAlarm.setRepeatType(RepeatType.CUSTOM);
-        assertEquals(1, testAlarm.getSelectedDays().getSunday());
-        assertEquals(1, testAlarm.getSelectedDays().getThursday());
+        testAlarm.setSelectedDays(selectedDays);
+        assertEquals(selectedDays, testAlarm.getSelectedDays());
+
+        testAlarm.setRepeatType(RepeatType.CUSTOM);
+        assertEquals(selectedDays, testAlarm.getSelectedDays());
     }
 
     @Test
@@ -138,7 +137,8 @@ public class UserAlarmTest {
         testAlarm.setRepeatType(RepeatType.CUSTOM);
         assertFalse(testAlarm.isValid());
 
-        testAlarm.setSelectedDays(new int[]{0, 0, 0, 0, 0, 0, 1});
+        SelectedDays selectedDays = SelectedDays.builder().saturday(1).build();
+        testAlarm.setSelectedDays(selectedDays);
         assertTrue(testAlarm.isValid());
     }
 
@@ -162,7 +162,11 @@ public class UserAlarmTest {
 
     @Test
     public void testValidAlarmDirectionId() {
-        testAlarm.setDirectionId(-1);
+        testAlarm.setDirectionId(null);
+        System.out.println(testAlarm);
+        assertFalse(testAlarm.isValid());
+
+        testAlarm.setDirectionId(-1L);
         assertFalse(testAlarm.isValid());
     }
 

@@ -1,11 +1,13 @@
 package com.jesseoberstein.alert.services;
 
+import android.app.IntentService;
 import android.content.Intent;
 
 import androidx.annotation.Nullable;
 
 import com.jesseoberstein.alert.data.database.AppDatabase;
 import com.jesseoberstein.alert.interfaces.data.AlarmReceiver;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.UserAlarmWithRelations;
 import com.jesseoberstein.alert.tasks.QueryAlarmsTask;
 import com.jesseoberstein.alert.utils.MbtaRealtimeUpdatesHelper;
@@ -16,9 +18,12 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 import static com.jesseoberstein.alert.utils.Constants.ALARM_ID;
 
-public class MbtaRealtimeUpdatesService extends AbstractService implements AlarmReceiver {
+@AndroidEntryPoint
+public class MbtaRealtimeUpdatesService extends IntentService implements AlarmReceiver {
 
     @Inject
     AppDatabase db;
@@ -49,7 +54,7 @@ public class MbtaRealtimeUpdatesService extends AbstractService implements Alarm
     public void onInsertAlarm(long insertedAlarmId) {}
 
     @Override
-    public void onUpdateAlarm(UserAlarmWithRelations alarm) {}
+    public void onUpdateAlarm(UserAlarm alarm) {}
 
     @Override
     public void onDeleteAlarm(UserAlarmWithRelations alarm) {}

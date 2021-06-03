@@ -1,12 +1,9 @@
 package com.jesseoberstein.alert.models;
 
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
 import androidx.room.Embedded;
 import androidx.room.Ignore;
 import androidx.room.Relation;
 
-import com.jesseoberstein.alert.BR;
 import com.jesseoberstein.alert.models.mbta.BaseResource;
 import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Endpoint;
@@ -23,29 +20,48 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.With;
+
 import static java.util.Objects.isNull;
 
-public class UserAlarmWithRelations extends BaseObservable implements Serializable, Validatable {
+@With
+@Data
+@Builder
+@ToString
+@AllArgsConstructor
+@EqualsAndHashCode
+public class UserAlarmWithRelations implements Serializable, Validatable {
 
     @Embedded
     private UserAlarm alarm;
 
+    @Builder.Default
     @Relation(entity = Route.class, entityColumn = "id", parentColumn = "route_id")
     private Set<Route> routes = Collections.emptySet();
 
+    @Builder.Default
     @Relation(entity = Stop.class, entityColumn = "id", parentColumn = "stop_id")
     private Set<Stop> stops = Collections.emptySet();
 
+    @Builder.Default
     @Relation(entity = Direction.class, entityColumn = "id", parentColumn = "direction_id")
     private Set<Direction> directions = Collections.emptySet();
 
+    @Builder.Default
     @Relation(entity = AlarmEndpoint.class, entityColumn = "alarm_id", parentColumn = "id")
     private List<AlarmEndpoint> alarmEndpoints = Collections.emptyList();
 
     @Ignore
-    private List<Endpoint> endpoints = Collections.emptyList();
+    @Builder.Default
+    private List<Endpoint> endpoints = new ArrayList<>();
 
     @Ignore
+    @Builder.Default
     private List<String> errors = new ArrayList<>();
 
     public UserAlarmWithRelations() {
@@ -53,30 +69,8 @@ public class UserAlarmWithRelations extends BaseObservable implements Serializab
         setRoute(null);
         setDirection(null);
         setStop(null);
-        setAlarmEndpoints(new ArrayList<>());
-        setEndpoints(new ArrayList<>());
     }
 
-    public UserAlarmWithRelations(UserAlarmWithRelations alarmWithRelations) {
-        setAlarm(new UserAlarm(alarmWithRelations.getAlarm()));
-        setRoute(alarmWithRelations.getRoute());
-        setDirection(alarmWithRelations.getDirection());
-        setStop(alarmWithRelations.getStop());
-        setAlarmEndpoints(alarmWithRelations.getAlarmEndpoints());
-        setEndpoints(alarmWithRelations.getEndpoints());
-    }
-
-    @Bindable
-    public UserAlarm getAlarm() {
-        return alarm;
-    }
-
-    public void setAlarm(UserAlarm alarm) {
-        this.alarm = alarm;
-        notifyPropertyChanged(BR.alarm);
-    }
-
-    @Bindable
     public Route getRoute() {
         return this.getItemInSet(routes);
     }
@@ -85,18 +79,8 @@ public class UserAlarmWithRelations extends BaseObservable implements Serializab
         this.routes = this.getSetOfSingleItem(route);
         String routeId = Optional.ofNullable(route).map(BaseResource::getId).orElse("");
         this.alarm.setRouteId(routeId);
-        notifyPropertyChanged(BR.route);
     }
 
-    public Set<Route> getRoutes() {
-        return routes;
-    }
-
-    public void setRoutes(Set<Route> routes) {
-        this.routes = routes;
-    }
-
-    @Bindable
     public Direction getDirection() {
         return this.getItemInSet(directions);
     }
@@ -105,18 +89,8 @@ public class UserAlarmWithRelations extends BaseObservable implements Serializab
         this.directions = this.getSetOfSingleItem(direction);
         long directionId = Optional.ofNullable(direction).map(Direction::getId).orElse(-1L);
         this.alarm.setDirectionId(directionId);
-        notifyPropertyChanged(BR.direction);
     }
 
-    public Set<Direction> getDirections() {
-        return directions;
-    }
-
-    public void setDirections(Set<Direction> directions) {
-        this.directions = directions;
-    }
-
-    @Bindable
     public Stop getStop() {
         return this.getItemInSet(stops);
     }
@@ -125,33 +99,6 @@ public class UserAlarmWithRelations extends BaseObservable implements Serializab
         this.stops = this.getSetOfSingleItem(stop);
         String stopId = Optional.ofNullable(stop).map(Stop::getId).orElse("");
         this.alarm.setStopId(stopId);
-        notifyPropertyChanged(BR.stop);
-    }
-
-    public Set<Stop> getStops() {
-        return stops;
-    }
-
-    public void setStops(Set<Stop> stops) {
-        this.stops = stops;
-    }
-
-    public List<AlarmEndpoint> getAlarmEndpoints() {
-        return alarmEndpoints;
-    }
-
-    public void setAlarmEndpoints(List<AlarmEndpoint> alarmEndpoints) {
-        this.alarmEndpoints = alarmEndpoints;
-    }
-
-    @Bindable
-    public List<Endpoint> getEndpoints() {
-        return endpoints;
-    }
-
-    public void setEndpoints(List<Endpoint> endpoints) {
-        this.endpoints = endpoints;
-        notifyPropertyChanged(BR.endpoints);
     }
 
     private <T> T getItemInSet(Set<T> items) {
@@ -162,24 +109,6 @@ public class UserAlarmWithRelations extends BaseObservable implements Serializab
         return Optional.ofNullable(item).isPresent() ?
                 new HashSet<>(Collections.singletonList(item)) :
                 Collections.emptySet();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return alarm.equals(((UserAlarmWithRelations) o).alarm);
-    }
-
-    @Override
-    public String toString() {
-        return this.alarm.toString();
-    }
-
-    @Override
-    public int hashCode() {
-        return alarm.hashCode();
     }
 
     @Override
@@ -195,10 +124,5 @@ public class UserAlarmWithRelations extends BaseObservable implements Serializab
         }
 
         return this.errors.isEmpty();
-    }
-
-    @Override
-    public List<String> getErrors() {
-        return this.errors;
     }
 }

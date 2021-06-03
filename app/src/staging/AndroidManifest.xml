@@ -9,7 +9,7 @@
 
     <application
         tools:replace="android:name"
-        android:name=".TestApplication"
+        android:name=".MainApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"

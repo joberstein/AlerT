@@ -1,23 +1,28 @@
 package com.jesseoberstein.alert.data.dao;
 
 import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.jesseoberstein.alert.models.mbta.Route;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
-public interface RouteDao extends BaseDao<Route> {
+public interface RouteDao {
 
     @Query("SELECT * FROM routes WHERE id = :routeId")
-    Route get(String routeId);
+    Single<Route> get(String routeId);
 
-    @Override
     @Query("SELECT * FROM routes")
-    List<Route> getAll();
+    Single<List<Route>> getAll();
 
-    @Override
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Single<List<Long>> insert(Route[] elements);
+
     @Query("SELECT COUNT(*) FROM routes")
     long count();
 }

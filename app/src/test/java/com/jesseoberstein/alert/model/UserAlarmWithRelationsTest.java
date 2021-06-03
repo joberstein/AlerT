@@ -10,25 +10,19 @@ import com.jesseoberstein.alert.models.mbta.Stop;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserAlarmWithRelationsTest {
     private UserAlarmWithRelations testAlarmWithRelations;
-    @Mock private UserAlarm testAlarm;
+    private UserAlarm validAlarm;
 
     @Before
     public void setup() {
@@ -43,13 +37,14 @@ public class UserAlarmWithRelationsTest {
         Direction testDirection = new Direction(0, "Northbound", "Orange");
         testDirection.setId(1);
 
-        when(testAlarm.isValid()).thenReturn(true);
-        doNothing().when(testAlarm).setRouteId(anyString());
-        doNothing().when(testAlarm).setStopId(anyString());
-        doNothing().when(testAlarm).setDirectionId(anyLong());
+        validAlarm = UserAlarm.builder()
+                .routeId("1")
+                .stopId("2")
+                .directionId(1L)
+                .build();
 
         testAlarmWithRelations = new UserAlarmWithRelations();
-        testAlarmWithRelations.setAlarm(testAlarm);
+        testAlarmWithRelations.setAlarm(validAlarm);
         testAlarmWithRelations.setRoute(testRoute);
         testAlarmWithRelations.setStop(testStop);
         testAlarmWithRelations.setDirection(testDirection);
@@ -67,24 +62,20 @@ public class UserAlarmWithRelationsTest {
     }
 
     @Test
-    public void testSingleArgConstructor() {
-        UserAlarm testAlarm = new UserAlarm();
-        testAlarm.setNickname("nickname");
-        testAlarm.setRouteId("routeId");
-        testAlarmWithRelations.setAlarm(testAlarm);
-        assertEquals(testAlarmWithRelations, new UserAlarmWithRelations(testAlarmWithRelations));
-    }
-
-    @Test
     public void testValidAlarm() {
         assertTrue(testAlarmWithRelations.isValid());
     }
 
 
     @Test
-    public void testValidAlarmData() {
-        when(testAlarm.isValid()).thenReturn(false);
-        when(testAlarm.getErrors()).thenReturn(Arrays.asList("invalid"));
+    public void testInValidAlarmData() {
+        UserAlarm validAlarm = UserAlarm.builder()
+            .routeId("1")
+            .stopId("2")
+            .directionId(1L)
+            .build();
+
+        testAlarmWithRelations.setAlarm(validAlarm);
         assertFalse(testAlarmWithRelations.isValid());
     }
 
