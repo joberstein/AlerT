@@ -1,6 +1,5 @@
 package com.jesseoberstein.alert.fragments.dialog.alarm;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.jesseoberstein.alert.R;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Direction;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public class SetDirectionDialog extends AlarmModifierDialog {
                 .map(Direction::toString)
                 .toArray(String[]::new);
 
-        return new AlertDialog.Builder(getActivity())
+        return this.getAlertDialogBuilder()
                 .setTitle(R.string.direction_dialog_title)
                 .setSingleChoiceItems(directionNames, selectedDirectionId, this::onItemSelected)
                 .create();

@@ -1,7 +1,6 @@
 package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,7 +31,7 @@ public class SetTimeDialog extends AlarmModifierDialog {
         View timePickerDialog = binding.getRoot();
         TimePicker timePicker = timePickerDialog.findViewById(R.id.alarm_time_picker);
 
-        return new AlertDialog.Builder(getActivity())
+        return this.getAlertDialogBuilder()
                 .setView(timePickerDialog)
                 .setPositiveButton(R.string.ok, ((dialogInterface, i) -> this.onPositiveButtonClick(timePicker)))
                 .setNegativeButton(R.string.cancel, ((dialogInterface, i) -> {}))
@@ -45,7 +44,7 @@ public class SetTimeDialog extends AlarmModifierDialog {
                 .minutes(timePicker.getMinute())
                 .build();
 
-        this.viewModel.getDraftAlarm().postValue(newAlarm);
+        this.viewModel.getDraftAlarm().setValue(newAlarm);
     }
 
     @BindingAdapter({"hour", "minutes", "is24HourMode"})

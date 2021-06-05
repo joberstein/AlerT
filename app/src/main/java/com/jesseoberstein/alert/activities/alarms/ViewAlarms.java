@@ -46,9 +46,6 @@ import static com.jesseoberstein.alert.utils.Constants.ALARM;
 public class ViewAlarms extends AppCompatActivity implements OnDialogClick, AlarmReceiver, AlarmAdapterInteractor {
 
     @Inject
-    ActionBar actionBar;
-
-    @Inject
     AppDatabase database;
 
     @Inject
@@ -65,7 +62,7 @@ public class ViewAlarms extends AppCompatActivity implements OnDialogClick, Alar
         setContentView(R.layout.activities_view_alarms);
         createQueryAlarmsTask().execute();
 
-        Optional.ofNullable(this.actionBar).ifPresent(bar -> {
+        Optional.ofNullable(this.getSupportActionBar()).ifPresent(bar -> {
             bar.setTitle(R.string.view_alarms_page);
             bar.setDisplayHomeAsUpEnabled(false);
         });

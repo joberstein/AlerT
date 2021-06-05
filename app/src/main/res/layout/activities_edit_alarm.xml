@@ -1,27 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/alarm_settings_pager"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/edit_alarm_theme_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/alarm_settings_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bottom_nav_height"
-            android:background="@color/white"
-            android:elevation="3dp"
-            app:tabBackground="?attr/tabsBackgroundColor"
-            app:tabGravity="fill"
-            app:tabMaxWidth="0dp"
-            app:tabIndicatorHeight="3dp"
-            app:tabIndicatorColor="?attr/tabSelectedIndicatorColor"/>
-
-    </androidx.viewpager.widget.ViewPager>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

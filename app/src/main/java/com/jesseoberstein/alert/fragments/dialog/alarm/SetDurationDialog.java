@@ -1,7 +1,6 @@
 package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -33,7 +32,7 @@ public class SetDurationDialog extends AlarmModifierDialog {
                 .mapToObj(DateTimeHelper::getFormattedDuration)
                 .toArray(String[]::new);
 
-        return new AlertDialog.Builder(getActivity())
+        return this.getAlertDialogBuilder()
                 .setTitle(R.string.duration_dialog_title)
                 .setSingleChoiceItems(formattedDurations, selectedIndex, this::onItemSelected)
                 .create();

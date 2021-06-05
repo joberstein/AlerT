@@ -31,7 +31,8 @@ public class SetNicknameDialog extends AlarmModifierDialog {
         binding.setViewModel(this.viewModel);
         binding.setLifecycleOwner(requireActivity());
 
-        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+
+        AlertDialog dialog = this.getAlertDialogBuilder()
                 .setTitle(R.string.nickname_dialog_title)
                 .setView(binding.getRoot())
                 .setOnKeyListener(this::onKeyPressed)

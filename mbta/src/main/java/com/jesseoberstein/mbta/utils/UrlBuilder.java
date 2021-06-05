@@ -3,7 +3,7 @@ package com.jesseoberstein.mbta.utils;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.jesseoberstein.mbta.sensitive.SensitiveData.API_KEY;
+//import static com.jesseoberstein.mbta.sensitive.SensitiveData.API_KEY;
 
 public class UrlBuilder {
     private static final String PROTOCOL = "https";
@@ -16,7 +16,7 @@ public class UrlBuilder {
     private UrlBuilder() {
         this.port = -1;
         this.endpoint = "";
-        this.query = QueryBuilder.queryBuilder().addParam("api_key", API_KEY);
+//        this.query = QueryBuilder.queryBuilder().addParam("api_key", API_KEY);
     }
 
     public static UrlBuilder urlBuilder() {

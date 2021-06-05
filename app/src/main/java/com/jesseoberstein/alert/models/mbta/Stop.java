@@ -49,6 +49,7 @@ public class Stop extends BaseResource {
 
     @ColumnInfo(name = "direction_id")
     @JsonProperty("route_id")
+    @NonNull
     private int directionId;
 
     @NotNull

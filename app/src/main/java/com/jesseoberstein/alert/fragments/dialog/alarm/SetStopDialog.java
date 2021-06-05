@@ -44,7 +44,7 @@ public class SetStopDialog extends AlarmModifierDialog {
         this.viewModel.getStop().observe(requireActivity(), binding::setStop);
         binding.setAutocomplete(autoComplete);
 
-        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+        AlertDialog dialog = this.getAlertDialogBuilder()
                 .setTitle(R.string.stop_dialog_title)
                 .setView(binding.getRoot())
                 .setOnKeyListener(this::onKeyPressed)

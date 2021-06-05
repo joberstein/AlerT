@@ -12,12 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 
 import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.databinding.AlarmRouteBinding;
 import com.jesseoberstein.alert.models.AutoComplete;
+import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 import com.jesseoberstein.alert.utils.LiveDataUtils;
@@ -57,7 +59,7 @@ public class SetRouteDialog extends AlarmModifierDialog {
             editText.setSelection(route.toString().length());
         });
 
-        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+        AlertDialog dialog = this.getAlertDialogBuilder()
                 .setTitle(R.string.route_dialog_title)
                 .setView(binding.getRoot())
                 .setOnKeyListener(this::onKeyPressed)

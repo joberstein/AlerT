@@ -1,8 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -46,14 +45,14 @@
         <item name="android:strokeWidth">2</item>
     </style>
 
-    <style name="AlarmSettingsLight" parent="Theme.AppCompat.Light">
+    <style name="AlarmSettingsLight" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="menuItemIconColor">@android:color/black</item>
         <item name="tabsBackgroundColor">@color/white</item>
         <item name="sectionLabelColor">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="AlarmSettingsDark" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AlarmSettingsDark" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="menuItemIconColor">@color/white</item>
         <item name="tabsBackgroundColor">@color/white</item>
         <item name="sectionLabelColor">@color/colorPrimary</item>

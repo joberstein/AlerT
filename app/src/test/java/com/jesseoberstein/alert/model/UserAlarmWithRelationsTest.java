@@ -30,9 +30,8 @@ public class UserAlarmWithRelationsTest {
         testRoute.setId("Orange");
         testRoute.setLongName("Orange Line");
 
-        Stop testStop = new Stop();
+        Stop testStop = new Stop("Orange", 0);
         testStop.setId("Haymarket");
-        testStop.setRouteId("Orange");
 
         Direction testDirection = new Direction(0, "Northbound", "Orange");
         testDirection.setId(1);

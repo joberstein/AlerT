@@ -1,7 +1,6 @@
 package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -34,7 +33,7 @@ public class SetDaysDialog extends AlarmModifierDialog {
 
         String[] daysList = Arrays.copyOfRange(getInstance().getWeekdays(), SUNDAY, SATURDAY + 1);
 
-        return new AlertDialog.Builder(getActivity())
+        return this.getAlertDialogBuilder()
                 .setTitle(R.string.repeat_custom_dialog_title)
                 .setMultiChoiceItems(daysList, this.selectedDays.toBooleanArray(), this::onItemToggle)
                 .setPositiveButton(R.string.ok, this::onPositiveButtonClick)
