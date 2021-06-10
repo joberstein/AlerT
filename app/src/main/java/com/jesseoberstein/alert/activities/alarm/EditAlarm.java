@@ -19,6 +19,7 @@ import com.jesseoberstein.alert.utils.AlarmManagerHelper;
 import com.jesseoberstein.alert.utils.UserAlarmScheduler;
 import com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,11 +53,12 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick, Alarm
         boolean isAlarmUpdate = !Objects.isNull(alarmWithRelations);
         UserAlarm alarm = isAlarmUpdate ? alarmWithRelations.getAlarm().toBuilder().build() : new UserAlarm();
 
-        if (!isAlarmUpdate) {
-            userAlarmScheduler.setDefaultAlarmTime(alarm);
-        }
-
-        this.viewModel.getDraftAlarm().setValue(alarm);
+        this.viewModel.getHour().setValue(alarm.getHour());
+        this.viewModel.getMinutes().setValue(alarm.getMinutes());
+        this.viewModel.getNickname().setValue(alarm.getNickname());
+        this.viewModel.getRepeatType().setValue(alarm.getRepeatType());
+        this.viewModel.getSelectedDays().setValue(alarm.getSelectedDays());
+        this.viewModel.getDuration().setValue(Duration.ofMinutes(alarm.getDuration()));
 
         Optional.ofNullable(alarm.getRouteId())
                 .ifPresent(viewModel::loadRoute);
@@ -66,11 +68,6 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick, Alarm
 
         Optional.ofNullable(alarm.getStopId())
                 .ifPresent(stopId -> viewModel.loadStop(stopId, alarm.getRouteId(), alarm.getDirectionId().intValue()));
-
-        viewModel.getDraftAlarm().observe(this, userAlarm -> {
-            userAlarmScheduler.setAlarmTime(userAlarm);
-            userAlarmScheduler.setNextFiringDayString(userAlarm);
-        });
 
         setTheme(R.style.AlarmSettingsDark_Default);
         this.viewModel.getThemeId().observe(this, this::setTheme);
@@ -108,8 +105,6 @@ public class EditAlarm extends AppCompatActivity implements OnDialogClick, Alarm
 
         // TODO can do this in the InsertAlarmTask
         alarm.setId(insertedAlarmId);
-//        AlarmEndpoint[] alarmEndpoints = AlarmUtils.createAlarmEndpoints(this.draftAlarm);
-//        new InsertAlarmEndpointsTask(database).execute(alarmEndpoints);
         this.alarmManagerHelper.scheduleUserAlarm(alarm);
         finish();
     }

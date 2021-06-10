@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data class="AlarmNicknameBinding">
-        <variable name="viewModel" type="com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel" />
+        <variable name="nickname" type="String" />
     </data>
 
     <LinearLayout
@@ -23,18 +22,18 @@
             android:lineSpacingExtra="10dp"
             android:inputType="textNoSuggestions|textCapWords|text"
             android:hint="@string/nickname_default"
-            android:text="@={viewModel.nickname}">
+            android:text="@={nickname}">
             <requestFocus/>
         </EditText>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@{viewModel.nickname.length() > 11 ? @android:color/holo_red_light : @android:color/black}"
+            android:textColor="@{nickname.length() > 11 ? @android:color/holo_red_light : @android:color/black}"
             android:gravity="end"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="@{viewModel.nickname.length() + `/12`, default=`0/12`}" />
+            android:text="@{nickname.length() + `/12`, default=`0/12`}" />
 
     </LinearLayout>
 

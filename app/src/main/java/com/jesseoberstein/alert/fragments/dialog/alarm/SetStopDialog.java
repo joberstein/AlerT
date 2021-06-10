@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -17,8 +18,10 @@ import com.jesseoberstein.alert.databinding.AlarmStopBinding;
 import com.jesseoberstein.alert.models.AutoComplete;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.ActivityUtils;
+import com.jesseoberstein.alert.utils.LiveDataUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 
@@ -41,7 +44,14 @@ public class SetStopDialog extends AlarmModifierDialog {
         autoComplete.attachAdapter(getActivity());
 
         AlarmStopBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_stop, null, false);
-        this.viewModel.getStop().observe(requireActivity(), binding::setStop);
+        EditText editText = binding.getRoot().findViewById(R.id.alarm_stop);
+
+        Optional.ofNullable(this.viewModel.getStop().getValue()).ifPresent(stop -> {
+            binding.setStop(stop);
+            editText.setText(stop.toString());
+            editText.setSelection(stop.toString().length());
+        });
+
         binding.setAutocomplete(autoComplete);
 
         AlertDialog dialog = this.getAlertDialogBuilder()

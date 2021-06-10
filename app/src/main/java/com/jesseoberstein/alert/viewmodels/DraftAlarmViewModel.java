@@ -8,12 +8,24 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.jesseoberstein.alert.data.database.AppDatabase;
+import com.jesseoberstein.alert.models.RepeatType;
+import com.jesseoberstein.alert.models.SelectedDays;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.models.mbta.Direction;
 import com.jesseoberstein.alert.models.mbta.Route;
 import com.jesseoberstein.alert.models.mbta.Stop;
 import com.jesseoberstein.alert.utils.AlertUtils;
 
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.format.TextStyle;
+import java.util.Arrays;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -24,10 +36,15 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
+import static java.time.temporal.TemporalAdjusters.next;
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
+
 @Value
 @HiltViewModel
 @EqualsAndHashCode(callSuper = false)
 public class DraftAlarmViewModel extends ViewModel {
+
+    private final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
 
     AppDatabase database;
     SavedStateHandle state;
@@ -36,16 +53,29 @@ public class DraftAlarmViewModel extends ViewModel {
     public DraftAlarmViewModel(SavedStateHandle savedStateHandle, AppDatabase database) {
         this.state = savedStateHandle;
         this.database = database;
+
+        this.addTimeSources();
+        this.addNextFiringDaysSources();
         this.addUserAlarmSources();
     }
 
-    MutableLiveData<UserAlarm> draftAlarm = new MutableLiveData<>();
+    MutableLiveData<Integer> hour = new MutableLiveData<>();
+    MutableLiveData<Integer> minutes = new MutableLiveData<>();
     MutableLiveData<String> nickname = new MutableLiveData<>();
+    MutableLiveData<RepeatType> repeatType = new MutableLiveData<>();
+    MutableLiveData<SelectedDays> selectedDays = new MutableLiveData<>();
+    MutableLiveData<Duration> duration = new MutableLiveData<>();
     MutableLiveData<Route> route = new MutableLiveData<>();
     MutableLiveData<Stop> stop = new MutableLiveData<>();
     MutableLiveData<Direction> direction = new MutableLiveData<>();
-    MediatorLiveData<UserAlarm> draftAlarmChanged = new MediatorLiveData<>();
+
+    MediatorLiveData<LocalTime> time = new MediatorLiveData<>();
+    MediatorLiveData<LocalDateTime> nextFiringDay = new MediatorLiveData<>();
+    MediatorLiveData<UserAlarm> draftAlarm = new MediatorLiveData<>();
+
     LiveData<Integer> themeId = Transformations.map(this.route, AlertUtils::getTheme);
+    LiveData<String> formattedTime = Transformations.map(this.time, DATE_TIME_FORMATTER::format);
+    LiveData<String> formattedNextFiringDay = Transformations.map(this.nextFiringDay, this::formatNextFiringDay);
 
     public void loadRoute(String routeId) {
         this.database.routeDao().get(routeId)
@@ -65,44 +95,100 @@ public class DraftAlarmViewModel extends ViewModel {
                 .subscribe(this.direction::postValue);
     }
 
+    private UserAlarm getCurrentUserAlarm() {
+        UserAlarm existing = this.draftAlarm.getValue();
+        return Optional.ofNullable(existing).orElse(new UserAlarm());
+    }
+
     private void addUserAlarmSources() {
-        addUserAlarmSource(this.draftAlarm, alarm -> alarm);
-        addUserAlarmSource(this.nickname, nickname -> getUserAlarm().withNickname(nickname));
-        addUserAlarmSource(this.route, route -> this.mergeRoute(route, getUserAlarm()));
-        addUserAlarmSource(this.direction, direction -> this.mergeDirection(direction, getUserAlarm()));
-        addUserAlarmSource(this.stop, stop -> this.mergeStop(stop, getUserAlarm()));
+        addSource(this.hour, this.draftAlarm,
+                hour -> getCurrentUserAlarm().withHour(hour));
+
+        addSource(this.minutes, this.draftAlarm,
+                minutes -> getCurrentUserAlarm().withMinutes(minutes));
+
+        addSource(this.nickname, this.draftAlarm,
+                nickname -> getCurrentUserAlarm().withNickname(nickname));
+
+        addSource(this.repeatType, this.draftAlarm,
+                repeatType -> getCurrentUserAlarm().withRepeatType(repeatType));
+
+        addSource(this.selectedDays, this.draftAlarm,
+                selectedDays -> getCurrentUserAlarm().withSelectedDays(selectedDays));
+
+        addSource(this.duration, this.draftAlarm,
+                duration -> getCurrentUserAlarm().withDuration(duration.toMinutes()));
+
+        addSource(this.route, this.draftAlarm,
+                route -> getCurrentUserAlarm().withRoute(route));
+
+        addSource(this.direction, this.draftAlarm,
+                direction -> getCurrentUserAlarm().withDirection(direction));
+
+        addSource(this.stop, this.draftAlarm,
+                stop -> getCurrentUserAlarm().withStop(stop));
     }
 
-    private UserAlarm mergeRoute(Route route, UserAlarm userAlarm) {
-        return Optional.ofNullable(route)
-                .map(Route::getId)
-                .map(userAlarm::withRouteId)
-                .orElse(userAlarm);
+    private LocalTime getCurrentTime() {
+        LocalTime existing = this.time.getValue();
+        return Optional.ofNullable(existing).orElse(LocalTime.now().plusHours(1));
     }
 
-    private UserAlarm mergeDirection(Direction direction, UserAlarm userAlarm) {
-        return Optional.ofNullable(direction)
-                .map(Direction::getId)
-                .map(userAlarm::withDirectionId)
-                .orElse(userAlarm);
+    private void addTimeSources() {
+        addSource(this.hour, this.time, hour -> getCurrentTime().withHour(hour));
+        addSource(this.minutes, this.time, minutes -> getCurrentTime().withMinute(minutes));
     }
 
-    private UserAlarm mergeStop(Stop stop, UserAlarm userAlarm) {
-        return Optional.ofNullable(stop)
-                .map(Stop::getId)
-                .map(userAlarm::withStopId)
-                .orElse(userAlarm);
-    }
+    private void addNextFiringDaysSources() {
+        addSource(this.time, this.nextFiringDay, time -> {
+            SelectedDays existingDays = this.getSelectedDays().getValue();
+            SelectedDays days = Optional.ofNullable(existingDays).orElse(new SelectedDays());
+            return getNextFiringDay(time, days);
+        });
 
-    private <T> void addUserAlarmSource(LiveData<T> liveData, Function<T, UserAlarm> merge) {
-        this.draftAlarmChanged.addSource(liveData, data -> {
-            UserAlarm mergedAlarm = merge.apply(data);
-            this.draftAlarmChanged.setValue(mergedAlarm);
+        addSource(this.selectedDays, this.nextFiringDay, selectedDays -> {
+            LocalTime existingTime = this.getTime().getValue();
+            LocalTime time = Optional.ofNullable(existingTime).orElse(LocalTime.now().plusHours(1));
+            return getNextFiringDay(time, selectedDays);
         });
     }
 
-    private UserAlarm getUserAlarm() {
-        UserAlarm existing = this.draftAlarmChanged.getValue();
-        return Optional.ofNullable(existing).orElse(new UserAlarm());
+    private LocalDateTime getNextFiringDay(LocalTime time, SelectedDays selectedDays) {
+        boolean[] selectedArray = selectedDays.toBooleanArray();
+        LocalTime now = LocalTime.now();
+        LocalDateTime todayAtTime = LocalDate.now().atTime(time);
+
+        return Arrays.stream(DayOfWeek.values())
+                .filter(dayOfWeek -> selectedArray[dayOfWeek.getValue()-1])
+                .map(dayOfWeek -> time.isAfter(now) ? nextOrSame(dayOfWeek) : next(dayOfWeek))
+                .map(todayAtTime::with)
+                .sorted()
+                .findFirst()
+                .orElseGet(() -> time.isAfter(now) ? todayAtTime : todayAtTime.plusDays(1));
+    }
+
+    private String formatNextFiringDay(LocalDateTime day) {
+        LocalDateTime now = LocalDate.now().atStartOfDay();
+        Duration durationBetween = Duration.between(now, day.toLocalDate().atStartOfDay());
+        int daysAway = Long.valueOf(durationBetween.toDays()).intValue();
+        String dayOfWeek = day.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US);
+
+        switch (daysAway) {
+            case 0:
+                return "Today";
+            case 1:
+                return "Tomorrow";
+            case 7:
+                return "Next " + dayOfWeek;
+            default:
+                return dayOfWeek;
+        }
+    }
+
+    private <S,T> void addSource(LiveData<S> source, MediatorLiveData<T> mediator, Function<S,T> merge) {
+        mediator.addSource(source, data -> {
+            T merged = merge.apply(data);
+            mediator.setValue(merged);
+        });
     }
 }

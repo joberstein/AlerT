@@ -15,8 +15,10 @@ import com.jesseoberstein.alert.utils.Constants;
 import com.jesseoberstein.alert.validation.Validatable;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -91,6 +93,10 @@ public class UserAlarm implements Serializable, Validatable {
         this.duration = 30;
         this.active = true;
         this.errors = new ArrayList<>();
+
+        LocalTime defaultTime = LocalTime.now().plusHours(1);
+        this.hour = defaultTime.getHour();
+        this.minutes = defaultTime.getMinute();
     }
 
     public void setRepeatType(RepeatType repeatType) {
@@ -101,6 +107,27 @@ public class UserAlarm implements Serializable, Validatable {
         this.repeatType = repeatType;
         setRepeatTypeId(repeatType.getId());
         setSelectedDays(repeatType.getSelectedDays());
+    }
+
+    public UserAlarm withRoute(Route route) {
+        return Optional.ofNullable(route)
+                .map(Route::getId)
+                .map(this::withRouteId)
+                .orElse(this);
+    }
+
+    public UserAlarm withDirection(Direction direction) {
+        return Optional.ofNullable(direction)
+                .map(Direction::getId)
+                .map(this::withDirectionId)
+                .orElse(this);
+    }
+
+    public UserAlarm withStop(Stop stop) {
+        return Optional.ofNullable(stop)
+                .map(Stop::getId)
+                .map(this::withStopId)
+                .orElse(this);
     }
 
     @Override

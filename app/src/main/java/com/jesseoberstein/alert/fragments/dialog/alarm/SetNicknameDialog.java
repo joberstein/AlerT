@@ -18,6 +18,8 @@ import com.jesseoberstein.alert.databinding.AlarmNicknameBinding;
 import com.jesseoberstein.alert.utils.ActivityUtils;
 import com.jesseoberstein.alert.utils.LiveDataUtils;
 
+import java.util.Optional;
+
 /**
  * A dialog fragment that shows a dialog for editing the alarm nickname.
  */
@@ -27,39 +29,33 @@ public class SetNicknameDialog extends AlarmModifierDialog {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        AlarmNicknameBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_nickname, null, false);
-        binding.setViewModel(this.viewModel);
-        binding.setLifecycleOwner(requireActivity());
 
+        AlarmNicknameBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_nickname, null, false);
+        EditText editText = binding.getRoot().findViewById(R.id.alarm_nickname);
+
+        Optional.ofNullable(this.viewModel.getNickname().getValue()).ifPresent(nickname -> {
+            binding.setNickname(nickname);
+            editText.setText(nickname);
+            editText.setSelection(nickname.length());
+        });
 
         AlertDialog dialog = this.getAlertDialogBuilder()
                 .setTitle(R.string.nickname_dialog_title)
                 .setView(binding.getRoot())
-                .setOnKeyListener(this::onKeyPressed)
+                .setOnKeyListener((dialogInterface, keyCode, event) -> this.onKeyPressed(dialogInterface, keyCode, event, binding.getNickname()))
                 .create();
-
-        EditText editText = binding.getRoot().findViewById(R.id.alarm_nickname);
-        LiveDataUtils.observeOnce(requireActivity(), this.viewModel.getNickname(), nickname -> {
-            editText.setSelection(nickname.length());
-        });
 
         ActivityUtils.showKeyboard(dialog.getWindow());
 
         return dialog;
     }
 
-    public boolean onKeyPressed(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
-        if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-            dialogInterface.dismiss();
+    public boolean onKeyPressed(DialogInterface dialog, int keyCode, KeyEvent keyEvent, String nickname) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            this.viewModel.getNickname().setValue(nickname);
+            dialog.dismiss();
         }
 
         return true;
-    }
-
-    @BindingAdapter("isCursorAtEnd")
-    public static void setEditTextCursor(EditText editText, boolean isCursorAtEnd) {
-        if (isCursorAtEnd) {
-            editText.setSelection(editText.getText().length());
-        }
     }
 }

@@ -24,8 +24,9 @@
             android:text="@{stop.toString()}"
             app:adapter="@{autocomplete.adapter}"
             app:validator="@{autocomplete.validator}"
-            app:onItemClick="@{autocomplete.itemClickListener}"/>
-            app:isCursorAtEnd="@{true}" />
+            app:onItemClick="@{autocomplete.itemClickListener}">
+            <requestFocus/>
+        </AutoCompleteTextView>
 
     </LinearLayout>
 

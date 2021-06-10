@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data class="AlarmTimeBinding">
-        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="hour" type="Integer"/>
+        <variable name="minutes" type="Integer"/>
     </data>
 
     <TimePicker
         android:id="@+id/alarm_time_picker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:hour="@{alarm.hour}"
-        app:minutes="@{alarm.minutes}"
-        app:is24HourMode="@{false}"/>
+        android:timePickerMode="clock"/>
 
 </layout>

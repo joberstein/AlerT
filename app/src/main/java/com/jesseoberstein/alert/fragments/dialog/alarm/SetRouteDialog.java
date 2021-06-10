@@ -25,6 +25,7 @@ import com.jesseoberstein.alert.utils.ActivityUtils;
 import com.jesseoberstein.alert.utils.LiveDataUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 
@@ -44,20 +45,19 @@ public class SetRouteDialog extends AlarmModifierDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
-        AlarmRouteBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_route, null, false);
-        binding.setLifecycleOwner(requireActivity());
-        binding.setViewModel(this.viewModel);
-
         AutoComplete<Route> autoComplete = new AutoComplete<>(routes, this::onAutoCompleteItemSelected);
         autoComplete.attachAdapter(requireActivity());
-        binding.setAutocomplete(autoComplete);
 
+        AlarmRouteBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_route, null, false);
         AutoCompleteTextView editText = binding.getRoot().findViewById(R.id.alarm_route);
-        LiveDataUtils.observeOnce(requireActivity(), this.viewModel.getRoute(), route -> {
-            // Set the text first before setting the cursor - autocompleteview does not propagate the databinding yet
+
+        Optional.ofNullable(this.viewModel.getRoute().getValue()).ifPresent(route -> {
+            binding.setRoute(route);
             editText.setText(route.toString());
             editText.setSelection(route.toString().length());
         });
+
+        binding.setAutocomplete(autoComplete);
 
         AlertDialog dialog = this.getAlertDialogBuilder()
                 .setTitle(R.string.route_dialog_title)

@@ -11,7 +11,10 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.utils.DateTimeHelper;
 
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
@@ -20,27 +23,35 @@ import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
  */
 public class SetDurationDialog extends AlarmModifierDialog {
 
-    final long[] durationList = new long[]{15L, 30L, 45L, 60L};
+    final Duration[] durationList = new Duration[]{
+            Duration.ofMinutes(15),
+            Duration.ofMinutes(30),
+            Duration.ofMinutes(45),
+            Duration.ofHours(1)
+    };
 
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        int selectedIndex = Arrays.binarySearch(this.durationList, this.userAlarm.getDuration());
+
+        int durationIndex = Optional.ofNullable(this.viewModel.getDuration().getValue())
+                .map(duration -> Arrays.binarySearch(this.durationList, duration))
+                .orElse(-1);
 
         String[] formattedDurations = Arrays.stream(this.durationList)
-                .mapToObj(DateTimeHelper::getFormattedDuration)
+                .map(duration -> String.format("%d minutes", duration.toMinutes()))
                 .toArray(String[]::new);
 
         return this.getAlertDialogBuilder()
                 .setTitle(R.string.duration_dialog_title)
-                .setSingleChoiceItems(formattedDurations, selectedIndex, this::onItemSelected)
+                .setSingleChoiceItems(formattedDurations, durationIndex, this::onItemSelected)
                 .create();
     }
 
     private void onItemSelected(DialogInterface dialogInterface, int selectedIndex) {
-        UserAlarm newAlarm = this.userAlarm.withDuration(this.durationList[selectedIndex]);
-        this.viewModel.getDraftAlarm().setValue(newAlarm);
+        Duration duration = this.durationList[selectedIndex];
+        this.viewModel.getDuration().setValue(duration);
 
         new android.os.Handler().postDelayed(dialogInterface::dismiss, DELAY_DIALOG_DISMISS);
     }

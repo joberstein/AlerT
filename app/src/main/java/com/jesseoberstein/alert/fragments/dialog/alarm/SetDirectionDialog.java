@@ -24,18 +24,13 @@ import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 public class SetDirectionDialog extends AlarmModifierDialog {
 
     private final List<Direction> directions;
-    private Direction selectedDirection;
 
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
-        this.viewModel.getDirection().observe(requireActivity(), direction -> {
-            this.selectedDirection = direction;
-        });
-
-        int selectedDirectionId = Optional.ofNullable(selectedDirection)
+        int selectedDirectionId = Optional.ofNullable(this.viewModel.getDirection().getValue())
                 .map(Direction::getDirectionId)
                 .orElse(-1);
 

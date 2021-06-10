@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="AlarmRouteBinding">
-        <variable name="viewModel" type="com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel" />
+        <variable name="route" type="com.jesseoberstein.alert.models.mbta.Route" />
         <variable name="autocomplete" type="com.jesseoberstein.alert.models.AutoComplete"/>
     </data>
 
@@ -21,7 +21,7 @@
             android:completionThreshold="1"
             android:imeOptions="actionDone"
             android:hint="@string/route_dialog_default"
-            android:text="@{viewModel.route.toString()}"
+            android:text="@{route.toString()}"
             app:adapter="@{autocomplete.adapter}"
             app:validator="@{autocomplete.validator}"
             app:onItemClick="@{autocomplete.itemClickListener}">

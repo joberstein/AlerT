@@ -11,6 +11,8 @@ import com.jesseoberstein.alert.R;
 import com.jesseoberstein.alert.models.RepeatType;
 import com.jesseoberstein.alert.models.UserAlarm;
 
+import java.util.Optional;
+
 import static com.jesseoberstein.alert.models.RepeatType.getRepeatTypes;
 import static com.jesseoberstein.alert.utils.Constants.DELAY_DIALOG_DISMISS;
 
@@ -23,11 +25,14 @@ public class SetRepeatTypeDialog extends AlarmModifierDialog {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        int currentRepeatType = this.userAlarm.getRepeatType().getId();
+
+        int repeatTypeId = Optional.ofNullable(this.viewModel.getRepeatType().getValue())
+                .map(RepeatType::getId)
+                .orElse(-1);
 
         return this.getAlertDialogBuilder()
                 .setTitle(R.string.repeat_dialog_title)
-                .setSingleChoiceItems(getRepeatTypes(), currentRepeatType, this::onItemSelected)
+                .setSingleChoiceItems(getRepeatTypes(), repeatTypeId, this::onItemSelected)
                 .create();
     }
 
@@ -37,8 +42,8 @@ public class SetRepeatTypeDialog extends AlarmModifierDialog {
         if (RepeatType.CUSTOM.equals(repeatType)) {
             new SetDaysDialog().show(this.getParentFragmentManager(), "setDays");
         } else {
-            UserAlarm newAlarm = this.userAlarm.withRepeatType(repeatType);
-            this.viewModel.getDraftAlarm().setValue(newAlarm);
+            this.viewModel.getRepeatType().setValue(repeatType);
+            this.viewModel.getSelectedDays().setValue(repeatType.getSelectedDays());
         }
 
         new android.os.Handler().postDelayed(dialogInterface::dismiss, DELAY_DIALOG_DISMISS);

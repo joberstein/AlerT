@@ -71,8 +71,7 @@ public class EditAlarmFragment extends Fragment {
             this.isAlarmUpdate = args.getBoolean(IS_ALARM_UPDATE);
         });
 
-        this.viewModel.getDraftAlarmChanged()
-                .observe(requireActivity(), alarm -> this.dismissSnackbar());
+        this.viewModel.getDraftAlarm().observe(requireActivity(), alarm -> this.dismissSnackbar());
     }
 
     @Override
@@ -99,7 +98,9 @@ public class EditAlarmFragment extends Fragment {
         setDrawableColor(requireContext(), save.getIcon(), R.attr.menuItemIconColor);
         save.setContentDescription("Save Alarm");
         save.setOnMenuItemClickListener(item -> {
-            LiveDataUtils.observeOnce(requireActivity(), this.viewModel.getDraftAlarmChanged(), this::saveAlarm);
+            Optional.ofNullable(this.viewModel.getDraftAlarm().getValue())
+                    .ifPresent(this::saveAlarm);
+
             return false;
         });
 

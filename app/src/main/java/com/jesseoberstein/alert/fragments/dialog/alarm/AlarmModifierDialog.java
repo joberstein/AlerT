@@ -11,12 +11,12 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.models.UserAlarm;
 import com.jesseoberstein.alert.viewmodels.DraftAlarmViewModel;
+
+import java.util.Optional;
 
 public abstract class AlarmModifierDialog extends DialogFragment {
 
-    protected UserAlarm userAlarm;
     protected DraftAlarmViewModel viewModel;
     private int themeId = R.style.AlarmSettingsDark_Default;
 
@@ -30,13 +30,8 @@ public abstract class AlarmModifierDialog extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        this.viewModel.getThemeId().observe(requireActivity(), themeId -> {
-            this.themeId = themeId;
-        });
-
-        this.viewModel.getDraftAlarm().observe(requireActivity(), userAlarm -> {
-            this.userAlarm = userAlarm;
-        });
+        Optional.ofNullable(this.viewModel.getThemeId().getValue())
+                .ifPresent(themeId -> this.themeId = themeId);
 
         return super.onCreateDialog(savedInstanceState);
     }

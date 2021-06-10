@@ -3,7 +3,7 @@
 
     <data class="RepeatSectionBinding">
         <import type="com.jesseoberstein.alert.models.RepeatType"/>
-        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="repeatType" type="com.jesseoberstein.alert.models.RepeatType"/>
     </data>
 
     <LinearLayout
@@ -33,7 +33,7 @@
                 android:id="@+id/alarmSettings_section_value_repeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{alarm.repeatType.toString()}"
+                android:text="@{repeatType.toString()}"
                 android:textSize="20sp"
                 android:textColor="@color/gray"
                 android:layout_below="@id/alarmSettings_section_label_repeat"

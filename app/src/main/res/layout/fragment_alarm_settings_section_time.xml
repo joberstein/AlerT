@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data class="TimeSectionBinding">
-        <variable name="alarm" type="com.jesseoberstein.alert.models.UserAlarm"/>
+        <variable name="time" type="String"/>
     </data>
 
     <LinearLayout
@@ -32,7 +32,7 @@
                 android:id="@+id/alarmSettings_section_value_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{alarm.time ?? `Enter a time...`, default=`12:30 pm`}"
+                android:text="@{time ?? `Enter a time...`}"
                 android:textSize="24sp"
                 android:textColor="@color/gray"
                 android:layout_below="@id/alarmSettings_section_label_time"

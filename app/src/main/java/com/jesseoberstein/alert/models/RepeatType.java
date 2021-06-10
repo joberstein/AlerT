@@ -38,7 +38,7 @@ public class RepeatType implements Serializable {
         return this.repeatType;
     }
 
-    SelectedDays getSelectedDays() {
+    public SelectedDays getSelectedDays() {
         switch (this.repeatType) {
             case weekdays:
                 return SelectedDays.WEEKDAYS;

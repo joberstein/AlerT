@@ -2,18 +2,15 @@ package com.jesseoberstein.alert.fragments.dialog.alarm;
 
 
 import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.DataBindingUtil;
 
-import com.jesseoberstein.alert.R;
-import com.jesseoberstein.alert.databinding.AlarmTimeBinding;
-import com.jesseoberstein.alert.models.UserAlarm;
+import java.time.LocalTime;
+import java.util.Optional;
 
 /**
  * A dialog fragment that shows a time picker.
@@ -25,32 +22,21 @@ public class SetTimeDialog extends AlarmModifierDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
-        AlarmTimeBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_alarm_dialog_time, null, false);
-        this.viewModel.getDraftAlarm().observe(requireActivity(), binding::setAlarm);
+        LocalTime now = LocalTime.now();
 
-        View timePickerDialog = binding.getRoot();
-        TimePicker timePicker = timePickerDialog.findViewById(R.id.alarm_time_picker);
+        int hour = Optional.ofNullable(this.viewModel.getHour().getValue())
+                .orElseGet(() -> now.plusHours(1).getHour());
 
-        return this.getAlertDialogBuilder()
-                .setView(timePickerDialog)
-                .setPositiveButton(R.string.ok, ((dialogInterface, i) -> this.onPositiveButtonClick(timePicker)))
-                .setNegativeButton(R.string.cancel, ((dialogInterface, i) -> {}))
-                .create();
+        int minutes = Optional.ofNullable(this.viewModel.getMinutes().getValue())
+                .orElseGet(now::getMinute);
+
+        Context context = this.getAlertDialogBuilder().getContext();
+
+        return new TimePickerDialog(context, this::onTimeSet, hour, minutes, false);
     }
 
-    public void onPositiveButtonClick(TimePicker timePicker) {
-        UserAlarm newAlarm = this.userAlarm.toBuilder()
-                .hour(timePicker.getHour())
-                .minutes(timePicker.getMinute())
-                .build();
-
-        this.viewModel.getDraftAlarm().setValue(newAlarm);
-    }
-
-    @BindingAdapter({"hour", "minutes", "is24HourMode"})
-    public static void setTime(TimePicker timePicker, Integer hour, Integer minutes, boolean is24HourMode) {
-        timePicker.setHour(hour);
-        timePicker.setMinute(minutes);
-        timePicker.setIs24HourView(is24HourMode);
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        this.viewModel.getHour().setValue(hourOfDay);
+        this.viewModel.getMinutes().setValue(minute);
     }
 }
